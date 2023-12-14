@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="js/vue.min.js"></script>
+	<body>
+		<div id="app">
+			<input type="button" value="修改message" @click="update" />
+			<!-- <input type="text" v-bind:value="message" /> -->
+			<input type="text" v-model="message" /> <br>
+			<input type="password" v-model="password" />
+			<!-- 双向绑定 v-model -->
+			<h1>{{message}}</h1>
+			<h1>{{password}}</h1>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				message: "拉钩教育训练营",
+				password: 123
+			},
+			methods: {
+				update: function() {
+					this.message = "拉勾"
+				}
+			}
+		})
+	</script>
+</html>

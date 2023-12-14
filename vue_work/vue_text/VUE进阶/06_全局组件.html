@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<!-- 使用组件 -->
+			<lagou-header></lagou-header>
+		</div>
+	</body>
+	<script>
+		// 定义全局组件
+		// 组件的命名规则：一般用短横线进行连接
+		// 左边是公司名，右边是组件的作用名称
+		Vue.component("lagou-header",{
+			template:"<div><p>HTML</p><h1 @click='hello'>{{msg}}</h1></div>",
+			// 组件中的data是一个函数
+			data() {
+				return {
+					msg:"这是lagou-header组件中的数据部分"
+				}
+			},
+			methods: {
+				hello() {
+					alert("你好")
+				}
+			},
+		})
+		// 创建Vue实例
+		VM = new Vue({
+			el: "#app",
+			data: {},
+			methods: {}
+		})
+	</script>
+</html>

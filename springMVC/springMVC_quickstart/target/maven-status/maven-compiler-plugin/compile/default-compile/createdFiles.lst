@@ -1,0 +1,5 @@
+com\lagou\converter\DateConverter.class
+com\lagou\controller\RestfulController.class
+com\lagou\domain\User.class
+com\lagou\controller\UserController.class
+com\lagou\domain\QueryVo.class

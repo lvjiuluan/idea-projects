@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.mapper.UserMapper">
+    <resultMap id="userResultMap" type="com.lagou.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+    </resultMap>
+    <sql id="selectUser">
+        select *
+        from user
+    </sql>
+    <select id="findUserById" parameterType="int" resultMap="userResultMap">
+        select *
+        from user
+        where id = #{id}
+    </select>
+    <select id="findAll" resultMap="userResultMap">
+        select *
+        from user
+    </select>
+    <!--    多条件查询方式一-->
+    <!--    <select id="findByIdAndUsername" resultMap="userResultMap">-->
+    <!--        select *-->
+    <!--        from user-->
+    <!--        where id = #{arg0}-->
+    <!--          and username like #{arg1}-->
+    <!--    </select>-->
+    <select id="findByIdAndUsername" resultMap="userResultMap">
+        select *
+        from user
+        where id = #{param1}
+          and username like #{param2}
+    </select>
+    <!--    多条件查询方式 二-->
+    <select id="findByIdAndUsername2" resultMap="userResultMap">
+        select *
+        from user
+        where id = #{id}
+          and username like #{username}
+    </select>
+    <!--    多条件查询方式 三-->
+    <select id="findByIdAndUsername3" resultMap="userResultMap" parameterType="user">
+        select *
+        from user
+        where id = #{id}
+          and username like #{usernameabc}
+    </select>
+    <!--    模糊查询方式一-->
+    <select id="findByUsername" parameterType="string" resultMap="userResultMap">
+        select *
+        from user
+        where username like #{username}
+    </select>
+    <!--    模糊查询方式二-->
+    <select id="findByUsername2" parameterType="string" resultMap="userResultMap">
+        select *
+        from user
+        where username like '${value}'
+    </select>
+    <!--添加用户，获取返回主键 方式一-->
+    <insert id="saveUser" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert into user (username, birthday, sex, address)
+        values (#{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+    <!--添加用户，获取返回主键 方式二-->
+    <insert id="saveUser2" parameterType="user">
+        <selectKey order="AFTER" keyProperty="id" keyColumn="id" resultType="int">
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into user (username, birthday, sex, address)
+        values (#{username}, #{birthday}, #{sex}, #{address})
+    </insert>
+    <!--    动态sql 多条件查询-->
+    <select id="findByIdAndUsernameIf" parameterType="user" resultType="com.lagou.domain.User">
+        select *
+        from user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="username != null">
+                and username=#{username}
+            </if>
+        </where>
+    </select>
+    <!--    动态sql之set-->
+    <update id="updateIf" parameterType="user">
+        update user
+        <set>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="birthday != null">
+                username=#{birthday},
+            </if>
+            <if test="sex != null">
+                username=#{sex},
+            </if>
+            <if test="address != null">
+                address=#{address}
+            </if>
+        </set>
+        where id =#{id}
+    </update>
+    <!--    动态sql for each 标签，根据多个id值查询记录-->
+    <select id="findByList" parameterType="list" resultType="user">
+        <include refid="selectUser"></include>
+        <where>
+            <foreach collection="list" open="id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <!--    动态sql for each 标签，根据多个id值查询记录-->
+    <select id="findByArray" parameterType="int" resultType="user">
+        <include refid="selectUser"></include>
+        <where>
+            <foreach collection="array" open="id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+</mapper>

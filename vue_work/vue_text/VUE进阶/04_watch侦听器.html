@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<h2>计算器: {{count}}</h2>
+			<input type="button" @click="count++" value="点我加一" />
+		</div>
+	</body>
+	<script>
+		// 创建Vue实例
+		VM = new Vue({
+			el: "#app",
+			data: {
+				count: 1
+			},
+			watch: {
+				// 监测属性的值的变化
+				count: function(nval,oval) {
+					console.log(nval,oval)
+				}
+			}
+		})
+	</script>
+</html>

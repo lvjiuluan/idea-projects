@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<body>
+<button>试试</button>
+<ul>
+    <li>盘古</li>
+    <li>蚩尤</li>
+    <li>刑天
+        <p>龚工</p>
+    </li>
+    <h3>祝融</h3>
+</ul>
+<script>
+$("button").click(function () {
+    // var x = $("ul").children().text()
+    // alert(x)
+    // var x = $("ul").children("li:first").text()
+    // alert(x)
+    // var x = $("ul").find("p").text()
+    // alert(x)
+    // var x = $("li").first().text()
+    // alert(x)
+    var x = $("li").parent().is("ul")
+    alert(x)
+})
+</script>
+</body>
+</html>

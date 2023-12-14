@@ -1,0 +1,3 @@
+<beans>
+    <bean id="userDao" class="com.lagou.dao.impl.UserDaoImpl"></bean>
+</beans>

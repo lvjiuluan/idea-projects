@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<style>
+    div{
+        width: 200px;
+        height: 200px;
+        background-color: black;
+    }
+</style>
+
+<body>
+<button id="bnt1">显示</button>
+<button id="bnt2">隐藏</button>
+<button id="bnt3">切换</button>
+<div>
+
+</div>
+<script>
+    $("#bnt2").click(function () {
+        // $("div").hide(2000)
+        // $("div").slideUp(2000)
+        $("div").fadeIn(2000)
+    })
+    $("#bnt1").click(function () {
+        // $("div").show(3000)
+        // $("div").slideDown(2000)
+        $("div").fadeOut(2000)
+    })
+    $("#bnt3").click(function () {
+        // $("div").toggle(3000) // 包含了1,2两个按钮的功能
+        // $("div").slideToggle(2000)
+        // $("div").slideToggle(2000)
+        // $("div").fadeToggle(2000)
+        $("div").fadeTo(1000,0.5)
+    })
+
+</script>
+</body>
+</html>
