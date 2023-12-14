@@ -1,0 +1,80 @@
+FedCVT: Semi-supervised vertical federated learning with cross-view training
+Secureboost+: A high performance gradient boosting tree framework for large scale vertical federated learning
+Realistic evaluation of deep semi-supervised learning algorithms
+Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results
+mixup: Beyond empirical risk minimization
+Softmatch: Addressing the quantity-quality trade-off in semi-supervised learning
+Adamatch: A unified approach to semi-supervised learning and domain adaptation
+Comatch: Semi-supervised learning with contrastive graph regularization
+Fixmatch: Simplifying semi-supervised learning with consistency and confidence
+Mixmatch: A holistic approach to semi-supervised learning
+Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks
+Multi-Positive and Unlabeled Learning.
+Practical private set intersection protocols with linear complexity
+A bagging SVM to learn from positive and unlabeled examples
+A robust ensemble approach to learn from positive and unlabeled data using SVM base models
+DRN: A deep reinforcement learning framework for news recommendation
+A secure federated transfer learning framework
+Advances and open problems in federated learning
+Agnostic federated learning
+An efficient framework for clustered federated learning
+Batchcrypt: Efficient homomorphic encryption for cross-silo federated learning
+Bayesian nonparametric federated learning of neural networks
+Building text classifiers using positive and unlabeled examples
+Classification with noisy labels by importance reweighting
+Communication-efficient learning of deep networks from decentralized data
+Debiasing model updates for improving personalized federated training
+Differentially private federated learning: A client level perspective
+Oort: Efficient Federated Learning via Guided Participant Selection.
+Enhancing Federated Learning with In-Cloud Unlabeled Data
+Fedpaq: A communication-efficient federated learning method with periodic averaging and quantization
+Feverless: Fast and secure vertical federated learning based on xgboost for decentralized labels
+Efficient batch homomorphic encryption for vertically federated xgboost
+An efficient and robust system for vertically federated random forest
+Parallel distributed logistic regression for vertical federated learning without third-party coordinator
+Secure logistic regression for vertical federated learning
+Federated Learning with Positive and Unlabeled Data
+Federated machine learning: Concept and applications
+Federated optimization in heterogeneous networks
+Federated semi-supervised learning with inter-client consistency \& disjoint learning
+Federated learning based on dynamic regularization
+Federated learning with matched averaging
+Federated learning: Strategies for improving communication efficiency
+HeteroFL: Computation and communication efficient federated learning for heterogeneous clients
+On data banks and privacy homomorphisms
+k-anonymity: A model for protecting privacy
+Differential privacy: A survey of results
+Inprivate digging: Enabling tree-based distributed data mining with differential privacy
+Least squares support vector machine classifiers
+Lower bounds and optimal algorithms for personalized federated learning
+Novelty detection: Unlabeled data definitely help
+Practical secure aggregation for privacy-preserving machine learning
+Practical federated gradient boosting decision trees
+Scalable private set intersection based on OT extension
+Faster private set intersection based on $\{$OT$\
+Privacy-preserving inter-database operations
+Lightgbm: A highly efficient gradient boosting decision tree
+Xgboost: extreme gradient boosting
+Scikit-learn: Machine learning in Python
+Fate: An industrial grade platform for collaborative learning with data protection
+Fedtree: A fast, effective, and secure tree-based federated learning system
+Scalable and secure logistic regression via homomorphic encryption
+Securegbm: Secure multi-party gradient boosting
+Secureboost+: A high performance gradient boosting tree framework for large scale vertical federated learning
+Learning classifiers from only positive and unlabeled data
+Secureboost: A lossless federated learning framework
+Greedy function approximation: a gradient boosting machine
+Privacy-preserving decision trees over vertically partitioned data
+Privacy-preserving deep learning
+Privacy-preserving entity resolution and logistic regression on encrypted data
+A communication efficient collaborative learning framework for distributed features
+Private federated learning on vertically partitioned data via entity resolution and additively homomorphic encryption
+RSCFed: random sampling consensus federated semi-supervised learning
+Robust and communication-efficient federated learning from non-iid data
+Scaffold: Stochastic controlled averaging for federated learning
+Text classification without negative examples revisit
+Analysis of recommendation algorithms for e-commerce
+E-commerce recommendation applications
+Pedersen. Personalized News Recommendation Based on Click
+Item recommendation based on context-aware model for personalized u-healthcare service
+An overview of recommendation techniques and their applications in healthcare
