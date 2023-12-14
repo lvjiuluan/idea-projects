@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 id="title">拉勾网，急速入职</h1>
+<script>
+    color = ["red","blue","yellow","pink","orange","black"]
+    i = 0
+    function bian(){
+        document.getElementById("title").style.color = color[i]
+        i++
+        i %= color.length
+    }
+    setInterval(bian,10);
+</script>
+</body>
+</html>

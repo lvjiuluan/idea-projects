@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<body>
+<button>测试</button>
+<p>p1</p>
+<ul>
+    <li>a</li>
+    <li>
+        <b>b</b>
+    </li>
+    <li>c</li>
+</ul>
+<p>p2</p>
+<p id="x">p3</p>
+<script>
+$("button").click(function () {
+    // var x = $("b").parent().html()
+    // console.log(x)
+    // alert(x)
+    // var x = $("b").parents("ul").html()
+    // alert(x)
+    // var x = $("b").parents("body").html()
+    // alert(x)
+    // var x = $("ul").next().text()
+    // alert(x)
+    // var x = $("ul").prev().text()
+    // alert(x)
+    var x = $("ul").siblings("#x").text()
+    alert(x)
+})
+</script>
+</body>
+</html>

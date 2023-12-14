@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p id="time"></p>
+<button onclick="start()">开始</button>
+<button onclick="stop()">停止</button>
+<script>
+    function start(){
+        timer = setInterval(bian,100)
+    }
+    function stop(){
+        clearInterval(timer)
+    }
+    function bian(){
+        document.getElementById("time").innerHTML = Math.floor(Math.random()*100)
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<h2 id="msg">{{message}}</h2>
+			<button @click="next">获取下一句</button>
+		</div>
+	</body>
+	<script>
+		// 创建Vue实例
+		new Vue({
+			el: "#app",
+			data: {
+				message: "想当年，金戈铁马"
+			},
+			methods: {
+				show() {
+					alert("show方法执行")
+				},
+				next() {
+					this.message = "气吞万里如虎"
+				}
+			},
+			beforeCreate() {
+				console.log("1.beforeCreated函数，在Vue对象实例化之前执行")
+
+			},
+			created() {
+				console.log("2.created函数组件实例化已经完成, dom还没生成")
+			},
+			beforeMount() {
+				console.log("3.beforMount函数执行时，模板已经在内存中编辑完成了，但是还没有被渲染到页面中")
+
+			},
+			mounted() {
+				console.log("4.mounted函数执行时，模板已经被渲染到页面，执行完就会显示页面")
+
+			},
+			beforeUpdate() {
+				console.log("5.beforeUpdate函数执行时，内存中的数据已经更新，但是还没有渲染到页面")
+				
+			},
+			updated() {
+				console.log("6.updated函数执行时，内存中的数据已经更新了")
+				console.log(document.getElementById("msg"))
+				console.log(this.message)
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lagou.mapper.OrderMapper">
+    <resultMap id="orderMap" type="orders">
+        <id column="id" property="id"></id>
+        <result column="ordertime" property="ordertime"></result>
+        <result column="total" property="total"></result>
+        <result column="uid" property="uid"></result>
+        <association javaType="com.lagou.domain.User" property="user">
+            <id column="uid" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="birthday" property="birthday"></result>
+            <result column="sex" property="sex"></result>
+            <result column="address" property="address"></result>
+        </association>
+    </resultMap>
+    <select id="findAllWithUser" resultMap="orderMap">
+        select *
+        from orders o
+                 left join user u on o.id = u.id
+    </select>
+    <!--    一对一嵌套查询-->
+    <resultMap id="orderMap2" type="orders">
+        <id column="id" property="id"></id>
+        <result column="ordertime" property="ordertime"></result>
+        <result column="total" property="total"></result>
+        <association property="user" javaType="user" select="com.lagou.mapper.UserMapper.findById" column="uid" >
+
+        </association>
+    </resultMap>
+    <select id="findAllWithUser2" resultMap="orderMap2">
+        select *
+        from orders
+    </select>
+    <select id="findByUid" resultType="orders" parameterType="int">
+        select *
+        from orders
+        where uid = #{uid}
+    </select>
+</mapper>

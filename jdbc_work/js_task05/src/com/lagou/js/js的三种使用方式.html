@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // var a = 10
+    // function test1(){
+    //     b = 20 // a和b都是全变量
+    //     var c = 30 //用var声明，并且在函数内部声部，属于局部遍历
+    //     console.log(a)
+    //     console.log(b)
+    //     console.log(c)
+    // }
+    // function test2(){
+    //     console.log(a)
+    //     console.log(b)
+    //     console.log(c)
+    // }
+    // test1()
+    // test2()
+    // var count = 0
+    // function test(){
+    //     count++
+    // }
+    // test()
+    // test()
+    // test()
+    // console.log(count)
+    function test(){
+        var count = 0
+        function jia(){
+            return count++
+        }
+        return jia
+    }
+    // 跟内存回收机制有关
+    fn = test()  //0
+    fn() // 0
+    fn() // 1
+    console.log(fn())
+</script>
+</body>
+</html>

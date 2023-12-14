@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<style>
+			/* 
+			用户名开头字母大写
+			 */
+		</style>
+	</head>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	<body>
+		<div id="app">
+			<p>{{user.name|changeName}}</p>
+		</div>
+	</body>
+	<script>
+		// 在创建Vue对象之前创建全局过滤器
+		Vue.filter("changeName", function(value) {
+			// 将名字开头字母大写
+			return value.charAt(0).toUpperCase() + value.slice(1)
+		})
+		// 创建Vue实例
+		VM = new Vue({
+			el: "#app",
+			data: {
+				user: {
+					name: 'tom'
+				}
+			}
+		})
+	</script>
+</html>

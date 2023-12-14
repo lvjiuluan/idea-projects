@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="js/vue.min.js"></script>
+	<link ref="stylesheet" href="css/inputNum.css" />
+	<body>
+		<div id="app">
+			<span :style="{fontSize: size+'px'}">Hello</span>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				imgSrc: "img/1.jpg",
+				imgTitle: "在云端",
+				size: 100,
+			}
+		})
+	</script>
+</html>

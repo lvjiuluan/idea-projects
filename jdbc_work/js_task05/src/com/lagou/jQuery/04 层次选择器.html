@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<body>
+<h3>000</h3>
+<div id="x">
+    111
+    <p>p1</p>
+    <div>
+        <p>p2</p>
+    </div>
+</div>
+<h3>222</h3>
+<h3>333</h3>
+<script>
+    // $("#x p").css("color","red")
+    // $("#x>p").css("color","red")
+    // $("#x+h3").css("color","red")
+    $("#x~h3").css("color","red")
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script src="js/vue.min.js"></script>
+	<body>
+		<div id="app">
+			<input type="button" value="点击按钮" v-on:click="show" />
+			<input type="button" value="点击按钮" @click="show" />
+			<input type="button" value="双击事件" @dblclick="show" />
+			<hr />
+			<!-- 绑定点击事件，修改内容 -->
+			<h2 @click="changeFood">{{food}}</h2>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				food: "麻辣小龙虾",
+			},
+			// 通过methods专门存放Vue方法
+			methods: {
+				show: function() {
+					alert("程序员在加班")
+				},
+				changeFood: function() {
+					// 使用this获取data中的数据
+					this.food += "真好吃"
+				}
+			}
+		})
+	</script>
+</html>
