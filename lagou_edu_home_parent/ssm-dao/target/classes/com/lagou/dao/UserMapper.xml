@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lagou.dao.UserMapper">
+
+    <!--用户分页&多条件组合查询    public List<User> findAllUserByPage(UserVo userVo);-->
+    <select id="findAllUserByPage" parameterType="com.lagou.domain.UserVo" resultType="com.lagou.domain.User">
+        select * from user
+        <where>
+            <if test="true">
+                and is_del !=1
+            </if>
+            <if test="username !=null and username !=''">
+                and name = #{username}
+            </if>
+            <if test="startCreateTime !=null and endCreateTime !=null">
+                and create_time BETWEEN #{startCreateTime} AND #{endCreateTime}
+            </if>
+        </where>
+
+    </select>
+    <!--     根据用户名查询用户信息-->
+    <select id="login" parameterType="com.lagou.domain.User" resultType="com.lagou.domain.User">
+        select *
+        from user
+        where phone = #{phone}
+    </select>
+    <!--    根据用户id查询管理的角色信息-->
+    <select id="findUserRelationRoleById" parameterType="int" resultType="com.lagou.domain.Role">
+        select *
+        from roles r
+                 inner join user_role_relation ur on r.id = ur.role_id
+        where ur.user_id = #{id}
+    </select>
+    <!--    根据用户id清空用户-角色中间表-->
+    <delete id="deleteUserRole" parameterType="com.lagou.domain.User_Role_relation">
+        delete
+        from user_role_relation
+        where user_id = #{id}
+    </delete>
+    <!--    向用户-角色表插入一条数据-->
+    <insert id="userContexRole" parameterType="com.lagou.domain.User_Role_relation">
+        insert into user_role_relation
+        values (null, #{userId}, #{roleId}, #{createdTime}, #{updatedTime}, #{createdBy}, #{updatedby})
+    </insert>
+    <!--
+    /*
+         * 动态菜单
+         * */
+        // 1. 根据用户id查询管理的角色信息
+        public List<Role> findUserRelationRoleById(Integer id);
+
+        // 2. 根据角色id查询角色所拥有的父级菜单
+        public List<Menu> findParentMenuByRoleId(List<Integer> ids);
+
+        // 3. 根据pid查询子菜单信息
+        public List<Menu> findSubMenuByPid(Integer pid);
+
+        // 4. 根据角色id获取拥有的资源权限信息
+        public List<Resource> findResourceByRoleId(List<Integer> ids);
+        -->
+    <!--    根据角色id查询角色所拥有的父级菜单-->
+    <select id="findParentMenuByRoleId" parameterType="list" resultType="com.lagou.domain.Menu">
+        select distinct m.*
+        from menu m
+        inner join role_menu_relation rm on m.id = rm.menu_id
+        where m.parent_id = -1
+        and rm.role_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <!--    3. 根据pid查询子菜单信息-->
+    <select id="findSubMenuByPid" parameterType="int" resultType="com.lagou.domain.Menu">
+        select *
+        from menu
+        where parent_id = #{pid}
+    </select>
+    <!--    4. 根据角色id获取用户拥有的资源权限信息-->
+    <select id="findResourceByRoleId" parameterType="list" resultType="com.lagou.domain.Resource">
+        select distinct r.*
+        from resource r
+        inner join role_resource_relation rr on r.id = rr.resource_id
+        where rr.role_id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+</mapper>
