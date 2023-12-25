@@ -1,6 +1,5 @@
 package HeadFirstJava.chapter05;
 
-import org.junit.Test;
 
 public class SimpleDotComTestDrive {
 
