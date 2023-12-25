@@ -1,54 +1,44 @@
 package 每周20道力扣.第五周;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Solution40 {
     LinkedList<Integer> list;
     List<List<Integer>> lists;
-    Integer[] candidates;
-    int n;
     int target;
-    int[] visited;
+    int[] candidates;
 
     public void dfs(int i, int sum) {
-        if (i <= n + 1) {
-            if (sum == target) {
-                List<Integer> temp = new ArrayList(list);
-                if (!lists.contains(temp)) {
-                    System.out.println(temp);
-                    lists.add(temp);
-                }
-            }
-            for (int j = i; j < n; j++) {
-                if (sum + candidates[j] <= target) {
-                    list.addLast(candidates[j]);
-                    dfs(j + 1, sum + candidates[j]);
-                    list.removeLast();
-                }
-            }
+        if (sum > target) return;
+        if (sum == target) {
+            lists.add(new ArrayList<>(list));
+            return;
+        }
+        for (int j = i + 1; j < candidates.length; j++) {
+            if (j != i + 1 && candidates[j] == candidates[j - 1]) continue;
+            list.addLast(candidates[j]);
+            dfs(j, sum + candidates[j]);
+            list.removeLast();
         }
     }
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        Set<Integer> set = new HashSet<>();
-        for (int candidate : candidates) {
-            set.add(candidate);
-        }
         Arrays.sort(candidates);
-        this.candidates = set.toArray(new Integer[0]);
-        this.n = this.candidates.length;
+        this.candidates = candidates;
         this.target = target;
-        visited = new int[candidates.length];
         list = new LinkedList<>();
         lists = new ArrayList<>();
-        dfs(0, 0);
+        dfs(-1, 0);
         return lists;
     }
 
     public static void main(String[] args) {
+        int[] candidates = {10, 1, 2, 7, 6, 1, 5};
+        int target = 8;
         Solution40 solution40 = new Solution40();
-        int[] candidates = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-        int target = 30;
-        solution40.combinationSum2(candidates,target);
+        System.out.println(solution40.combinationSum2(candidates, target));
     }
 }
