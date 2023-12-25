@@ -15,5 +15,23 @@
     jQuery('#myQrcode').qrcode({
         text: "${codeUrl}"
     });
+    $(function () {
+        // 定时器
+        setInterval(function () {
+            console.log('开始查询支付状态...')
+            $.ajax({
+                url: '/pay/queryByOrderId',
+                data: {
+                    'orderId': '170350303661'
+                },
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    alert(result);
+                }
+            })
+        }, 2000)
+    })
 </script>
 </html>

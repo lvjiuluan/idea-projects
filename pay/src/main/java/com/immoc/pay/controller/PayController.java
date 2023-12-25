@@ -1,5 +1,6 @@
 package com.immoc.pay.controller;
 
+import com.immoc.pay.pojo.PayInfo;
 import com.immoc.pay.service.impl.PayService;
 import com.lly835.bestpay.model.PayResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +26,9 @@ public class PayController {
                                @RequestParam("amount") BigDecimal amount) {
         Instant now = Instant.now();
         long milliSeconds = now.toEpochMilli();
+        milliSeconds = milliSeconds / 100;
         orderId = milliSeconds + orderId;
-        PayResponse payResponse = payService.create(orderId + orderId, amount);
+        PayResponse payResponse = payService.create(orderId, amount);
         Map map = new HashMap<>();
         map.put("codeUrl", payResponse.getCodeUrl());
         map.put("orderId", orderId);
@@ -40,11 +42,16 @@ public class PayController {
         return "hello";
     }
 
-
     // 接收异步通知
     @PostMapping("/notify")
     @ResponseBody
     public String asyncNotify(@RequestBody String notifyData) {
         return payService.asyncNotify(notifyData);
+    }
+
+    @GetMapping("/queryByOrderId")
+    @ResponseBody
+    public PayInfo queryByOrderId(@RequestParam String orderId) {
+        return payService.queryByOrderId(orderId);
     }
 }

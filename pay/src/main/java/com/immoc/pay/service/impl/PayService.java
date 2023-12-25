@@ -1,8 +1,11 @@
 package com.immoc.pay.service.impl;
 
+import com.immoc.pay.dao.PayInfoMapper;
+import com.immoc.pay.pojo.PayInfo;
 import com.immoc.pay.service.IPayService;
 import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
+import com.lly835.bestpay.enums.OrderStatusEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.BestPayService;
@@ -19,11 +22,14 @@ import java.math.BigDecimal;
 public class PayService implements IPayService {
     @Autowired
     private BestPayService bestPayService;
+    @Autowired
+    private PayInfoMapper payInfoMapper;
 
     @Override
     public PayResponse create(String orderId, BigDecimal amount) {
         // 写入数据库 订单号-金额
-
+        PayInfo payInfo = new PayInfo(Long.parseLong(orderId), 2, OrderStatusEnum.NOTPAY.name(), amount);
+        payInfoMapper.insertSelective(payInfo); // 有选择的添加
         // 发起支付
         PayRequest payRequest = new PayRequest();
         payRequest.setOrderName("测试");
@@ -33,7 +39,7 @@ public class PayService implements IPayService {
 
 
         PayResponse payResponse = bestPayService.pay(payRequest);
-        log.info("response = {}", payResponse);
+        log.info("发起支付的 response = {}", payResponse);
         return payResponse;
     }
 
@@ -41,22 +47,37 @@ public class PayService implements IPayService {
     public String asyncNotify(String notifyData) {
         // 1 签名校验
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
-//        log.info("payResponse={}", payResponse);
+        log.info("微信后台发送的 payResponse={}", payResponse);
         // 2 校验金额(根据订单号查询)
-        // 3 修改订单为支付状态
+        PayInfo payInfo = payInfoMapper.selectByOrderNo(Long.parseLong(payResponse.getOrderId()));
+        // 这种情况比较严重，发出警告：钉钉、短信
+        if (payInfo == null) {
+            throw new RuntimeException("通过orderNo查询到的结果是null");
+        }
+        // 如果订单状态不是已支付
+        if (!payInfo.getPlatformStatus().equals(OrderStatusEnum.SUCCESS.name())) {
+            // 则比较金额对不对
+            if (payInfo.getPayAmount().compareTo(BigDecimal.valueOf(payResponse.getOrderAmount())) != 0) {
+                //
+                throw new RuntimeException("异步通知中的金额和数据库里不一致, orderNo = " + payResponse.getOrderId());
+            }
+            // 3 修改订单为支付状态
+            payInfo.setPlatformStatus(OrderStatusEnum.SUCCESS.name());
+            // 交易流水号
+            payInfo.setPlatformNumber(payResponse.getOutTradeNo());
+            // 修改时间
+            log.info("payInfo={}", payInfo);
+            payInfoMapper.updateByPrimaryKeySelective(payInfo);
+        }
         // 4 告诉微信不要再通知了
         return "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +
                 "   <return_msg><![CDATA[OK]]></return_msg>\n" +
-                "   <appid><![CDATA[wx2421b1c4370ec43b]]></appid>\n" +
-                "   <mch_id><![CDATA[10000100]]></mch_id>\n" +
-                "   <nonce_str><![CDATA[IITRi8Iabbblz1Jc]]></nonce_str>\n" +
-                "   <openid><![CDATA[oUpF8uMuAJO_M2pxb1Q9zNjWeS6o]]></openid>\n" +
-                "   <sign><![CDATA[7921E432F65EB8ED0CE9755F0E86D72F]]></sign>\n" +
-                "   <result_code><![CDATA[SUCCESS]]></result_code>\n" +
-                "   <prepay_id><![CDATA[wx201411101639507cbf6ffd8b0779950874]]></prepay_id>\n" +
-                "   <trade_type><![CDATA[JSAPI]]></trade_type>\n" +
                 "</xml>";
     }
 
+    // 查询支付结果
+    public PayInfo queryByOrderId(String orderId) {
+        return payInfoMapper.selectByOrderNo(Long.parseLong(orderId));
+    }
 }

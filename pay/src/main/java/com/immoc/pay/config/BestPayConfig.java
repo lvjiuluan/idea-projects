@@ -14,7 +14,7 @@ public class BestPayConfig {
         wxPayConfig.setAppId("wx3e6b9f1c5a7ff034"); // 公众号appId
         wxPayConfig.setMchId("1614433647"); // 商户号
         wxPayConfig.setMchKey("Aa111111111122222222223333333333"); // 商户密钥
-        wxPayConfig.setNotifyUrl("http://da8ccc.natappfree.cc/pay/notify");
+        wxPayConfig.setNotifyUrl("http://mhdhgg.natappfree.cc/pay/notify");
 
 
         // 配置

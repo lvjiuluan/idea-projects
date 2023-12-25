@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry location="D:\maven\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar"/>
+    <classPathEntry location="D:\MyJar\mysql-connector-java-5.1.6.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!--        不在追加XML-->
@@ -39,6 +39,10 @@
                enableSelectByExample="false"
                enableUpdateByExample="false"/>
         <table tableName="mall_order_item" domainObjectName="OrderItem" enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+        <table tableName="mall_pay_info" domainObjectName="PayInfo" enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                enableUpdateByExample="false"/>
