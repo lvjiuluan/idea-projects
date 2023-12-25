@@ -11,3 +11,9 @@ mybatis:
 logging:
   pattern:
     console: "[%thread] %-5level %logger{36} - %msg%n"
+wx:
+  appId: wx3e6b9f1c5a7ff034
+  mchId: 1614433647
+  mchKey: Aa111111111122222222223333333333
+  notifyUrl: http://xt9wvx.natappfree.cc/pay/notify
+  returnUrl: http://127.0.0.1:8080

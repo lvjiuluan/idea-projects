@@ -43,6 +43,7 @@ public class PayService implements IPayService {
         return payResponse;
     }
 
+    //TODO pay发送MQ消息， mall接收MQ消息
     @Override
     public String asyncNotify(String notifyData) {
         // 1 签名校验

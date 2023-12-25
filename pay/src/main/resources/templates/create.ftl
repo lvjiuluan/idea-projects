@@ -10,6 +10,9 @@
 <h1>订单号为: ${orderId}</h1>
 <p>支付金额为：${amount}</p>
 <div id="myQrcode"></div>
+<div id="orderId" hidden>${orderId}</div>
+<div id="returnUrl" hidden>${returnUrl}</div>
+
 </body>
 <script>
     jQuery('#myQrcode').qrcode({
@@ -22,10 +25,13 @@
             $.ajax({
                 url: '/pay/queryByOrderId',
                 data: {
-                    'orderId': '170350303661'
+                    'orderId': $('#orderId').text()
                 },
                 success: function (result) {
                     console.log(result);
+                    if (result.platformStatus != null && result.platformStatus === 'SUCCESS') {
+                        location.href = $('#returnUrl').text()
+                    }
                 },
                 error: function (result) {
                     alert(result);

@@ -2,6 +2,7 @@ package com.immoc.pay.controller;
 
 import com.immoc.pay.pojo.PayInfo;
 import com.immoc.pay.service.impl.PayService;
+import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.model.PayResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class PayController {
     @Autowired
     private PayService payService;
+    @Autowired
+    private WxPayConfig wxPayConfig;
 
     @GetMapping("/create")
     public ModelAndView create(@RequestParam("orderId") String orderId,
@@ -33,6 +36,7 @@ public class PayController {
         map.put("codeUrl", payResponse.getCodeUrl());
         map.put("orderId", orderId);
         map.put("amount", amount);
+        map.put("returnUrl", wxPayConfig.getReturnUrl());
         return new ModelAndView("create", map);
     }
 
