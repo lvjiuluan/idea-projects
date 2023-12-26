@@ -14,4 +14,8 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User row);
 
     int updateByPrimaryKey(User row);
+
+    int countByUsername(String username);
+
+    int countByEmail(String email);
 }

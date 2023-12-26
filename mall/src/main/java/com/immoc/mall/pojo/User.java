@@ -25,4 +25,11 @@ public class User {
     private Date createTime;
 
     private Date updateTime;
+
+    public User(String username, String password, String email, Integer role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
 }
