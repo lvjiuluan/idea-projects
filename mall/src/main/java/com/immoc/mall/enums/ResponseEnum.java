@@ -18,6 +18,8 @@ public enum ResponseEnum {
 
     PARAM_ERROR(3, "参数错误"),
 
+    UERNAME_OR_PASSWORD_ERROR(11, "用户名或密码错误"),
+
     ;
 
     Integer code;

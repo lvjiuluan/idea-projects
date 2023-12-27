@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import javax.management.relation.Role;
 import java.nio.charset.StandardCharsets;
 
 import static com.immoc.mall.enums.ResponseEnum.*;
@@ -21,7 +20,7 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public ResponseVo register(User user) {
+    public ResponseVo<User> register(User user) {
         // username不能重复
         int countByUsername = userMapper.countByUsername(user.getUsername());
         if (countByUsername > 0) {
@@ -48,5 +47,26 @@ public class UserServiceImpl implements IUserService {
         // 注册成功
         return ResponseVo.sucess();
     }
-    
+
+    @Override
+    public ResponseVo<User> login(String username, String password) {
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            // 用户不存在
+            // 用户名或密码错误
+            return ResponseVo.error(UERNAME_OR_PASSWORD_ERROR);
+        }
+        ;
+        if (!user.getPassword().equalsIgnoreCase(
+                DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8))
+        )) {
+            // 密码错误
+            return ResponseVo.error(UERNAME_OR_PASSWORD_ERROR);
+        }
+        // 不要返回密码
+        user.setPassword(null);
+        // 返回成功
+        return ResponseVo.sucess(user);
+    }
+
 }
