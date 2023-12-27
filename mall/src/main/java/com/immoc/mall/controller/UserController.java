@@ -8,6 +8,7 @@ import com.immoc.mall.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,18 +53,27 @@ public class UserController {
         }
         ResponseVo<User> userResponseVo = userService.login(userLoginForm.getUsername(), userLoginForm.getPassword());
         // 设置Session
+        // session保存在内存里
         session.setAttribute(CURRENT_USER, userResponseVo.getData());
-
+        log.info("/login sessionID={}", session.getId());
         return userResponseVo;
     }
 
     @GetMapping("/user")
     public ResponseVo<User> userInfo(HttpSession session) {
+        log.info("/user sessionID={}", session.getId());
         User user = (User) session.getAttribute(CURRENT_USER);
-        if (user == null) {
-            return ResponseVo.error(NEED_LOGIN);
-        }
         return ResponseVo.sucess(user);
     }
 
+    //TODO 判断登录状态 统一拦截
+    /*
+     * {@link TomcatServletWebServerFactory}
+     * */
+    @PostMapping("/user/logout")
+    public ResponseVo logout(HttpSession session) {
+        log.info("/logout sessionID={}", session.getId());
+        session.removeAttribute(CURRENT_USER);
+        return ResponseVo.sucess();
+    }
 }
