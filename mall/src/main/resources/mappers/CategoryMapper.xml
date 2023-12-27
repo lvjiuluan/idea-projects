@@ -12,4 +12,40 @@
         from mall_category
         where id = #{id}
     </select>
+
+    <resultMap id="resultCategoryVo" type="com.immoc.mall.vo.CategoryVo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="sort_order" property="sortOrder" jdbcType="INTEGER"/>
+        <collection property="subCategories" ofType="com.immoc.mall.vo.CategoryVo"
+                    column="id" select="queryChildrenCategory"/>
+    </resultMap>
+
+    <resultMap id="resultCategoryIdVo" type="com.immoc.mall.vo.CategoryIdVo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <collection property="subIds" ofType="com.immoc.mall.vo.CategoryIdVo"
+                    column="id" select="queryAllCategoryId"/>
+    </resultMap>
+
+    <select id="queryAllCategory" resultMap="resultCategoryVo" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_category
+        where parent_id = #{parent_id}
+    </select>
+
+    <select id="queryChildrenCategory" resultMap="resultCategoryVo" parameterType="int">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_category
+        where parent_id = #{parent_id}
+    </select>
+
+    <select id="queryAllCategoryId" resultMap="resultCategoryIdVo" parameterType="int">
+        select id
+        from mall_category
+        where parent_id = #{parent_id}
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.immoc.mall.pojo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /*
  * po: persistent object 持久层对象

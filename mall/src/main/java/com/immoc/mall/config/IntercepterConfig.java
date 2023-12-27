@@ -1,12 +1,16 @@
 package com.immoc.mall.config;
 
 import com.immoc.mall.intercepter.UserLoginIntercepter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class IntercepterConfig implements WebMvcConfigurer {
+    @Autowired
+    private FilterUrl filterUrl;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 配置拦截器
@@ -15,6 +19,6 @@ public class IntercepterConfig implements WebMvcConfigurer {
          * */
         registry.addInterceptor(new UserLoginIntercepter())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/login", "user/register");
+                .excludePathPatterns(filterUrl.getFilterUrl().split(" "));
     }
 }

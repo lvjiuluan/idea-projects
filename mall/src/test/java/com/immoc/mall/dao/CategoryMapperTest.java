@@ -1,11 +1,15 @@
 package com.immoc.mall.dao;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.immoc.mall.MallApplicationTests;
 import com.immoc.mall.pojo.Category;
+import com.immoc.mall.vo.CategoryIdVo;
+import com.immoc.mall.vo.CategoryVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 class CategoryMapperTest extends MallApplicationTests {
     @Autowired
@@ -29,5 +33,21 @@ class CategoryMapperTest extends MallApplicationTests {
 
     @Test
     void queryById() {
+    }
+
+    @Test
+    void queryAllCategory() throws JsonProcessingException {
+        List<CategoryVo> categories = categoryMapper.queryAllCategory(0);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s = objectMapper.writeValueAsString(categories);
+        System.out.println(s);
+    }
+
+    @Test
+    void queryAllCategoryId() throws JsonProcessingException {
+        List<CategoryIdVo> list = categoryMapper.queryAllCategoryId(100001);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s = objectMapper.writeValueAsString(list);
+        System.out.println(s);
     }
 }
