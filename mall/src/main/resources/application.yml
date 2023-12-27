@@ -19,4 +19,4 @@ server:
       timeout: 120
 # 配置不需要登录的url，自定义配置
 my:
-  filterUrl: "/user/login user/register /categories"
+  filterUrl: "/user/login user/register /categories /products /products/*"
