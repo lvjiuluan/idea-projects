@@ -33,11 +33,7 @@ public class UserController {
     }*/
     @PostMapping("/user/register")
     // 前端用body里面的raw json格式
-    public ResponseVo register(@Valid @RequestBody UserRegisterForm userRegisterForm, BindingResult bindingResult) {
-        // 判断所需字段是否为空
-        if (bindingResult.hasErrors()) {
-            return ResponseVo.error(PARAM_ERROR, bindingResult);
-        }
+    public ResponseVo register(@Valid @RequestBody UserRegisterForm userRegisterForm) {
         User user = new User();
         BeanUtils.copyProperties(userRegisterForm, user);
         return userService.register(user);
@@ -45,12 +41,9 @@ public class UserController {
 
     @PostMapping("/user/login")
     public ResponseVo login(@Valid @RequestBody UserLoginForm userLoginForm,
-                            BindingResult bindingResult,
                             HttpSession session) {
         // 判断所需字段是否为空
-        if (bindingResult.hasErrors()) {
-            return ResponseVo.error(PARAM_ERROR, bindingResult);
-        }
+
         ResponseVo<User> userResponseVo = userService.login(userLoginForm.getUsername(), userLoginForm.getPassword());
         // 设置Session
         // session保存在内存里

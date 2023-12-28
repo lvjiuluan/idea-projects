@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class UserLoginForm {
     //    @NotBlank  判断字符 空格也是非法的
     //    @NotEmpty 判断集合
-    //    @NotNull
+    //    @NotNull 判断非字符字段
     @NotBlank
     private String username;
     @NotBlank
