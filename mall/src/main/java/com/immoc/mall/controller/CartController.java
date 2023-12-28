@@ -63,7 +63,7 @@ public class CartController {
     }
 
     // 6.全不选
-    @PutMapping("/carts/selectAll")
+    @PutMapping("/carts/unSelectAll")
     public ResponseVo<CartVo> unSelectAll(HttpSession session) {
         User user = (User) session.getAttribute(CURRENT_USER);
         Integer uid = user.getId();

@@ -235,7 +235,9 @@ public class CartServiceImpl implements ICartService {
         // 购物出中的商品遍历一遍
         List<Cart> cartList = listForCart(uid);
         for (Cart cart : cartList) {
-            sum += cart.getQuantity();
+            if (cart.getProductSelected()) {
+                sum += cart.getQuantity();
+            }
         }
         return ResponseVo.sucess(sum);
     }
