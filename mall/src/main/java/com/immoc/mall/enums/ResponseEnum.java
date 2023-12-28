@@ -25,6 +25,8 @@ public enum ResponseEnum {
     PRODUCT_NOT_EXIST(13, "商品不存在"),
 
     PRODUCT_STOCK_NOT_ENOUGH(13, "库存不足"),
+
+    CART_PRODUCT_NOT_EXIST(15, "购物车里无商品不存在"),
     ;
 
     Integer code;
