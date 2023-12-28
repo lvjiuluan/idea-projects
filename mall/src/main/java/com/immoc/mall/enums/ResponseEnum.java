@@ -27,6 +27,16 @@ public enum ResponseEnum {
     PRODUCT_STOCK_NOT_ENOUGH(13, "库存不足"),
 
     CART_PRODUCT_NOT_EXIST(15, "购物车里无商品不存在"),
+
+    ADD_SHIPPING_FAILURE(16, "新建地址失败"),
+
+    SHIPPING_NOT_EXIST(17, "地址不存在"),
+
+    DELETE_SHIPPING_FAILURE(18, "删除地址失败"),
+
+    NO_RIGHT_DELETE_OR_UPDATE_SHIPPING(18, "没有权限删除或修改该地址"),
+
+    UPDATE_SHIPPING_FAILURE(18, "更新地址失败"),
     ;
 
     Integer code;

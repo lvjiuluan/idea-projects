@@ -43,6 +43,10 @@ public class ResponseVo<T> {
         return new ResponseVo<T>(ResponseEnum.SUCCESS.getCode(), data);
     }
 
+    public static <T> ResponseVo<T> sucess(T data, String msg) {
+        return new ResponseVo<T>(ResponseEnum.SUCCESS.getCode(), msg, data);
+    }
+
     public static <T> ResponseVo<T> error(ResponseEnum responseEnum) {
         return new ResponseVo<>(responseEnum.getCode(), responseEnum.getDesc());
     }
