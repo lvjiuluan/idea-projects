@@ -18,7 +18,6 @@ class OrderServiceImplTest extends MallApplicationTests {
     private Integer uid = 1;
     private Integer shippingId = 4;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    Integer productId = 4;
 
     @Test
     void create() {

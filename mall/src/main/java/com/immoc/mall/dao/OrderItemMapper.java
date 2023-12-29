@@ -1,6 +1,9 @@
 package com.immoc.mall.dao;
 
 import com.immoc.mall.pojo.OrderItem;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderItemMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface OrderItemMapper {
     int updateByPrimaryKeySelective(OrderItem row);
 
     int updateByPrimaryKey(OrderItem row);
+
+    int batchInsert(@Param("orderItemList") List<OrderItem> orderItemList);
 }

@@ -19,7 +19,7 @@ class CartServiceImplTest extends MallApplicationTests {
     private CartServiceImpl cartService;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Integer uid = 1;
-    Integer productId = 27;
+    Integer productId = 29;
 
     @Test
     public void add() {
