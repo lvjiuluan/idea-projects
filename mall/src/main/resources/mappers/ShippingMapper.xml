@@ -35,6 +35,15 @@
         where user_id = #{user_id,jdbcType=INTEGER}
     </select>
 
+
+    <select id="selectByUserIdAndShippingId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_shipping
+        where user_id = #{user_id,jdbcType=INTEGER} and id = #{id,jdbcType=INTEGER}
+    </select>
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from mall_shipping

@@ -190,7 +190,7 @@
         <include refid="Base_Column_List"/>
         from mall_product
         where status = 1
-        <if test="categoryIdList != null">
+        <if test="categoryIdList.size() > 0">
             and category_id in
             <foreach collection="categoryIdList" item="item" index="index" open="(" separator="," close=")">
                 #{item}
@@ -198,4 +198,18 @@
         </if>
     </select>
 
+
+    <select id="selectByProductIdSet" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_product
+        <where>
+            <if test="productIdSet.size() > 0">
+                id in
+                <foreach collection="productIdSet" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

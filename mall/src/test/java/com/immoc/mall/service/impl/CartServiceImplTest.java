@@ -18,19 +18,21 @@ class CartServiceImplTest extends MallApplicationTests {
     @Autowired
     private CartServiceImpl cartService;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    Integer uid = 1;
+    Integer productId = 27;
 
     @Test
     public void add() {
         CartAddForm cartAddForm = new CartAddForm();
-        cartAddForm.setProductId(28);
-        cartAddForm.setSelected(false);
-        ResponseVo<CartVo> responseVo = cartService.add(1, cartAddForm);
+        cartAddForm.setProductId(productId);
+        cartAddForm.setSelected(true);
+        ResponseVo<CartVo> responseVo = cartService.add(uid, cartAddForm);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
     @Test
     public void carts() {
-        ResponseVo<CartVo> responseVo = cartService.carts(1);
+        ResponseVo<CartVo> responseVo = cartService.carts(uid);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
@@ -39,31 +41,31 @@ class CartServiceImplTest extends MallApplicationTests {
         CartUpdateForm cartUpdateForm = new CartUpdateForm();
         cartUpdateForm.setQuantity(10);
         cartUpdateForm.setSelected(false);
-        ResponseVo<CartVo> responseVo = cartService.update(1, 29, cartUpdateForm);
+        ResponseVo<CartVo> responseVo = cartService.update(uid, productId, cartUpdateForm);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
     @Test
     public void delet() {
-        ResponseVo<CartVo> responseVo = cartService.delete(1, 27);
+        ResponseVo<CartVo> responseVo = cartService.delete(uid, productId);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
     @Test
     public void selectAll() {
-        ResponseVo<CartVo> responseVo = cartService.selectAll(1);
+        ResponseVo<CartVo> responseVo = cartService.selectAll(uid);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
     @Test
     public void unSelectAll() {
-        ResponseVo<CartVo> responseVo = cartService.unSelectAll(1);
+        ResponseVo<CartVo> responseVo = cartService.unSelectAll(uid);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 
     @Test
     public void sum() {
-        ResponseVo<Integer> responseVo = cartService.sum(1);
+        ResponseVo<Integer> responseVo = cartService.sum(uid);
         log.info("responseVo={}", gson.toJson(responseVo));
     }
 }

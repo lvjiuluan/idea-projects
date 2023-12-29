@@ -2,9 +2,12 @@ package com.immoc.mall.service;
 
 import com.immoc.mall.form.CartAddForm;
 import com.immoc.mall.form.CartUpdateForm;
+import com.immoc.mall.pojo.Cart;
 import com.immoc.mall.vo.CartVo;
 import com.immoc.mall.vo.ResponseVo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 public interface ICartService {
     /*
@@ -46,4 +49,13 @@ public interface ICartService {
      * 获取购物车数量总和
      * */
     ResponseVo<Integer> sum(Integer uid);
+
+    /*
+     * 获取购物车中的所有商品，不管是否选中，都要返回
+     * */
+    List<Cart> listForCart(Integer uid);
+    /*
+     * 获取购物车中的所有选中的商品
+     * */
+    List<Cart> listForCartSelected(Integer uid);
 }

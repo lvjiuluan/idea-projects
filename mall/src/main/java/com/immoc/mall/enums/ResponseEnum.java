@@ -37,6 +37,8 @@ public enum ResponseEnum {
     NO_RIGHT_DELETE_OR_UPDATE_SHIPPING(18, "没有权限删除或修改该地址"),
 
     UPDATE_SHIPPING_FAILURE(18, "更新地址失败"),
+
+    CART_SELECTED_IS_EMPTY(19, "请选择商品后下单"),
     ;
 
     Integer code;

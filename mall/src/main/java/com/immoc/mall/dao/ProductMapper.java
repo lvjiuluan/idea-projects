@@ -5,6 +5,7 @@ import com.immoc.mall.vo.ProductVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +22,6 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product row);
 
     List<ProductVo> selectByCategoryIdList(@Param("categoryIdList") List<Integer> categoryIdList);
+
+    List<Product> selectByProductIdSet(@Param("productIdSet") Set<Integer> productIdSet);
 }

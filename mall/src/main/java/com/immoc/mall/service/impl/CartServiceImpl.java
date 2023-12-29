@@ -188,7 +188,8 @@ public class CartServiceImpl implements ICartService {
         return carts(uid);
     }
 
-    private List<Cart> listForCart(Integer uid) {
+    @Override
+    public List<Cart> listForCart(Integer uid) {
         List<Cart> cartList = new ArrayList<>();
         // 用map结构获取
         HashOperations<String, String, String> opsForHash = stringRedisTemplate.opsForHash();
@@ -197,6 +198,22 @@ public class CartServiceImpl implements ICartService {
         for (Map.Entry<String, String> entry : entries.entrySet()) {
             Cart cart = gson.fromJson(entry.getValue(), Cart.class);// Cart对象
             cartList.add(cart);
+        }
+        return cartList;
+    }
+
+    @Override
+    public List<Cart> listForCartSelected(Integer uid) {
+        List<Cart> cartList = new ArrayList<>();
+        // 用map结构获取
+        HashOperations<String, String, String> opsForHash = stringRedisTemplate.opsForHash();
+        String redisKey = String.format(CAR_REDIS_KEY_FORMAT, uid);
+        Map<String, String> entries = opsForHash.entries(redisKey);
+        for (Map.Entry<String, String> entry : entries.entrySet()) {
+            Cart cart = gson.fromJson(entry.getValue(), Cart.class);// Cart对象
+            if (cart.getProductSelected()) {
+                cartList.add(cart);
+            }
         }
         return cartList;
     }

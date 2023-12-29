@@ -1,6 +1,7 @@
 package com.immoc.mall.dao;
 
 import com.immoc.mall.pojo.Shipping;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface ShippingMapper {
     Integer insertSelectiveId(Shipping row);
 
     List<Shipping> selectByUserId(Integer uid);
+
+    Shipping selectByUserIdAndShippingId(@Param("user_id") Integer uid, @Param("id") Integer shippingId);
 }

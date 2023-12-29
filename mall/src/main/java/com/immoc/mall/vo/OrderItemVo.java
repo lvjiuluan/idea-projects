@@ -1,4 +1,4 @@
-package com.immoc.mall.pojo;
+package com.immoc.mall.vo;
 
 import lombok.Data;
 
@@ -6,11 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-public class OrderItem {
-    private Integer id;
-
-    private Integer userId;
-
+public class OrderItemVo {
     private Long orderNo;
 
     private Integer productId;
@@ -27,5 +23,4 @@ public class OrderItem {
 
     private Date createTime;
 
-    private Date updateTime;
 }
