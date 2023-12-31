@@ -7,6 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>pay</name>
     <description>pay</description>
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,6 +18,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
         <dependency>
@@ -102,7 +108,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.immoc.pay.PayApplication</mainClass>
-                    <skip>true</skip>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
                 <executions>
                     <execution>
@@ -114,6 +120,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>pay</finalName>
     </build>
 
 </project>

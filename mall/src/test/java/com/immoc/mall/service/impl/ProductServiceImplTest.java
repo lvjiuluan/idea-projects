@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductServiceImplTest extends MallApplicationTests {
+public class ProductServiceImplTest extends MallApplicationTests {
 
     @Autowired
     private ProductServiceImpl productService;

@@ -8,13 +8,13 @@ import com.immoc.mall.form.CartUpdateForm;
 import com.immoc.mall.vo.CartVo;
 import com.immoc.mall.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-class CartServiceImplTest extends MallApplicationTests {
+public class CartServiceImplTest extends MallApplicationTests {
     @Autowired
     private CartServiceImpl cartService;
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();

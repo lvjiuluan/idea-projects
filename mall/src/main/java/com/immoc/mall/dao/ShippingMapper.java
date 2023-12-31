@@ -4,6 +4,7 @@ import com.immoc.mall.pojo.Shipping;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ShippingMapper {
     int deleteByPrimaryKey(Integer id);
@@ -24,4 +25,6 @@ public interface ShippingMapper {
     List<Shipping> selectByUserId(Integer uid);
 
     Shipping selectByUserIdAndShippingId(@Param("user_id") Integer uid, @Param("id") Integer shippingId);
+
+    List<Shipping> selectByShippingIdSet(@Param("shippingIdSet")  Set<Integer> shippingIdSet);
 }

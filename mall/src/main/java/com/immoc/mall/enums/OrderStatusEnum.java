@@ -9,7 +9,7 @@ public enum OrderStatusEnum {
      * */
     CANCELED(0, "已取消"),
     NOT_PAY(10, "未付款"),
-    PAYED(20, "已付款"),
+    PAID(20, "已付款"),
     SHIPPED(40, "已发货"),
     TRIP_SUCCESS(50, "交易成功"),
     TRIP_CLOSED(60, "交易关闭"),

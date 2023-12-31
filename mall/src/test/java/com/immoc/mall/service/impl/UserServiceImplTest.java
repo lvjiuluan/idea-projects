@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
-class UserServiceImplTest extends MallApplicationTests {
+public class UserServiceImplTest extends MallApplicationTests {
     public static final String USERNAME = "jack";
     public static final String PASSWORD = "14725";
 

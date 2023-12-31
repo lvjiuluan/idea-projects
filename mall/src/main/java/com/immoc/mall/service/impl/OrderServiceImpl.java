@@ -1,5 +1,7 @@
 package com.immoc.mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.immoc.mall.dao.OrderItemMapper;
 import com.immoc.mall.dao.OrderMapper;
 import com.immoc.mall.dao.ProductMapper;
@@ -129,6 +131,134 @@ public class OrderServiceImpl implements IOrderService {
         // 7 构造OrderVo对象并返回
         OrderVo orderVo = buildOrderVo(order, orderItemList, shipping);
         return ResponseVo.sucess(orderVo);
+    }
+
+    @Override
+    public ResponseVo<PageInfo> list(Integer uid, Integer pageNum, Integer pageSize) {
+        // 从数据库中将Order和OrderItem查出来封装成OrderVo
+        // 一个人有多个Order，每个Order对应多个OrderItem
+        // 同一个订单的订单编号相同
+        // 1 通过uid查询该用户的所有Order
+        // 传入分页信息
+        PageHelper.startPage(pageNum, pageSize);
+        List<Order> orderList = orderMapper.selectByUserId(uid);
+        // 通过sql in (orderNo) 把OrderItem查询出来
+        // TODO 用stream API 改写
+        List<OrderItem> orderItemList = orderItemMapper.selectByOrderList(orderList);
+        Map<Long, List<OrderItem>> orderItemMap = getOrderItemMap(orderItemList);
+        // 通过sql in (shippingId) 把收货地址查询出来
+        Set<Integer> shippingIdSet = getShippingIdSet(orderList);
+        List<Shipping> shippingList = shippingMapper.selectByShippingIdSet(shippingIdSet);
+        Map<Integer, Shipping> shippingMap = getSippingMap(shippingList);
+        List<OrderVo> orderVoList = new ArrayList<>();
+        // 构建OrderVo对象
+        for (Order order : orderList) {
+            List<OrderItem> orderItemListTemp = orderItemMap.get(order.getOrderNo());
+            Shipping shipping = shippingMap.get(order.getShippingId());
+            OrderVo orderVo = buildOrderVo(order, orderItemListTemp, shipping);
+            orderVoList.add(orderVo);
+        }
+        // list里面是orderVoList
+        PageInfo<OrderVo> pageInfo = new PageInfo<>(orderVoList);
+        pageInfo.setList(orderVoList);
+
+        return ResponseVo.sucess(pageInfo);
+    }
+
+    private Map<Integer, Shipping> getSippingMap(List<Shipping> shippingList) {
+        Map<Integer, Shipping> map = new HashMap<>();
+        for (Shipping shipping : shippingList) {
+            map.put(shipping.getId(), shipping);
+        }
+        return map;
+    }
+
+    private Map<Long, List<OrderItem>> getOrderItemMap(List<OrderItem> orderItemList) {
+        Map<Long, List<OrderItem>> map = new HashMap<>();
+        for (OrderItem orderItem : orderItemList) {
+            List<OrderItem> orderItemList1 = map.get(orderItem.getOrderNo());
+            if (orderItemList1 == null) {
+                orderItemList1 = new ArrayList<>();
+                map.put(orderItem.getOrderNo(), orderItemList1);
+            }
+            orderItemList1.add(orderItem);
+
+        }
+        return map;
+    }
+
+    private Set getShippingIdSet(List<Order> orderList) {
+        Set<Integer> shippingIdSet = new HashSet<>();
+        for (Order order : orderList) {
+            shippingIdSet.add(order.getShippingId());
+        }
+        return shippingIdSet;
+    }
+
+    @Override
+    public ResponseVo<OrderVo> detail(Integer uid, Long orderNo) {
+        // 根据订单编号查询订单
+        // 只允许查询自己的订单
+        Order order = orderMapper.selectByOderNo(orderNo);
+        if (order == null || !order.getUserId().equals(uid)) {
+            return ResponseVo.error(ORDER_NOT_EXIST);
+        }
+        Integer shippingId = order.getShippingId();
+        // 1 校验收货地址(总之收货地址要查出来)
+        Shipping shipping = shippingMapper.selectByUserIdAndShippingId(uid, shippingId);
+        if (shipping == null) {
+            // 没有该地址
+            return ResponseVo.error(SHIPPING_NOT_EXIST);
+        }
+        // 2 orderItem查出来
+        List<OrderItem> orderItemList = orderItemMapper.selectByOderNo(orderNo);
+        OrderVo orderVo = buildOrderVo(order, orderItemList, shipping);
+        return ResponseVo.sucess(orderVo);
+    }
+
+    @Override
+    public ResponseVo cancel(Integer uid, Long orderNo) {
+        // 先把订单查出来
+        // 只允许查询自己的订单
+        Order order = orderMapper.selectByOderNo(orderNo);
+        if (order == null || !order.getUserId().equals(uid)) {
+            return ResponseVo.error(ORDER_NOT_EXIST);
+        }
+        // 什么情况下可以取消
+        // 未付款的时候才能取消
+        if (!order.getStatus().equals(OrderStatusEnum.NOT_PAY.getCode())) {
+            // 只有订单未付款时才可以取消
+            return ResponseVo.error(ORDER_STATUS_ERROR);
+        }
+        order.setStatus(OrderStatusEnum.CANCELED.getCode());
+        order.setCloseTime(new Date());
+        // 将修改后的订单状态写入数据库
+        int row = orderMapper.updateByPrimaryKeySelective(order);
+        if (row <= 0) {
+            return ResponseVo.error(ERROR);
+        }
+        return ResponseVo.sucess();
+    }
+
+    @Override
+    public void paid(Long orderNo) {
+        // 先把订单查出来
+        Order order = orderMapper.selectByOderNo(orderNo);
+        if (order == null) {
+            throw new RuntimeException(ORDER_NOT_EXIST.getDesc() + "订单号：" + orderNo);
+        }
+        // 只有未付款订单可以变成已付款
+        if (!order.getStatus().equals(OrderStatusEnum.NOT_PAY.getCode())) {
+            throw new RuntimeException(ORDER_STATUS_ERROR.getDesc() + "订单号：" + orderNo);
+        }
+        order.setStatus(OrderStatusEnum.PAID.getCode());
+        order.setPaymentTime(new Date());
+        // 将修改后的订单状态写入数据库
+        int row = orderMapper.updateByPrimaryKeySelective(order);
+        if (row <= 0) {
+            throw new RuntimeException(ERROR.getDesc() + "订单号：" + orderNo);
+        }
+
     }
 
     private OrderVo buildOrderVo(Order order, List<OrderItem> orderItemList, Shipping shipping) {

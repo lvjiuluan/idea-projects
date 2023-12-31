@@ -281,4 +281,19 @@
             </if>
         </trim>
     </insert>
+
+
+    <select id="selectByShippingIdSet" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mall_shipping
+        <where>
+            <if test="shippingIdSet.size() > 0">
+                id in
+                <foreach collection="shippingIdSet" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
 </mapper>

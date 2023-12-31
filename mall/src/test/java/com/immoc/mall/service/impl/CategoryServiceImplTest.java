@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-class CategoryServiceImplTest extends MallApplicationTests {
+public class CategoryServiceImplTest extends MallApplicationTests {
 
     @Autowired
     private CategoryServiceImpl categoryService;

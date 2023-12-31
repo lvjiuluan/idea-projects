@@ -39,6 +39,13 @@ public enum ResponseEnum {
     UPDATE_SHIPPING_FAILURE(18, "更新地址失败"),
 
     CART_SELECTED_IS_EMPTY(19, "请选择商品后下单"),
+
+    NO_RIGHT_SELECT_ORDER(18, "没有权限查询该订单"),
+
+    ORDER_NOT_EXIST(19, "没有找到订单"),
+
+    ORDER_STATUS_ERROR(20, "订单状态有误"),
+
     ;
 
     Integer code;

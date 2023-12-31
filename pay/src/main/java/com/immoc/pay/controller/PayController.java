@@ -1,7 +1,7 @@
 package com.immoc.pay.controller;
 
 import com.immoc.pay.pojo.PayInfo;
-import com.immoc.pay.service.impl.PayService;
+import com.immoc.pay.service.impl.PayServiceImpl;
 import com.lly835.bestpay.config.WxPayConfig;
 import com.lly835.bestpay.model.PayResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -20,18 +20,18 @@ import java.util.Map;
 @Slf4j
 public class PayController {
     @Autowired
-    private PayService payService;
+    private PayServiceImpl payServiceImpl;
     @Autowired
     private WxPayConfig wxPayConfig;
 
     @GetMapping("/create")
     public ModelAndView create(@RequestParam("orderId") String orderId,
                                @RequestParam("amount") BigDecimal amount) {
-        Instant now = Instant.now();
-        long milliSeconds = now.toEpochMilli();
-        milliSeconds = milliSeconds / 100;
-        orderId = milliSeconds + orderId;
-        PayResponse payResponse = payService.create(orderId, amount);
+//        Instant now = Instant.now();
+//        long milliSeconds = now.toEpochMilli();
+//        milliSeconds = milliSeconds / 100;
+//        orderId = milliSeconds + orderId;
+        PayResponse payResponse = payServiceImpl.create(orderId, amount);
         Map map = new HashMap<>();
         map.put("codeUrl", payResponse.getCodeUrl());
         map.put("orderId", orderId);
@@ -50,12 +50,12 @@ public class PayController {
     @PostMapping("/notify")
     @ResponseBody
     public String asyncNotify(@RequestBody String notifyData) {
-        return payService.asyncNotify(notifyData);
+        return payServiceImpl.asyncNotify(notifyData);
     }
 
     @GetMapping("/queryByOrderId")
     @ResponseBody
     public PayInfo queryByOrderId(@RequestParam String orderId) {
-        return payService.queryByOrderId(orderId);
+        return payServiceImpl.queryByOrderId(orderId);
     }
 }

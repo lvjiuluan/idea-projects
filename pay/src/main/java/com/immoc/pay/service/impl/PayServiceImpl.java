@@ -1,5 +1,6 @@
 package com.immoc.pay.service.impl;
 
+import com.google.gson.Gson;
 import com.immoc.pay.dao.PayInfoMapper;
 import com.immoc.pay.pojo.PayInfo;
 import com.immoc.pay.service.IPayService;
@@ -11,6 +12,7 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.BestPayService;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,11 +21,15 @@ import java.math.BigDecimal;
 
 @Slf4j
 @Service
-public class PayService implements IPayService {
+public class PayServiceImpl implements IPayService {
+    private static final String QUEUE_PAY_NOTIFY = "payNotify";
     @Autowired
     private BestPayService bestPayService;
     @Autowired
     private PayInfoMapper payInfoMapper;
+
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public PayResponse create(String orderId, BigDecimal amount) {
@@ -43,7 +49,7 @@ public class PayService implements IPayService {
         return payResponse;
     }
 
-    //TODO pay发送MQ消息， mall接收MQ消息
+
     @Override
     public String asyncNotify(String notifyData) {
         // 1 签名校验
@@ -70,6 +76,9 @@ public class PayService implements IPayService {
             log.info("payInfo={}", payInfo);
             payInfoMapper.updateByPrimaryKeySelective(payInfo);
         }
+        //TODO pay发送MQ消息， mall接收MQ消息
+        Gson gson = new Gson();
+        amqpTemplate.convertAndSend(QUEUE_PAY_NOTIFY, gson.toJson(payInfo));
         // 4 告诉微信不要再通知了
         return "<xml>\n" +
                 "   <return_code><![CDATA[SUCCESS]]></return_code>\n" +

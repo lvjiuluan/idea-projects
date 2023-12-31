@@ -6,37 +6,37 @@ import com.immoc.mall.MallApplicationTests;
 import com.immoc.mall.pojo.Category;
 import com.immoc.mall.vo.CategoryIdVo;
 import com.immoc.mall.vo.CategoryVo;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-class CategoryMapperTest extends MallApplicationTests {
+public class CategoryMapperTest extends MallApplicationTests {
     @Autowired
     private CategoryMapper categoryMapper;
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
         Category category = categoryMapper.findById(100001);
         System.out.println(category);
     }
 
     @Test
-    void test01() {
+    public void test01() {
         Category category = categoryMapper.queryById(100001);
         System.out.println(category);
     }
 
     @Test
-    void findById() {
+    public void findById() {
     }
 
     @Test
-    void queryById() {
+    public void queryById() {
     }
 
     @Test
-    void queryAllCategory() throws JsonProcessingException {
+    public void queryAllCategory() throws JsonProcessingException {
         List<CategoryVo> categories = categoryMapper.queryAllCategory(0);
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(categories);
@@ -44,7 +44,7 @@ class CategoryMapperTest extends MallApplicationTests {
     }
 
     @Test
-    void queryAllCategoryId() throws JsonProcessingException {
+    public void queryAllCategoryId() throws JsonProcessingException {
         List<CategoryIdVo> list = categoryMapper.queryAllCategoryId(100001);
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(list);

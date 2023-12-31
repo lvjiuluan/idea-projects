@@ -1,5 +1,6 @@
 package com.immoc.mall.dao;
 
+import com.immoc.mall.pojo.Order;
 import com.immoc.mall.pojo.OrderItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,8 @@ public interface OrderItemMapper {
     int updateByPrimaryKey(OrderItem row);
 
     int batchInsert(@Param("orderItemList") List<OrderItem> orderItemList);
+
+    List<OrderItem> selectByOrderList(@Param("orderList") List<Order> orderList);
+
+    List<OrderItem> selectByOderNo(Long orderNo);
 }

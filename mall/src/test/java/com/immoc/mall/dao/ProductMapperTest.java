@@ -4,7 +4,7 @@ import com.immoc.mall.MallApplicationTests;
 import com.immoc.mall.pojo.Product;
 import com.immoc.mall.vo.ProductVo;
 import com.immoc.mall.vo.ResponseVo;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductMapperTest extends MallApplicationTests {
+public class ProductMapperTest extends MallApplicationTests {
     @Autowired
     private ProductMapper productMapper;
 

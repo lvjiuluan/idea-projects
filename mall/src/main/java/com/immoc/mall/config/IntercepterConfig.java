@@ -15,7 +15,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 配置拦截器
         /*
-         *   /**表示默认对所有url拦截
+         *
          * */
         registry.addInterceptor(new UserLoginIntercepter())
                 .addPathPatterns("/**")
