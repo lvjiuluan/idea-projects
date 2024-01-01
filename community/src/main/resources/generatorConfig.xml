@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--    配置连接mysql的jar包-->
+    <classPathEntry location="D:\MyJar\mysql-connector-java-8.0.16.jar"/>
+    <context id="MyMGB" targetRuntime="MyBatis3">
+        <!--        配置不追加XML的插件，XML有重复不会融合，而是直接覆盖-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.LombokPlugin">
+            <property name="hasLombok" value="true"/>
+        </plugin>
+
+        <!--        配置不加注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--        配置JDBC连接信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/community"
+                        userId="root"
+                        password="147258">
+            <!--            配置URL后面带的参数-->
+            <property name="characterEncoding" value="utf-8"/>
+            <property name="useSSL" value="false"/>
+            <property name="serverTimezone" value="UTC"/>
+            <!-- If you are using version 8.x of Connector/J you may notice
+            that the generator attempts to generate code for tables in the MySql
+            information schemas (sys, information_schema, performance_schema, etc.)
+            This is probably not what you want! To disable this behavior,
+            add the property "nullCatalogMeansCurrent=true" to your JDBC URL.
+            https://mybatis.org/generator/usage/mysql.html  -->
+            <!--            解决主键无法获取错误的配置-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!--        配置生成java普通对象类的生成器 popj-->
+        <javaModelGenerator targetPackage="com.nowcoder.community.pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <!--            配置删除空白字符-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--        配置mapper.XML文件生成器 由于下面配置了XMLMAPPER，所以这里要配置-->
+        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--        配置java mapper接口生成器 dao层-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.nowcoder.community.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--        配置表-->
+        <table tableName="discuss_post"
+               domainObjectName="Post"
+               enableCountByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+    </context>
+</generatorConfiguration>
