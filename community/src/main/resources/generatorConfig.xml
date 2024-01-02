@@ -34,14 +34,14 @@
             <!--            解决主键无法获取错误的配置-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
-        <!--        配置生成java普通对象类的生成器 popj-->
+        <!--        配置生成java普通对象类的生成器 -->
         <javaModelGenerator targetPackage="com.nowcoder.community.entity" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <!--            配置删除空白字符-->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--        配置mapper.XML文件生成器 由于下面配置了XMLMAPPER，所以这里要配置-->
-        <sqlMapGenerator targetPackage="mappers" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--        配置java mapper接口生成器 dao层-->
@@ -50,8 +50,8 @@
         </javaClientGenerator>
 
         <!--        配置表-->
-        <table tableName="discuss_post"
-               domainObjectName="Post"
+        <table tableName="user"
+               domainObjectName="User"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
