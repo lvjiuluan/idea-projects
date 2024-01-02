@@ -4,7 +4,7 @@ server:
     context-path: /community
 spring:
   thymeleaf:
-    cache: true
+    cache: false
     check-template: true
     check-template-location: true
     enabled: true
@@ -20,6 +20,9 @@ spring:
     username: root
     password: 147258
     url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+  mvc:
+    view:
+      prefix: /
 mybatis:
   mapper-locations: classpath:/mappers/*.xml
   configuration:
