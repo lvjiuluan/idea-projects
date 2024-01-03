@@ -27,4 +27,9 @@ public class CommunityApplicationTest {
 
 //        mailClient.sendMail("1342409485@qq.com", "HTML", content);
     }
+
+    @Test
+    public void testRedis() {
+        
+    }
 }

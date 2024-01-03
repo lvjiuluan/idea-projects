@@ -7,5 +7,5 @@ public class LoginForm {
     private String username;
     private String password;
     private String validCode;
-    private Boolean rememberMe;
+    private Boolean rememberMe = Boolean.FALSE;
 }

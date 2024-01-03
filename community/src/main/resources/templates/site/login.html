@@ -74,7 +74,7 @@
                     <div class="col-sm-10">
                         <input type="text"
                                th:class="|form-control ${usernameMsg!=null ? 'is-invalid':''}|"
-                               th:value="${username}"
+                               th:value="${loginForm != null ? loginForm.username:''}"
                                id="username" name="username" placeholder="请输入您的账号!" required>
                         <div class="invalid-feedback" th:text="${usernameMsg}">
                         </div>
@@ -85,7 +85,7 @@
                     <div class="col-sm-10">
                         <input type="password"
                                th:class="|form-control ${passwordMsg!=null ? 'is-invalid':''}|"
-                               th:value="${password}"
+                               th:value="${loginForm != null ? loginForm.password:''}"
                                id="password" name="password" placeholder="请输入您的密码!"
                                required>
                         <div class="invalid-feedback" th:text="${passwordMsg}">
@@ -98,7 +98,7 @@
                         <input type="text"
                                name="validCode"
                                th:class="|form-control ${codeMsg!=null ? 'is-invalid':''}|"
-                               th:value="${validCode}"
+                               th:value="${loginForm != null ? loginForm.validCode:''}"
                                class="form-control is-invalid"
                                id="verifycode"
                                placeholder="请输入验证码!">
@@ -115,7 +115,7 @@
                     <div class="col-sm-2"></div>
                     <div class="col-sm-10">
                         <input type="checkbox" name="rememberMe" id="remember-me"
-                               th:checked="${rememberMe == null || rememberMe}">
+                               th:checked="${loginForm == null || loginForm.rememberMe}">
                         <label class="form-check-label" for="remember-me">记住我</label>
                         <a href="forget.html" class="text-danger float-right">忘记密码?</a>
                     </div>

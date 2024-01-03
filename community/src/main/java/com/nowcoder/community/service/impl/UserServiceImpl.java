@@ -154,7 +154,7 @@ public class UserServiceImpl implements IUserService {
             return map;
         }
         password = CommunityUtil.md5(password + tempUser.getSalt());
-        if (tempUser.getPassword().equals(password)) {
+        if (!tempUser.getPassword().equals(password)) {
             map.put("passwordMsg", "密码错误！");
             return map;
         }

@@ -3,6 +3,11 @@ server:
   servlet:
     context-path: /community
 spring:
+  redis:
+    host: 43.142.181.137
+    password: 13110197267ljlLJL!
+    port: 6379
+    database: 0
   thymeleaf:
     cache: false
     check-template: true

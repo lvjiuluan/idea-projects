@@ -119,6 +119,7 @@ public class UserController {
     public String login(Model model, LoginForm loginForm,
                         HttpSession httpSession,
                         HttpServletResponse response) {
+        log.info("loginForm = {}", loginForm);
         // 1 首先判断验证码对不对
         // 送session中取出来
         String kaptcha = (String) httpSession.getAttribute("kaptcha");
@@ -133,7 +134,7 @@ public class UserController {
         // 2 判断用户名和密码
         // 如果勾上记住我就过期时间长一点
         Long expiredSession = loginForm.getRememberMe() ? REMEMBERME_EXPIRED_SECONDS.getCode() : DEFALUT_EXPIRED_SECONDS.getCode();
-        Map<String, Object> map = userService.login(username, password, expiredSession);
+        Map<String, Object> map = userService.login(loginForm.getUsername(), loginForm.getPassword(), expiredSession);
         // 判断是否包含ticket
         if (map.containsKey("ticket")) {
             // 表示登录成功
