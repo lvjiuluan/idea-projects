@@ -38,7 +38,8 @@
                 #{status,jdbcType=INTEGER}, #{activationCode,jdbcType=VARCHAR}, #{headerUrl,jdbcType=VARCHAR},
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.nowcoder.community.entity.User">
+    <insert id="insertSelective" parameterType="com.nowcoder.community.entity.User" useGeneratedKeys="true"
+            keyProperty="id">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

@@ -19,7 +19,7 @@ import java.util.Map;
  * 尽量保持一致
  * */
 @Controller
-public class HomeController {
+public class DiscussPostController {
     @Autowired
     private IDiscussPostService discussPostService;
     @Autowired
