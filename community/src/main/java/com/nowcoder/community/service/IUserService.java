@@ -1,6 +1,7 @@
 package com.nowcoder.community.service;
 
 import com.nowcoder.community.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -17,4 +18,10 @@ public interface IUserService {
 
     // 登录的业务
     Map<String, Object> login(String username, String password, Long expiredSession);
+
+    // 退出登录业务
+    void logout(String ticket);
+
+    // 上传用户头像
+    void upload(String ticket, MultipartFile multipartFile);
 }

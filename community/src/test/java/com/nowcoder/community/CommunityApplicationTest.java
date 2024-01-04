@@ -60,8 +60,10 @@ public class CommunityApplicationTest {
     @Test
     public void testGetFromRedis() {
         ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-        String loginTicketString = opsForValue.get("test");
+        String loginTicketString = opsForValue.get("a08dd45431c5499ebcd2817bf3e40e8f");
         LoginTicket loginTicket = gson.fromJson(loginTicketString, LoginTicket.class);
         log.info("loginTicket = {}", loginTicket);
+        Date expired = loginTicket.getExpired();
+        System.out.println(expired.after(new Date()));
     }
 }

@@ -11,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
@@ -145,13 +148,28 @@ public class UserController {
             response.addCookie(cookie);
             // 重定向到首页, 这会发起一次新的请求，搞清楚为什么很重要，凭什么
             // 如果直接return "index"; 则浏览器窗口中的url不会改变，不应该这样
+            // 会发起两次请求
             return "redirect:/index";
         } else {
             // 表示有错误
             model.addAttribute("usernameMsg", map.get("usernameMsg"));
             model.addAttribute("passwordMsg", map.get("passwordMsg"));
             // 回到登录页面
+            //  还是同一次请求
             return "site/login";
         }
+    }
+
+    // 退出登录
+    @GetMapping("/logout")
+    public String logout(@CookieValue("ticket") String ticket) {
+        userService.logout(ticket);
+        return "redirect:index";
+    }
+
+    // 上传用户头像
+    @PostMapping("/upload")
+    public void upload(MultipartFile multipartFile) {
+        userService.upload("", multipartFile);
     }
 }

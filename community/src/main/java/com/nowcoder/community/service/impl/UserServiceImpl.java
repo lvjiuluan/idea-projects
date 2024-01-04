@@ -10,12 +10,14 @@ import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -25,6 +27,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements IUserService {
 
     @Autowired
@@ -175,14 +178,38 @@ public class UserServiceImpl implements IUserService {
         // 设置过期时间
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSession));
         // 4 保存loginTicket
-        loginTicketMapper.insertSelective(loginTicket);
-        // 将保存loginTicket存入redis
+//        loginTicketMapper.insertSelective(loginTicket);
+        // 4.1 将保存loginTicket存入redis
         ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
         opsForValue.set(loginTicket.getTicket(),
                 new Gson().toJson(loginTicket));
         // 5 将ticket返回，需要存入cookie
         map.put("ticket", loginTicket.getTicket());
         return map;
+    }
+
+    @Override
+    public void logout(String ticket) {
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        LoginTicket loginTicket = new Gson().fromJson(opsForValue.get(ticket), LoginTicket.class);
+        if (opsForValue == null) {
+            throw new RuntimeException("服务器错误");
+        }
+        // 0-有效; 1-无效;
+        loginTicket.setStatus(1);
+        // 修改状态后再保存
+        opsForValue.set(ticket, new Gson().toJson(loginTicket));
+    }
+
+    @Override
+    public void upload(String ticket, MultipartFile multipartFile) {
+        log.info("file = {}", multipartFile);
+        // 通过ticket查找用户
+        // 保存文件生成url
+        // 用户设置headUrl
+        // 更新用户
+
+
     }
 
 
