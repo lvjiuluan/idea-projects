@@ -1,5 +1,6 @@
 package com.nowcoder.community.service.impl;
 
+import com.google.gson.Gson;
 import com.nowcoder.community.config.MailConfig;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
@@ -12,6 +13,8 @@ import com.nowcoder.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -32,6 +35,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private LoginTicketMapper loginTicketMapper;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Autowired
     private MailClient mailClient;
@@ -168,8 +174,12 @@ public class UserServiceImpl implements IUserService {
         loginTicket.setTicket(CommunityUtil.generateUUID());
         // 设置过期时间
         loginTicket.setExpired(new Date(System.currentTimeMillis() + expiredSession));
-        // 4 保存loginticket
+        // 4 保存loginTicket
         loginTicketMapper.insertSelective(loginTicket);
+        // 将保存loginTicket存入redis
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        opsForValue.set(loginTicket.getTicket(),
+                new Gson().toJson(loginTicket));
         // 5 将ticket返回，需要存入cookie
         map.put("ticket", loginTicket.getTicket());
         return map;
