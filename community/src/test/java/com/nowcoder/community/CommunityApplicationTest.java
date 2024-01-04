@@ -1,10 +1,12 @@
 package com.nowcoder.community;
 
+import com.nowcoder.community.form.LoginForm;
 import com.nowcoder.community.util.MailClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -15,8 +17,12 @@ import org.thymeleaf.context.Context;
 public class CommunityApplicationTest {
     @Autowired
     private TemplateEngine templateEngine;
+
     @Autowired
     private MailClient mailClient;
+
+    @Autowired
+    private RedisTemplate<Object,Object> redisTemplate;
 
     @Test
     public void testHtmlMail() {
@@ -30,6 +36,6 @@ public class CommunityApplicationTest {
 
     @Test
     public void testRedis() {
-        
+        System.out.println(redisTemplate.getClass().getName());
     }
 }
