@@ -10,6 +10,7 @@ import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
+import io.netty.util.internal.ResourcesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -208,7 +210,7 @@ public class UserServiceImpl implements IUserService {
         // 保存文件生成url
         // 用户设置headUrl
         // 更新用户
-
+//        URL resource = this.getClass().getResource();
 
     }
 
