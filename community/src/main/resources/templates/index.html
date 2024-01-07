@@ -43,11 +43,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img th:src="${loginUser.headerUrl}" class="rounded-circle"
-                                     style="width:30px;"/>
+                                     style="width:80px;height:60px"/>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item text-center" href="site/profile.html">个人主页</a>
-                                <a class="dropdown-item text-center" href="site/setting.html">账号设置</a>
+                                <a class="dropdown-item text-center" th:href="@{/setting}">账号设置</a>
                                 <a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
                                 <div class="dropdown-divider"></div>
                                 <span class="dropdown-item text-center text-secondary"
@@ -79,6 +79,7 @@
                     </li>
                 </ul>
                 <button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal"
+                        th:if="${loginUser!=null}"
                         data-target="#publishModal">我要发布
                 </button>
             </div>
@@ -136,7 +137,7 @@
                     </a>
                     <div class="media-body">
                         <h6 class="mt-0 mb-3">
-                            <a href="#" th:utext="${map.post.title}"></a>
+                            <a th:href="@{/post/detail/{id}(id=${map.post.id})}" th:utext="${map.post.title}"></a>
                             <span class="badge badge-secondary bg-primary" th:if="${map.post.type==1}">置顶</span>
                             <span class="badge badge-secondary bg-danger" th:if="${map.post.status==1}">精华</span>
                         </h6>
@@ -146,14 +147,14 @@
                             <ul class="d-inline float-right">
                                 <li class="d-inline ml-2">赞 11</li>
                                 <li class="d-inline ml-2">|</li>
-                                <li class="d-inline ml-2">回帖 7</li>
+                                <li class="d-inline ml-2">回帖 <b th:text="${map.post.commentCount==null?0:map.post.commentCount}"></b></li>
                             </ul>
                         </div>
                     </div>
                 </li>
             </ul>
             <!-- 分页 -->
-            <nav class="mt-5" th:if="${page.rows > 0}">
+            <nav class="mt-5" th:if="${page.rows > 0}" th:fragment="page">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <a class="page-link" th:href="@{${page.path}(pageNum=1)}">首页</a>

@@ -50,8 +50,8 @@
         </javaClientGenerator>
 
         <!--        配置表-->
-        <table tableName="login_ticket"
-               domainObjectName="LoginTicket"
+        <table tableName="comment"
+               domainObjectName="Comment"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"

@@ -22,6 +22,9 @@ public interface IUserService {
     // 退出登录业务
     void logout(String ticket);
 
-    // 上传用户头像
+    // 上传用户头像 返回图像名称
     void upload(String ticket, MultipartFile multipartFile);
+
+    // 修改密码
+    Map<String, Object> changePassword(String ticket, String original, String now);
 }

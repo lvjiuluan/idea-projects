@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum LoginTicketExpiredEnum {
-    DEFALUT_EXPIRED_SECONDS(3600 * 12L, "默认超时时间"),
-    REMEMBERME_EXPIRED_SECONDS(3600 * 24 * 100L, "记住我的超时时间");
+    DEFALUT_EXPIRED_SECONDS(1000 * 3600 * 12L, "默认超时时间"),
+    REMEMBERME_EXPIRED_SECONDS(1000 * 3600 * 24 * 100L, "记住我的超时时间");
 
     Long code;
     String desc;

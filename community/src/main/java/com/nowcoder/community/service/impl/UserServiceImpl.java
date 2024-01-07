@@ -22,7 +22,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +60,7 @@ public class UserServiceImpl implements IUserService {
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
+
 
     @Override
     public User findUserById(Integer id) {
@@ -205,13 +214,69 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void upload(String ticket, MultipartFile multipartFile) {
+        /*
+         * TODO 1 判断文件后缀名是否正确
+         *      2 如何将本地文件夹变成服务器
+         *      3 如何通过IO流将图片写进Response
+         *      4 前端如果文件错误怎么报错，把输入密码那个错误提示复制上来
+         *      5 用hostUser获取当前请求的用户
+         *
+         * 第二点本质上是 浏览器->http:127.0.0.1:8080/community/head/filename.jpg
+         * ->controller写了一个@GetMapping("/head/{fileName}")来处理这个请求
+         * -->通过HttpServletResponse返回给img标签
+         *
+         * */
         log.info("file = {}", multipartFile);
         // 通过ticket查找用户
         // 保存文件生成url
         // 用户设置headUrl
         // 更新用户
-//        URL resource = this.getClass().getResource();
+        try {
+            URI resource = this.getClass().getResource("/static").toURI();
+            String directoryPathStr = Paths.get(resource).toString();
+            Path directoryPath = Paths.get(directoryPathStr, "upload");
+            log.info("directoryPath = {}", directoryPath);
+            if (!Files.exists(directoryPath)) {
+                Files.createDirectories(directoryPath);
+            }
+            String fileName = CommunityUtil.generateUUID() + multipartFile.getOriginalFilename();
+            Path filePath = directoryPath.resolve(fileName);
+            Files.copy(multipartFile.getInputStream(), filePath);
+            // 生成新的headerUrl
+            // https://images.nowcoder.com/head/582t.png
+            // http:127.0.0.1:8080/community/upload/filename.jpg
+            // 获取当前项目的域名,contextPath,文件名，拼接成headerUrl
+            String headerUrl = domain + contextPath + "/upload/" + fileName;
+            log.info("headerUrl = {}", headerUrl);
+            // 根据ticket去redis查询出user_Id
+            ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+            LoginTicket loginTicket = new Gson().fromJson(opsForValue.get(ticket), LoginTicket.class);
+            User user = userMapper.selectByPrimaryKey(loginTicket.getUserId());
+            // 修改url并保存
+            user.setHeaderUrl(headerUrl);
+            userMapper.updateByPrimaryKeySelective(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    @Override
+    public Map<String, Object> changePassword(String ticket, String original, String now) {
+        Map<String, Object> map = new HashMap<>();
+        // 将用户查出来
+        ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
+        LoginTicket loginTicket = new Gson().fromJson(opsForValue.get(ticket), LoginTicket.class);
+        User user = userMapper.selectByPrimaryKey(loginTicket.getUserId());
+        String originalMd5 = CommunityUtil.md5(original + user.getSalt());
+        if (!user.getPassword().equals(originalMd5)) {
+            map.put("passwordMsg", "密码错误！");
+            return map;
+        }
+        String nowMd5 = CommunityUtil.md5(now + user.getSalt());
+        user.setPassword(nowMd5);
+        userMapper.updateByPrimaryKeySelective(user);
+        return map;
     }
 
 

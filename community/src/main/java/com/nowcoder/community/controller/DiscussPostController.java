@@ -1,14 +1,19 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.IDiscussPostService;
 import com.nowcoder.community.service.IUserService;
+import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,4 +49,28 @@ public class DiscussPostController {
         // page会自动注入给model
         return "index";
     }
+
+    @PostMapping("/post/add")
+    @ResponseBody
+    public String addDiscussPost(DiscussPost discussPost) {
+        Map<String, Object> map = discussPostService.addDiscussPost(discussPost);
+        String response;
+        if (map.isEmpty()) {
+            response = CommunityUtil.getJSONString(0, "发送帖子成功！ ");
+        } else {
+            response = CommunityUtil.getJSONString(1, map);
+        }
+        return response;
+    }
+
+    @GetMapping("/post/detail/{id}")
+    public String detail(@PathVariable Integer id, Model model, Page page) {
+        // 由于page是对象，会自动封装到model中
+        page.setPath("/post/detail/" + id);
+        page.setPageSize(5);
+        Map<String, Object> map = discussPostService.findPostAndUserById(id, page);
+        model.addAllAttributes(map);
+        return "site/discuss-detail";
+    }
+
 }

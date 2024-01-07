@@ -1,8 +1,10 @@
 package com.nowcoder.community;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.form.LoginForm;
+import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -24,6 +26,8 @@ import java.util.Date;
 @RunWith(SpringRunner.class)
 @Slf4j
 public class CommunityApplicationTest {
+
+
     @Autowired
     private TemplateEngine templateEngine;
 
@@ -65,5 +69,10 @@ public class CommunityApplicationTest {
         log.info("loginTicket = {}", loginTicket);
         Date expired = loginTicket.getExpired();
         System.out.println(expired.after(new Date()));
+    }
+
+    @Test
+    public void GenerateMd5() {
+        System.out.println(CommunityUtil.md5("147258364f5"));
     }
 }

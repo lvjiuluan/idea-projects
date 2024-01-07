@@ -1,6 +1,7 @@
 package com.nowcoder.community.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.form.LoginForm;
@@ -11,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -26,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import static com.nowcoder.community.enums.LoginTicketExpiredEnum.DEFALUT_EXPIRED_SECONDS;
 import static com.nowcoder.community.enums.LoginTicketExpiredEnum.REMEMBERME_EXPIRED_SECONDS;
@@ -162,14 +161,38 @@ public class UserController {
 
     // 退出登录
     @GetMapping("/logout")
+    @LoginRequired
     public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
         return "redirect:index";
     }
 
     // 上传用户头像
-    @PostMapping("/upload")
-    public void upload(MultipartFile multipartFile) {
-        userService.upload("", multipartFile);
+    @PostMapping("/uploadFile")
+    @LoginRequired
+    public String upload(MultipartFile multipartFile,
+                         @CookieValue("ticket") String ticket,
+                         Model model) {
+        userService.upload(ticket, multipartFile);
+        return "redirect:/setting";
+    }
+
+    @GetMapping("/setting")
+    @LoginRequired
+    public String setting() {
+        return "site/setting";
+    }
+
+    // 修改密码
+    @PostMapping("/setting")
+    @LoginRequired
+    public String changePassword(Model model, String original, String now,
+                                 @CookieValue("ticket") String ticket) {
+        Map<String, Object> map = userService.changePassword(ticket, original, now);
+        if (!map.isEmpty()) {
+            model.addAttribute("passwordMsg", map.get("passwordMsg"));
+            return "site/setting";
+        }
+        return "redirect:/logout";
     }
 }
