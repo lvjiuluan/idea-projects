@@ -6,6 +6,7 @@ import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.Comment;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.form.AddCommentForm;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.util.HostHolder;
@@ -59,8 +60,20 @@ public class CommentServiceImpl implements ICommentService {
 
     }
 
+    /*
+     *
+     * TODO 1 事务传播机制
+     *      2 不通过加1跟新commentCount，通过查询该帖子id下的评论数量，
+     *        然后更新commentCount，且回评论只包括回复帖子的评论，不包括回复评论的评论
+     *      3 在contrller通过重定向重新渲染该页面，
+     *      4 前端通过<input type="hidden">来传变量给后端
+     *      5 手动在前端补充上表单,且type="button"要改成type="submit"
+     *
+     *
+     * */
+
     @Override
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Map<String, Object> addComment(AddCommentForm form) {
         Map<String, Object> map = new HashMap<>();
         // 内容不能为空
@@ -91,7 +104,9 @@ public class CommentServiceImpl implements ICommentService {
         // 修改discussPost的commentCount字段，加1
         // 通过postId查询出帖子
         DiscussPost discussPost = discussPostMapper.selectByPrimaryKey(form.getPostId());
-        discussPost.setCommentCount(discussPost.getCommentCount() + 1);
+        // 通过commentMapper查询出回复postId的评论
+        Integer commentCount = commentMapper.selectTotalRowsByEntity(EntiyTypeEnum.POST.getCode(), form.getPostId());
+        discussPost.setCommentCount(commentCount);
         // 保存修改
         int rows2 = discussPostMapper.updateByPrimaryKeySelective(discussPost);
         if (rows2 < 0) {

@@ -1,7 +1,7 @@
-$(function () {
-    $("#replayCommentButton").click(sendReplayComment)
-    $("#replayCommentTargetUserButton").click(sendreplayCommentTargetUser)
-});
+// $(function () {
+//     $("#replayCommentButton").click(sendReplayComment)
+//     $("#replayCommentTargetUserButton").click(sendreplayCommentTargetUser)
+// });
 
 /*
     * 获取
@@ -21,13 +21,13 @@ function getPostId() {
     return postId;
 }
 
-function getCommentId() {
-    var commentId = $("#getCommentId").data("getcommentid");
+function getCommentId(index) {
+    var commentId = $("#getCommentId" + index).data("getcommentid");
     return commentId;
 }
 
-function getTargetId() {
-    var targetId = $("#getTargetId").data("gettargetid");
+function getTargetId(index) {
+    var targetId = $("#getTargetId" + index).data("gettargetid");
     return targetId;
 }
 
@@ -64,11 +64,12 @@ function sendReplayPost() {
 
 }
 
-function sendReplayComment() {
+function sendReplayComment(id) {
+    var index = id.match(/\d+/)[0]
     var entityType = 2;
     var postId = getPostId();
-    var entityId = getCommentId();
-    var content = $("#replayCommentInput").val();
+    var entityId = getCommentId(index);
+    var content = $("#replayCommentInput" + index).val();
     postData = {
         "postId": postId,
         "entityType": entityType,
@@ -89,12 +90,16 @@ function sendReplayComment() {
     );
 }
 
-function sendreplayCommentTargetUser() {
+function sendreplayCommentTargetUser(element) {
+    id = element.id
+    var index = id.match(/\d+/)[0]
+    var commentIndex = element.dataset.commentindex
+
     var entityType = 2;
     var postId = getPostId();
-    var entityId = getCommentId();
-    var targetId = getTargetId();
-    var content = $("#replayCommentTargetUserInput").val();
+    var entityId = getCommentId(commentIndex);
+    var targetId = getTargetId(index);
+    var content = $("#replayCommentTargetUserInput" + index).val();
     postData = {
         "postId": postId,
         "entityType": entityType,

@@ -77,7 +77,8 @@
                             class="btn btn-danger btn-sm">置顶
                     </button>
                     <button type="button" th:if="${loginUser.type==1}" class="btn btn-danger btn-sm">加精</button>
-                    <button type="button" th:if="${loginUser.type==1||loginUser.type==2}" class="btn btn-danger btn-sm">删除
+                    <button type="button" th:if="${loginUser.type==1||loginUser.type==2}" class="btn btn-danger btn-sm">
+                        删除
                     </button>
                 </div>
             </h6>
@@ -120,7 +121,9 @@
             <ul class="list-unstyled mt-4">
                 <!-- 第1条回帖 -->
                 <li class="media pb-3 pt-3 mb-3 border-bottom" th:each="map,iterStat:${mapList}">
-                    <a href="profile.html" id="getCommentId" th:data-getcommentid="${map.comment.id}">
+                    <a href="profile.html"
+                       th:id="${'getCommentId'+iterStat.index}"
+                       th:data-getcommentid="${map.comment.id}">
                         <img th:src="${map.user.headerUrl}"
                              class="align-self-start mr-4 rounded-circle user-header" alt="用户头像">
                     </a>
@@ -150,7 +153,7 @@
                             <li class="pb-3 pt-3 mb-3 border-bottom"
                                 th:each="commentVo,iterCommentVoStat:${map.comment?.commentVoList}">
                                 <div>
-                                    <span id="getTargetId" th:data-gettargetid="${commentVo.user.id}">
+                                    <span th:id="${'getTargetId'+iterCommentVoStat.index}" th:data-gettargetid="${commentVo.user.id}">
                                         <i th:utext="${commentVo.user.username}" class="text-info">Sissi</i>
                                         <b th:if="${commentVo.targetUser!=null}">回复</b>
                                         <b class="text-info"
@@ -174,11 +177,14 @@
                                         <div>
                                             <input type="text"
                                                    class="input-size"
-                                                   id="replayCommentTargetUserInput"
+                                                   th:id="${'replayCommentTargetUserInput'+iterCommentVoStat.index}"
                                                    th:attr="placeholder='回复'+${commentVo.user.username}"/>
                                         </div>
                                         <div class="text-right mt-2">
-                                            <button type="button" id="replayCommentTargetUserButton"
+                                            <button type="button"
+                                                    th:id="${'replayCommentTargetUserButton'+iterCommentVoStat.index}"
+                                                    th:data-commentindex="${iterStat.index}"
+                                                    onclick="sendreplayCommentTargetUser(this)"
                                                     class="btn btn-primary btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;
                                             </button>
                                         </div>
@@ -188,12 +194,13 @@
                             <!-- 回复输入框 -->
                             <li class="pb-3 pt-3">
                                 <div>
-                                    <input type="text" id="replayCommentInput" class="input-size"
+                                    <input type="text" th:id="${'replayCommentInput'+iterStat.index}" class="input-size"
                                            placeholder="请输入你的观点"/>
                                 </div>
                                 <div class="text-right mt-2">
                                     <button type="button"
-                                            id="replayCommentButton"
+                                            th:id="${'replayCommentButton'+iterStat.index}"
+                                            onclick="sendReplayComment(this.id)"
                                             class="btn btn-primary btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;
                                     </button>
                                 </div>

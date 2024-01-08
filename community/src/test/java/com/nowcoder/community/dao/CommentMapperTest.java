@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.nowcoder.community.CommunityApplicationTest;
 import com.nowcoder.community.entity.Comment;
 import com.nowcoder.community.entity.Page;
-import com.sun.org.apache.xalan.internal.xsltc.trax.XSLTCSource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

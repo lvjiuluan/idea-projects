@@ -50,8 +50,8 @@
         </javaClientGenerator>
 
         <!--        配置表-->
-        <table tableName="comment"
-               domainObjectName="Comment"
+        <table tableName="message"
+               domainObjectName="Message"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"

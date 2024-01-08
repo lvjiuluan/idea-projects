@@ -165,4 +165,5 @@
         where entity_type = #{entityType,jdbcType=INTEGER}
           and entity_id = #{entityId,jdbcType=INTEGER}
     </select>
+
 </mapper>
