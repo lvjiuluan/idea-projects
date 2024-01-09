@@ -30,7 +30,7 @@ public class MessageMapperTest extends CommunityApplicationTest {
         page.setPageSize(2);
         List<String> conversationIdList = messageMapper.selectConversationId(page.getOffset(), page.getPageSize());
         System.out.println(conversationIdList.size());
-        // 根据conversationIdList查询出所有的Message
+        // 根据conversationIdList查询出所有的Message,结果根据时间排序
         List<Message> messageList = messageMapper.selectMessgByConversationIdList(conversationIdList);
 //        System.out.println(gson.toJson(messageList));
         Map<String, Message> map = new HashMap<>();
@@ -41,6 +41,5 @@ public class MessageMapperTest extends CommunityApplicationTest {
             }
         }
         System.out.println(gson.toJson(map));
-
     }
 }

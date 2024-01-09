@@ -152,10 +152,15 @@
 
     <select id="selectConversationId" resultType="java.lang.String">
         SELECT conversation_id
-        FROM message
-        WHERE conversation_id NOT IN ("like", "comment", "follow")
-        GROUP BY conversation_id
-            limit #{offset}, #{limit}
+        FROM (
+            SELECT conversation_id, MAX(create_time) as create_time
+            FROM message
+            WHERE conversation_id NOT IN ("like", "comment", "follow")
+            GROUP BY conversation_id
+            ORDER BY create_time DESC
+        ) as t
+            limit #{offset}
+           , #{limit}
     </select>
 
     <select id="selectConversationRows" resultType="java.lang.Integer">
@@ -178,5 +183,48 @@
             </foreach>
             order by create_time DESC
         </if>
+    </select>
+
+    <select id="selectConversations" resultMap="ResultMapWithBLOBs">
+        SELECT *
+        FROM message
+        WHERE id IN
+              (SELECT MAX(id) FROM message WHERE STATUS
+            != 2
+          AND from_id != 1
+          AND (from_id=#{userId}
+           OR to_id=#{userId})
+        GROUP BY conversation_id)
+        ORDER BY id DESC
+            limit #{offset}, #{limit}
+    </select>
+
+    <select id="selectConversationCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE STATUS != 2
+        AND from_id != 1
+        AND (from_id=#{userId}
+           OR to_id=#{userId})
+    </select>
+
+    <select id="selectLetters" resultMap="ResultMapWithBLOBs">
+        SELECT *
+        FROM message
+        WHERE conversation_id = #{conversationId} limit #{offset}
+            , #{limit}
+    </select>
+
+    <select id="selectLetterCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE conversation_id = #{conversationId}
+    </select>
+
+    <select id="selectLetterUnreadCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE status = 0
+          AND conversation_id = #{conversationId}
     </select>
 </mapper>
