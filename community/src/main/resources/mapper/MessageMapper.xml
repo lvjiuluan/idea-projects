@@ -185,46 +185,70 @@
         </if>
     </select>
 
+    <!--    #############################################-->
+
     <select id="selectConversations" resultMap="ResultMapWithBLOBs">
-        SELECT *
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
         FROM message
         WHERE id IN
-              (SELECT MAX(id) FROM message WHERE STATUS
-            != 2
-          AND from_id != 1
-          AND (from_id=#{userId}
-           OR to_id=#{userId})
-        GROUP BY conversation_id)
+        (
+        SELECT MAX(id)
+        FROM message
+        WHERE STATUS!= 2
+        AND from_id != 1
+        AND (from_id=#{userId}
+        OR to_id=#{userId})
+        GROUP BY conversation_id
+        )
         ORDER BY id DESC
-            limit #{offset}, #{limit}
+        limit #{offset}, #{limit}
     </select>
 
     <select id="selectConversationCount" resultType="java.lang.Integer">
-        SELECT COUNT(*)
-        FROM message
-        WHERE STATUS != 2
+        select count(m.maxid)
+        from (
+                 SELECT MAX(id) as maxid
+                 FROM message
+                 WHERE STATUS!= 2
         AND from_id != 1
         AND (from_id=#{userId}
-           OR to_id=#{userId})
+                    OR to_id=#{userId})
+                 GROUP BY conversation_id
+             ) as m
     </select>
 
     <select id="selectLetters" resultMap="ResultMapWithBLOBs">
-        SELECT *
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
         FROM message
-        WHERE conversation_id = #{conversationId} limit #{offset}
-            , #{limit}
+        WHERE status!=2
+        AND from_id != 1
+        AND conversation_id = #{conversationId}
+        ORDER BY id DESC
+        limit #{offset}, #{limit}
     </select>
 
     <select id="selectLetterCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM message
-        WHERE conversation_id = #{conversationId}
+        WHERE status!=2
+        AND from_id != 1
+        AND conversation_id = #{conversationId}
     </select>
 
     <select id="selectLetterUnreadCount" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM message
         WHERE status = 0
-          AND conversation_id = #{conversationId}
+        AND from_id != 1
+        AND to_id = #{userId}
+        <if test="conversationId != null and conversationId != '' ">
+            AND conversation_id = #{conversationId}
+        </if>
     </select>
 </mapper>

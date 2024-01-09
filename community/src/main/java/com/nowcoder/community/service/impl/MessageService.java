@@ -58,4 +58,29 @@ public class MessageService implements IMessageService {
         map.put("conversationVoList", conversationVoList);
         return map;
     }
+
+    @Override
+    public List<Message> findCurrentUserConversations(Integer userId, Integer offset, Integer limit) {
+        return messageMapper.selectConversations(userId, offset, limit);
+    }
+
+    @Override
+    public Integer findCurrentUserConversationCount(Integer userId) {
+        return messageMapper.selectConversationCount(userId);
+    }
+
+    @Override
+    public List<Message> findLetters(String conversationId, Integer offset, Integer limit) {
+        return messageMapper.selectLetters(conversationId, offset, limit);
+    }
+
+    @Override
+    public Integer findLetterCount(String conversationId) {
+        return messageMapper.selectLetterCount(conversationId);
+    }
+
+    @Override
+    public Integer findLetterUnderReadCount(Integer userId, String conversationId) {
+        return messageMapper.selectLetterUnreadCount(userId, conversationId);
+    }
 }

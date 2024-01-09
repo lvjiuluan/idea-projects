@@ -42,4 +42,48 @@ public class MessageMapperTest extends CommunityApplicationTest {
         }
         System.out.println(gson.toJson(map));
     }
+
+    @Test
+    public void testMessage() {
+        /*
+        *
+        *
+        *
+    // 分页查询当前用户的会话列表，针对每个会话，只返回一条最新的私信
+    List<Message> selectConversations(@Param("userId") Integer userId,
+                                      @Param("offset") Integer offset,
+                                      @Param("limit") Integer limit);
+
+    // 查询当前用户的会话数量，便于计算分页
+    Integer selectConversationCount(Integer userId);
+
+    // 根据会话id 查询某个会话所包含的私信列表
+    List<Message> selectLetters(@Param("conversationId") String conversationId,
+                                @Param("offset") Integer offset,
+                                @Param("limit") Integer limit);
+
+    // 根据会话id，查询某个会话所包含的私信数量
+    Integer selectLetterCount(String conversationId);
+
+    // 查询当前用户未读私信的数量，或当前用户某个会话的未读私信数量
+    Integer selectLetterUnreadCount(@Param("userId") Integer userId,
+                                    @Param("conversationId") String conversationId);
+        * */
+        Integer userId = 111;
+        String conversationId = "111_112";
+        Page page = new Page();
+        page.setPageSize(15);
+        page.setRows(messageMapper.selectConversationCount(userId));
+        Integer rows = page.getRows();
+        System.out.println(rows);
+        List<Message> messageList = messageMapper.selectConversations(userId, page.getOffset(), page.getPageSize());
+        System.out.println(gson.toJson(messageList));
+        page.setRows(messageMapper.selectLetterCount(conversationId));
+        rows = page.getRows();
+        System.out.println(rows);
+        List<Message> messageList1 = messageMapper.selectLetters(conversationId, page.getOffset(), page.getPageSize());
+        System.out.println(gson.toJson(messageList1));
+        Integer count = messageMapper.selectLetterUnreadCount(userId, "");
+        System.out.println(count);
+    }
 }

@@ -37,6 +37,8 @@ public interface MessageMapper {
     // 根据conversationIdList查询出所有的Message
     List<Message> selectMessgByConversationIdList(@Param("conversationIdList") List<String> conversationIdList);
 
+    //###################################################################
+
     // 分页查询当前用户的会话列表，针对每个会话，只返回一条最新的私信
     List<Message> selectConversations(@Param("userId") Integer userId,
                                       @Param("offset") Integer offset,
