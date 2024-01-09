@@ -27,6 +27,7 @@ import java.util.Date;
 @Slf4j
 public class CommunityApplicationTest {
 
+    public Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Autowired
     private TemplateEngine templateEngine;
@@ -37,7 +38,6 @@ public class CommunityApplicationTest {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    Gson gson = new Gson();
 
     @Test
     public void testHtmlMail() {
