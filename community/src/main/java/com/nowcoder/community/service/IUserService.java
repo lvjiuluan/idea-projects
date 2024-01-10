@@ -27,4 +27,7 @@ public interface IUserService {
 
     // 修改密码
     Map<String, Object> changePassword(String ticket, String original, String now);
+
+    // 根据用户名查询用户
+    User findUserByUsername(String username);
 }

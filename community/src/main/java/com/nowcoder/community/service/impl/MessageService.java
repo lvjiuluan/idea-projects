@@ -6,6 +6,8 @@ import com.nowcoder.community.entity.Message;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.IMessageService;
+import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.SensitiveFilter;
 import com.nowcoder.community.vo.ConversationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,10 @@ public class MessageService implements IMessageService {
     private MessageMapper messageMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
+    @Autowired
+    private HostHolder hostHolder;
 
     @Override
     public Map<String, Object> findConversationByPage(Page page) {
@@ -82,5 +88,26 @@ public class MessageService implements IMessageService {
     @Override
     public Integer findLetterUnderReadCount(Integer userId, String conversationId) {
         return messageMapper.selectLetterUnreadCount(userId, conversationId);
+    }
+
+    @Override
+    public Integer addMessage(Message message) {
+        message.setContent(sensitiveFilter.replaceSensitiveWords(message.getContent()));
+        return messageMapper.insertSelective(message);
+    }
+
+    @Override
+    public Integer readMessage(String conversationId) {
+        List<Message> messages = messageMapper.selectLetters(conversationId, 0, Integer.MAX_VALUE);
+        // 筛选出toId是自己的Message
+        List<Message> messageList = new ArrayList<>();
+        User user = hostHolder.getUser();
+        for (Message message : messages) {
+            if (message.getToId() == user.getId() && message.getStatus() == 0) {
+                messageList.add(message);
+            }
+        }
+        if (messageList.size() == 0) return 0;// 全部已读，不用改状态
+        return messageMapper.updateStatusByMessageList(messageList, 1);
     }
 }

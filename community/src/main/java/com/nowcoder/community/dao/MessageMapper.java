@@ -47,7 +47,7 @@ public interface MessageMapper {
     // 查询当前用户的会话数量，便于计算分页
     Integer selectConversationCount(Integer userId);
 
-    // 根据会话id 查询某个会话所包含的私信列表
+    // 根据会话id 分页查询某个会话所包含的私信列表
     List<Message> selectLetters(@Param("conversationId") String conversationId,
                                 @Param("offset") Integer offset,
                                 @Param("limit") Integer limit);
@@ -58,4 +58,8 @@ public interface MessageMapper {
     // 查询当前用户未读私信的数量，或当前用户某个会话的未读私信数量
     Integer selectLetterUnreadCount(@Param("userId") Integer userId,
                                     @Param("conversationId") String conversationId);
+
+    // 根据message id 修改多个私信的状态消息，修改为已读
+    Integer updateStatusByMessageList(@Param("messageList") List<Message> messageList,
+                                      @Param("status") Integer status);
 }

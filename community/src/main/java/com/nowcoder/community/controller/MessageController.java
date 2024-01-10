@@ -5,13 +5,12 @@ import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.service.IUserService;
+import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +29,7 @@ public class MessageController {
 
     @GetMapping("/letter/list")
     public String letter(Model model, Page page) {
+//        Integer.valueOf("acv");
         // 分页信息
         page.setPageSize(5);
         page.setPath("/letter/list");
@@ -86,6 +86,33 @@ public class MessageController {
             }
             model.addAttribute("letters", letters);
         }
+        // 在返回前要将该会话id所有的message设置为已读状态
+        Integer rows = messageService.readMessage(conversationId);
         return "site/letter-detail";
+    }
+
+    @PostMapping("/letter/send")
+    @ResponseBody
+    public String sendLetter(String toName, String content) {
+        /*
+         * 跟着做，学习代码风格，思维
+         * */
+//        Integer.valueOf("acv");
+        User target = userService.findUserByUsername(toName);
+        if (target == null) {
+            return CommunityUtil.getJSONString(1, "目标用户不存在");
+        }
+        Message message = new Message();
+        User user = hostHolder.getUser();
+        message.setFromId(user.getId());
+        message.setToId(target.getId());
+        if (message.getFromId() < message.getToId()) {
+            message.setConversationId(message.getFromId() + "_" + message.getToId());
+        } else {
+            message.setConversationId(message.getToId() + "_" + message.getFromId());
+        }
+        message.setContent(content);
+        messageService.addMessage(message);
+        return CommunityUtil.getJSONString(0, "发送消息成功");
     }
 }

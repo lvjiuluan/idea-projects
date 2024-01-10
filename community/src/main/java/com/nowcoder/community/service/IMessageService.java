@@ -25,4 +25,10 @@ public interface IMessageService {
 
     // 查询当前会话的未读消息活着当前用户的未读消息
     Integer findLetterUnderReadCount(Integer userId, String conversationId);
+
+    // 新增一条消息
+    Integer addMessage(Message message);
+    // 把未读消息改为已读消息，修改私信状态
+
+    Integer readMessage(String conversationId);
 }

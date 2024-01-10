@@ -73,4 +73,8 @@ public class DiscussPostController {
         return "site/discuss-detail";
     }
 
+    @GetMapping("/error")
+    public String getErrorPage() {
+        return "/error/500";
+    }
 }

@@ -86,4 +86,13 @@ public class MessageMapperTest extends CommunityApplicationTest {
         Integer count = messageMapper.selectLetterUnreadCount(userId, "");
         System.out.println(count);
     }
+
+    @Test
+    public void updateStatusByMessageList() {
+        List<Message> messageList = messageMapper.selectLetters("111_115", 0, Integer.MAX_VALUE);
+        System.out.println(messageList.size());
+        Integer rows = messageMapper.updateStatusByMessageList(messageList, 1);
+        System.out.println(rows);
+
+    }
 }

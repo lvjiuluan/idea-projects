@@ -177,7 +177,7 @@
         <include refid="Blob_Column_List"/>
         from message
         <if test="conversationIdList.size() > 0">
-            where conversation_id in
+            conversation_id in
             <foreach collection="conversationIdList" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
@@ -251,4 +251,17 @@
             AND conversation_id = #{conversationId}
         </if>
     </select>
+
+    <update id="updateStatusByMessageList">
+        update message
+        set status= #{status,jdbcType=INTEGER}
+        <where>
+            <if test="messageList.size()>0">
+                id in
+                <foreach collection="messageList" index="index" item="item" open="(" separator="," close=")">
+                    #{item.id}
+                </foreach>
+            </if>
+        </where>
+    </update>
 </mapper>
