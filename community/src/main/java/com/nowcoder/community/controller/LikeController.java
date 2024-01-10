@@ -3,6 +3,7 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.ILikeService;
+import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,12 @@ public class LikeController {
         User user = hostHolder.getUser();
         likeService.like(user.getId(), entityType, entityId);
         // 数量
-        Long entityLikeCount = likeService.findEntityLikeCount(entityType, entityId);
+        Long likeCount = likeService.findEntityLikeCount(entityType, entityId);
         // 状态
-        Integer entityLikeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
+        Integer likeStatus = likeService.findEntityLikeStatus(user.getId(), entityType, entityId);
         Map<String, Object> map = new HashMap<>();
-        return null;
+        map.put("likeCount", likeCount);
+        map.put("likeStatus", likeStatus);
+        return CommunityUtil.getJSONString(0, map);
     }
 }

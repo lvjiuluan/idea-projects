@@ -8,6 +8,7 @@ import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.service.IDiscussPostService;
+import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.SensitiveFilter;
@@ -43,6 +44,9 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     @Autowired
     private ICommentService commentService;
+
+    @Autowired
+    private ILikeService likeService;
 
     @Override
     public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit) {
@@ -104,6 +108,12 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
         }
         map.put("post", discussPost);
         map.put("user", user);
+        // 加上该帖子的点赞数量
+        Long likeCount = likeService.findEntityLikeCount(1, id);
+        map.put("likeCount", likeCount);
+        // 加上该当前登录用户是否对该帖子已赞、
+        Integer likeStatus = likeService.findEntityLikeStatus(hostHolder.getUser().getId(), 1, id);
+        map.put("likeStatus", likeStatus);
         // 还需把loginUser查出来,以此判断其权限
         User loginUser = hostHolder.getUser();
         map.put("loginUser", loginUser);
@@ -121,6 +131,12 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
             user = userService.findUserById(comment.getUserId());
             tempMap.put("comment", comment);
             tempMap.put("user", user);
+            // 加上该回帖的点赞数量
+            likeCount = likeService.findEntityLikeCount(2, comment.getId());
+            tempMap.put("likeCount", likeCount);
+            // 加上该当前用户是否对该回帖已赞
+            likeStatus = likeService.findEntityLikeStatus(hostHolder.getUser().getId(), 2, comment.getId());
+            tempMap.put("likeStatus", likeStatus);
             mapList.add(tempMap);
         }
         map.put("mapList", mapList);

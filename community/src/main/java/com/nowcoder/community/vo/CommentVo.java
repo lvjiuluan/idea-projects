@@ -28,4 +28,8 @@ public class CommentVo {
 
     private User targetUser;
 
+    private Long likeCount;
+
+    private Integer likeStatus;
+
 }

@@ -8,6 +8,7 @@ public class RequestUtil {
         if (request == null || name == null) {
             throw new IllegalArgumentException("参数为空");
         }
+        if (request.getCookies() == null) return null;
         for (Cookie cookie : request.getCookies()) {
             if (cookie.getName().equals(name)) {
                 return cookie.getValue();

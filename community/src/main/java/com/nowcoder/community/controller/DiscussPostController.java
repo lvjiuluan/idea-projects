@@ -5,6 +5,7 @@ import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.IDiscussPostService;
+import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class DiscussPostController {
     private IDiscussPostService discussPostService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ILikeService likeService;
 
     @GetMapping("/index")
     public String getIndexPage(Model model, Page page) {
@@ -42,6 +45,9 @@ public class DiscussPostController {
                 map.put("post", discussPost);
                 User user = userService.findUserById(discussPost.getUserId());
                 map.put("user", user);
+                // 加上该帖子的点赞数量
+                Long likeCount = likeService.findEntityLikeCount(1, discussPost.getId());
+                map.put("likeCount", likeCount);
                 discussPosts.add(map);
             }
         }

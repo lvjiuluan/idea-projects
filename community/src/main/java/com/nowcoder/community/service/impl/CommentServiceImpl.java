@@ -9,6 +9,7 @@ import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.form.AddCommentForm;
 import com.nowcoder.community.service.ICommentService;
+import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.SensitiveFilter;
 import com.nowcoder.community.vo.CommentVo;
@@ -36,6 +37,8 @@ public class CommentServiceImpl implements ICommentService {
     private DiscussPostMapper discussPostMapper;
     @Autowired
     private SensitiveFilter sensitiveFilter;
+    @Autowired
+    private ILikeService likeService;
 
     @Override
     public List<CommentVo> findCommentsById(Integer id) {
@@ -50,6 +53,12 @@ public class CommentServiceImpl implements ICommentService {
             BeanUtils.copyProperties(comment, commentVo);
             User user = userMapper.selectByPrimaryKey(comment.getUserId());
             commentVo.setUser(user);
+            // 加上该回复的点赞数量
+            Long likeCount = likeService.findEntityLikeCount(2, commentVo.getId());
+            commentVo.setLikeCount(likeCount);
+            // 加上该当前登录用户是否对该回帖已赞
+            Integer likeStatus = likeService.findEntityLikeStatus(hostHolder.getUser().getId(), 2, comment.getId());
+            commentVo.setLikeStatus(likeStatus);
             if (!comment.getTargetId().equals(0)) {
                 User targetUser = userMapper.selectByPrimaryKey(comment.getTargetId());
                 commentVo.setTargetUser(targetUser);
