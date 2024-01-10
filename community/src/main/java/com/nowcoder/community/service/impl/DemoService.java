@@ -46,4 +46,8 @@ public class DemoService {
         Integer.valueOf("abc");
         return "OK";
     }
+
+    public void jointPoint() {
+        System.out.println("我是jointPoint，我执行了");
+    }
 }
