@@ -166,4 +166,15 @@
         from user
         where email = #{email,jdbcType=VARCHAR}
     </select>
+
+
+    <select id="selectUsersByIdList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        WHERE id in
+        <foreach collection="entityIdList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

@@ -1,6 +1,9 @@
 package com.nowcoder.community.dao;
 
 import com.nowcoder.community.entity.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -19,4 +22,5 @@ public interface UserMapper {
 
     User selectByEmail(String email);
 
+    List<User> selectUsersByIdList(@Param("entityIdList") List<Integer> entityIdList);
 }

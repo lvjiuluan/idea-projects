@@ -31,10 +31,7 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -282,6 +279,12 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findUserByUsername(String username) {
         return userMapper.selectByUsername(username);
+    }
+
+    @Override
+    public List<User> findUsersByIdList(List<Integer> entityIdList) {
+
+        return userMapper.selectUsersByIdList(entityIdList);
     }
 
 
