@@ -5,7 +5,9 @@ import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.form.LoginForm;
+import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
+import com.nowcoder.community.util.HostHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,12 @@ public class UserController {
 
     @Autowired
     private Producer kaptchaProducer;
+
+    @Autowired
+    private HostHolder hostHolder;
+
+    @Autowired
+    private ILikeService likeService;
 
     // 1 处理访问注册页面的请求
     @GetMapping("/register")
@@ -194,5 +202,17 @@ public class UserController {
             return "site/setting";
         }
         return "redirect:/logout";
+    }
+
+    // 用户个人主页
+    @GetMapping("/profile/{userId}")
+    public String profile(@PathVariable Integer userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) throw new RuntimeException("该用户不存在");
+        Integer likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("likeCount", likeCount);
+
+        return "site/profile";
     }
 }

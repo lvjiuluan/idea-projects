@@ -22,9 +22,9 @@ public class LikeController {
 
     @PostMapping("/like")
     @ResponseBody
-    public String like(Integer entityType, Integer entityId) {
+    public String like(Integer entityType, Integer entityId, Integer entityUserId) {
         User user = hostHolder.getUser();
-        likeService.like(user.getId(), entityType, entityId);
+        likeService.like(user.getId(), entityType, entityId, entityUserId);
         // 数量
         Long likeCount = likeService.findEntityLikeCount(entityType, entityId);
         // 状态
