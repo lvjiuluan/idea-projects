@@ -9,11 +9,14 @@ import com.nowcoder.community.form.LoginForm;
 import com.nowcoder.community.service.IFollowService;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
+import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 import static com.nowcoder.community.enums.LoginTicketExpiredEnum.DEFALUT_EXPIRED_SECONDS;
 import static com.nowcoder.community.enums.LoginTicketExpiredEnum.REMEMBERME_EXPIRED_SECONDS;
@@ -53,6 +57,9 @@ public class UserController {
 
     @Autowired
     private IFollowService followService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     // 1 处理访问注册页面的请求
     @GetMapping("/register")
@@ -108,8 +115,7 @@ public class UserController {
     }
 
     @GetMapping("/kaptcha")
-    public void getKaptcha(HttpServletResponse httpServletResponse,
-                           HttpSession httpSession) {
+    public void getKaptcha(HttpServletResponse httpServletResponse) {
         // 1 生成验证码字符串和图片
         String text = kaptchaProducer.createText();
         BufferedImage bufferedImage = kaptchaProducer.createImage(text);
@@ -122,7 +128,22 @@ public class UserController {
             log.error("相应验证码失败失败" + e.getMessage());
         }
         // 3 用httpSession将验证码字符串保存
-        httpSession.setAttribute("kaptcha", text);
+//        httpSession.setAttribute("kaptcha", text);
+        // 3 用redis将验证码字符串保存
+        // 3.1 构造验证码redis key
+        // 需要用一个字符串去验证验证码的归属
+        String kaptchaOwner = CommunityUtil.generateUUID();
+        // 用cookie保存该字符串
+        Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
+        // 设置cookie的生成时间
+        cookie.setMaxAge(60); // 60 s
+        cookie.setPath(contextPath); // 设置cookie有效的路径
+        // 将cookie添加到cookie中
+        httpServletResponse.addCookie(cookie);
+        // 构造key
+        String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+        // 将验证码存入redis
+        redisTemplate.opsForValue().set(kaptchaKey, text, 60, TimeUnit.SECONDS);
     }
 
     @GetMapping("/login")
@@ -132,12 +153,21 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(Model model, LoginForm loginForm,
-                        HttpSession httpSession,
-                        HttpServletResponse response) {
+            /*HttpSession httpSession,*/
+                        HttpServletResponse response,
+                        @CookieValue("kaptchaOwner") String kaptchaOwner) {
         log.info("loginForm = {}", loginForm);
         // 1 首先判断验证码对不对
-        // 送session中取出来
-        String kaptcha = (String) httpSession.getAttribute("kaptcha");
+        // 从session中取出来
+//        String kaptcha = (String) httpSession.getAttribute("kaptcha");
+        // 从redis中取
+        String kaptcha = null;
+        // 构造reddiskey
+        // 判断kaptchaOwner是否存在
+        if (StringUtils.isNotBlank(kaptchaOwner)) {
+            String kaptchaKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+            kaptcha = (String) redisTemplate.opsForValue().get(kaptchaKey);
+        }
         if (StringUtils.isBlank(kaptcha) ||
                 StringUtils.isBlank(loginForm.getValidCode()) ||
                 !kaptcha.equalsIgnoreCase(loginForm.getValidCode())) {
