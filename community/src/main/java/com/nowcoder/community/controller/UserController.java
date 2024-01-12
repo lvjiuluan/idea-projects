@@ -4,7 +4,9 @@ import com.google.code.kaptcha.Producer;
 import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.ActivationStatusEnum;
+import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.form.LoginForm;
+import com.nowcoder.community.service.IFollowService;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.HostHolder;
@@ -48,6 +50,9 @@ public class UserController {
 
     @Autowired
     private ILikeService likeService;
+
+    @Autowired
+    private IFollowService followService;
 
     // 1 处理访问注册页面的请求
     @GetMapping("/register")
@@ -212,7 +217,18 @@ public class UserController {
         Integer likeCount = likeService.findUserLikeCount(userId);
         model.addAttribute("user", user);
         model.addAttribute("likeCount", likeCount);
-
+        // 查询当前访问的用户的关注数量
+        Long followeeCount = followService.findFolloweeCount(userId, EntiyTypeEnum.USER.getCode());
+        model.addAttribute("followeeCount", followeeCount);
+        // 查询当前访问用户的粉丝数量
+        Long followerCount = followService.findFollowerCount(EntiyTypeEnum.USER.getCode(), userId);
+        model.addAttribute("followerCount", followerCount);
+        // 查询当前登录用户对这个用户是否已关注
+        Boolean hasFollowed = false;
+        if (hostHolder.getUser() != null) {
+            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), EntiyTypeEnum.USER.getCode(), userId);
+        }
+        model.addAttribute("hasFollowed", hasFollowed);
         return "site/profile";
     }
 }

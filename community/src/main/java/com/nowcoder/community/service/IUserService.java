@@ -3,6 +3,7 @@ package com.nowcoder.community.service;
 import com.nowcoder.community.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IUserService {
@@ -30,4 +31,6 @@ public interface IUserService {
 
     // 根据用户名查询用户
     User findUserByUsername(String username);
+
+    List<User> findUsersByIdList(List<Integer> entityIdList);
 }

@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum EntiyTypeEnum {
     POST(1),
-    COMMENT(2)
-    ;
+    COMMENT(2),
+    USER(3);
 
     Integer code;
 
