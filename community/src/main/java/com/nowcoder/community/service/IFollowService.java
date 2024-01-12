@@ -22,4 +22,7 @@ public interface IFollowService {
 
     // 分页查询 关注 某个实体 的粉丝 有哪些人
     Map<String, Object> findFollowerByPage(Integer entityType, Integer entityId, Page page);
+
+    // 分页查询 某个人 关注的 某类 实体有哪些
+    Map<String, Object> findFolloweeByPage(Integer userId, Integer entityType, Page page);
 }

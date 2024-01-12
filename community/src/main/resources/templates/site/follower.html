@@ -64,19 +64,22 @@
     </header>
 
     <!-- 内容 -->
-    <div class="main">
+    <div class="main" th:fragment="follow">
         <div class="container">
             <div class="position-relative">
                 <!-- 选项 -->
                 <ul class="nav nav-tabs mb-3">
                     <li class="nav-item">
-                        <a class="nav-link position-relative" href="followee.html"><i class="text-info"
-                                                                                      th:text="${user.username}">Nowcoder</i>
+                        <a th:class="|nav-link position-relative ${isFollowerPage?'':'active'}|"
+                           th:href="@{|/followee/${user.id}|}"><i class="text-info"
+                                                                  th:text="${user.username}">Nowcoder</i>
                             关注的人</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link position-relative active" href="follower.html">关注 <i class="text-info"
-                                                                                                th:text="${user.username}">Nowcoder</i>
+                        <a th:class="|nav-link position-relative ${isFollowerPage?'active':''}|"
+                           th:href="@{|/follower/${user.id}|}">关注 <i
+                                class="text-info"
+                                th:text="${user.username}">Nowcoder</i>
                             的人</a>
                     </li>
                 </ul>

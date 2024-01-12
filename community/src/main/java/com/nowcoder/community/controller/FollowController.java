@@ -55,6 +55,21 @@ public class FollowController {
         model.addAttribute("user", user);
         Map<String, Object> map = followService.findFollowerByPage(EntiyTypeEnum.USER.getCode(), userId, page);
         model.addAllAttributes(map);
+        Boolean isFollowerPage = Boolean.TRUE;
+        model.addAttribute("isFollowerPage", isFollowerPage);
         return "site/follower";
+    }
+
+    @GetMapping("/followee/{userId}")
+    public String followee(Model model, @PathVariable Integer userId, Page page) {
+        page.setPath("/followee/" + userId);
+        page.setPageSize(5);
+        User user = userService.findUserById(userId);
+        model.addAttribute("user", user);
+        Map<String, Object> map = followService.findFolloweeByPage(userId, EntiyTypeEnum.USER.getCode(), page);
+        model.addAllAttributes(map);
+        Boolean isFollowerPage = Boolean.FALSE;
+        model.addAttribute("isFollowerPage", isFollowerPage);
+        return "site/followee";
     }
 }

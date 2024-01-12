@@ -78,4 +78,12 @@ public class FollowServiceImplTest extends CommunityApplicationTest {
         Map<String, Object> map = followService.findFollowerByPage(EntiyTypeEnum.USER.getCode(), entityId, page);
         System.out.println(gson.toJson(map));
     }
+
+    @Test
+    public void findFolloweeByPage(){
+        Page page = new Page();
+        page.setPageSize(5);
+        Map<String, Object> map = followService.findFolloweeByPage(111, EntiyTypeEnum.USER.getCode(), page);
+        System.out.println(gson.toJson(map));
+    }
 }

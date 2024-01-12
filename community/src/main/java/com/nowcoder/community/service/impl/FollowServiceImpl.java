@@ -139,4 +139,54 @@ public class FollowServiceImpl implements IFollowService {
         map.put("userFollowVoList", userFollowVoList);
         return map;
     }
+
+    @Override
+    public Map<String, Object> findFolloweeByPage(Integer userId, Integer entityType, Page page) {
+        Map<String, Object> map = new HashMap<>();
+        // 查询某个用户 关注实体的数量 设置行数
+        page.setRows(findFolloweeCount(userId, entityType).intValue());
+        //  构造key
+        String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
+        // 分页 查询 某个用户 关注了类实体 有哪些，按关注的时间有小到大
+        Set<ZSetOperations.TypedTuple<Object>> typedTuples = redisTemplate.opsForZSet().rangeByScoreWithScores(followeeKey,
+                Double.MIN_VALUE,
+                Double.MAX_VALUE,
+                page.getOffset(),
+                page.getPageSize());
+        List<Integer> entityIdList = new ArrayList<>();
+        List<Long> scores = new ArrayList<>();
+        for (ZSetOperations.TypedTuple<Object> typedTuple : typedTuples) {
+            Integer id = (Integer) typedTuple.getValue();
+            Long score = typedTuple.getScore().longValue();
+            entityIdList.add(id);
+            scores.add(score);
+
+        }
+        // 构造UserFollowVo对象
+        List<UserFollowVo> userFollowVoList = new ArrayList<>();
+        if (!entityIdList.isEmpty()) {
+            // 不为空，去查对应的实体
+            // 根据 entityType 调用对应的servvice
+            if (EntiyTypeEnum.USER.getCode().equals(entityType)) {
+                // 用户类型，根据idList查询出所有的user
+                List<User> userList = userService.findUsersByIdList(entityIdList);
+
+                for (int i = 0; i < userList.size(); i++) {
+                    User user = userList.get(i);
+                    Long score = scores.get(i);
+                    UserFollowVo userFollowVo = new UserFollowVo();
+                    BeanUtils.copyProperties(user, userFollowVo);
+                    userFollowVo.setFollowTime(new Date(score));
+                    // 判断当前登录用户是否关注了目标
+                    Boolean hasFollowed = this.hasFollowed(hostHolder.getUser().getId(),
+                            EntiyTypeEnum.USER.getCode(),
+                            user.getId());
+                    userFollowVo.setHasFollowed(hasFollowed);
+                    userFollowVoList.add(userFollowVo);
+                }
+            }
+        }
+        map.put("userFollowVoList", userFollowVoList);
+        return map;
+    }
 }
