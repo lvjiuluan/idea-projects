@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.form.AddCommentForm;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.util.CommunityUtil;
@@ -18,6 +19,7 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
+
     @PostMapping("/add")
     @ResponseBody
     public String add(AddCommentForm form) {
@@ -25,6 +27,6 @@ public class CommentController {
         if (!map.isEmpty()) {
             return CommunityUtil.getJSONString(1, map);
         }
-        return CommunityUtil.getJSONString(0, "新增帖子成功");
+        return CommunityUtil.getJSONString(0, "添加评论成功成功");
     }
 }

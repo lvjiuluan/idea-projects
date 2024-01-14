@@ -1,5 +1,6 @@
 package com.nowcoder.community.service;
 
+import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 public interface IUserService {
     // 根据用户id查询用户
     // 尽量保持一致，学习别人怎么命名
+    // 重构
     User findUserById(Integer id);
 
     // 注册的业务
@@ -33,4 +35,7 @@ public interface IUserService {
     User findUserByUsername(String username);
 
     List<User> findUsersByIdList(List<Integer> entityIdList);
+
+    // 查询登录凭证的用户
+    public LoginTicket findLoginTicket(String ticket);
 }

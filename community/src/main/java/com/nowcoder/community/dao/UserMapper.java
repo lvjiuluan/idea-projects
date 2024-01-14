@@ -23,4 +23,5 @@ public interface UserMapper {
     User selectByEmail(String email);
 
     List<User> selectUsersByIdList(@Param("entityIdList") List<Integer> entityIdList);
+
 }

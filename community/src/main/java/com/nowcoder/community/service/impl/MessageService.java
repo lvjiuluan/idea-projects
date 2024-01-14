@@ -1,7 +1,10 @@
 package com.nowcoder.community.service.impl;
 
+import com.google.gson.Gson;
+import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.MessageMapper;
 import com.nowcoder.community.dao.UserMapper;
+import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Message;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
@@ -9,6 +12,8 @@ import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.SensitiveFilter;
 import com.nowcoder.community.vo.ConversationVo;
+import com.nowcoder.community.vo.MessageContentVo;
+import com.nowcoder.community.vo.NoticeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +33,8 @@ public class MessageService implements IMessageService {
     private SensitiveFilter sensitiveFilter;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private DiscussPostMapper discussPostMapper;
 
     @Override
     public Map<String, Object> findConversationByPage(Page page) {
@@ -110,4 +117,52 @@ public class MessageService implements IMessageService {
         if (messageList.size() == 0) return 0;// 全部已读，不用改状态
         return messageMapper.updateStatusByMessageList(messageList, 1);
     }
+
+    @Override
+    public Integer findUnreadNoticeCount(Integer userId, String conversationId) {
+        return messageMapper.selectUnreadNoticeCount(userId, conversationId);
+    }
+
+    @Override
+    public NoticeVo findNewestNotice(Integer userId, String conversationId) {
+        List<Message> messageList = messageMapper.selectNoticeByPage(userId, conversationId, 0, 1);
+        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList);
+        if (!noticeVoList.isEmpty()) return noticeVoList.get(0);
+        return null;
+    }
+
+    @Override
+    public List<NoticeVo> findNoticeByPage(Integer userId, String conversationId, Page page) {
+        page.setRows(messageMapper.selectNoticeRows(userId, conversationId));
+        List<Message> messageList = messageMapper.selectNoticeByPage(userId,
+                conversationId,
+                page.getOffset(),
+                page.getPageSize());
+        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList);
+        return noticeVoList;
+    }
+
+    @Override
+    public Integer findNoticeCount(Integer userId, String conversationId) {
+        return messageMapper.selectNoticeRows(userId, conversationId);
+    }
+
+    private List<NoticeVo> buidldNoticeVoList(List<Message> messageList) {
+        List<NoticeVo> noticeVoList = new ArrayList<>();
+        if (messageList == null || messageList.isEmpty()) return noticeVoList;
+        for (Message message : messageList) {
+            NoticeVo noticeVo = new NoticeVo();
+            noticeVo.setMessage(message);
+            MessageContentVo messageContentVo = new Gson().fromJson(message.getContent(), MessageContentVo.class);
+            noticeVo.setUser(userMapper.selectByPrimaryKey(messageContentVo.getUserId()));
+            noticeVo.setDiscussPost(discussPostMapper.selectByPrimaryKey(messageContentVo.getPostId()));
+            noticeVoList.add(noticeVo);
+        }
+        return noticeVoList;
+    }
+    /*
+     * 用户 【xxx】 评论/点赞/关注 了你的帖子/空,点击查看【帖子id】
+     *
+     *
+     * */
 }

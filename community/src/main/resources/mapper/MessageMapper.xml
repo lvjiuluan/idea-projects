@@ -264,4 +264,37 @@
             </if>
         </where>
     </update>
+
+
+    <select id="selectUnreadNoticeCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE status = 0
+        AND from_id = 1
+        AND to_id = #{userId}
+        <if test="conversationId != null and conversationId != '' ">
+            AND conversation_id = #{conversationId}
+        </if>
+    </select>
+
+
+    <select id="selectNoticeByPage" resultMap="ResultMapWithBLOBs">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        FROM message
+        WHERE from_id = 1
+        AND to_id = #{userId}
+        AND conversation_id = #{conversationId}
+        ORDER BY create_time DESC
+        LIMIT #{offset},#{limit}
+    </select>
+    <select id="selectNoticeRows" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM message
+        WHERE from_id = 1
+          AND to_id = #{userId}
+          AND conversation_id = #{conversationId}
+    </select>
 </mapper>

@@ -10,6 +10,7 @@ import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.MailClient;
+import com.nowcoder.community.util.RedisKeyUtil;
 import io.netty.util.internal.ResourcesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
@@ -58,10 +60,42 @@ public class UserServiceImpl implements IUserService {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    /*
+     * 1 优先从redis缓存中取值，取得到就返回
+     * 2 取不到就去数据库取并初始化缓存数据
+     * 3 如果用户信息改变，就删除缓存数据
+     *
+     * */
+
+    private User getCache(Integer userId) {
+        // 拼接key
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        String userStr = redisTemplate.opsForValue().get(userKey);
+        if (userStr == null) {
+            return null;
+        }
+        return new Gson().fromJson(userStr, User.class);
+    }
+
+    private User initCache(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        // 拼接key
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.opsForValue().set(userKey, new Gson().toJson(user), 3600, TimeUnit.SECONDS);
+        return user;
+    }
+
+    private void clearCache(Integer userId) {
+        // 拼接key
+        String userKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.delete(userKey);
+    }
 
     @Override
     public User findUserById(Integer id) {
-        return userMapper.selectByPrimaryKey(id);
+        User user = getCache(id);
+        if (user == null) user = initCache(id);
+        return user;
     }
 
 
@@ -141,6 +175,8 @@ public class UserServiceImpl implements IUserService {
         if (user.getActivationCode().equals(activationCode)) {
             user.setStatus(1);
             userMapper.updateByPrimaryKeySelective(user);
+            // 修改了user,清除缓存
+            clearCache(id);
             return ActivationStatusEnum.SUCCESS.getCode();
         }
         return ActivationStatusEnum.FAILURE.getCode();
@@ -252,6 +288,7 @@ public class UserServiceImpl implements IUserService {
             // 修改url并保存
             user.setHeaderUrl(headerUrl);
             userMapper.updateByPrimaryKeySelective(user);
+            clearCache(user.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -273,6 +310,7 @@ public class UserServiceImpl implements IUserService {
         String nowMd5 = CommunityUtil.md5(now + user.getSalt());
         user.setPassword(nowMd5);
         userMapper.updateByPrimaryKeySelective(user);
+        clearCache(user.getId());
         return map;
     }
 
@@ -285,6 +323,12 @@ public class UserServiceImpl implements IUserService {
     public List<User> findUsersByIdList(List<Integer> entityIdList) {
 
         return userMapper.selectUsersByIdList(entityIdList);
+    }
+
+    @Override
+    public LoginTicket findLoginTicket(String ticket) {
+        String loginTicketStr = redisTemplate.opsForValue().get(ticket);
+        return new Gson().fromJson(loginTicketStr, LoginTicket.class);
     }
 
 

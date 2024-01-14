@@ -6,8 +6,10 @@ import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.IDiscussPostService;
 import com.nowcoder.community.service.ILikeService;
+import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
+import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +34,10 @@ public class DiscussPostController {
     private IUserService userService;
     @Autowired
     private ILikeService likeService;
+    @Autowired
+    private IMessageService messageService;
+    @Autowired
+    private HostHolder hostHolder;
 
     @GetMapping("/index")
     public String getIndexPage(Model model, Page page) {
@@ -52,6 +58,12 @@ public class DiscussPostController {
             }
         }
         model.addAttribute("discussPosts", discussPosts);
+
+        Integer letterUnderReadCount = messageService.findLetterUnderReadCount(hostHolder.getUser().getId(), "");
+        Integer unreadNoticeCount = messageService.findUnreadNoticeCount(hostHolder.getUser().getId(), "");
+
+        model.addAttribute("unreadMessage", letterUnderReadCount + unreadNoticeCount);
+
         // page会自动注入给model
         return "index";
     }

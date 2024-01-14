@@ -3,6 +3,7 @@ package com.nowcoder.community.interceptor;
 import com.google.gson.Gson;
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.RequestUtil;
@@ -38,18 +39,27 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private IMessageService messageService;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ticket = RequestUtil.getCookie(request, "ticket");
         if (ticket != null) {
             // 根据ticket查出loginTicket
             ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
-            LoginTicket loginTicket = new Gson().fromJson(opsForValue.get(ticket), LoginTicket.class);
+            LoginTicket loginTicket = userService.findLoginTicket(ticket);
             if (loginTicket != null && loginTicket.getStatus().equals(0)
                     && loginTicket.getExpired().after(new Date())) {
                 // 没有失效，且没有过期
                 // 根据凭证中的userId查询出user的信息
                 User user = userService.findUserById(loginTicket.getUserId());
+                /*
+                 * findUserById这个方法要去数据库查，不方便，因为这里会被调用很多次
+                 * findUserById改造为从redis查用户信息
+                 *
+                 * */
+
                 // 将user信息存入请求中，让本次请求中持有用户
                 // 用一个容器存要考虑线程安全
                 hostHolder.setUser(user);
@@ -68,6 +78,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user != null && modelAndView != null) {
             Map<String, Object> model = modelAndView.getModel();
             model.put("loginUser", user);
+            Integer letterUnderReadCount = messageService.findLetterUnderReadCount(hostHolder.getUser().getId(), "");
+            Integer unreadNoticeCount = messageService.findUnreadNoticeCount(hostHolder.getUser().getId(), "");
+
+            model.put("unreadMessage", letterUnderReadCount + unreadNoticeCount);
             log.info("当前的视图名：{}", modelAndView.getViewName());
         }
     }

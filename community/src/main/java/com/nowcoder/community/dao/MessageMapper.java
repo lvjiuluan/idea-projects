@@ -62,4 +62,15 @@ public interface MessageMapper {
     // 根据message id 修改多个私信的状态消息，修改为已读
     Integer updateStatusByMessageList(@Param("messageList") List<Message> messageList,
                                       @Param("status") Integer status);
+
+    Integer selectUnreadNoticeCount(@Param("userId") Integer userId, @Param("conversationId") String conversationId);
+
+    // 分页查询某个用户，某个conversationId下的通知(fromId=1)
+    List<Message> selectNoticeByPage(@Param("userId") Integer userId,
+                                     @Param("conversationId") String conversationId,
+                                     @Param("offset") Integer offset,
+                                     @Param("limit") Integer limit);
+
+    // 查询某个用户，某个conversationId下的通知(fromId=1)总行数，用于计算分页
+    Integer selectNoticeRows(@Param("userId") Integer userId, @Param("conversationId") String conversationId);
 }

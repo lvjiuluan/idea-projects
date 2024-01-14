@@ -121,13 +121,14 @@ function sendreplayCommentTargetUser(element) {
     );
 }
 
-function like(element, entityType, entityId, entityUserId) {
+function like(element, entityType, entityId, entityUserId, postId) {
     $.post(
         CONTEXT_PATH + "/like",
         {
             "entityType": entityType,
             "entityId": entityId,
-            "entityUserId": entityUserId
+            "entityUserId": entityUserId,
+            "postId": postId
         },
         function (data) {
             data = $.parseJSON(data);

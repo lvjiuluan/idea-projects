@@ -1,9 +1,11 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.annotation.LoginRequired;
+import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.EntiyTypeEnum;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.IFollowService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
+import static com.nowcoder.community.constant.EventTopicsConst.FOLLOW;
+
 @Controller
 public class FollowController {
 
@@ -27,6 +31,8 @@ public class FollowController {
     private HostHolder hostHolder;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private EventProducer eventProducer;
 
 
     @PostMapping("/follow")
@@ -35,6 +41,15 @@ public class FollowController {
     public String follow(Integer entityType, Integer entityId) {
         User user = hostHolder.getUser();
         followService.follow(user.getId(), entityType, entityId);
+        /*触发关注事件
+         * */
+        Event event = new Event()
+                .setTopic(FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
         return CommunityUtil.getJSONString(0, "已关注");
     }
 

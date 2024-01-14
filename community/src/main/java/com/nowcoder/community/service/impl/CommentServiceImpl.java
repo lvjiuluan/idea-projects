@@ -5,8 +5,10 @@ import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.Comment;
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.EntiyTypeEnum;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.form.AddCommentForm;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.service.ILikeService;
@@ -25,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.nowcoder.community.constant.EventTopicsConst.COMMENT;
+
 @Service
 public class CommentServiceImpl implements ICommentService {
     @Autowired
@@ -39,6 +43,9 @@ public class CommentServiceImpl implements ICommentService {
     private SensitiveFilter sensitiveFilter;
     @Autowired
     private ILikeService likeService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @Override
     public List<CommentVo> findCommentsById(Integer id) {
@@ -119,9 +126,27 @@ public class CommentServiceImpl implements ICommentService {
         // 保存修改
         int rows2 = discussPostMapper.updateByPrimaryKeySelective(discussPost);
         if (rows2 < 0) {
-            map.put("msg", "修改帖子数量失败");
+            map.put("msg", "修改帖子回帖数量失败");
             return map;
         }
+        /*
+         * 触发评论事件
+         * */
+        // 1 构造事件对象
+        Event event = new Event()
+                .setTopic(COMMENT)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(comment.getEntityType())
+                .setEntityId(comment.getEntityId())
+                .setData("postId", form.getPostId());
+        if (EntiyTypeEnum.POST.getCode().equals(comment.getEntityType())) {
+            DiscussPost target = discussPostMapper.selectByPrimaryKey(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        } else if (EntiyTypeEnum.COMMENT.getCode().equals(comment.getEntityType())) {
+            Comment target = commentMapper.selectByPrimaryKey(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        }
+        eventProducer.fireEvent(event);
         return map;
     }
 }

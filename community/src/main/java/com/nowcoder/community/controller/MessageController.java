@@ -7,6 +7,7 @@ import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.vo.NoticeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.nowcoder.community.constant.EventTopicsConst.*;
 
 @Controller
 public class MessageController {
@@ -54,6 +57,8 @@ public class MessageController {
         }
         model.addAttribute("conversations", conversations);
         model.addAttribute("letterUnreadCount", messageService.findLetterUnderReadCount(user.getId(), ""));
+        Integer unreadNoticeCount = messageService.findUnreadNoticeCount(user.getId(), null);
+        model.addAttribute("unreadNoticeCount", unreadNoticeCount);
         return "site/letter";
     }
 
@@ -114,5 +119,39 @@ public class MessageController {
         message.setContent(content);
         messageService.addMessage(message);
         return CommunityUtil.getJSONString(0, "发送消息成功");
+    }
+
+    @GetMapping("/notice")
+    public String notice(Model model) {
+        User user = hostHolder.getUser();
+
+        NoticeVo comment = messageService.findNewestNotice(user.getId(), COMMENT);
+        NoticeVo like = messageService.findNewestNotice(user.getId(), LIKE);
+        NoticeVo follow = messageService.findNewestNotice(user.getId(), FOLLOW);
+        model.addAttribute("comment", comment);
+        model.addAttribute("like", like);
+        model.addAttribute("follow", follow);
+
+        Integer unreadNoticeCount = messageService.findUnreadNoticeCount(user.getId(), null);
+        model.addAttribute("unreadNoticeCount", unreadNoticeCount);
+        model.addAttribute("letterUnreadCount", messageService.findLetterUnderReadCount(user.getId(), ""));
+
+        Integer commentUnreadCount = messageService.findUnreadNoticeCount(user.getId(), COMMENT);
+        Integer likeUnreadCount = messageService.findUnreadNoticeCount(user.getId(), LIKE);
+        Integer followUnreadCount = messageService.findUnreadNoticeCount(user.getId(), FOLLOW);
+        model.addAttribute("commentUnreadCount", commentUnreadCount);
+        model.addAttribute("likeUnreadCount", likeUnreadCount);
+        model.addAttribute("followUnreadCount", followUnreadCount);
+
+        // 查询某个会话所有会话数量
+        model.addAttribute("commentCount", messageService.findNoticeCount(user.getId(), COMMENT));
+        model.addAttribute("likeCount", messageService.findNoticeCount(user.getId(), LIKE));
+        model.addAttribute("followCount", messageService.findNoticeCount(user.getId(), FOLLOW));
+        return "site/notice";
+    }
+
+    @GetMapping("/notice/detail")
+    public String noticeDetail() {
+        return "site/notice-detail";
     }
 }

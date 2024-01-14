@@ -21,7 +21,7 @@ public class ServiceLogAspect {
     @Autowired
     private SimpleDateFormat simpleDateFormat;
 
-    @Pointcut("execution(* com.nowcoder.community.service.impl.*.*(..))")
+    @Pointcut("execution(* com.nowcoder.community.service.*.*(..))")
     public void pointcut() {
     }
 
@@ -33,10 +33,16 @@ public class ServiceLogAspect {
          *
          * */
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest httpServletRequest = attributes.getRequest();
-        String ip = httpServletRequest.getRemoteHost();
-        String now = simpleDateFormat.format(new Date()).toString();
-        String tatget = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
-        log.info("用户[{}]在[{}]访问了[{}]", ip, now, tatget);
+        if (attributes != null) {
+            /*
+             * 不是从controller处调用service的话attributes会为空
+             * */
+            HttpServletRequest httpServletRequest = attributes.getRequest();
+            String ip = httpServletRequest.getRemoteHost();
+            String now = simpleDateFormat.format(new Date()).toString();
+            String tatget = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+            log.info("用户[{}]在[{}]访问了[{}]", ip, now, tatget);
+        }
+
     }
 }
