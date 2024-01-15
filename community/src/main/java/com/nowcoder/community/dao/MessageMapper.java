@@ -73,4 +73,5 @@ public interface MessageMapper {
 
     // 查询某个用户，某个conversationId下的通知(fromId=1)总行数，用于计算分页
     Integer selectNoticeRows(@Param("userId") Integer userId, @Param("conversationId") String conversationId);
+
 }

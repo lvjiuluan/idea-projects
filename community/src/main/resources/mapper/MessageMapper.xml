@@ -229,7 +229,7 @@
         WHERE status!=2
         AND from_id != 1
         AND conversation_id = #{conversationId}
-        ORDER BY id DESC
+        ORDER BY create_time DESC
         limit #{offset}, #{limit}
     </select>
 
@@ -285,6 +285,7 @@
         <include refid="Blob_Column_List"/>
         FROM message
         WHERE from_id = 1
+        AND status != 2
         AND to_id = #{userId}
         AND conversation_id = #{conversationId}
         ORDER BY create_time DESC
@@ -294,6 +295,7 @@
         SELECT COUNT(*)
         FROM message
         WHERE from_id = 1
+          AND status != 2
           AND to_id = #{userId}
           AND conversation_id = #{conversationId}
     </select>

@@ -3,7 +3,7 @@ $(function () {
 });
 
 function follow(index) {
-    if (index == undefined) {
+    if (!$.isNumeric(index)) {
         var entityId = $("#entityId").val();
         var btn = this;
     } else {

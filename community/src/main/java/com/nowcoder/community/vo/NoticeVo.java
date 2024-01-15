@@ -10,4 +10,7 @@ public class NoticeVo {
     private User user;
     private DiscussPost discussPost;
     private Message message;
+    private String action;
+    private String type;
+    private String url;
 }

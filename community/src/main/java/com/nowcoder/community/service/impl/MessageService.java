@@ -1,6 +1,7 @@
 package com.nowcoder.community.service.impl;
 
 import com.google.gson.Gson;
+import com.nowcoder.community.constant.EventTopicsConst;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.dao.MessageMapper;
 import com.nowcoder.community.dao.UserMapper;
@@ -8,6 +9,7 @@ import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Message;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.service.IMessageService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.SensitiveFilter;
@@ -15,6 +17,7 @@ import com.nowcoder.community.vo.ConversationVo;
 import com.nowcoder.community.vo.MessageContentVo;
 import com.nowcoder.community.vo.NoticeVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +38,13 @@ public class MessageService implements IMessageService {
     private HostHolder hostHolder;
     @Autowired
     private DiscussPostMapper discussPostMapper;
+
+    @Value("${community.path.domain}")
+    private String domain;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
 
     @Override
     public Map<String, Object> findConversationByPage(Page page) {
@@ -119,6 +129,13 @@ public class MessageService implements IMessageService {
     }
 
     @Override
+    public Integer readNotice(Integer userId, String conversationId) {
+        List<Message> messages = messageMapper.selectNoticeByPage(userId, conversationId, 0, Integer.MAX_VALUE);
+        if (messages.size() == 0) return 0;// 全部已读，不用改状态
+        return messageMapper.updateStatusByMessageList(messages, 1);
+    }
+
+    @Override
     public Integer findUnreadNoticeCount(Integer userId, String conversationId) {
         return messageMapper.selectUnreadNoticeCount(userId, conversationId);
     }
@@ -126,7 +143,7 @@ public class MessageService implements IMessageService {
     @Override
     public NoticeVo findNewestNotice(Integer userId, String conversationId) {
         List<Message> messageList = messageMapper.selectNoticeByPage(userId, conversationId, 0, 1);
-        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList);
+        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList, conversationId);
         if (!noticeVoList.isEmpty()) return noticeVoList.get(0);
         return null;
     }
@@ -138,7 +155,7 @@ public class MessageService implements IMessageService {
                 conversationId,
                 page.getOffset(),
                 page.getPageSize());
-        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList);
+        List<NoticeVo> noticeVoList = buidldNoticeVoList(messageList, conversationId);
         return noticeVoList;
     }
 
@@ -147,7 +164,7 @@ public class MessageService implements IMessageService {
         return messageMapper.selectNoticeRows(userId, conversationId);
     }
 
-    private List<NoticeVo> buidldNoticeVoList(List<Message> messageList) {
+    private List<NoticeVo> buidldNoticeVoList(List<Message> messageList, String conversationId) {
         List<NoticeVo> noticeVoList = new ArrayList<>();
         if (messageList == null || messageList.isEmpty()) return noticeVoList;
         for (Message message : messageList) {
@@ -156,6 +173,14 @@ public class MessageService implements IMessageService {
             MessageContentVo messageContentVo = new Gson().fromJson(message.getContent(), MessageContentVo.class);
             noticeVo.setUser(userMapper.selectByPrimaryKey(messageContentVo.getUserId()));
             noticeVo.setDiscussPost(discussPostMapper.selectByPrimaryKey(messageContentVo.getPostId()));
+            // action, type, url
+            noticeVo.setAction(EventTopicsConst.getAction(conversationId));
+            noticeVo.setType(EntiyTypeEnum.getType(messageContentVo.getEntityType()));
+            if (EntiyTypeEnum.USER.getCode().equals(messageContentVo.getEntityType())) {
+                noticeVo.setUrl("/profile/" + messageContentVo.getUserId());
+            } else {
+                noticeVo.setUrl("/post/detail/" + messageContentVo.getPostId());
+            }
             noticeVoList.add(noticeVo);
         }
         return noticeVoList;

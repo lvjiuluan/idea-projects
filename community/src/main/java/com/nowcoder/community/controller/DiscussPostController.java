@@ -59,10 +59,6 @@ public class DiscussPostController {
         }
         model.addAttribute("discussPosts", discussPosts);
 
-        Integer letterUnderReadCount = messageService.findLetterUnderReadCount(hostHolder.getUser().getId(), "");
-        Integer unreadNoticeCount = messageService.findUnreadNoticeCount(hostHolder.getUser().getId(), "");
-
-        model.addAttribute("unreadMessage", letterUnderReadCount + unreadNoticeCount);
 
         // page会自动注入给model
         return "index";

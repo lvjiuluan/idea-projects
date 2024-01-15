@@ -5,7 +5,8 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class MessageContentVo {
+public class
+MessageContentVo {
     private Integer entityType;
     private Integer entityId;
     private Integer userId;

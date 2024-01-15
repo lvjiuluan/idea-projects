@@ -150,8 +150,26 @@ public class MessageController {
         return "site/notice";
     }
 
-    @GetMapping("/notice/detail")
-    public String noticeDetail() {
+    @GetMapping("/notice/detail/{conversationId}")
+    public String noticeDetail(Model model,
+                               @PathVariable String conversationId,
+                               Page page) {
+        page.setPath("/notice/detail/" + conversationId);
+        page.setPageSize(5);
+        List<NoticeVo> noticeVoList = messageService.findNoticeByPage(hostHolder.getUser().getId(),
+                conversationId,
+                page);
+        model.addAttribute("noticeVoList", noticeVoList);
+        // 改为已读状态
+        messageService.readNotice(hostHolder.getUser().getId(), conversationId);
         return "site/notice-detail";
     }
+    /*
+    * TODO: 1 notcie那里最好用一个列表
+    *       2 要把已删除的message排除 sql语句加上status!=2
+    *       3 评论了你的回复
+    *       4 ORDER BY id DESC 应该是create_time
+    *
+    *
+    * */
 }

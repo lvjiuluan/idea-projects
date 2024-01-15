@@ -43,5 +43,8 @@ public interface IMessageService {
     List<NoticeVo> findNoticeByPage(Integer userId, String conversationId, Page page);
 
     // 查询某个用户，某个会话所有通知数量
-    Integer findNoticeCount(Integer userId,String conversationId);
+    Integer findNoticeCount(Integer userId, String conversationId);
+
+    // 阅读通知
+    Integer readNotice(Integer userId,String conversationId);
 }
