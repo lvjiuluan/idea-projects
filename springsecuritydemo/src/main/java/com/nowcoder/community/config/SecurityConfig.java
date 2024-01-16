@@ -18,8 +18,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -83,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 登录相关配置
         http.formLogin()
-                .loginPage("/loginPage")
+                .loginPage("/loginpage")
                 .loginProcessingUrl("/login")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
@@ -97,8 +100,48 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         // 回到登录页面
                         httpServletRequest.setAttribute("error", e.getMessage());
-                        httpServletRequest.getRequestDispatcher("/loginPage").forward(httpServletRequest,httpServletResponse);
+                        httpServletRequest.getRequestDispatcher("/loginpage").forward(httpServletRequest, httpServletResponse);
                     }
-                })
+                });
+        // 退出相关配置
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        // 重定向到首页
+                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/index");
+                    }
+                });
+
+        // 授权配置
+        http.authorizeRequests().antMatchers("/letter").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                .and().exceptionHandling().accessDeniedPage("/denied");
+
+        // 在验证账号密码之前增加filter
+        http.addFilterBefore(new Filter() {
+            @Override
+            public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+                HttpServletRequest request = (HttpServletRequest) servletRequest;
+                HttpServletResponse response = (HttpServletResponse) servletResponse;
+                if (request.getServletPath().equals("/login")) {
+                    String verifyCode = request.getParameter("verifyCode");
+                    if (!"1234".equals(verifyCode)) {
+                        request.setAttribute("error", "验证码错误");
+                        request.getRequestDispatcher("/loginpage").forward(request, response);
+                        return;
+                    }
+
+                }
+                // 让请求继续向下执行
+                filterChain.doFilter(request, response);
+            }
+        }, UsernamePasswordAuthenticationFilter.class);
+        // 记住我
+        http.rememberMe()
+                .tokenRepository(new InMemoryTokenRepositoryImpl())
+                .tokenValiditySeconds(3600 * 24)
+                .userDetailsService(userService);
     }
 }
