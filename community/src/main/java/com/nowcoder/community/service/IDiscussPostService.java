@@ -17,4 +17,7 @@ public interface IDiscussPostService {
 
     // 根据Id查询帖子和对应的用户信息
     Map<String, Object> findPostAndUserById(Integer id, Page page);
+
+    // 根据postId查询帖子信息
+    DiscussPost findDiscussPostById(Integer postId);
 }

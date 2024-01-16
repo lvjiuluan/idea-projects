@@ -1,0 +1,28 @@
+logging:
+  level:
+    com:
+      nowcoder:
+        community: debug
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+    useGeneratedKeys: true
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.nowcoder.community.entity
+server:
+  port: 8080
+  servlet:
+    context-path: /community
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      idle-timeout: 30000
+      maximum-pool-size: 15
+      minimum-idle: 5
+    password: 147258
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+  thymeleaf:
+    cache: false

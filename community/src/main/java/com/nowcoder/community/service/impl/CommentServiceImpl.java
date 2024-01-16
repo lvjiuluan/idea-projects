@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.nowcoder.community.constant.EventTopicsConst.COMMENT;
+import static com.nowcoder.community.constant.EventTopicsConst.PUBLISH;
 
 @Service
 public class CommentServiceImpl implements ICommentService {
@@ -147,6 +148,21 @@ public class CommentServiceImpl implements ICommentService {
             event.setEntityUserId(target.getUserId());
         }
         eventProducer.fireEvent(event);
+        /*
+         * 如果评论的是帖子，则帖子的回帖数量commentCount会增加
+         * 此时要修改commentCount并覆盖elasticsearch原来存的一份
+         * */
+        if (EntiyTypeEnum.POST.getCode().equals(comment.getEntityType())) {
+            /*
+             * 触发发帖事件
+             * */
+            event = new Event()
+                    .setTopic(PUBLISH)
+                    .setUserId(comment.getUserId())
+                    .setEntityType(EntiyTypeEnum.POST.getCode())
+                    .setEntityId(comment.getEntityId());
+            eventProducer.fireEvent(event);
+        }
         return map;
     }
 }

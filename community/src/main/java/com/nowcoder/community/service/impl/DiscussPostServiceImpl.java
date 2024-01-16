@@ -2,10 +2,9 @@ package com.nowcoder.community.service.impl;
 
 import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.dao.DiscussPostMapper;
-import com.nowcoder.community.entity.Comment;
-import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.entity.Page;
-import com.nowcoder.community.entity.User;
+import com.nowcoder.community.entity.*;
+import com.nowcoder.community.enums.EntiyTypeEnum;
+import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.service.IDiscussPostService;
 import com.nowcoder.community.service.ILikeService;
@@ -21,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.nowcoder.community.constant.EventTopicsConst.PUBLISH;
 
 @Service
 public class DiscussPostServiceImpl implements IDiscussPostService {
@@ -47,6 +48,9 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
 
     @Autowired
     private ILikeService likeService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @Override
     public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit) {
@@ -83,6 +87,16 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
             map.put("msg", "新增帖子失败");
             return map;
         }
+        /*
+         * 发送成功后向Elasticsearch存一份帖子数据
+         * 使用kafka消息队列存一个事件，让后台慢慢处理
+         * */
+        Event event = new Event()
+                .setTopic(PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(EntiyTypeEnum.POST.getCode())
+                .setEntityId(discussPost.getId());
+        eventProducer.fireEvent(event);
         return map;
     }
 
@@ -141,5 +155,10 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
         }
         map.put("mapList", mapList);
         return map;
+    }
+
+    @Override
+    public DiscussPost findDiscussPostById(Integer postId) {
+        return discussPostMapper.selectByPrimaryKey(postId);
     }
 }

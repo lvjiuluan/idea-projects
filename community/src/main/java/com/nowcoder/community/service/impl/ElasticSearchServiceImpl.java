@@ -1,13 +1,9 @@
-package com.nowcoder.community.dao.elasticsearch;
+package com.nowcoder.community.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.nowcoder.community.CommunityApplicationTest;
-import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.elasticsearch.DiscussPostRepository;
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.service.IElasticsearchService;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -15,7 +11,6 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,101 +19,44 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.SearchResultMapper;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DiscussPostRepositoryTest extends CommunityApplicationTest {
-
-    @Autowired
-    private DiscussPostMapper discussPostMapper;
-
+@Service
+public class ElasticSearchServiceImpl implements IElasticsearchService {
     @Autowired
     private DiscussPostRepository discussPostRepository;
-
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
 
-    @Test
-    public void insertAll() {
-        List<DiscussPost> discussPosts = discussPostMapper.selectAll();
-        System.out.println(discussPosts.size());
-        discussPostRepository.saveAll(discussPosts);
-    }
-
-    @Test
-    public void deleteAll() {
-        discussPostRepository.deleteAll();
-    }
-
-    @Test
-    public void elasticSearch() {
-        // 往es服务器插入数据
-        discussPostRepository.save(discussPostMapper.selectByPrimaryKey(241));
-        discussPostRepository.save(discussPostMapper.selectByPrimaryKey(242));
-        discussPostRepository.save(discussPostMapper.selectByPrimaryKey(243));
-    }
-
-    @Test
-    public void insertList() {
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(101, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(102, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(103, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(111, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(112, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(131, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(132, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(133, 0, 100));
-        discussPostRepository.saveAll(discussPostMapper.selectDiscussPosts(134, 0, 100));
-    }
-
-    @Test
-    public void testUpdate() {
-        DiscussPost discussPost = discussPostMapper.selectByPrimaryKey(231);
-        discussPost.setContent("我是新人，使劲灌水");
-        discussPostMapper.updateByPrimaryKeySelective(discussPost);
+    @Override
+    public void saveDiscussPost(DiscussPost discussPost) {
         discussPostRepository.save(discussPost);
     }
 
-    @Test
-    public void testDelete() {
-        discussPostRepository.deleteById(231);
+    @Override
+    public void deleteDiscussPost(Integer id) {
+        discussPostRepository.deleteById(id);
     }
 
-    @Test
-    public void testSearch() {
+    @Override
+    public Page<DiscussPost> searchDiscussPost(String keyword, Integer current, Integer limit) {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.multiMatchQuery("互联网寒冬", "title", "content"))
+                .withQuery(QueryBuilders.multiMatchQuery(keyword, "title", "content"))
                 .withSort(SortBuilders.fieldSort("type").order(SortOrder.DESC))
                 .withSort(SortBuilders.fieldSort("score").order(SortOrder.DESC))
                 .withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC))
-                .withPageable(PageRequest.of(0, 10))
+                .withPageable(PageRequest.of(current, limit))
                 .withHighlightFields(
                         new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
                         new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
                 ).build();
-        Page<DiscussPost> page = discussPostRepository.search(searchQuery);
-        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-        System.out.println(gson.toJson(page));
-    }
-
-    @Test
-    public void searchByTemplate() {
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.multiMatchQuery("互联网寒冬", "title", "content"))
-                .withSort(SortBuilders.fieldSort("type").order(SortOrder.DESC))
-                .withSort(SortBuilders.fieldSort("score").order(SortOrder.DESC))
-                .withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC))
-                .withPageable(PageRequest.of(0, 10))
-                .withHighlightFields(
-                        new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
-                        new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
-                ).build();
-        Page<DiscussPost> page = elasticsearchTemplate.queryForPage(searchQuery, DiscussPost.class, new SearchResultMapper() {
+        return elasticsearchTemplate.queryForPage(searchQuery, DiscussPost.class, new SearchResultMapper() {
             @Override
             public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> aClass, Pageable pageable) {
                 SearchHits hits = response.getHits();
@@ -176,11 +114,6 @@ public class DiscussPostRepositoryTest extends CommunityApplicationTest {
                 );
             }
         });
-//        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
-//        System.out.println(gson.toJson(page));
-        for (DiscussPost discussPost : page) {
-            System.out.println(discussPost);
-        }
-
     }
+
 }

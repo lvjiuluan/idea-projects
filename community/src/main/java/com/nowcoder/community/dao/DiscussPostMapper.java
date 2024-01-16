@@ -33,4 +33,7 @@ public interface DiscussPostMapper {
     // 3. 只有一个参数时不会用param1来指代，而是调用参数的getXXX方法
     // 所以必须有@Param
     Integer selectDiscussPostRows(@Param("userId") Integer userId);
+
+    // 查询所有的帖子
+    List<DiscussPost> selectAll();
 }
