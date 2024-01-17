@@ -7,6 +7,13 @@ function publish() {
     // 1 获取标题和内容 recipient-name
     var title = $("#recipient-name").val();
     var content = $("#message-text").val();
+    // 发送ajax请求之前，要将csrf令牌设置到header中
+    /*var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function (e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    })
+    console.log("token = " + token);*/
     // 2 发送异步请求
     $.post(
         CONTEXT_PATH + "/post/add",

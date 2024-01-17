@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         UserRoleConst.USER,
                         UserRoleConst.ADMIN,
                         UserRoleConst.MODERATOR)
-                .anyRequest().permitAll();
+                .anyRequest().permitAll().and().csrf().disable();
         // 权限不够时的处理
         http.exceptionHandling()
                 .accessDeniedHandler(new AccessDeniedHandler() {
