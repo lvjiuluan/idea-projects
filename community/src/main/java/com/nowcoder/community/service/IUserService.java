@@ -2,8 +2,10 @@ package com.nowcoder.community.service;
 
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -38,4 +40,7 @@ public interface IUserService {
 
     // 查询登录凭证的用户
     public LoginTicket findLoginTicket(String ticket);
+
+    // 根据用户获取权限
+    Collection<? extends GrantedAuthority> getAuthorities(Integer userId);
 }

@@ -16,8 +16,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
-    @Autowired
-    private LoginRequiredInterceptor loginRequiredInterceptor;
+//    @Autowired
+//    private LoginRequiredInterceptor loginRequiredInterceptor;
 
     @Value("${server.servlet.context-path}")
     private String contextPath;
@@ -35,11 +35,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
         // 这里的patterns以context-path为起点
         // 这里应该何controller那里的url保持一致
         interceptorRegistration.addPathPatterns("/**")
-                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.png", "/**/*.jpeg", "/**/*.html");
+                .excludePathPatterns("/**/*.css", "/**/*.js",
+                        "/**/*.jpg", "/**/*.png",
+                        "/**/*.jpeg", "/**/*.html");
 
-        InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(loginRequiredInterceptor);
-        interceptorRegistration1.addPathPatterns("/**")
-                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.png", "/**/*.jpeg", "/**/*.html");
-//        log.info("debug...");
+//        InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(loginRequiredInterceptor);
+//        interceptorRegistration1.addPathPatterns("/**")
+//                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.png", "/**/*.jpeg", "/**/*.html");
     }
 }

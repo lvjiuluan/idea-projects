@@ -2,6 +2,7 @@ package com.nowcoder.community.service.impl;
 
 import com.google.gson.Gson;
 import com.nowcoder.community.config.MailConfig;
+import com.nowcoder.community.constant.UserRoleConst;
 import com.nowcoder.community.dao.LoginTicketMapper;
 import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.LoginTicket;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
@@ -329,6 +331,26 @@ public class UserServiceImpl implements IUserService {
     public LoginTicket findLoginTicket(String ticket) {
         String loginTicketStr = redisTemplate.opsForValue().get(ticket);
         return new Gson().fromJson(loginTicketStr, LoginTicket.class);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(Integer userId) {
+        User user = findUserById(userId);
+        List<GrantedAuthority> list = new ArrayList<>();
+        list.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                switch (user.getType()) {
+                    case 1:
+                        return UserRoleConst.ADMIN;
+                    case 2:
+                        return UserRoleConst.MODERATOR;
+                    default:
+                        return UserRoleConst.USER;
+                }
+            }
+        });
+        return list;
     }
 
 
