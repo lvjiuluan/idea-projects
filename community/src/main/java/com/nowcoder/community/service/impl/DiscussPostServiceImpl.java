@@ -3,6 +3,7 @@ package com.nowcoder.community.service.impl;
 import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.entity.*;
+import com.nowcoder.community.enums.DiscussPostStatusEnum;
 import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.ICommentService;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.nowcoder.community.constant.EventTopicsConst.DELETE;
 import static com.nowcoder.community.constant.EventTopicsConst.PUBLISH;
 
 @Service
@@ -160,5 +162,85 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
     @Override
     public DiscussPost findDiscussPostById(Integer postId) {
         return discussPostMapper.selectByPrimaryKey(postId);
+    }
+
+    @Override
+    public Map<String, Object> top(Integer postId) {
+
+        // 根据postId查询帖子
+        DiscussPost discussPost = findDiscussPostById(postId);
+        if (discussPost == null) {
+            throw new RuntimeException("服务器错误");
+        }
+        // 如果本身的type已经置顶，那么就是取消置顶
+        if (discussPost.getType().equals(1)) {
+            discussPost.setType(0);
+        } else {
+            discussPost.setType(1);
+        }
+        int rows = discussPostMapper.updateByPrimaryKeySelective(discussPost);
+        if (rows <= 0) {
+            throw new RuntimeException("服务器错误");
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("post", discussPost);
+        Event event = new Event()
+                .setTopic(PUBLISH)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(EntiyTypeEnum.POST.getCode())
+                .setEntityId(discussPost.getId());
+        eventProducer.fireEvent(event);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> delete(Integer postId) {
+        // 根据postId查询帖子
+        DiscussPost discussPost = findDiscussPostById(postId);
+        if (discussPost == null) {
+            throw new RuntimeException("服务器错误");
+        }
+        discussPost.setStatus(DiscussPostStatusEnum.DELETED.getCode());
+        int rows = discussPostMapper.updateByPrimaryKeySelective(discussPost);
+        if (rows <= 0) {
+            throw new RuntimeException("服务器错误");
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("post", discussPost);
+        Event event = new Event()
+                .setTopic(DELETE)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(EntiyTypeEnum.POST.getCode())
+                .setEntityId(discussPost.getId());
+        eventProducer.fireEvent(event);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> highlight(Integer postId) {
+        // 根据postId查询帖子
+        DiscussPost discussPost = findDiscussPostById(postId);
+        if (discussPost == null) {
+            throw new RuntimeException("服务器错误");
+        }
+        // 如果本身的type已经加精，那么就是取消加精
+        if (discussPost.getStatus().equals(DiscussPostStatusEnum.HIGHLIGHT.getCode())) {
+            discussPost.setStatus(DiscussPostStatusEnum.NORMAL.getCode());
+        } else {
+            discussPost.setStatus(DiscussPostStatusEnum.HIGHLIGHT.getCode());
+        }
+        int rows = discussPostMapper.updateByPrimaryKeySelective(discussPost);
+        if (rows <= 0) {
+            throw new RuntimeException("服务器错误");
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("post", discussPost);
+        Event event = new Event()
+                .setTopic(PUBLISH)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(EntiyTypeEnum.POST.getCode())
+                .setEntityId(discussPost.getId());
+        eventProducer.fireEvent(event);
+        return map;
     }
 }

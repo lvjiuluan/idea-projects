@@ -4,6 +4,7 @@ import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.enums.DiscussPostStatusEnum;
 import com.nowcoder.community.service.IDiscussPostService;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IMessageService;
@@ -95,5 +96,26 @@ public class DiscussPostController {
     @GetMapping("/denied")
     public String getDeniedPage() {
         return "/error/404";
+    }
+
+    @PostMapping("/top")
+    @ResponseBody
+    public String top(Integer postId) {
+        discussPostService.top(postId);
+        return CommunityUtil.getJSONString(0, "操作成功");
+    }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public String delete(Integer postId) {
+        discussPostService.delete(postId);
+        return CommunityUtil.getJSONString(0, "操作成功");
+    }
+
+    @PostMapping("/highlight")
+    @ResponseBody
+    public String highlight(Integer postId) {
+        Map<String, Object> map = discussPostService.highlight(postId);
+        return CommunityUtil.getJSONString(0, "操作成功", map);
     }
 }

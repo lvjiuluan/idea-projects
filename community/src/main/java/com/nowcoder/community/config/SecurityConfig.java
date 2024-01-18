@@ -17,6 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/*
+ * TODO: 1 修改帖子状态要触发发帖事件，然后修改elasticsearch里面的帖子
+ *       2 删除要触发删除帖子事件,从es将帖子删除
+ *       3 直接在 http.authorizeRequests()后面写
+ *
+ * */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
@@ -41,7 +47,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         UserRoleConst.USER,
                         UserRoleConst.ADMIN,
                         UserRoleConst.MODERATOR)
+                .antMatchers(
+                        "/top",
+                        "/highlight"
+                ).hasAnyAuthority(UserRoleConst.MODERATOR)
+                .antMatchers(
+                        "/delete",
+                        "/data/**"
+
+                ).hasAnyAuthority(UserRoleConst.ADMIN)
                 .anyRequest().permitAll().and().csrf().disable();
+
         // 权限不够时的处理
         http.exceptionHandling()
                 .accessDeniedHandler(new AccessDeniedHandler() {

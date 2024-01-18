@@ -20,7 +20,7 @@ wx:
   appId: wx3e6b9f1c5a7ff034
   mchId: 1614433647
   mchKey: Aa111111111122222222223333333333
-  notifyUrl: http://43.142.181.137/pay/notify
-  returnUrl: http://43.142.181.137/#/order/list
+  notifyUrl: http://127.0.0.1:8081/pay/notify
+  returnUrl: https://www.bilibili.com/v/popular/all/?spm_id_from=333.1007.0.0
 server:
   port: 8081

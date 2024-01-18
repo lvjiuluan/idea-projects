@@ -1,5 +1,6 @@
 package com.nowcoder.community.config;
 
+import com.nowcoder.community.interceptor.DataInterceptor;
 import com.nowcoder.community.interceptor.LoginInterceptor;
 import com.nowcoder.community.interceptor.LoginRequiredInterceptor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private DataInterceptor dataInterceptor;
+
 //    @Autowired
 //    private LoginRequiredInterceptor loginRequiredInterceptor;
 
@@ -25,7 +29,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration interceptorRegistration = registry.addInterceptor(loginInterceptor);
+
         /*
         * server:
               port: 8080
@@ -34,7 +38,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         * */
         // 这里的patterns以context-path为起点
         // 这里应该何controller那里的url保持一致
-        interceptorRegistration.addPathPatterns("/**")
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**")
                 .excludePathPatterns("/**/*.css", "/**/*.js",
                         "/**/*.jpg", "/**/*.png",
                         "/**/*.jpeg", "/**/*.html");
@@ -42,5 +47,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //        InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(loginRequiredInterceptor);
 //        interceptorRegistration1.addPathPatterns("/**")
 //                .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.jpg", "/**/*.png", "/**/*.jpeg", "/**/*.html");
+        registry.addInterceptor(dataInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/**/*.css", "/**/*.js",
+                        "/**/*.jpg", "/**/*.png",
+                        "/**/*.jpeg", "/**/*.html");
     }
 }

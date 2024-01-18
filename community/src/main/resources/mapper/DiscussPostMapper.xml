@@ -28,6 +28,7 @@
         <include refid="Blob_Column_List"/>
         from discuss_post
         where id = #{id,jdbcType=INTEGER}
+        and status != 2
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete

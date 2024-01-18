@@ -20,4 +20,12 @@ public interface IDiscussPostService {
 
     // 根据postId查询帖子信息
     DiscussPost findDiscussPostById(Integer postId);
+
+    // 根据postId置顶帖子 type = 1
+    Map<String, Object> top(Integer postId);
+
+    // 根据postId删除、status = 2
+    Map<String, Object> delete(Integer postId);
+    // 加精帖子 status = 1
+    Map<String, Object> highlight(Integer postId);
 }

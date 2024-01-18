@@ -142,3 +142,55 @@ function like(element, entityType, entityId, entityUserId, postId) {
         }
     )
 }
+
+
+function topPost() {
+    console.log("置顶")
+    postId = getPostId();
+    console.log(postId);
+    $.post(
+        CONTEXT_PATH + "/top",
+        {"postId": postId},
+        function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            if (data.code == 0) {
+                window.location.reload();
+            }
+        }
+    )
+}
+
+function highlight() {
+    console.log("加精")
+    postId = getPostId();
+    console.log(postId);
+    $.post(
+        CONTEXT_PATH + "/highlight",
+        {"postId": postId},
+        function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            if (data.code == 0) {
+                window.location.href = CONTEXT_PATH + "/index";
+            }
+        }
+    )
+}
+
+function deletePost() {
+    console.log("删除")
+    postId = getPostId();
+    console.log(postId);
+    $.post(
+        CONTEXT_PATH + "/delete",
+        {"postId": postId},
+        function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            if (data.code == 0) {
+                window.location.href = CONTEXT_PATH + "/index";
+            }
+        }
+    )
+}

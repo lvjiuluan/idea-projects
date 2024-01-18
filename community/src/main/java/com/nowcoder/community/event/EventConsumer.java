@@ -78,4 +78,20 @@ public class EventConsumer {
         // 2 存帖子
         elasticsearchService.saveDiscussPost(discussPost);
     }
+
+    @KafkaListener(topics = {DELETE})
+    public void handleDeletewhMessage(ConsumerRecord record) {
+        if (record == null || record.value() == null) {
+            log.error("消息的内容为空");
+            return;
+        }
+        Event event = new Gson().fromJson(record.value().toString(), Event.class);
+        if (event == null) {
+            log.error("消息格式错误");
+            return;
+        }
+        // 处理事件
+        // 删除帖子
+        elasticsearchService.deleteDiscussPost(event.getEntityId());
+    }
 }
