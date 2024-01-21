@@ -17,9 +17,9 @@ logging:
   pattern:
     console: "[%thread] %-5level %logger{36} - %msg%n"
 wx:
-  appId: wx3e6b9f1c5a7ff034
-  mchId: 1614433647
-  mchKey: Aa111111111122222222223333333333
+  appId: wx281c6e6b6cffe1b1
+  mchId: 1644767154
+  mchKey: Szy11111111111111111111111111111
   notifyUrl: http://127.0.0.1:8081/pay/notify
   returnUrl: https://www.bilibili.com/v/popular/all/?spm_id_from=333.1007.0.0
 server:
