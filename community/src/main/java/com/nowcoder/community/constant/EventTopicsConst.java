@@ -6,6 +6,7 @@ public class EventTopicsConst {
     public static final String FOLLOW = "follow";
     public static final String PUBLISH = "PUBLISH";
     public static final String DELETE = "delete";
+    public static final String SHARE = "share";
 
     public static final String getAction(String action) {
         if (COMMENT.equals(action)) return "评论";

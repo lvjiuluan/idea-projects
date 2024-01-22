@@ -39,8 +39,11 @@ public interface IUserService {
     List<User> findUsersByIdList(List<Integer> entityIdList);
 
     // 查询登录凭证的用户
-    public LoginTicket findLoginTicket(String ticket);
+    LoginTicket findLoginTicket(String ticket);
 
     // 根据用户获取权限
     Collection<? extends GrantedAuthority> getAuthorities(Integer userId);
+
+    // 修改userr
+    Integer updateUser(User user);
 }

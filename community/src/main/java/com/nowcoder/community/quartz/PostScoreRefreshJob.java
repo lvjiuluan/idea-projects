@@ -47,7 +47,6 @@ public class PostScoreRefreshJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        log.error("执行了该方法！！");
         String redisKey = RedisKeyUtil.getPostScoreKey();
         BoundSetOperations<String, Object> operations = redisTemplate.boundSetOps(redisKey);
 

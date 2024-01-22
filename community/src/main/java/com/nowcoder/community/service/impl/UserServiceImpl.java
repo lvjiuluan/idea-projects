@@ -353,5 +353,15 @@ public class UserServiceImpl implements IUserService {
         return list;
     }
 
+    @Override
+    public Integer updateUser(User user) {
+        int rows = userMapper.updateByPrimaryKeySelective(user);
+        if (rows <= 0) {
+            throw new RuntimeException("修改user失败");
+        }
+        initCache(user.getId());
+        return rows;
+    }
+
 
 }

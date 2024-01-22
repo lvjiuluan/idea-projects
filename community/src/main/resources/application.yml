@@ -79,6 +79,22 @@ mybatis:
 community:
   path:
     domain: http://127.0.0.1:8080
+wk:
+  image:
+    command: D:/wkhtmltopdf/bin/wkhtmltoimage
+    storage: D:/wkhtmltopdf/data/wk-images
+
+qiniu:
+  key:
+    access: IKbX3OlAH-k--5DUh6n5TB-bo5Hk2pRA4_6ObRzI
+    secret: NOKsuhAOJYwALXuZcSFUiz18gkmCHcu8lU4n-49B
+  bucket:
+    header:
+      name: community-header-lvjiuluan
+      url: http://s7nz5qurx.hd-bkt.clouddn.com
+    share:
+      name: community-share-lvjiuluan
+      url: http://s7o0ooubc.hn-bkt.clouddn.com
 #logging:
 #  level:
 #    root: error

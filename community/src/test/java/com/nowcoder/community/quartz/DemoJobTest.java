@@ -18,7 +18,7 @@ public class DemoJobTest extends CommunityApplicationTest {
     @Test
     public void execute() {
         try {
-            boolean result = scheduler.deleteJob(new JobKey("demoJob", "demoJobGroup"));
+            boolean result = scheduler.deleteJob(new JobKey("postScoreRefreshJob", "communityJobGroup"));
             System.out.println(result);
         } catch (SchedulerException e) {
             e.printStackTrace();

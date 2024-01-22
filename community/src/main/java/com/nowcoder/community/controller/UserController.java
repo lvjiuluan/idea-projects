@@ -2,6 +2,7 @@ package com.nowcoder.community.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.nowcoder.community.annotation.LoginRequired;
+import com.nowcoder.community.config.QiniuConfig;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.enums.ActivationStatusEnum;
 import com.nowcoder.community.enums.EntiyTypeEnum;
@@ -12,6 +13,8 @@ import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.RedisKeyUtil;
+import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,10 @@ public class UserController {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private QiniuConfig qiniuConfig;
+
 
     // 1 处理访问注册页面的请求
     @GetMapping("/register")
@@ -214,20 +221,49 @@ public class UserController {
         return "redirect:index";
     }
 
+
     // 上传用户头像
-    @PostMapping("/uploadFile")
+    // 废弃
+    /*@PostMapping("/uploadFile")
     @LoginRequired
     public String upload(MultipartFile multipartFile,
                          @CookieValue("ticket") String ticket,
                          Model model) {
         userService.upload(ticket, multipartFile);
         return "redirect:/setting";
-    }
+    }*/
 
     @GetMapping("/setting")
     @LoginRequired
-    public String setting() {
+    public String setting(Model model) {
+        // 设置上传文件名称
+        String fileName = CommunityUtil.generateUUID();
+        // 设置响应信息
+        StringMap policy = new StringMap();
+        policy.put("returnBody", CommunityUtil.getJSONString(0));
+        // 生成上传凭证
+        Auth auth = Auth.create(qiniuConfig.getKey().getAccess(),
+                qiniuConfig.getKey().getSecret());
+        String uploadToken = auth.uploadToken(qiniuConfig.getBucket().get("header").getName(),
+                fileName,
+                3600, policy);
+        model.addAttribute("uploadToken", uploadToken);
+        model.addAttribute("fileName", fileName);
         return "site/setting";
+    }
+
+    // 更新头像路径
+    @PostMapping("/header/url")
+    @ResponseBody
+    public String updateHeaderUrl(String fileName) {
+        if (StringUtils.isBlank(fileName)) {
+            return CommunityUtil.getJSONString(1, "文件名不能为空");
+        }
+        String url = qiniuConfig.getBucket().get("header").getUrl() + "/" + fileName;
+        User user = hostHolder.getUser();
+        user.setHeaderUrl(url);
+        userService.updateUser(user);
+        return CommunityUtil.getJSONString(0, "成功");
     }
 
     // 修改密码
