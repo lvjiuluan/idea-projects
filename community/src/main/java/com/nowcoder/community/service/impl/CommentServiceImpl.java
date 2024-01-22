@@ -13,10 +13,12 @@ import com.nowcoder.community.form.AddCommentForm;
 import com.nowcoder.community.service.ICommentService;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import com.nowcoder.community.util.SensitiveFilter;
 import com.nowcoder.community.vo.CommentVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,9 +46,10 @@ public class CommentServiceImpl implements ICommentService {
     private SensitiveFilter sensitiveFilter;
     @Autowired
     private ILikeService likeService;
-
     @Autowired
     private EventProducer eventProducer;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public List<CommentVo> findCommentsById(Integer id) {
@@ -162,7 +165,12 @@ public class CommentServiceImpl implements ICommentService {
                     .setEntityType(EntiyTypeEnum.POST.getCode())
                     .setEntityId(comment.getEntityId());
             eventProducer.fireEvent(event);
+
+            // 添加评论会把post存到cache中，定时计算分数
+            String redisKey = RedisKeyUtil.getPostScoreKey();
+            redisTemplate.opsForSet().add(redisKey, comment.getEntityId());
         }
+
         return map;
     }
 }

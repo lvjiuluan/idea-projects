@@ -14,7 +14,7 @@ public class DiscussPostMapperTest extends CommunityApplicationTest {
 
     @Test
     public void selectDiscussPosts() {
-        List<DiscussPost> discussPostList = discussPostMapper.selectDiscussPosts(101, 1, 2);
+        List<DiscussPost> discussPostList = discussPostMapper.selectDiscussPosts(101, 1, 2,0);
         for (DiscussPost discussPost : discussPostList) {
             System.out.println(discussPost);
         }

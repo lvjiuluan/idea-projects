@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface IDiscussPostService {
 
-    List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit);
+    List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit, Integer orderMode);
 
     Integer findDiscussPostRows(Integer userId);
 
@@ -26,6 +26,10 @@ public interface IDiscussPostService {
 
     // 根据postId删除、status = 2
     Map<String, Object> delete(Integer postId);
+
     // 加精帖子 status = 1
     Map<String, Object> highlight(Integer postId);
+
+    // 修改帖子
+    Integer updateDiscussPost(DiscussPost discussPost);
 }

@@ -11,8 +11,10 @@ import com.nowcoder.community.service.IDiscussPostService;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import com.nowcoder.community.util.SensitiveFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
@@ -54,9 +56,12 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
     @Autowired
     private EventProducer eventProducer;
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
     @Override
-    public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit) {
-        return discussPostMapper.selectDiscussPosts(userId, offset, limit);
+    public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit, Integer orderMode) {
+        return discussPostMapper.selectDiscussPosts(userId, offset, limit, orderMode);
     }
 
     @Override
@@ -99,6 +104,9 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
                 .setEntityType(EntiyTypeEnum.POST.getCode())
                 .setEntityId(discussPost.getId());
         eventProducer.fireEvent(event);
+        // 添加帖子会把post存到cache中，定时计算分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, discussPost.getId());
         return map;
     }
 
@@ -241,6 +249,16 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
                 .setEntityType(EntiyTypeEnum.POST.getCode())
                 .setEntityId(discussPost.getId());
         eventProducer.fireEvent(event);
+
+        // 加精会把post存到cache中，定时计算分数
+        String redisKey = RedisKeyUtil.getPostScoreKey();
+        redisTemplate.opsForSet().add(redisKey, discussPost.getId());
+
         return map;
+    }
+
+    @Override
+    public Integer updateDiscussPost(DiscussPost discussPost) {
+        return discussPostMapper.updateByPrimaryKeySelective(discussPost);
     }
 }

@@ -5,18 +5,34 @@ import com.nowcoder.community.dao.UserMapper;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.util.CommunityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class DemoService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
+
+    // 让该方法在多线程的环境下被异步地调用
+    // 即该方法与主线程是并发执行，(异步执行)
+/*    @Async
+    public void execute1() {
+        log.error("execute 1");
+    }
+
+    @Scheduled(initialDelay = 10000,fixedDelay = 1000)
+    public void execute2() {
+        log.error("execute 2");
+    }*/
 
     /*
      * 传播机制: B called A 时

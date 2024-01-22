@@ -3,11 +3,14 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.User;
+import com.nowcoder.community.enums.EntiyTypeEnum;
 import com.nowcoder.community.event.EventProducer;
 import com.nowcoder.community.service.ILikeService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
+import com.nowcoder.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +28,8 @@ public class LikeController {
     private HostHolder hostHolder;
     @Autowired
     private EventProducer eventProducer;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @PostMapping("/like")
     @ResponseBody
@@ -51,6 +56,12 @@ public class LikeController {
                     .setEntityUserId(entityUserId)
                     .setData("postId", postId);
             eventProducer.fireEvent(event);
+        }
+        // 如果是对帖子点赞，才会去定时计算帖子分数
+        if (EntiyTypeEnum.POST.getCode().equals(entityType)) {
+            // 点赞 帖子 会把post存到cache中，定时计算分数
+            String redisKey = RedisKeyUtil.getPostScoreKey();
+            redisTemplate.opsForSet().add(redisKey, postId);
         }
         return CommunityUtil.getJSONString(0, map);
     }

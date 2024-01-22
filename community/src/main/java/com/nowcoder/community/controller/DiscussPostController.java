@@ -14,10 +14,7 @@ import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +38,11 @@ public class DiscussPostController {
     private HostHolder hostHolder;
 
     @GetMapping("/index")
-    public String getIndexPage(Model model, Page page) {
+    public String getIndexPage(Model model, Page page,
+                               @RequestParam(name = "orderMode", defaultValue = "0") Integer orderMode) {
         page.setRows(discussPostService.findDiscussPostRows(0));
-        page.setPath("/index"); // 页面就可以复用这个路径了
-        List<DiscussPost> discussPostList = discussPostService.findDiscussPosts(0, page.getOffset(), page.getPageSize());
+        page.setPath("/index?orderMode=" + orderMode); // 页面就可以复用这个路径了
+        List<DiscussPost> discussPostList = discussPostService.findDiscussPosts(0, page.getOffset(), page.getPageSize(), orderMode);
         List<Map<String, Object>> discussPosts = new ArrayList<>();
         if (discussPosts != null) {
             for (DiscussPost discussPost : discussPostList) {
@@ -62,6 +60,7 @@ public class DiscussPostController {
 
 
         // page会自动注入给model
+        model.addAttribute("orderMode", orderMode);
         return "index";
     }
 

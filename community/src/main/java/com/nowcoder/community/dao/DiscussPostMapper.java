@@ -25,7 +25,10 @@ public interface DiscussPostMapper {
     // 如果userId != 0，则查询该用户所有帖子
     // 这里不是必须要@Param注解，因为可以用param1, param2,param3来指代三个参数的位置
     // 所以不是必须有，但最好有
-    List<DiscussPost> selectDiscussPosts(@Param("userId") Integer userId, @Param("offset") Integer offset, @Param("limit") Integer limit);
+    List<DiscussPost> selectDiscussPosts(@Param("userId") Integer userId,
+                                         @Param("offset") Integer offset,
+                                         @Param("limit") Integer limit,
+                                         @Param("orderMode") Integer orderMode);
 
     // 这里必须要@Param注解
     // 1. userId会出现在if test里面

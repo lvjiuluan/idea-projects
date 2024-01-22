@@ -8,6 +8,9 @@ spring:
     password: 13110197267ljlLJL!
     port: 6379
     database: 0
+    timeout: 50s
+    lettuce:
+      shutdown-timeout: 100
   thymeleaf:
     cache: false
     check-template: true
@@ -43,6 +46,30 @@ spring:
     elasticsearch:
       cluster-name: nowcoder
       cluster-nodes: 43.142.181.137:9300
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 15
+        queue-capacity: 100
+    scheduling:
+      pool:
+        size: 5
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: communityScheduler
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   configuration:
@@ -52,4 +79,15 @@ mybatis:
 community:
   path:
     domain: http://127.0.0.1:8080
+#logging:
+#  level:
+#    root: error
 
+#  spring.quartz.job-store-type=jdbc
+#  spring.quartz.scheduler-name=communityScheduler
+#  spring.quartz.properties.org.quartz.scheduler.instanceId=AUTO
+#  spring.quartz.properties.org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX
+#  spring.quartz.properties.org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#  spring.quartz.properties.org.quartz.jobStore.isClustered=true
+#  spring.quartz.properties.org.quartz.threadPool.class=org.quartz.simpl.SimpleThreadPool
+#  spring.quartz.properties.org.quartz.threadPool.threadCount=5
