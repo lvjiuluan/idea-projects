@@ -53,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).hasAnyAuthority(UserRoleConst.MODERATOR)
                 .antMatchers(
                         "/delete",
-                        "/data/**"
+                        "/data/**",
+                        "/actuator/**"
 
                 ).hasAnyAuthority(UserRoleConst.ADMIN)
                 .anyRequest().permitAll().and().csrf().disable();

@@ -20,7 +20,7 @@ function upload() {
                     function (data) {
                         data = $.parseJSON(data);
                         if (data.code == 0) {
-                            // window.location.reload();
+                            window.location.reload();
                         } else {
                             alert(data.msg);
                         }

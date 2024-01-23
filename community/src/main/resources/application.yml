@@ -95,6 +95,20 @@ qiniu:
     share:
       name: community-share-lvjiuluan
       url: http://s7o0ooubc.hn-bkt.clouddn.com
+caffeine:
+  post:
+    max-size: 15
+    expire-seconds: 180
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        exclude: info,caches
+        include: "*"
 #logging:
 #  level:
 #    root: error

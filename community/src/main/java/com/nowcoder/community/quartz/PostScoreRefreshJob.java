@@ -60,7 +60,7 @@ public class PostScoreRefreshJob implements Job {
         while (operations.size() > 0) {
             this.refresh((Integer) operations.pop());
         }
-        log.info("[任务结束]，刷新了帖子+" + size + "+的分数");
+        log.info("[任务结束]，刷新了" + size + "条帖子的分数");
 
     }
 

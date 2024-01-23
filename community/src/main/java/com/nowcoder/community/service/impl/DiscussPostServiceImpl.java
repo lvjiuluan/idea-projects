@@ -1,5 +1,9 @@
 package com.nowcoder.community.service.impl;
 
+import com.github.benmanes.caffeine.cache.CacheLoader;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.nowcoder.community.config.CaffeineConfig;
 import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.dao.DiscussPostMapper;
 import com.nowcoder.community.entity.*;
@@ -13,21 +17,28 @@ import com.nowcoder.community.service.IUserService;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.RedisKeyUtil;
 import com.nowcoder.community.util.SensitiveFilter;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.nowcoder.community.constant.EventTopicsConst.DELETE;
 import static com.nowcoder.community.constant.EventTopicsConst.PUBLISH;
 
 @Service
+@Slf4j
 public class DiscussPostServiceImpl implements IDiscussPostService {
     @Autowired
     private DiscussPostMapper discussPostMapper;
@@ -59,13 +70,78 @@ public class DiscussPostServiceImpl implements IDiscussPostService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Autowired
+    private CaffeineConfig caffeineConfig;
+
+    /*
+     * 帖子列表缓存
+     * */
+    private LoadingCache<String, List<DiscussPost>> postListCache;
+
+    /*
+     * 帖子总行数缓存
+     * */
+    private LoadingCache<Integer, Integer> postRowsCache;
+
+    @PostConstruct
+    void init() {
+        // 初始化帖子列表缓存
+        postListCache = Caffeine.newBuilder()
+                .maximumSize(caffeineConfig.getPost().getMaxSize())
+                .expireAfterWrite(caffeineConfig.getPost().getExpireSeconds(), TimeUnit.SECONDS)
+                .build(new CacheLoader<String, List<DiscussPost>>() {
+                    @Override
+                    public @Nullable List<DiscussPost> load(@NonNull String key) throws Exception {
+                        // 访问数据库得到数据
+                        if (key == null || key.length() == 0) {
+                            throw new IllegalArgumentException("参数错误！");
+                        }
+                        String[] params = key.split(":");
+                        if (params == null || params.length != 2) {
+                            throw new IllegalArgumentException("参数错误！");
+                        }
+                        int offset = Integer.valueOf(params[0]);
+                        int limit = Integer.valueOf(params[1]);
+
+                        // 可以加二级缓存
+                        // 本地缓存 -> Redis -> mysql
+                        log.info("load postList from DB.");
+                        return discussPostMapper.selectDiscussPosts(0, offset, limit, 1);
+                    }
+                });
+        //初始化帖子总行数缓存
+        postRowsCache = Caffeine.newBuilder()
+                .maximumSize(caffeineConfig.getPost().getMaxSize())
+                .expireAfterWrite(caffeineConfig.getPost().getExpireSeconds(), TimeUnit.SECONDS)
+                .build(new CacheLoader<Integer, Integer>() {
+                    @Override
+                    public @Nullable Integer load(@NonNull Integer key) throws Exception {
+                        log.info("load post rows from DB.");
+                        return discussPostMapper.selectDiscussPostRows(key);
+                    }
+                });
+    }
+
+
     @Override
     public List<DiscussPost> findDiscussPosts(Integer userId, Integer offset, Integer limit, Integer orderMode) {
+        if (userId == 0 && orderMode == 1) {
+            // 启用缓存
+            return postListCache.get(offset + ":" + limit);
+        }
+        log.info("load postList from DB.");
         return discussPostMapper.selectDiscussPosts(userId, offset, limit, orderMode);
     }
 
     @Override
     public Integer findDiscussPostRows(Integer userId) {
+        /*
+         * 总的行数做一个缓存
+         * */
+        if (userId == 0) {
+            return postRowsCache.get(userId);
+        }
+        log.info("load post rows from DB.");
         return discussPostMapper.selectDiscussPostRows(userId);
     }
 

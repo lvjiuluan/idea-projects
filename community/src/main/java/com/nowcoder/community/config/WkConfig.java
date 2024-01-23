@@ -18,8 +18,8 @@ public class WkConfig {
         // 创建wk图片目录
         File file = new File(wkImageStorage);
         if (!file.exists()) {
-            file.mkdir();
-            log.info("创建wk图片目录" + wkImageStorage);
+            boolean mkdirs = file.mkdirs();
+            log.info("创建wk图片目录" + wkImageStorage + "结果:" + mkdirs);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.nowcoder.community.controller;
 
+import com.nowcoder.community.config.QiniuConfig;
 import com.nowcoder.community.constant.EventTopicsConst;
 import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.event.EventProducer;
@@ -34,6 +35,9 @@ public class ShareController {
     @Value("${wk.image.storage}")
     private String wkImageStorage;
 
+    @Autowired
+    private QiniuConfig qiniuConfig;
+
     @GetMapping("/share")
     @ResponseBody
     public String share(String htmlUrl) {
@@ -49,12 +53,16 @@ public class ShareController {
         eventProducer.fireEvent(event);
         // 返回访问路径
         Map<String, Object> map = new HashMap<>();
-        map.put("shareUrl", domain + contextPath + "/share/image/" + fileName);
+//        map.put("shareUrl", domain + contextPath + "/share/image/" + fileName);
+        map.put("shareUrl", qiniuConfig.getBucket().get("share").getUrl() + "/" + fileName);
         return CommunityUtil.getJSONString(0, null, map);
     }
 
+
+
+    // 废弃
     // 获取长图
-    @GetMapping("/share/image/{fileName}")
+    /*@GetMapping("/share/image/{fileName}")
     public void getShareImage(@PathVariable String fileName,
                               HttpServletResponse response) {
         // 判断参数
@@ -75,5 +83,5 @@ public class ShareController {
             log.error("获取长图失败: " + e.getMessage());
         }
 
-    }
+    }*/
 }
