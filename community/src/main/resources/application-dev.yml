@@ -1,0 +1,123 @@
+server:
+  port: 8080
+  servlet:
+    context-path:
+spring:
+  redis:
+    host: 43.142.181.137
+    password: 13110197267ljlLJL!
+    port: 6379
+    database: 0
+    timeout: 50s
+    lettuce:
+      shutdown-timeout: 100
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: UTF-8
+    excluded-view-names: ''
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+    servlet:
+      content-type: text/html
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 147258
+    url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+  mail:
+    host: smtp.163.com
+    port: 465
+    username: 17384775461@163.com
+    password: 13110197267ljl
+    protocol: smtps
+    properties:
+      mail.smtp.ssl.enable: true
+  kafka:
+    bootstrap-servers: 43.142.181.137:9092
+    consumer:
+      group-id: community-consumer-group
+      enable-auto-commit: true
+      auto-commit-interval: 3000
+  data:
+    elasticsearch:
+      cluster-name: nowcoder
+      cluster-nodes: 43.142.181.137:9300
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 15
+        queue-capacity: 100
+    scheduling:
+      pool:
+        size: 5
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: communityScheduler
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            isClustered: true
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 5
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true
+community:
+  path:
+    domain: http://127.0.0.1:8080
+wk:
+  image:
+    command: D:/wkhtmltopdf/bin/wkhtmltoimage
+    storage: D:/wkhtmltopdf/data/wk-images
+
+qiniu:
+  key:
+    access: IKbX3OlAH-k--5DUh6n5TB-bo5Hk2pRA4_6ObRzI
+    secret: NOKsuhAOJYwALXuZcSFUiz18gkmCHcu8lU4n-49B
+  bucket:
+    header:
+      name: community-header-lvjiuluan
+      url: http://s7nz5qurx.hd-bkt.clouddn.com
+    share:
+      name: community-share-lvjiuluan
+      url: http://s7o0ooubc.hn-bkt.clouddn.com
+caffeine:
+  post:
+    max-size: 15
+    expire-seconds: 180
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        exclude: info,caches
+        include: "*"
+#logging:
+#  level:
+#    root: error
+
+#  spring.quartz.job-store-type=jdbc
+#  spring.quartz.scheduler-name=communityScheduler
+#  spring.quartz.properties.org.quartz.scheduler.instanceId=AUTO
+#  spring.quartz.properties.org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX
+#  spring.quartz.properties.org.quartz.jobStore.driverDelegateClass=org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+#  spring.quartz.properties.org.quartz.jobStore.isClustered=true
+#  spring.quartz.properties.org.quartz.threadPool.class=org.quartz.simpl.SimpleThreadPool
+#  spring.quartz.properties.org.quartz.threadPool.threadCount=5
