@@ -1,6 +1,7 @@
 package 韩顺平Java.异常.异常练习题;
 
 public class Exception01 {
+
     public int m() {
         int i = 1;
         try {
@@ -15,6 +16,11 @@ public class Exception01 {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Exception01().m());
+        String ss = "h" + "g";
+        "aaa".length();
+        "aaa".hashCode();
+        String b = "hhh";
+        String s1 = new String("hhh");
+        String a = new String("aa") + "bb";
     }
 }
