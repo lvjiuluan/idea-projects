@@ -3,14 +3,13 @@ package 韩顺平Java.字符串综合.多线程执行;
 public class String01 {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder();
-//        StringBuffer sb = new StringBuffer();
         T t = new T(sb);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             new Thread(t).start();
         }
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+               https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean class="com.example.spring.service.impl.OrderServiceImpl" id="orderService"/>
+    <bean class="com.example.spring.service.impl.EmailServiceImpl" id="emailService"/>
+    <bean class="com.example.spring.processor.OrderProcessor" id="processor">
+        <property name="orderService" ref="orderService"/>
+        <property name="emailService" ref="emailService"/>
+    </bean>
+</beans>
