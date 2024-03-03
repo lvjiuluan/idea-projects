@@ -1,0 +1,50 @@
+创建一个基本的多叉搜索树涉及到一些复杂的逻辑，特别是对于插入和搜索操作。以下是一个简单的三叉搜索树的实现，只包含插入和搜索功能，并且不考虑平衡：
+
+```java
+public class Node {
+    int[] keys = new int[2]; // keys[0] is the smaller key, keys[1] is the larger key
+    Node[] children = new Node[3]; // children[0] is for values < keys[0], children[1] is for values between keys[0] and keys[1], children[2] is for values > keys[1]
+    int numKeys = 0;
+
+    public boolean insert(int value) {
+        int i = 0;
+        while (i < numKeys && value > keys[i]) {
+            i++;
+        }
+        if (children[i] != null) {
+            return children[i].insert(value);
+        } else {
+            if (numKeys < keys.length) {
+                // Insert the value into the keys array
+                System.arraycopy(keys, i, keys, i + 1, numKeys - i);
+                keys[i] = value;
+                numKeys++;
+                return true;
+            } else {
+                // Node is full, cannot insert
+                return false;
+            }
+        }
+    }
+
+    public boolean search(int value) {
+        int i = 0;
+        while (i < numKeys && value > keys[i]) {
+            i++;
+        }
+        if (value == keys[i]) {
+            return true;
+        } else if (children[i] != null) {
+            return children[i].search(value);
+        } else {
+            return false;
+        }
+    }
+}
+```
+
+这个实现中，每个节点有两个键和三个孩子。当我们尝试在节点中插入一个值时，我们首先找到值应该插入的子树，如果子树存在，我们在子树中递归插入；如果子树不存在，我们尝试在当前节点中插入值。如果节点已经满了（即已经有两个键），插入失败。
+
+搜索操作也是类似的，我们首先找到值应该在的子树，如果子树存在，我们在子树中递归搜索；如果子树不存在，我们在当前节点中搜索值。
+
+注意这个实现是非常基础的，它不支持删除操作，也不保证树的平衡。在实际应用中，你可能需要使用更复杂的数据结构，如B树或红黑树，这些数据结构在插入和删除时会保持树的平衡，从而提供更好的性能。
