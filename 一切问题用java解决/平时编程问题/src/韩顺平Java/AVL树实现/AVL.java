@@ -70,9 +70,9 @@ public class AVL {
                 // 插入后检查是否平衡
                 if ((height(root.left) - height(root.right)) == 2) {
                     if (val < root.left.val) {
-                        root = LR(root);
-                    } else {
                         root = LL(root);
+                    } else {
+                        root = LR(root);
                     }
                 }
             } else {
@@ -92,7 +92,7 @@ public class AVL {
     }
 
     public void insert(int val) {
-        insert(root, val);
+        root = insert(root, val);
     }
 }
 
@@ -105,6 +105,7 @@ class TreeNode {
     public TreeNode(int val) {
         this.val = val;
     }
+
 
 }
 /*
