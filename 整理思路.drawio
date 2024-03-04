@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-03-04T00:10:58.883Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="mEW5DmS87NtvsWe5sKEo" version="23.1.5" type="device" pages="32">
+<mxfile host="Electron" modified="2024-03-04T02:07:30.839Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="IuMlFer48btrcHlDi0Kc" version="23.1.5" type="device" pages="34">
   <diagram name="为什么订单要这么设计？" id="laN1Qc6VaZEZ64mN4CGq">
-    <mxGraphModel dx="1562" dy="909" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1050" dy="629" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -7720,6 +7720,124 @@
           <mxGeometry width="30" height="30" as="geometry">
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="wLqYgYeR14sc3-6VqFag" name="磁盘块">
+    <mxGraphModel dx="1050" dy="629" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xJuGbhmKlClKw7hhwxjS-1" value="磁盘" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="110" y="160" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="xJuGbhmKlClKw7hhwxjS-2" value="内存" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="160" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="xJuGbhmKlClKw7hhwxjS-3" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="229.5" as="sourcePoint" />
+            <mxPoint x="350" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xJuGbhmKlClKw7hhwxjS-4" value="以块为单位读取文件" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="280" y="250" width="70" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="YyqudSb5bq_79epBIagj" name="搜索树">
+    <mxGraphModel dx="724" dy="434" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QFA-63PgL4etgjyVSyvg-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-1" target="QFA-63PgL4etgjyVSyvg-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-1" target="QFA-63PgL4etgjyVSyvg-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-1" value="T" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="50" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-2" target="QFA-63PgL4etgjyVSyvg-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-2" value="多叉树" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240.5" y="130" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-3" target="QFA-63PgL4etgjyVSyvg-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-3" value="BT" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="379.5" y="130" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-6" target="QFA-63PgL4etgjyVSyvg-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-6" value="BST" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="379.5" y="204" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-7" target="QFA-63PgL4etgjyVSyvg-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-7" value="多叉搜索树" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="204" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-14" target="QFA-63PgL4etgjyVSyvg-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-14" target="QFA-63PgL4etgjyVSyvg-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-14" target="QFA-63PgL4etgjyVSyvg-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-14" value="Self-blancing BST" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354.25" y="290" width="120.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-15" target="QFA-63PgL4etgjyVSyvg-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-15" target="QFA-63PgL4etgjyVSyvg-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-15" value="平衡多叉搜索树" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="214.75" y="290" width="120.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-18" target="QFA-63PgL4etgjyVSyvg-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="QFA-63PgL4etgjyVSyvg-18" target="QFA-63PgL4etgjyVSyvg-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-18" value="B树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="210" y="380" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-19" value="B+树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="275.25" y="380" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-22" value="2-3树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="173" y="470" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-23" value="2-3-4树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="243.5" y="470" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-26" value="3阶B树" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="173" y="510" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-27" value="4阶B树" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="243.5" y="510" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-28" value="AVL树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="354.25" y="380" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-29" value="红黑树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="420" y="380" width="60" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QFA-63PgL4etgjyVSyvg-31" value="替罪羊树" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="490" y="380" width="60" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
