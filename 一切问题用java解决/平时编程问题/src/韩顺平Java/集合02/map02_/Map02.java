@@ -18,5 +18,6 @@ public class Map02 {
         }
         map.remove(a[6]);
         System.out.println(map);
+
     }
 }
