@@ -6,4 +6,9 @@
     <select id="getById" parameterType="int" resultType="com.example.spring.entity.Goods">
         select * from t_goods where id = #{id}
     </select>
+    <update id="updateGoodsUseCAS" parameterType="com.example.spring.entity.Goods">
+        update t_goods
+        set status = #{status}, name = #{name},version = version + 1
+        where id = #{id} and version = #{version}
+    </update>
 </mapper>
