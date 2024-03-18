@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.concurrent.locks.LockSupport;
 
 public class GoodsDaoTest {
     private GoodsDao goodsDao;
@@ -16,6 +17,7 @@ public class GoodsDaoTest {
 
     @Before
     public void init() {
+
         // 加载Mybatis配置文件
         InputStream is = GoodsDaoTest.class.getClassLoader().getResourceAsStream("config.xml");
         SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
@@ -59,3 +61,5 @@ public class GoodsDaoTest {
 
     }
 }
+
+
