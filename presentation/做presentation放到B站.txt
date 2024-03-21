@@ -7,3 +7,5 @@
 
 presentation清单:
 请你聊一聊Spring MVC的原理
+
+PPT多图少文字，不要有大段文字，尽量用图来表示
