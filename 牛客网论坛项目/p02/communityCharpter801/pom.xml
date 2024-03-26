@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nowcoder.community</groupId>
-	<artifactId>communityCharpter8</artifactId>
+	<artifactId>communityCharpter801</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>communityCharpter8</name>
-	<description>nowcoder communityCharpter8</description>
+	<name>communityCharpter801</name>
+	<description>nowcoder communityCharpter801</description>
 	<packaging>war</packaging>
 
 	<properties>
