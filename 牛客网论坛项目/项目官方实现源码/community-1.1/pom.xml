@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.nowcoder.community</groupId>
-    <artifactId>community</artifactId>
+    <artifactId>community-1.1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>community</name>
-    <description>nowcoder community</description>
+    <name>community-1.1</name>
+    <description>nowcoder community-1.1</description>
 
     <properties>
         <java.version>8</java.version>
