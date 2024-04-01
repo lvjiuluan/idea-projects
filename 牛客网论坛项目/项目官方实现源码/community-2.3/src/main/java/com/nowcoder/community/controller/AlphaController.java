@@ -147,15 +147,29 @@ public class AlphaController {
     }
 
     // cookie示例
-
     @RequestMapping(path = "/cookie/set", method = RequestMethod.GET)
     @ResponseBody
     public String setCookie(HttpServletResponse response) {
         // 创建cookie
+        /*
+        * 创建cookie对象，一个cookie对象都是key=value形式
+        * code=CommunityUtil.generateUUID()
+        * */
         Cookie cookie = new Cookie("code", CommunityUtil.generateUUID());
         // 设置cookie生效的范围
+        /*
+        * 浏览器访问哪些路径才会发，如果不指定，所有路径都会发该cookie，浪费的网络资源。
+        * 不需要这个cookie的路径就让他无效即可。
+        *
+        * 在该路径/community/alpha和其子路径有效。
+        * */
         cookie.setPath("/community/alpha");
         // 设置cookie的生存时间
+        /*
+        * 浏览器得到cookie之后，会存在内存里面，当浏览器进程结束，cookie就没了
+        * 如果想让其时间久一点，可以设置生存时间，浏览器就会对其持久化操作，保存到硬盘里面
+        * 知道生成时间结束
+        * */
         cookie.setMaxAge(60 * 10);
         // 发送cookie
         response.addCookie(cookie);
@@ -166,6 +180,9 @@ public class AlphaController {
     @RequestMapping(path = "/cookie/get", method = RequestMethod.GET)
     @ResponseBody
     public String getCookie(@CookieValue("code") String code) {
+        /*
+        * 通过注解的方式，根据key获取对应的value
+        * */
         System.out.println(code);
         return "get cookie";
     }
@@ -174,6 +191,12 @@ public class AlphaController {
 
     @RequestMapping(path = "/session/set", method = RequestMethod.GET)
     @ResponseBody
+    /*
+    * 只需要声明，HttpSession session，spring会自动帮我们进行注入
+    *
+    * session可以存储任意类型的数据。
+    * 自动生成一个SessionI： JSESSIONID=666348E637AFAFA87648668F23E8C174;
+     * */
     public String setSession(HttpSession session) {
         session.setAttribute("id", 1);
         session.setAttribute("name", "Test");
