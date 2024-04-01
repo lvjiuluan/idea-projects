@@ -16,9 +16,6 @@ public class CommunityUtil {
     // hello -> abc123def456
     // hello + 3e4a8 -> abc123def456abc
     public static String md5(String key) {
-        /*
-        * 判断key是否为空，空串、null、空格
-        * */
         if (StringUtils.isBlank(key)) {
             return null;
         }
