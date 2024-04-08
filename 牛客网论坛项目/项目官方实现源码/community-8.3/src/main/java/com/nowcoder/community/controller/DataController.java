@@ -16,7 +16,7 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    // 统计页面
+    // 网站数据统计页面
     @RequestMapping(path = "/data", method = {RequestMethod.GET, RequestMethod.POST})
     public String getDataPage() {
         return "/site/admin/data";
