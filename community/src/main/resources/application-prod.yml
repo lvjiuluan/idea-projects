@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path:
+    context-path: ''
 spring:
   redis:
     host: 127.0.0.1
@@ -78,7 +78,7 @@ mybatis:
     use-generated-keys: true
 community:
   path:
-    domain: http://43.142.181.137:81
+      domain: http://43.142.181.137:81
 wk:
   image:
     command: /opt/wkhtmltoimage.sh

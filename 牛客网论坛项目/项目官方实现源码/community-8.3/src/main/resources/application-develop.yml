@@ -1,0 +1,104 @@
+caffeine:
+    posts:
+        expire-seconds: 180
+        max-size: 15
+community:
+    path:
+        domain: http://localhost:8080
+        upload: d:/work/data/upload
+management:
+    endpoints:
+        web:
+            exposure:
+                exclude: info,caches
+                include: '*'
+mybatis:
+    configuration:
+        mapUnderscoreToCamelCase: true
+        useGeneratedKeys: true
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.nowcoder.community.entity
+qiniu:
+    bucket:
+        header:
+            name: community_header
+        share:
+            name: community_share
+            url: http://pvghvvuzm.bkt.clouddn.com
+    key:
+        access: 6RA-Uus95ZT_1znMrCMD8BpqfjT-K7OKmQTfKB48
+        secret: kPNnLFz2_tzztKUVpSLm0lYngtuHWyIq5LzTmLIL
+quniu:
+    bucket:
+        header:
+            url: http://pvghrij81.bkt.clouddn.com
+server:
+    port: 8080
+    servlet:
+        context-path: ''
+spring:
+    data:
+        elasticsearch:
+            cluster-name: nowcoder
+            cluster-nodes: 127.0.0.1:9300
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+            idle-timeout: 30000
+            maximum-pool-size: 15
+            minimum-idle: 5
+        password: lihonghe
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+        username: root
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            auto-commit-interval: 3000
+            enable-auto-commit: true
+            group-id: community-consumer-group
+    mail:
+        host: smtp.sina.com
+        password: nowcoder123
+        port: 465
+        properties:
+            mail:
+                smtp:
+                    ssl:
+                        enable: true
+        protocol: smtps
+        username: nowcoder@sina.com
+    quartz:
+        job-store-type: jdbc
+        properties:
+            org:
+                quartz:
+                    jobStore:
+                        class: org.quartz.impl.jdbcjobstore.JobStoreTX
+                        driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+                        isClustered: true
+                    scheduler:
+                        instanceId: AUTO
+                    threadPool:
+                        class: org.quartz.simpl.SimpleThreadPool
+                        threadCount: 5
+        scheduler-name: communityScheduler
+    redis:
+        database: 11
+        host: localhost
+        port: 6379
+    task:
+        execution:
+            pool:
+                core-size: 5
+                max-size: 15
+                queue-capacity: 100
+        scheduling:
+            pool:
+                size: 5
+    thymeleaf:
+        cache: false
+wk:
+    image:
+        command: d:/work/wkhtmltopdf/bin/wkhtmltoimage
+        storage: d:/work/data/wk-images

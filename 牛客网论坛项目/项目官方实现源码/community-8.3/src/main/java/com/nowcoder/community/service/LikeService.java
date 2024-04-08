@@ -13,6 +13,12 @@ public class LikeService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+    /*
+    *
+    * 使用redisTemplate进行Redis操作，这里使用了一个SessionCallback来执行一个Redis事务
+    *
+    *
+    * */
 
     // 点赞
     public void like(int userId, int entityType, int entityId, int entityUserId) {
@@ -24,6 +30,7 @@ public class LikeService {
 
                 boolean isMember = operations.opsForSet().isMember(entityLikeKey, userId);
 
+                // 开始一个Redis事务
                 operations.multi();
 
                 if (isMember) {
@@ -34,6 +41,7 @@ public class LikeService {
                     operations.opsForValue().increment(userLikeKey);
                 }
 
+                // 执行Redis事务，并返回结果
                 return operations.exec();
             }
         });

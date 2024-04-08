@@ -205,6 +205,9 @@ public class UserService implements CommunityConstant {
     private User initCache(int userId) {
         User user = userMapper.selectById(userId);
         String redisKey = RedisKeyUtil.getUserKey(userId);
+        /*
+         *这里从数据库查出来的user，不管是不是null，都存入缓存，所以不会造成缓存穿透问题
+         * */
         redisTemplate.opsForValue().set(redisKey, user, 3600, TimeUnit.SECONDS);
         return user;
     }
