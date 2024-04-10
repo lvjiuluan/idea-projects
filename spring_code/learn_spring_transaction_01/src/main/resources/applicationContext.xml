@@ -16,6 +16,12 @@
         <!--        &  &amp -->
         <property name="url" value="jdbc:mysql://localhost:3306/imooc?characterEncoding=UTF-8"/>
     </bean>
+    <!--
+    org.springframework.jdbc.datasource包下的DataSourceTransactionManager
+    -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
     <!--创建一个bean  jdbcTemplate
         JdbcTemplate是org.springframework.jdbc下的类
@@ -30,4 +36,12 @@
     <bean id="employeeDao" class="com.imooc.spring.jdbc.dao.EmployeeDao">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+    <!--
+        创建service层的bean
+    -->
+    <bean id="employeeService" class="com.imooc.spring.jdbc.service.EmployeeService">
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
 </beans>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+">
+    <!--    配置数据源，用到了 springframework.jdbc（引入的）包
+            配置一个bean实例，用到了bean schema，spring-beans，spring-core
+            com.mysql.jdbc.Driver是mysql-connector-java下面的
+    -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="147258"/>
+        <!--        &  &amp -->
+        <property name="url" value="jdbc:mysql://localhost:3306/imooc?characterEncoding=UTF-8"/>
+    </bean>
+
+
+    <!--创建一个bean  jdbcTemplate
+        JdbcTemplate是org.springframework.jdbc下的类
+        从dataSource中获取
+    -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--
+        创建dao层的bean
+    -->
+    <bean id="employeeDao" class="com.imooc.spring.jdbc.dao.EmployeeDao">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+    <!--
+        创建service层的bean
+    -->
+    <bean id="batchService" class="com.imooc.spring.jdbc.service.BatchService">
+        <property name="employeeDao" ref="employeeDao"/>
+    </bean>
+    <bean id="employeeService" class="com.imooc.spring.jdbc.service.EmployeeService">
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="batchService" ref="batchService"/>
+    </bean>
+
+    <!--    使用声明式注解（即基于AOP，不侵入代码）-->
+    <!--
+        第一步：配置事务管理器
+       org.springframework.jdbc.datasource包下的DataSourceTransactionManager
+    -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--    第二步：事务通知配置，决定哪些方法使用事务，哪些方法不使用事务-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <!--            设置所有的findXXX方法和getXXXX不需要使用事务-->
+            <!--            read-only="true"：这表示这些方法是只读的，也就是这些方法只会进行读取操作，
+            不会进行写入操作-->
+            <tx:method name="find*" propagation="NOT_SUPPORTED" read-only="true"/>
+            <tx:method name="get*" propagation="NOT_SUPPORTED" read-only="true"/>
+
+            <tx:method name="import*" propagation="REQUIRES_NEW"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--    配置 切面 = 事务通知 + 切点，  即声明式事务的作用范围 -->
+    <aop:config>
+        <!--        访问修饰符 返回值 包.类.方法名(形参列表)-->
+        <!--        访问修饰符不写代表所有访问修饰类型，不能写*-->
+        <aop:pointcut id="pointcut" expression="execution(* com.imooc.spring.jdbc.service.*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+</beans>
