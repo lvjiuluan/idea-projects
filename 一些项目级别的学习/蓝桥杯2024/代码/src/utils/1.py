@@ -50,8 +50,8 @@ def get_response(user_message):
     client = OpenAI(api_key="sk-dV1vmy9KJ1GDr3OMNOqAlSUnIMR3S6wbsGRSKKTGYpXhAWMn", base_url="https://api.chatanywhere.tech")
 
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-#         model="gpt-4",
+        # model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
             {"role": "system", "content": "你是一个数学博士，同时也精通Java编程语言，熟悉各种算法"},
             {"role": "user", "content": user_message}
@@ -63,4 +63,4 @@ def get_response(user_message):
     
 writeQuestion()
 get_response(getUserMessage())
-sendFile()
+#sendFile()
