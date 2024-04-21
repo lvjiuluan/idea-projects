@@ -11,4 +11,10 @@
 |                                                              |                                                 |
 |                                                              |                                                 |
 
-？
+[6. 全局锁和表锁](https://www.iamshuaidi.com/?p=7932)
+
+[7. 行锁功过：怎么减少行锁对性能的影响？](https://www.iamshuaidi.com/?p=7934)
+
+[19. 为什么我只查一行的语句，也执行这么慢？](https://www.iamshuaidi.com/?p=8061)
+
+[21. 为什么我只改一行的语句，锁这么多？](https://www.iamshuaidi.com/?p=8065)
