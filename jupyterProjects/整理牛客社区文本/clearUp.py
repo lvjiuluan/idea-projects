@@ -36,6 +36,13 @@ def remove_words(text, words):
         text = text.replace(word, '')
     return text
 
+def remove_space(content):
+    # 正则表达式匹配汉字和英文字母之间的空格，以及汉字之间的空格
+    # \u4e00-\u9fff 是汉字的Unicode范围
+    pattern = re.compile(r'(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])|(?<=[\u4e00-\u9fff])\s+(?=[a-zA-Z])|(?<=[a-zA-Z])\s+(?=[\u4e00-\u9fff])')
+    # 使用空字符串替换找到的匹配项
+    return pattern.sub('', content)
+
 def main():
     # 要删除的词语列表
     words_to_remove = ['然后', '那么']
@@ -46,6 +53,9 @@ def main():
     # 读取原始文本
     with open('source.md', 'r', encoding='utf-8') as file:
         content = file.read()
+    
+    # 删除空格
+    # conten = remove_space(content);
     
     # 删除词语
     content = remove_words(content, words_to_remove)

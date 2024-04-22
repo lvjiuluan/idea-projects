@@ -87,7 +87,7 @@ complement,Component
 repository,Repository
 恐怖的,Component
 computer,component
-并上，Bean上
+并上,Bean上
 个并,个Bean
 community application,CommunityApplication
 并是,Bean是
@@ -96,3 +96,24 @@ community application,CommunityApplication
 使用容器,Spring容器
 成分变量,成员变量
 通用台,控制台
+买卖类似,MyBatis
+买卖点,MyBatis
+时限内,实现类
+being,Bean
+他,它
+她,它
+并的,Bean的
+的并,的Bean
+my business,MyBatis
+阿尔法 service,AlphaService
+阿尔法service,AlphaService
+post construct,PostConstruct
+实力,实例
+单立,单例
+死扣不,Scope
+scope,Scope
+实地化,实例化
+管理并,管理Bean
+deo,Dao
+死菌,String
+dao,Dao

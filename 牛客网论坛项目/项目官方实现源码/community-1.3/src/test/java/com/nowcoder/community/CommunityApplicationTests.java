@@ -49,7 +49,7 @@ public class CommunityApplicationTests implements ApplicationContextAware {
 	}
 
 	@Test
-	public void testBeanConfig() {
+		public void testBeanConfig() {
 		SimpleDateFormat simpleDateFormat =
 				applicationContext.getBean(SimpleDateFormat.class);
 		System.out.println(simpleDateFormat.format(new Date()));
@@ -71,5 +71,4 @@ public class CommunityApplicationTests implements ApplicationContextAware {
 		System.out.println(alphaService);
 		System.out.println(simpleDateFormat);
 	}
-
 }
