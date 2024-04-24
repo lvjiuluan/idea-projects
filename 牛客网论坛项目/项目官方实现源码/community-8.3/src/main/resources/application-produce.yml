@@ -58,8 +58,8 @@ spring:
       enable-auto-commit: true
       group-id: community-consumer-group
   mail:
-    host: smtp.sina.com
-    password: nowcoder123
+    host: smtp.163.com
+    password: 13110197267ljl
     port: 465
     properties:
       mail:
@@ -67,7 +67,7 @@ spring:
           ssl:
             enable: true
     protocol: smtps
-    username: nowcoder@sina.com
+    username: 17384775461@163.com
   quartz:
     job-store-type: jdbc
     properties:
