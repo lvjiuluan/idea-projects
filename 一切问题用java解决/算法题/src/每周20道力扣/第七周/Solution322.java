@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Solution322 {
-    Thread
     public static void main(String[] args) {
         int[] coins = {1, 2, 5};
         int c = new Solution322().coinChange(coins, 100);
