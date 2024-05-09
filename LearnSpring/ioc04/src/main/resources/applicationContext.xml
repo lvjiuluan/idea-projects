@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<beans>
-    <bean id="sweetApple" class="com.imooc.spring.ioc.entity.Apple">
-        <property name="title" value="红富士"/>
-        <property name="color" value="红色"/>
-        <property name="original" value="欧洲"/>
-    </bean>
-</beans>
