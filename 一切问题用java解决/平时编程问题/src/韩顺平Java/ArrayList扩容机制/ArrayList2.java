@@ -11,6 +11,5 @@ public class ArrayList2 {
             arrayList.add(i);
         }
         System.out.println(arrayList);
-        HashMap
     }
 }
