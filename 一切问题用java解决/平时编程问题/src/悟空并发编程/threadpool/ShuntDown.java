@@ -18,7 +18,8 @@ public class ShuntDown {
         Thread.sleep(1500);
         List<Runnable> runnables = executorService.shutdownNow();
         System.out.println(runnables.size());
-//        executorService.shutdown();
+        executorService.shutdown();
+        boolean b = executorService.awaitTermination(100, TimeUnit.MILLISECONDS);
 //        System.out.println(executorService.awaitTermination(3, TimeUnit.SECONDS));
 
 //        System.out.println(executorService.isShutdown());
