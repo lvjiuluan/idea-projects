@@ -8,13 +8,14 @@ import java.text.SimpleDateFormat;
  * */
 public class ThreadLocalNormalUse06 {
     public static void main(String[] args) {
-//        new Service1().process();
-        System.out.println(ThreadSafeFormatter.dateFormatThreadLocal);
-        System.out.println(UserContextHolder.holder);
-        // threadlocal.ThreadSafeFormatter$1@7e0babb1
-        // java.lang.ThreadLocal@5ba23b66
-        Thread thread = Thread.currentThread();
-
+        User user = new User("张超");
+        UserContextHolder.holder.set(user);
+        System.out.println(UserContextHolder.holder.get());
+        Thread thread = new Thread(() -> {
+            UserContextHolder.holder.set(user);
+            System.out.println(UserContextHolder.holder.get());
+        });
+        thread.start();
     }
 }
 

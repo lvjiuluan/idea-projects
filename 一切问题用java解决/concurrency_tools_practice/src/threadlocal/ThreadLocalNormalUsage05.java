@@ -41,6 +41,7 @@ class ThreadSafeFormatter {
     public static ThreadLocal<SimpleDateFormat> dateFormatThreadLocal = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
+            System.out.println(Thread.currentThread().getName() + "调用initialValue方法");
             return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }
     };
