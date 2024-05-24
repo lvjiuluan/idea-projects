@@ -5,9 +5,13 @@ import java.util.Queue;
 
 public class MoneyChange3 {
     public static void main(String[] args) {
-        int[] coins = {5,2,1};
+        /*int[] coins = {5,2,1};
         int amount = 11;
-        System.out.println(coinChange(coins,amount));
+        System.out.println(coinChange(coins,amount));*/
+
+        String s = "abc";
+
+        System.out.println(s.charAt(1) + "sad");
     }
     public static int coinChange(int[] coins, int amount) {
         Queue<Integer> queue = new LinkedList<>();
