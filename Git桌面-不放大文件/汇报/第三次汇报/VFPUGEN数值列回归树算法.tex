@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont[Mapping=tex-text]{SimSun}
+\title{VFPUGEN numerical column regression tree algorithm}
+\author{jiuluan lv}
+\date{July 2024}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage[UTF8]{ctex}
+\usepackage{hyperref}
+
+\renewcommand{\algorithmicrequire}{\textbf{输入:}}
+\renewcommand{\algorithmicensure}{\textbf{输出:}}
+\renewcommand{\theequation}{(\arabic{equation})}
+\numberwithin{equation}{algorithm}
+
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{algorithm}
+		\caption{数值列采用回归树处理算法}
+		\begin{algorithmic}[0]
+			\Require 训练数据集$D$
+			\Ensure 回归树$f(x)$
+			\State 在训练数据集所在的输入空间中，递归地将每个区域划分为两个子区域并决定每个子区域上的输出值，构建二叉决策树:
+			\State (1)选择最优切分变量$j$与切分点$s$，求解
+			\begin{equation}
+				\min_{j,s} \left[ \min_{c_1} \sum_{x_i \in R_1(j,s)} (y_i - c_1)^2 + \min_{c_2} \sum_{x_i \in R_2(j,s)} (y_i - c_2)^2 \right]
+			\end{equation}
+			遍历变量$j$，对固定的切分变量$j$扫描切分点$s$，选择使式(1.1)达到最小值的对$(j,s)$
+			\State (2)用选定的对$(j,s)$划分区域并决定相应的输出值：
+			\begin{align}
+				R_1(j,s) &= \{ x|x^{(j)} \le s \}, R_2(j,s) = \{ x|x^{(j)} > s \} \\
+				\hat{c}_m &= \frac{1}{N_m}\sum_{x_i \in R_m(j,s)} y_i, x \in R_m, m = 1,2
+			\end{align}
+			\State (3)继续对两个子区域调用步骤(1)，(2)，直至满足停止条件
+			\State (4)将输入空间划分为$M$个区域$R_1,R_2,...,R_M$，生成决策树：
+			\begin{equation}
+				f(x) = \sum_{m = 1}^M \hat{c}_mI(x \in R_m)
+			\end{equation}
+		\end{algorithmic}
+	\end{algorithm}
+	
+\end{document}
