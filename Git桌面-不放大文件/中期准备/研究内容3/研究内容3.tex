@@ -1,0 +1,49 @@
+\documentclass{article}
+\usepackage{xeCJK}
+\usepackage{fontspec}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}  % 引入 amsmath 包
+
+% 设置中文和英文的字体
+\setCJKmainfont{SimSun}  % 这里设置中文宋体
+\setmainfont{Times New Roman}  % 这里设置英文的字体
+
+\begin{document}
+	
+	\title{中文文档示例}
+	\author{作者名}
+	\date{\today}
+	
+	\maketitle
+	
+	\section{介绍}
+	这是一个包含中文的\LaTeX{} 文档示例。
+	
+	\begin{algorithm}
+		\caption{优化后的迭代Bagging算法}
+		\begin{algorithmic}[1]
+			\State \textbf{输入:} 未标记数据集 $U$, 正样本集 $P$, 初始为空的负样本集 $N$, 平衡参数 $k$
+			\State \textbf{输出:} 训练好的纵向联邦分类器
+			
+			\Procedure{OptimizedVFPU}{$U, P, N, k$}
+			\State $|P| \gets \text{计算 } P \text{ 的大小}$
+			\State $|N| \gets \text{计算 } N \text{ 的大小}$
+			\State $sample\_size \gets ||P| \cdot k - |N||$ \Comment{计算需要采样的数量}
+			\If{$|P| \cdot k > |N|$}
+			\State $label \gets \text{负样本}$
+			\Else
+			\State $label \gets \text{正样本}$
+			\EndIf
+			\State $S \gets \text{从 } U \text{ 中随机采样 } sample\_size \text{ 个实例}$
+			\State 将 $label$ 分配给 $S$ 中的所有实例
+			\State $U \gets U \setminus S$ \Comment{从未标记集中移除已采样的实例}
+			\State $N \gets N \cup S$ \Comment{如果 $label$ 是负样本，则更新负样本集}
+			\State $P \gets P \cup S$ \Comment{如果 $label$ 是正样本，则更新正样本集}
+			\State 使用 $P$ 和 $N$ 训练纵基分类器
+			\State 在 $U$ 的剩余实例上评估分类器
+			\EndProcedure
+		\end{algorithmic}
+	\end{algorithm}
+	
+\end{document}
