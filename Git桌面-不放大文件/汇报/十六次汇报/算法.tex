@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{xeCJK}
+
+% 设置中文和英文的字体
+\setCJKmainfont{SimSun}  % 这里设置中文宋体
+\setmainfont{Times New Roman}  % 这里设置英文的字体
+
+\begin{document}
+	
+	\section*{Algorithm: VF\_TwoStep Self-Training 过程}
+	
+	\begin{algorithm}[H]
+		\caption{VF\_TwoStep Self-Training 过程}
+		\begin{algorithmic}[1]
+			\REQUIRE 
+			\begin{itemize}
+				\item $\mathcal{D}_L = \{(\mathbf{x}_i^A, \mathbf{x}_i^B, y_i)\}_{i=1}^n$ \quad (已标注数据)
+				\item $\mathcal{D}_U = \{(\mathbf{x}_j^A, \mathbf{x}_j^B)\}_{j=1}^m$ \quad (未标注数据)
+				\item $f_\text{clf}, f_\text{reg}$ \quad (分类器与回归器)
+				\item $k \in (0,1]$ \quad (每轮选取的比例)
+				\item $\text{min\_confidence} \ge 0$
+				\item $\text{convergence\_threshold} > 0$
+				\item $\text{max\_iter} \in \mathbb{N}^+$
+			\end{itemize}
+			\ENSURE 未标注数据在最终模型上的预测结果
+			
+			\STATE 根据 $\mathbf{y}_L$ 判断任务类型：分类或回归
+			\IF{分类}
+			\STATE 初始化分类器 $f_\text{clf}$ 并训练
+			\ELSE
+			\STATE 初始化回归器 $f_\text{reg}$ 并训练
+			\ENDIF
+			\STATE $\text{epoch} \leftarrow 1$
+			\WHILE{$\text{epoch} \le \text{max\_iter}$}
+			\STATE 对 $\mathcal{D}_U$ 执行预测并估计置信度 $\{\alpha_j\}_{j=1}^m$
+			\STATE 从 $\mathcal{D}_U$ 中选取置信度最高的前 $k\%$ 或 $\alpha_j \ge \text{min\_confidence}$
+			\IF{选中样本数 $< \text{convergence\_threshold}$}
+			\STATE \textbf{break}
+			\ENDIF
+			\STATE 将选中样本 $\mathcal{S}$ 的伪标签加入 $\mathcal{D}_L$，从 $\mathcal{D}_U$ 中移除
+			\STATE 利用更新后的 $\mathcal{D}_L$ 重新训练相应模型
+			\STATE $\text{epoch} \leftarrow \text{epoch} + 1$
+			\ENDWHILE
+			\STATE 对剩余的未标注数据执行最终预测，得到最终预测结果
+			\RETURN $\{\hat{y}_j\}_{j=1}^m$
+		\end{algorithmic}
+	\end{algorithm}
+	
+\end{document}
