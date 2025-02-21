@@ -1,0 +1,4 @@
+dataset	k1	k2	max_iter	base_estimator	correlation_threshold
+census	0.1	0.1	-1	LGBM	0.1
+bank	0.1	0.1	-1	RF	0.8
+credit	0.1	0.1	-1	GBDT	0.4
