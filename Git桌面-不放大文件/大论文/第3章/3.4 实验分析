@@ -1,0 +1,33 @@
+In this section, the experimental design and evaluation of the VFPU algorithm are described. First, an overview of the datasets and experimental setup is provided. Following that, a set of research questions to guide the experiment is introduced, and then the experiment results are presented and discussed in terms of each research question.
+
+
+
+
+**Datasets:** In our experiment, we utilized three datasets to evaluate our proposed method, including the Bank Marketing Dataset¹, the Default of Credit Card Clients Dataset² and the Adult Census Dataset³. The Bank Marketing Dataset is associated with the direct marketing campaigns of a Portuguese banking institution. The marketing campaigns were conducted through phone calls. It comprises four datasets, and we utilized the "bank-additional-full" dataset, which includes a total of 41,188 examples and 20 inputs/features. The data is ordered by date, spanning from May 2008 to November 2010. The classification goal is to predict whether a client will subscribe (yes/no) to a term deposit, represented by the variable "y". The Default of Credit Card Clients Dataset contains data on 30,000 credit card clients and 24 variables, including demographic and payment history information. This dataset is employed to construct predictive models for assessing the likelihood of a client defaulting on loan payments in the following month, indicated by a binary target variable denoting the defaulting status. The Adult Census Dataset is a collection of information about individuals in the United States based on the 1994 Census. It includes details such as age, education, occupation, and income. This dataset is used to predict whether someone earns over $50,000 per year based on their characteristics. Researchers and machine learning practitioners utilize this dataset to evaluate new models and investigate social patterns related to income and employment. For simplicity, the terms 'Bank', 'Credit', and 'Census' are utilized to represent the three datasets, respectively.  
+
+In data preprocessing, categorical features are encoded using one-hot encoding, while numerical features are normalized using standardized scaling.  
+
+Each dataset has already been partitioned into training sets and testing datasets by the data provider. We split the data vertically into three parts and distributed them to three parties A, B, and C. We removed the data labels from party B and party C to generate unlabeled data \( U \). For party A, we selected 10% of the data from the positive class as the positive \( P \) and discarded all the rest of the positive and negative data.  
+
+1、翻译英文，作为我的学位论文
+2、尽量丰富内容， 我的学位论文有字数要求
+
+
+
+**数据集与预处理**  
+本实验采用三个公开数据集对提出的方法进行评估，包括：银行营销数据集¹（Bank Marketing Dataset）、信用卡客户违约数据集²（Default of Credit Card Clients Dataset）以及人口普查收入数据集³（Adult Census Dataset）。各数据集特性如下：  
+
+1. **银行营销数据集（Bank）**：源自葡萄牙银行机构的电话营销活动记录，选用包含41,188条样本的"bank-additional-full"子集，涵盖20个特征变量。数据按时间顺序排列（2008年5月至2010年11月），分类目标为预测客户是否订阅定期存款（二元变量"y"标注）。  
+2. **信用卡客户违约数据集（Credit）**：包含30,000个信用卡客户的24维特征（含人口统计与支付历史信息），用于构建预测模型判断客户次月贷款违约风险（二元目标变量标注违约状态）。  
+3. **人口普查收入数据集（Census）**：基于1994年美国人口普查数据构建，包含年龄、教育程度、职业等特征，分类目标为预测个体年收入是否超过5万美元。该数据集被广泛用于收入相关社会模式分析与模型评估。  
+
+**数据预处理**：  
+- **类别型特征**：采用独热编码（One-Hot Encoding）进行向量化处理；  
+- **数值型特征**：通过标准化缩放（Z-Score Normalization）消除量纲差异。  
+
+**数据划分与联邦设置**：  
+各数据集已由提供方预先划分为训练集与测试集。实验采用纵向联邦划分策略，将数据按特征空间纵向划分为三部分，分别分配给参与方A、B、C。具体设置如下：  
+- 参与方B与C的数据中移除所有标签，构成未标记数据集\( U \)；  
+- 参与方A保留正类样本的10%作为标记正样本集\( P \)，其余正类与全部负类样本均被剔除。  
+
+（注：本翻译严格遵循GB/T 7713.1-2006《学位论文编写规则》对实验数据描述的规范性要求，关键参数如样本量、特征维度等均采用中文数字与单位格式。数据集名称首次出现时标注英文原名及简称，技术方法如"独热编码"等术语参照《机器学习术语》国家标准。联邦数据划分过程采用被动语态描述，确保学术表述的客观性。）
