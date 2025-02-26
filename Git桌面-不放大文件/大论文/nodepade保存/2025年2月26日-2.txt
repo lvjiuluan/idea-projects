@@ -1,0 +1,189 @@
+我是Jiuluan Lv，Multi-party Federated Recommendation Based on Semi-supervised Learning 这篇论文是我以第二作者发表的一篇学术论文，现在我要撰写毕业论文，也就是学位论文，注意我要把这篇学术论文作为我大论文的第三章，我第三章的题目是“基于多方联邦的半监督学习方法研究”
+第3章的提纲如下:
+第3章 基于多方联邦的半监督学习方法研究
+3.1 引言
+3.2 多方联邦的半监督学习方法
+3.2.1 问题设置
+3.2.2 VFPU算法
+3.3 实验分析
+3.4 本章小结
+
+3.1引言部分我已经基本撰写好
+....(省略前面的内容)
+
+（第五个自然段：结构安排。在这个段落中，您可以简要介绍本章的结构安排，即接下来几节的主要内容，以便读者更好地理解和跟随您的研究思路。）【示例：本章的结构描述如下：3.2 小节系统地介绍了本章的模型框架，并对模型中的 子模块进行详细介绍。3.3 小节在多个英文数据集上进行实验，证明证模型是有效 的，并且在司法数据集上进行实验，证明证模型是有应用价值的，最后对实验结果 进行分析。3.4 小节对本章工作进行总结】
+
+3.1引言部分的第五自然段我是这样构思的，但具体我不知道怎么写，可以帮我写一段示例吗？
+
+
+本章的结构描述如下：3.2节将系统阐述多方联邦半监督学习的问题定义与方法框架，并对方法执行流程和算法进行详细介绍。3.3小节在多个英文数据集上进行实验，验证方法有效性，最后对实验结果进行分析。3.4 小节对本章工作进行总结。
+
+非常棒!, 现在我要撰写3.2.1，问题设置，将英文部分翻译成中文
+
+3.2 多方联邦的半监督学习方法
+本节将系统阐述未标记数据缺失的PU（UDD-PU）学习问题设定，并提出基于正样本与未标记数据的纵向联邦学习（VFPU）算法。我们将详细阐述VFPU算法如何为UDD-PU学习问题提供解决方案。
+3.2.1 问题设置
+Firstly, consider a scenario with \( K \) data owners and one central server. Let matrix \( \mathcal{D}_k \) represent the data held by the \( k \)-th data owner, where each row of the matrix represents a sample, and each column represents a feature. The dataset can be represented as \( (\mathcal{I}, \mathcal{X}, \mathcal{Y}) \), where \( \mathcal{I} \) denotes the samples' ID space, \( \mathcal{X} \) denotes the feature space, and \( \mathcal{Y} \) denotes the label space. In the traditional vertical federated learning (VFL) setting, at least one party possesses complete labels of its dataset. However, obtaining fully labeled data in many real-world scenarios is challenging due to business constraints.
+研究场景：考虑包含K个数据持有方和一个中心服务器的联邦学习架构。令矩阵\\( \\mathcal{D}_k \\)表示第k个数据持有方拥有的数据集，其中矩阵行向量表征样本，列向量表征特征。整个数据集可形式化表示为三元组\\( (\\mathcal{I}, \\mathcal{X}, \\mathcal{Y}) \\)，其中\\( \\mathcal{I} \\)为样本标识空间，\\( \\mathcal{X} \\)为特征空间，\\( \\mathcal{Y} \\)为标签空间。传统纵向联邦学习（Vertical Federated Learning, VFL）要求至少存在一方持有完整标签数据，然而实际商业场景中受限于业务边界，获取全量标注数据具有显著挑战性。
+
+For the purpose of illustration, let us consider a scenario involving three data owners: party A, party B, and party C. These data owners possess sensitive data and need to collaborate securely while maintaining data privacy. Suppose there are two classes of samples, namely positive and negative. All three parties share some overlap on sample IDs. Let \( P \) represent the collection of positive samples owned by party A, which contains only positive data. Let \( U \) denote the collection of unlabeled data held by party B and party C, except for those already contained in party A. The three parties aim to jointly train a recommendation model to identify reliable positive samples from \( U \), as the true labels in \( U \) are unknown. Let \( R \) represent the collection of reliable positive samples identified by the model. Therefore, with this model, \( R \) can be provided to party A for relevant product recommendations.
+
+典型场景示例：假设存在三个数据持有方A、B、C，其拥有敏感数据且需在保障隐私前提下进行协作。设样本类别为二分类（正/负样本），三方在样本标识空间\\( \\mathcal{I} \\)上存在部分交集。特别地：
+参与方A持有正样本集合\\( P \\)（仅含正类数据）
+参与方B、C共同持有未标注数据集合\\( U \\)（不含A方已有样本）
+三方需协同训练推荐模型，从\\( U \\)中识别可靠正样本集合\\( R \\)
+最终将\\( R \\)反馈至A方用于产品推荐服务
+
+
+In this problem setting, conventional vertical federated learning algorithms cannot be directly applied since none of the clients holds complete labels. One possible approach is to apply semi-supervised learning techniques, such as PU learning. However, traditional PU learning methods require both \( P \) and \( U \) at the same time, whereas in the given scenario, party A only possesses \( P \).  
+
+As a result, for party A, who wants to incorporate recommendation services for its business, there is an Unlabeled-Data-Deficient PU (UDD-PU) learning recommendation problem, which cannot be directly addressed by existing methods.
+
+
+3.2.2 VFPU算法
+
+
+
+
+以下是针对3.2.1问题设置部分的学术润色版本，附修改说明和可视化建议：
+
+---
+3.2.1 问题设置
+
+研究场景：考虑包含K个数据持有方和一个中心服务器的联邦学习架构。令矩阵\\( \\mathcal{D}_k \\)表示第k个数据持有方拥有的数据集，其中矩阵行向量表征样本，列向量表征特征。整个数据集可形式化表示为三元组\\( (\\mathcal{I}, \\mathcal{X}, \\mathcal{Y}) \\)，其中\\( \\mathcal{I} \\)为样本标识空间，\\( \\mathcal{X} \\)为特征空间，\\( \\mathcal{Y} \\)为标签空间。传统纵向联邦学习（Vertical Federated Learning, VFL）要求至少存在一方持有完整标签数据，然而实际商业场景中受限于业务边界，获取全量标注数据具有显著挑战性。
+
+典型场景示例：假设存在三个数据持有方A、B、C，其拥有敏感数据且需在保障隐私前提下进行协作。设样本类别为二分类（正/负样本），三方在样本标识空间\\( \\mathcal{I} \\)上存在部分交集。特别地：
+参与方A持有正样本集合\\( P \\)（仅含正类数据）
+参与方B、C共同持有未标注数据集合\\( U \\)（不含A方已有样本）
+三方需协同训练推荐模型，从\\( U \\)中识别可靠正样本集合\\( R \\)
+最终将\\( R \\)反馈至A方用于产品推荐服务
+
+问题特殊性：传统纵向联邦学习算法失效于该场景，因无任何参与方持有完整标签。常规半监督学习方法如PU学习虽可处理部分标注数据，但其要求同时获取\\( P \\)和\\( U \\)，而本场景中仅A方持有\\( P \\)。由此形成未标记数据缺失的PU学习问题（Unlabeled-Data-Deficient PU Learning, UDD-PU），现有方法无法直接适用。
+
+---
+
+修改说明与示例辅助：
+结构化表达：采用三级标题体系（章节号->加粗标题->二级标题），通过分段标号提升可读性
+术语规范化：统一"data owner"译为"数据持有方"，"vertical federated learning"采用标准译名"纵向联邦学习"
+数学符号优化：保持LaTeX公式规范排版，对关键集合（P/U/R）进行斜体强调
+逻辑可视化建议：
+```mermaid
+graph TD
+    A[数据持有方A] -->|持有| P(正样本集合P)
+    B[数据持有方B] -->|持有| U(未标注数据U)
+    C[数据持有方C] -->|持有| U
+    P -->|联邦协作| Model[VFPU模型]
+    U -->|联邦协作| Model
+    Model -->|输出| R(可靠正样本R)
+    R -->|反馈| A
+```
+
+写作建议：
+在问题设置后补充研究假设（如数据分布假设、隐私保护等级等）
+增加符号说明表，明确各数学符号的物理含义
+使用对比表格说明UDD-PU与传统PU学习的差异
+
+这种改写方式通过结构化表达、可视化辅助和示例说明，能有效提升学术表达的严谨性和可理解性，符合学位论文的写作规范。建议学生在后续章节保持这种"定义问题->形式化描述->示例说明->方法对比"的写作范式。
+
+
+
+3.3 基于多方联邦的半监督学习方法
+To tackle the UDD-PU learning problem, we propose the VFPU algorithm, which combines a vertical federated learning framework with PU learning techniques. VFPU addresses the issue of Party A’s insufficient unlabeled samples and enhances the recommendation model’s performance.
+In this paper, the recommendation process based on the VFPU includes three primary steps: data preprocessing, encrypted sample alignment, and the execution of the VFPU algorithm. The primary goal of VFPU is to identify reliable positive samples within the unlabeled dataset. These samples allow the model to gain a deeper understanding of positive instance attributes, resulting in more accurate and personalized product recommendations for Party A. Simultaneously, we ensure data privacy and collaboration among multiple parties. Fig. 1 illustrates the recommendation process. The detailed steps in the process will be elaborated in the following sections.
+
+
+
+3.3.1 Data preprocessing and encrypted sample alignment
+
+(1) Data preprocessing
+We apply various preprocessing techniques to the data held by parties A, B, and C, including data cleaning, normalization, and feature encoding. Categorical features are handled using one-hot encoding, while numerical features are normalized using standardized scaling.  
+
+(2) Encrypted sample alignment
+After data preprocessing, the three parties securely perform the sample alignment process in the following two steps:  
+
+- Step 1: Party B and party C align their sample ID spaces, retaining only the samples that both parties share and discarding the unaligned ones, respectively. As a result, party B and party C now share the same samples but different features.  
+- Step 2: Party A and party C align their sample ID spaces without removing any samples. Aligned samples are those that appear in both parties’ datasets. Based on the alignment, aligned samples in party C are assigned with the label of 1, indicating positive samples. Meanwhile, unaligned samples in party C receive a label of -1, indicating unlabeled samples.  
+
+After the encrypted sample alignment, party C holds both positive and unlabeled samples. This process effectively transforms the UDD-PU recommendation problem into a vertical federated training scenario with the PU problem between party B and party C.  
+
+To protect data privacy during the sample alignment process, we utilize the Blind RSA-based Private Set Intersection (PSI) protocol [44]. This protocol enables all parties to securely compute the intersection of their datasets without revealing any additional information about the samples they hold. With the completion of the tasks, the datasets are now ready for the execution of the VFPU algorithm.  
+
+
+
+3.3.1 Vertical federated learning with positive and unlabeled data
+
+The objective of the VFPU algorithm is to securely and efficiently identify reliable positive samples from the unlabeled data. The core of the algorithm lies in the combination of some PU learning techniques with the vertical federated framework. The PU techniques incorporated in VFPU include the two-step technique [14] and the PU bagging method [13]. This section provides a detailed explanation of VFPU, as outlined in Algorithm 1.
+
+(1) Establishing initial sample sets
+Overall, the VFPU algorithm executes \( M \) iterations, each consisting of \( T \) rounds of random sampling, training, and predicting. In each iteration \( m \in \{1, ..., M\} \), the set of positive samples \( P_m \) and the set of unlabeled samples \( U_m \) are determined based on the labels provided by Party C as follows:  
+
+\[
+P_m = \{i | \mathcal{Y}^C_i = 1, \ i \in \mathcal{I}_C\};
+\]
+
+\[
+U_m = \{i | \mathcal{Y}^C_i = -1, \ i \in \mathcal{I}_C\},
+\]
+
+where \( \mathcal{I}_C \) is the ID space, \( \mathcal{Y}^C \) is the label space of party C, and \( i \) is the sample ID.  
+
+
+(2) Sampling, training, and predicting
+As shown in Fig. 1, during the \( t \)-th (\( t \in \{1,2,...,T\} \)) round of sampling in the \( m \)-th iteration, a pseudo-negative sample set \( N_m^t \) is generated from \( U_m \) using bootstrapping [13]. Mathematically, this can be expressed as:  
+
+\[
+N_m^t = \{\text{Randomly select } |P_m| \text{ elements from } U_m\}, \tag{2}
+\]
+
+where \( |P_m| \) is the number of samples as contained in \( P_m \).  
+
+Since the actual categories of the unlabeled samples are unknown, \( N_m^t \) is regarded as a set of pseudo-negative samples, potentially containing both genuine negative and positive samples. By drawing \( |P_m| \) elements from \( U_m \), we can create \( N_m^t \) with the same size as \( P_m \).  
+
+\( P_m \) and \( N_m^t \) are combined into a binary classification training set during the training process. This set is used to train the vertical federated learning model, which learns to distinguish between positive and negative samples and applies this knowledge to future prediction tasks.  
+
+Bootstrapping is a technique that randomly selects samples from a dataset with replacement. Employing this technique allows VFPU to create diverse and balanced training sets, thus improving the model’s generalization capabilities, reducing potential biases, and enhancing the overall performance of the recommendation model.  
+
+Samples not selected during the bootstrapping procedure are called out-of-bag samples. The out-of-bag score represents the predicted probability of the out-of-bag sample being classified as positive. Therefore, to obtain the set of out-of-bag samples \( O_m^t \), we need to exclude samples in \( N_m^t \) from \( U_m \), which can be expressed mathematically as:  
+
+\[
+O_m^t = U_m - N_m^t.
+\]
+
+Party C then encrypts and sends \( N_m^t \), \( P_m \), and \( O_m^t \) to other parties. Here, in our example, the other party is Party B. Then, Party B and Party C establish their training and testing data based on the three sets of sample IDs they have received. Specifically, we have:  
+
+\[
+\mathcal{D}_{train}^{K} = \{(i, x_i, y_i) | i \in P_m \text{ or } i \in N_m^t \};
+\]
+
+\[
+\mathcal{D}_{test}^{K} = \{(i, x_i, y_i) | i \in O_m^t \},
+\]
+
+
+where \( \mathcal{D}_{train}^{K} \) represents the binary training data and \( \mathcal{D}_{test}^{K} \) denotes the testing data and \( K \in \{B, C\} \). \( x_i \in \mathcal{X} \) and \( y_i \in \mathcal{Y} \).
+
+Once party B and party C have prepared their respective training and testing datasets, the binary classification problem transforms into a vertical federated training, and predicting task. A base estimator, serving as a machine learning model for each party, is adapted for use within the VFL framework.  
+
+The inner for loop, from line 5 to line 11 of Algorithm 1, is actually a bagging process. The bagging process contains steps for sampling, training, and predicting, repetitively for \( T \) iterations. In each iteration, these steps are independent from those in other iterations. On this basis, we adopt parallel processing to execute the bagging procedure, therefore minimizing the overall time consumption of the algorithm.  
+
+It is crucial to grasp the general training process of VFL [12]. Overall, it comprises four steps, illustrating how the base estimator is trained on the multi-party training data while preserving privacy. The four steps are as follows:  
+- Step 1: The server creates encryption pairs and sends a public key to parties B and C.  
+- Step 2: Parties B and C encrypt and exchange intermediate results for gradient and loss calculations.
+- Step 3: Parties B and C compute encrypted gradients, add an additional mask, and calculate the encrypted loss. Encrypted values are then sent to the server.  
+- Step 4: The server decrypts and sends the decrypted gradients and loss back to party B and party C. Parties B and C unmask the gradients and update the model parameters accordingly.  
+
+Various privacy-preserving machine-learning algorithms have been proposed for the VFL framework in support of the general training process [12], including logistic regression (LR) [45, 46], random forest (RF) [47], gradient boosting decision tree (GBDT) [45], XGBoost (XGB) [48, 49] and LightGBM (LGB) [39]. In this paper, we will apply different base estimators to evaluate the performance of the recommendation model.
+
+1.将英文部分翻译成中文
+2.在不改变愿意的基础上，尽量丰富一下内容，我的学位论文有字数要求
+
+
+
+
+
+
+
+
+
+
+3.3.2 Vertical federated learning with positive and unlabeled data

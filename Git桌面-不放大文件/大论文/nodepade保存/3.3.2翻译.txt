@@ -1,0 +1,110 @@
+3.3.1 Vertical federated learning with positive and unlabeled data
+
+The objective of the VFPU algorithm is to securely and efficiently identify reliable positive samples from the unlabeled data. The core of the algorithm lies in the combination of some PU learning techniques with the vertical federated framework. The PU techniques incorporated in VFPU include the two-step technique [14] and the PU bagging method [13]. This section provides a detailed explanation of VFPU, as outlined in Algorithm 1.
+
+(1) Establishing initial sample sets
+Overall, the VFPU algorithm executes \( M \) iterations, each consisting of \( T \) rounds of random sampling, training, and predicting. In each iteration \( m \in \{1, ..., M\} \), the set of positive samples \( P_m \) and the set of unlabeled samples \( U_m \) are determined based on the labels provided by Party C as follows:  
+
+\[
+P_m = \{i | \mathcal{Y}^C_i = 1, \ i \in \mathcal{I}_C\};
+\]
+
+\[
+U_m = \{i | \mathcal{Y}^C_i = -1, \ i \in \mathcal{I}_C\},
+\]
+
+where \( \mathcal{I}_C \) is the ID space, \( \mathcal{Y}^C \) is the label space of party C, and \( i \) is the sample ID.  
+
+将英文部分翻译成中文
+
+(2) Sampling, training, and predicting
+As shown in Fig. 1, during the \( t \)-th (\( t \in \{1,2,...,T\} \)) round of sampling in the \( m \)-th iteration, a pseudo-negative sample set \( N_m^t \) is generated from \( U_m \) using bootstrapping [13]. Mathematically, this can be expressed as:  
+
+\[
+N_m^t = \{\text{Randomly select } |P_m| \text{ elements from } U_m\}, \tag{2}
+\]
+
+where \( |P_m| \) is the number of samples as contained in \( P_m \).  
+
+Since the actual categories of the unlabeled samples are unknown, \( N_m^t \) is regarded as a set of pseudo-negative samples, potentially containing both genuine negative and positive samples. By drawing \( |P_m| \) elements from \( U_m \), we can create \( N_m^t \) with the same size as \( P_m \).  
+
+\( P_m \) and \( N_m^t \) are combined into a binary classification training set during the training process. This set is used to train the vertical federated learning model, which learns to distinguish between positive and negative samples and applies this knowledge to future prediction tasks.  
+
+Bootstrapping is a technique that randomly selects samples from a dataset with replacement. Employing this technique allows VFPU to create diverse and balanced training sets, thus improving the model’s generalization capabilities, reducing potential biases, and enhancing the overall performance of the recommendation model.  
+
+Samples not selected during the bootstrapping procedure are called out-of-bag samples. The out-of-bag score represents the predicted probability of the out-of-bag sample being classified as positive. Therefore, to obtain the set of out-of-bag samples \( O_m^t \), we need to exclude samples in \( N_m^t \) from \( U_m \), which can be expressed mathematically as:  
+
+\[
+O_m^t = U_m - N_m^t.
+\]
+
+Party C then encrypts and sends \( N_m^t \), \( P_m \), and \( O_m^t \) to other parties. Here, in our example, the other party is Party B. Then, Party B and Party C establish their training and testing data based on the three sets of sample IDs they have received. Specifically, we have:  
+
+\[
+\mathcal{D}_{train}^{K} = \{(i, x_i, y_i) | i \in P_m \text{ or } i \in N_m^t \};
+\]
+
+\[
+\mathcal{D}_{test}^{K} = \{(i, x_i, y_i) | i \in O_m^t \},
+\]
+
+
+where \( \mathcal{D}_{train}^{K} \) represents the binary training data and \( \mathcal{D}_{test}^{K} \) denotes the testing data and \( K \in \{B, C\} \). \( x_i \in \mathcal{X} \) and \( y_i \in \mathcal{Y} \).
+
+将英文部分翻译成中文，作为我的学位论文
+
+Once party B and party C have prepared their respective training and testing datasets, the binary classification problem transforms into a vertical federated training, and predicting task. A base estimator, serving as a machine learning model for each party, is adapted for use within the VFL framework.  
+
+The inner for loop, from line 5 to line 11 of Algorithm 1, is actually a bagging process. The bagging process contains steps for sampling, training, and predicting, repetitively for \( T \) iterations. In each iteration, these steps are independent from those in other iterations. On this basis, we adopt parallel processing to execute the bagging procedure, therefore minimizing the overall time consumption of the algorithm.  
+
+It is crucial to grasp the general training process of VFL [12]. Overall, it comprises four steps, illustrating how the base estimator is trained on the multi-party training data while preserving privacy. The four steps are as follows:  
+- Step 1: The server creates encryption pairs and sends a public key to parties B and C.  
+- Step 2: Parties B and C encrypt and exchange intermediate results for gradient and loss calculations.
+- Step 3: Parties B and C compute encrypted gradients, add an additional mask, and calculate the encrypted loss. Encrypted values are then sent to the server.  
+- Step 4: The server decrypts and sends the decrypted gradients and loss back to party B and party C. Parties B and C unmask the gradients and update the model parameters accordingly.  
+
+Various privacy-preserving machine-learning algorithms have been proposed for the VFL framework in support of the general training process [12], including logistic regression (LR) [45, 46], random forest (RF) [47], gradient boosting decision tree (GBDT) [45], XGBoost (XGB) [48, 49] and LightGBM (LGB) [39]. In this paper, we will apply different base estimators to evaluate the performance of the recommendation model.
+将英文部分翻译成中文，作为我的学位论文
+
+
+
+
+(3) dentifying reliable positive samples
+During the *m*-th iteration, the process of sampling, training, and predicting is carried out *T* times. Upon completion of these *T* rounds, sufficient information is collected to determine the set of probabilities, represented as *P?*, for all unlabeled samples in *U?*. These probabilities correspond to the likelihood of each sample being regarded as the positive class and can be employed for subsequent decision-making processes, such as pinpointing reliable positive samples and updating training sets.
+To derive the entire set \( P_{m} \), it is necessary to compute the probability \( P_{m}(u) \) for each unlabeled sample \( u(u \in U_{m}) \). \( P_{m}(u) \) is calculated by summing up the out-of-bag scores of \( u \) across all the \( T \) rounds and dividing the sum by the total number of occurrences of \( u \) remaining as an out-of-bag sample in the \( m \)-th iteration. The subsequent formula can be obtained:
+
+\[
+P_{m}(u) = \frac{\sum_{t=1}^{T} S_{m}^{t}(u)}{\sum_{t=1}^{T} I(u \in O_{m}^{t})}.
+\]
+
+
+Note that \( S_{m}^{t}(u) = 0 \) if \( u \) was not an out-of-bag sample in the \( t \)-th round of sampling during the \( m \)-th iteration. The indicator function \( \sum_{t=1}^{T} I(u \in O_{m}^{t}) \) returns 1 if the sample \( u \) is in the out-of-bag set \( O_{m}^{t} \), and 0 otherwise.
+
+Based on the probabilities \( P_{m}(u) \), we rank all the unlabeled samples decreasingly. Then, the top-ranked samples can be selected as reliable positive samples since they are more probable to be true positive samples. The set of reliable positive samples identified in the \( m \)-th iteration can be denoted as \( R_{m} \), and we have that:
+
+\[
+R_{m} = \{ \text{Choose Top } |U_{m}| \times \theta \text{ IDs from } P_{m} \}.
+\]
+
+
+This calculation can be performed in two steps:
+
+- Step 1: Sort the samples in \( P_{m} \) in a non-increasing order based on their probabilities.
+- Step 2: Select the top \( |U_{m}| \times \theta \) samples from the sorted ranking, where \( \theta \) is a manually set ratio representing the sampling rate of reliable positive samples.
+
+将英文部分翻译成中文，作为我的学位论文
+
+
+Subsequently, we update the labels of the samples in party \( C \)'s dataset by adding the selected reliable positive samples to the set of positive samples. As a result, the number of samples in the unlabeled dataset \( U_m \) decreases. Specifically, we can formalize it as follows:
+
+\[
+\mathcal{Y}^C_r = 1, \quad r \in R_m
+\]
+
+
+where each sample \( r \) in the set \( R_m \) is assigned a label of 1 (positive class).
+
+(4) Final results and application to recommend**  
+After completing all the \( M \) iterations of the algorithm, the final set of reliable positive samples \( R \) is obtained by taking the union of all \( R_m \) sets from each iteration. With this set of reliable positive samples, Party A can now tailor recommendations to each sample in \( R \), thereby improving the accuracy and relevance of the recommendation system. This final step is crucial in ensuring the effectiveness of the algorithm in identifying the most relevant samples for enhancing the performance of the recommendation system.
+
+将英文部分翻译成中文，作为我的学位论文

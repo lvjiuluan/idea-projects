@@ -1,0 +1,16 @@
+你好，现在我要撰写3.2.1，问题设置：
+1.将英文部分翻译成中文
+2.在不改变愿意的基础上，尽量丰富一下内容，我的学位论文有字数要求
+
+3.2 多方联邦的半监督学习方法
+本节将系统阐述未标记数据缺失的PU（UDD-PU）学习问题设定，并提出基于正样本与未标记数据的纵向联邦学习（VFPU）算法。我们将详细阐述VFPU算法如何为UDD-PU学习问题提供解决方案。
+3.2.1 问题设置
+Firstly, consider a scenario with \( K \) data owners and one central server. Let matrix \( \mathcal{D}_k \) represent the data held by the \( k \)-th data owner, where each row of the matrix represents a sample, and each column represents a feature. The dataset can be represented as \( (\mathcal{I}, \mathcal{X}, \mathcal{Y}) \), where \( \mathcal{I} \) denotes the samples’ ID space, \( \mathcal{X} \) denotes the feature space, and \( \mathcal{Y} \) denotes the label space. In the traditional vertical federated learning (VFL) setting, at least one party possesses complete labels of its dataset. However, obtaining fully labeled data in many real-world scenarios is challenging due to business constraints.
+
+For the purpose of illustration, let us consider a scenario involving three data owners: party A, party B, and party C. These data owners possess sensitive data and need to collaborate securely while maintaining data privacy. Suppose there are two classes of samples, namely positive and negative. All three parties share some overlap on sample IDs. Let \( P \) represent the collection of positive samples owned by party A, which contains only positive data. Let \( U \) denote the collection of unlabeled data held by party B and party C, except for those already contained in party A. The three parties aim to jointly train a recommendation model to identify reliable positive samples from \( U \), as the true labels in \( U \) are unknown. Let \( R \) represent the collection of reliable positive samples identified by the model. Therefore, with this model, \( R \) can be provided to party A for relevant product recommendations.
+
+In this problem setting, conventional vertical federated learning algorithms cannot be directly applied since none of the clients holds complete labels. One possible approach is to apply semi-supervised learning techniques, such as PU learning. However, traditional PU learning methods require both \( P \) and \( U \) at the same time, whereas in the given scenario, party A only possesses \( P \).  
+
+As a result, for party A, who wants to incorporate recommendation services for its business, there is an Unlabeled-Data-Deficient PU (UDD-PU) learning recommendation problem, which cannot be directly addressed by existing methods.
+
+3.2.2 VFPU算法
