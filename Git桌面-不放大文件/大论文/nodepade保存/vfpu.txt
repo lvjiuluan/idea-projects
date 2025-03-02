@@ -1,0 +1,205 @@
+输入：$ X_{al}^A$,  $X_{nl}^A $, $ \mathcal{L}_B $，$ \tau $
+
+初始化: $ X^B = \emptyset $ , $\mathcal{L}_B^{\text{predict}} = \{ (\mu_q, f^B_q) \in \mathcal{L}_B \mid u_q > \tau \}$
+
+for $(\mu_t, f^B_t) \in \mathcal{L}_B^{\text{predict}}$ do
+
+​	$X_{al}^{B}=\{x_{i}^{B}\}_{i=1}^{{{n}_{al}}}$
+
+​	$X_{nl}^{B}=\{x_{i}^{B}\}_{i={{n}_{al}}+1}^{{{n}_{B}}}$
+
+   p = vfpu-m($ X_{al}^A$，$X_{nl}^A $，$X_{al}^B $，$X_{nl}^B $, $f^B_t$)
+
+​	${{X}^{B}}={{X}^{B}}\cup \{p\}$
+
+
+
+vfpu-m 的代码实现如下，仔细越读并理解，帮我将其转为严谨的数学描述。
+
+$ X_{al}^A$：对应XA_L
+
+$X_{nl}^A $：对应XA_U
+
+$X_{al}^B $：对应XB_L
+
+$X_{nl}^B $, ：对应XB_U
+
+$f^B_t$：对应y_L
+
+```python
+    def __fit_common(self, XA_L, XB_L, y_L, XA_U, XB_U, task_type):
+        """
+        自训练过程的通用函数，可用于分类和回归任务。
+
+        参数:
+        ----------
+        XA_L : np.ndarray
+            已标注数据的 A 方特征，形状为 (n_L, dimA)。
+        XB_L : np.ndarray
+            已标注数据的 B 方特征，形状为 (n_L, dimB)。
+        y_L : np.ndarray
+            已标注数据的标签，形状为 (n_L,)。
+        XA_U : np.ndarray
+            未标注数据的 A 方特征，形状为 (n_U, dimA)。
+        XB_U : np.ndarray
+            未标注数据的 B 方特征，形状为 (n_U, dimB)。
+        task_type : str
+            任务类型，'clf'表示分类任务，'reg'表示回归任务。
+
+        返回:
+        ----------
+        None
+            函数执行结束后，会将对未标注数据的预测结果写入相应的self.pred_clf或self.pred_reg。
+        """
+        # 根据任务类型确定使用的模型、参数和结果存储变量
+        is_clf_task = task_type == TaskType.CLASSIFICATION.value
+        # 纵向联邦分类器，或者纵向联邦回归器
+        model = self.clf if is_clf_task else self.reg
+        k_value = self.k1 if is_clf_task else self.k2
+        pick_lowest = not is_clf_task  # 分类任务选最高置信度，回归任务选最低Z分数
+
+        # 初始化预测结果数组, 与 XA_U, XB_U 行数一致
+        unlabeled_indices = np.arange(len(XA_U))
+        pred_result = np.full(len(XA_U), np.nan)
+
+        # 存储到相应的预测结果变量
+        if is_clf_task:
+            self.pred_clf = pred_result
+        else:
+            self.pred_reg = pred_result
+
+        self.logger.info("[INIT] 初始化预测结果, 未标注数据数量=%d", len(XA_U))
+        self.logger.info("[INIT] 最大迭代次数 max_iter=%d, 每轮选取比例 k=%.2f",
+                         self.max_iter, k_value)
+
+        start_time = time.time()
+        for epoch in range(self.max_iter):
+            epoch_start_time = time.time()
+
+            self.logger.info("===== [Epoch %d/%d] 迭代开始 =====", epoch + 1, self.max_iter)
+            self.logger.info("[INFO] 当前 Labeled 样本数量: %d, Unlabeled 样本数量: %d",
+                             len(XA_L), len(XA_U))
+
+            # 若当前没有任何有标签数据，无法进行训练，直接结束
+            if len(XA_L) == 0:
+                self.logger.warning("[WARNING] Labeled 数据量为0，无法继续训练，终止迭代。")
+                break
+
+            # 1. 训练模型
+            task_name = "分类器" if is_clf_task else "回归器"
+            self.logger.info("[STEP 1] 开始训练%s (基于 %d 个 Labeled 样本)...", task_name, len(XA_L))
+            model_start_time = time.time()
+            model.fit(XA_L, XB_L, y_L)
+            model_time = time.time() - model_start_time
+            self.logger.info("[STEP 1] %s训练完成，耗时 %.2f 秒。", task_name, model_time)
+
+            # 对分类任务输出一些额外信息
+            if is_clf_task and hasattr(model, 'classes_'):
+                self.logger.debug("[DEBUG] 分类器识别的类别列表: %s", model.classes_)
+
+            # 2. 对 Unlabeled 数据打分
+            self.logger.info("[STEP 2] 对 Unlabeled 数据进行置信度计算...")
+            scores_start_time = time.time()
+
+            # 根据任务类型计算置信度分数
+            if is_clf_task:
+                pred = model.predict(XA_U, XB_U)  # 预测数据的标签
+                proba = model.get_predict_proba()  # 此次预测数据的概率值
+                scores = proba.max(axis=1)  # 取预测概率中最大的值作为该样本的置信度
+            else:
+                predictions = model.predict(XA_U, XB_U)
+                mean_prediction = np.mean(predictions)
+                std_prediction = np.std(predictions)
+                # 计算每个预测值的 Z 分数（标准化偏离程度）
+                scores = np.abs((predictions - mean_prediction) / std_prediction)
+                pred = predictions  # 为了统一后续代码，回归任务中也使用pred变量
+
+            scores_time = time.time() - scores_start_time
+            self.logger.info("[STEP 2] 置信度计算完成，耗时 %.2f 秒。", scores_time)
+            self.logger.debug("[DEBUG] 置信度分数统计: min=%.4f, max=%.4f, mean=%.4f, std=%.4f",
+                              scores.min(), scores.max(), scores.mean(), scores.std())
+
+            # 3. 选出符合条件的那部分数据
+            self.logger.info("[STEP 3] 按置信度选取前 %.2f%% 的未标注样本 (min_confidence=%.2f)...",
+                             k_value * 100, self.min_confidence)
+            idx = get_top_k_percent_idx(scores, k_value, pick_lowest=pick_lowest)
+
+            if len(idx) == 0:
+                self.logger.info("[INFO] 本轮没有样本满足置信度筛选条件，终止迭代。")
+                break
+
+            self.logger.info("[STEP 3] 本轮选中高置信度样本数量: %d, 占未标注样本总数的 %.2f%%",
+                             len(idx), 100.0 * len(idx) / (len(XA_U) + 1e-9))
+            selected_original_idx = unlabeled_indices[idx]
+
+            # 4. 得到这部分数据的预测标签
+            self.logger.info("[STEP 4] 获取高置信度样本的预测标签。")
+            best_pred = pred[idx]
+
+            # 5. 将 pred_result 对应位置赋值为 best_pred
+            if is_clf_task:
+                self.pred_clf[selected_original_idx] = best_pred
+            else:
+                self.pred_reg[selected_original_idx] = best_pred
+
+            # 6. 将这些样本移动到 Labeled 集合中
+            self.logger.info("[STEP 5] 合并高置信度样本至 Labeled 集...")
+            XA_L = np.concatenate([XA_L, XA_U[idx]], axis=0)
+            XB_L = np.concatenate([XB_L, XB_U[idx]], axis=0)
+            y_L = np.concatenate([y_L, best_pred], axis=0)
+            self.logger.info("[STEP 5] 合并后 Labeled 样本数=%d", len(XA_L))
+
+            # 从 Unlabeled 集中删除这些样本
+            XA_U = np.delete(XA_U, idx, axis=0)
+            XB_U = np.delete(XB_U, idx, axis=0)
+            unlabeled_indices = np.delete(unlabeled_indices, idx, axis=0)
+            self.logger.info("[STEP 5] 剩余 Unlabeled 样本数=%d", len(XA_U))
+
+            # 判断是否满足提前收敛条件（本轮选样本不足某个数量）
+            if len(idx) < self.convergence_threshold:
+                self.logger.info("[INFO] 本轮新增标注数量=%d < 收敛阈值=%d，提前结束迭代。",
+                                 len(idx), self.convergence_threshold)
+                break
+
+            # 如果 Unlabeled 集已空，结束迭代
+            if len(XA_U) == 0:
+                self.logger.info("[INFO] Unlabeled 样本已全部处理完，提前结束迭代。")
+                break
+
+            epoch_elapsed_time = time.time() - epoch_start_time
+            self.logger.info("===== [Epoch %d/%d] 迭代结束，耗时 %.2f 秒 =====",
+                             epoch + 1, self.max_iter, epoch_elapsed_time)
+
+        total_elapsed_time = time.time() - start_time
+        self.logger.info("[DONE] 自训练流程结束，共进行了 %d 轮迭代，耗时 %.2f 秒。", epoch + 1, total_elapsed_time)
+        self.logger.info("[DONE] 目前尚有 %d 个未标注样本未获得最终预测。", len(XA_U))
+
+        # 若还有剩余的未标注数据，则进行一次最终预测
+        if len(XA_U) != 0:
+            self.logger.info("[FINAL] 对剩余 %d 个未标记样本进行最终预测...", len(XA_U))
+            final_pred_start_time = time.time()
+            final_pred = model.predict(XA_U, XB_U)
+            final_pred_time = time.time() - final_pred_start_time
+            self.logger.info("[FINAL] 最终预测完成，耗时 %.2f 秒。", final_pred_time)
+
+            # 根据任务类型保存预测结果
+            if is_clf_task:
+                self.logger.info(f"final_pred = self.clf.predict(XA_U, XB_U) "
+                                 f"语句输入形状： XA_U.shape = {XA_U.shape},XB_U.shape = {XB_U.shape},"
+                                 f"\n输出形状： final_pred.shape = {final_pred.shape}")
+                self.logger.info(f"final_pred的长度为{len(final_pred)}")
+                self.logger.info(f"self.pred_clf[unlabeled_indices]的长度为: {len(self.pred_clf[unlabeled_indices])}")
+                self.pred_clf[unlabeled_indices] = final_pred
+            else:
+                self.logger.debug("[DEBUG] 剩余未标注样本的预测标签分布: %s",
+                                  np.unique(final_pred, return_counts=True))
+                self.pred_reg[unlabeled_indices] = final_pred
+
+        self.logger.info("[DONE] 所有未标注样本的预测任务完成！(self.pred 已更新)")
+        if task_type == 'clf':
+            return self.pred_clf
+        else:
+            return self.pred_reg
+
+```
+

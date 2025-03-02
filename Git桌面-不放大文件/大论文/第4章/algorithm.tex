@@ -1,0 +1,73 @@
+\documentclass{article}  % 选择文档类型
+\usepackage{amsmath, amssymb}  % 载入数学包
+\usepackage{algorithm}  % 载入算法环境
+\usepackage{algpseudocode}  % 载入伪代码环境
+
+\begin{document}  % 文档开始
+	
+	\title{LaTeX 基本结果}
+	\author{作者姓名}
+	\date{\today}  % 自动生成当前日期
+	\maketitle  % 生成标题
+	
+	\section{Algorithm}
+	
+	\begin{algorithm}
+		\caption{Process of Generating Data Using Vertical Federated Semi-supervised Method}
+		\begin{algorithmic}[1]
+			\Require $X_{al}^A$, $X_{nl}^A$, $\mathcal{L}_B$, $\tau$
+			\Ensure $X^B$
+			\State Initialization: $X^B = \emptyset$, $\mathcal{L}_B^{\text{predict}} = \{(\mu_q, f^B_q) \in \mathcal{L}_B \mid u_q > \tau\}$
+			\For{$(\mu_q, f^B_q) \in \mathcal{L}_B^{\text{predict}}$}
+			\State $X_{al}^{B}=\{x_{i}^{B}\}_{i=1}^{n_{al}}$
+			\State $X_{nl}^{B}=\{x_{i}^{B}\}_{i=n_{al}+1}^{n_{B}}$
+			\State $p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^B, X_{nl}^B, f^B_q)$
+			\State $X^{B} = X^{B} \cup \{p\}$
+			\EndFor
+			\Return $X^{B}$
+		\end{algorithmic}
+	\end{algorithm}
+
+	\begin{algorithm}
+		\caption{VFPU-M Algorithm}
+		\begin{algorithmic}[1]
+			\Require $X_{al}^A$, $X_{nl}^A$, $X_{al}^B$, $X_{nl}^B$, $y$, $\alpha$, $k$, $T$
+			\Ensure $\mathbf{y}^{\text{pseudo}}$
+			\State Initialize the federated model $f_\theta$
+			\State $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$
+			\State $\mathcal{D}_{U}^{(0)} = \{X_{nl}^A, X_{nl}^B\}$
+			\For{$t = 1$ \textbf{to} $T$}
+			\State \textbf{Federated Model Training:}
+			\State $\theta^{(t)} \leftarrow \arg\min_\theta \sum_{(\mathbf{x}^A,\mathbf{x}^B,y)\in\mathcal{D}_L^{(t)}} \ell(f_\theta(\mathbf{x}^A,\mathbf{x}^B), y)$
+			
+			\State \textbf{Confidence Calculation:}
+			\State For $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)}$, calculate the confidence:
+			\State $s_j = \begin{cases} 
+				\max_{c} \mathbb{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{Classification task} \\
+				1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t} & \text{Regression task}
+			\end{cases}$
+			\State Where $\mu_t,\sigma_t$ are the current predicted mean and standard deviation
+			
+			\State \textbf{Sample Selection:}
+			\State $\mathcal{C}^{(t)} = \{(\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)} | s_j \geq \alpha\}$
+			\State Select the top $k$ proportion of samples after sorting by confidence:
+			\State $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$
+			
+			\State \textbf{Pseudo-label Generation:}
+			\State $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \quad \hat{y}_j = \begin{cases}
+				\arg\max_c \mathbb{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{Classification} \\
+				f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{Regression}
+			\end{cases}$
+			
+			\State \textbf{Dataset Update:}
+			\State $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$
+			\State $\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$
+			\EndFor
+			
+			\State $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$
+			\Return $\mathbf{y}^{\text{pseudo}}$
+		\end{algorithmic}
+	\end{algorithm}
+	
+	
+\end{document}  % 文档结束
