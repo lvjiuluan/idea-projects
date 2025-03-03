@@ -1,0 +1,11 @@
+
+文献编号：[1]
+名称：Multi-party Federated Recommendation Based on Semi-supervised Learning
+摘要:Leveraging multi-party data to provide recommendations remains a challenge, particularly when the party in need of recommendation services possesses only positive samples while other parties just have unlabeled data. To address UDD-PU learning problem, this paper proposes an algorithm VFPU, Vertical Federated learning with Positive and Unlabeled data. VFPU conducts random sampling repeatedly from the multi-party unlabeled data, treating sampled data as negative ones. It hence forms multiple training datasets with balanced positive and negative samples, and multiple testing datasets with those unsampled data. For each training dataset, VFPU trains a base estimator adapted for the vertical federated learning framework iteratively. We use the trained base estimator to generate forecast scores for each sample in the testing dataset. Based on the sum of scores and their frequency of occurrence in the testing datasets, we calculate the probability of being positive for each unlabeled sample. Those with top probabilities are regarded as reliable positive samples. They are then added to the positive samples and subsequently removed from the unlabeled data. This process of sampling, training, and selecting positive samples is iterated repeatedly. Experimental results demonstrated that VFPU performed comparably to its non-federated counterparts and outperformed other federated semi-supervised learning methods.
+
+我的论文
+2.1 Process I 计算跨方特征相关性
+...已写完
+2.2 Process II 纵向联邦半监督预测缺失特征
+[1]提出了纵向联邦半监督VFPU方法，我们在该方法的基础上，进行了多种，使得其适用于多分类和回归任务，我们称该方法为VFPU-M(VFPU-Multi task)。通过计算跨方特征相关性，现在得到B方每个特征列与A方之间的相关性，我们选择与A方高相关性的特征列，用VFPU-M生成伪标签来进行
+

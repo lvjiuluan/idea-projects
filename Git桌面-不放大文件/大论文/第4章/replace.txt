@@ -1,0 +1,50 @@
+We consider a two-party vertical federated learning setting where only one party has labels. This is the typical VFL setting defined in Reference [40] where the party having labels is short of features to build an accurate model, and thus it leverages complimentary features provided by a second party. Specifically, party A has dataset 
+
+$$
+\mathcal{D}^A := \{(X^A, i, Y^A, i)\}_{i=1}^{n^A}
+$$
+
+where $X^A, i$ is the feature vector of the $i$th sample and $Y^A, i \in \{0,1\}^C$ is the corresponding one-hot encoding ground-truth label with $C$ classes for the $i$th sample, while party B has dataset 
+
+$$
+\mathcal{D}^B := \{X^B, i\}_{i=1}^{n^B}.
+$$
+
+$\mathcal{D}^A$ and $\mathcal{D}^B$ are held privately by the two parties and cannot be exposed to each other. $n^A$ and $n^B$ are numbers of samples for $\mathcal{D}^A$ and $\mathcal{D}^B$, respectively.
+
+If we concatenate $\mathcal{D}^A$ and $\mathcal{D}^B$ with samples (of different parties) having the same identity aligned, then we obtain a single dataset depicted in Figure 1. This dataset is vertically partitioned, and each party owns one vertical partition (or a partial view) of this dataset. This is where the term “vertical federated learning” comes from. We assume that there exists only a limited amount of aligned samples 
+
+$$
+\mathcal{D}_{al} := \{X^B, i_{al}, X^A, i_{al}, Y^A, i_{al}\}_{i=1}^{n_{al}}
+$$
+
+between the two parties. Party A owns the partition 
+
+$$
+\mathcal{D}^A_{al} := \{X^A, i_{al}, Y^A, i_{al}\}_{i=1}^{n_{al}}
+$$
+
+and party B owns 
+
+$$
+\mathcal{D}^B_{al} := \{X^B, i_{al}\}_{i=1}^{n_{al}},
+$$
+
+where $n_{al}$ is the number of aligned samples. One can perform the alignment through encrypted entity matching techniques in a privacy-preserving setting [30]. Here, we assume that party A and party B have already established the alignment between their samples.
+
+
+Other than aligned samples, the rest samples of each party have no aligned counterparts from the other party. We call them non-aligned samples and denote them as  
+
+$$
+\mathcal{D}^A_{nl} := \{X^A, i_{nl}, Y^A, i_{nl}\}_{i=1}^{n^A_{nl}}
+$$
+
+for party A and  
+
+$$
+\mathcal{D}^B_{nl} := \{X^B, i_{nl}\}_{i=1}^{n^B_{nl}}
+$$
+
+for party B. From the perspective of a single tabular dataset (see Figure 1), each party has no features (or labels) that correspond to non-aligned samples of the other party. We treat those features (or labels) as *missing*.
+
+The conventional VFL is trying to build a federated machine learning model utilizing only aligned samples $\mathcal{D}_{al}$, leaving non-aligned samples $\mathcal{D}^A_{nl}$ and $\mathcal{D}^B_{nl}$ unused. We, therefore, propose a semi-supervised VFL with Cross-view Training (FedCVT) approach that not only leverages aligned samples but also takes full advantages of non-aligned samples (shown in Figure 2), aiming to boost the performance of VFL, especially when the amount of aligned samples is small.

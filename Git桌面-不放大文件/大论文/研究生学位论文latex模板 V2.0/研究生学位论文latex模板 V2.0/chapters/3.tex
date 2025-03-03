@@ -1,0 +1,223 @@
+
+
+\chapter{图表、公式格式和印制要求Abc}
+\thispagestyle{others}
+\pagestyle{others}
+\xiaosi
+
+\section{本章引言}
+本章引言……
+
+\section{引用参考文献}
+参考文献引用示例：单篇引用\textsuperscript{\cite{ref1}}，多篇同处引用\textsuperscript{\cite{ref1,ref2,ref3,ref13}}
+
+
+\section{图和表格式}
+
+图、表在版面中居中放置，图编号和图题居中列在图下。编号采用阿拉伯数字分章连续编号，例如“图 \ref{fig:3.1}”,“表 \ref{tab:3.1}”以及“式 \ref{eq:3.1}”。
+
+\subsection{图}
+下面给出图片示例：
+
+%调整图片与上方文字之间的间距
+\vspace{-0.1cm}
+
+\begin{figure}[h]
+		\centering 
+		\includegraphics[width=10cm]{chapters/31}
+	    \bicaption[\xiaosi 不同缩放系数v的缩放效果]{\wuhao 不同缩放系数v的缩放结果}{\wuhao Scaling results with different scaling coefficients ν}
+	   	 \label{fig:3.1}
+\end{figure}
+
+%调整图片与下方文字之间的间距
+\vspace{-0.35cm}
+
+图片标题与图片之间的间距使用默认设置即可，与上下文的间距由于LATEX动态排版特性，和该页的整体布局有关，需要大家手动调整。
+
+。
+
+。
+
+
+
+
+
+下图是多子图示例，对于标题没有超过一行的图题，可以参照下面代码进行设置：
+
+\vspace{0.5cm} %调整图片与上文的间距
+
+\begin{figure}[!h]
+	\centering
+	\subfigure[]{
+		\label{fig:666}
+		\includegraphics[width=12cm]{chapters/DE_J.pdf}}
+	\subfigure[]{
+		\label{fig:888}
+		\includegraphics[width=12cm]{chapters/DE_CF.pdf}}
+		\bicaption[\xiaosi 理论效率与$\gamma$和$\varphi$的关系]{\wuhao 理论效率与$\gamma$和$\varphi$的关系。 (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}{\wuhao Theoretical DE versus $\gamma$ and $\varphi$. (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}
+\end{figure}
+
+\vspace{-0.2cm} %调整图片与下文的间距
+
+图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。
+
+图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。图片要求参照写作指南。
+
+
+对于图题超过了一行的图片，请参照下面代码进行设置，使得图题能与WORD一样居中左对齐,注意其中bicaption[]()(这个里面的字号使用wuhaob):
+
+\vspace{0.3cm}
+
+\begin{figure}[!h]
+	\centering
+	\subfigure[]{
+		\label{fig:DE_J}
+		\includegraphics[width=12cm]{chapters/DE_J.pdf}}
+	\subfigure[]{
+		\label{fig:DE_CF}
+		\includegraphics[width=12cm]{chapters/DE_CF.pdf}}
+	\begin{itemize}[leftmargin=1.6cm,rightmargin=1.6cm]
+		\item[\quad] \bicaption[\xiaosi 理论效率与$\gamma$和$\varphi$的关系]{\wuhao 理论效率与$\gamma$和$\varphi$的关系。 (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}{\wuhaob Theoretical DE versus $\gamma$ and $\varphi$. (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$Theoretical DE versus $\gamma$ and $\varphi$. (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}
+	\end{itemize}
+\vspace{-1cm}
+
+
+%\captionsetup{margin={1.6cm,1.6cm}}
+%\bicaption[\xiaosi 理论效率与$\gamma$和$\varphi$的关系。]{\wuhao 理论效率与$\gamma$和$\varphi$的关系。 (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}{\wuhaob Theoretical DE versus $\gamma$ and $\varphi$. (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$Theoretical DE versus $\gamma$ and $\varphi$. (a) $\alpha=1$; (b) $\alpha=2/\sqrt{3}$}
+
+
+\end{figure}
+
+
+
+\subsection{表}
+
+表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。
+
+\vspace{0.1cm}
+
+\begin{table}[h]
+	\renewcommand{\arraystretch}{1.5}
+	\centering
+	\bicaption[\xiaosi 电流类型对效率的影响]{\wuhao 电流类型对效率的影响}{\wuhao Current type impact on efficiency}
+	\begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}}
+		\toprule[1.5pt]
+		\makecell[c]{\songti\wuhao 电流类型}&\makecell[c]{\songti\wuhao A}&\makecell[c]{\songti\wuhao B}&\makecell[c]{\songti\wuhao C}\\
+		\hline
+		\makecell[c]{\wuhao aaa}&\makecell[c]{\wuhao aa1}&\makecell[c]{\wuhao bb1}&\makecell[c]{\wuhao cc1}\\
+		\bottomrule[1.5pt]
+	\end{tabular}
+   \label{tab:3.1} 	
+\end{table}
+
+表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。表格格式参照写作指南。
+
+\vspace{-0.1cm}
+
+\begin{table*}[h]
+	\renewcommand{\arraystretch}{1.5}
+	\bicaption[\xiaosi 高效率功放性能对比]{\wuhao 高效率功放性能对比}{\wuhao High-effiency power amplifier performance comparison}
+	\label{tab_1}
+	\centering
+	\wuhao
+	\begin{tabular}{c c c c c }
+		\hline
+		{\textbf{带宽}(GHz)}&{\textbf{功率}(dBm)}&{\textbf{效率}(\%)}&{\textbf{线性度}(dBc)}&{\textbf{信号带宽}(MHz)}\\
+		\hline
+		1.4--2.6&32--34&30--40 (DE)&-25 -- -30 (ACLR)&5\\
+		\hline
+		\multirow{2}{*}{2.1--2.7}&39&45 (DE) @ 2.14 GHz&--31 (ACLR)&\multirow{2}{*}{\diagbox{\qquad}{\qquad}}\\\cline{3-4}
+		&(average)&40 (DE) @ 2.655 GHz&--30 (ACLR)& \\
+		\hline
+		3.5&38.1&59 (PAE)&30 (C/I)&5\\
+		\hline
+		\multirow{2}{*}{1.6--2.6}&36.0--38.5&45--60 (PAE)&30 (C/I)&5\\\cline{2-5}
+		&35.3--37.5&40--55 (PAE)&--30 (ACLR)&20\\
+		\hline
+	\end{tabular}
+\end{table*}
+
+算法表示例：XXXXXXXX，如算法3-1所示。
+
+\begin{table}[!htb]
+	\setlength{\belowcaptionskip}{6pt}
+	\setlength{\abovecaptionskip}{6pt}
+	\centering
+	%	\caption{\wuhao DQN算法训练过程}
+	%	{\wuhao Table2-1 Training process of DQN\\[6pt]}
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{p{13.2cm}}
+		\toprule[1.5pt]
+		\makecell[l]{\songti\wuhao 算法3-1 XXXXXX训练过程}\\
+		\midrule[0.75pt]
+		\makecell[l]{\wuhao 1: \ \ xxxxxx缓存$D$以及xxxxxx量为$\theta$的xxxxx络;}\\
+		\makecell[l]{\wuhao 2: \ \ \textbf{for} episodes $=0, 1,\cdots ,E$ \textbf{do}}\\
+		\makecell[l]{\wuhao 3: \quad \ \ 初始xxxxx向量$\Phi (s)$并将其作为xxxxxxxx值;}\\
+		\makecell[l]{\wuhao 4: \quad \ \ \textbf{for} $t =0, 1,\cdots ,T$ \textbf{do}}\\
+		\makecell[l]{\wuhao 5: \qquad \ \ 以xxx率$\epsilon$选xxxxx动作$a$;}\\
+		\makecell[l]{\wuhao 6: \qquad \ \ 否xxx动作${{a}}={{\max }_{\hat{a}}}Q(\Phi ({{s}}),\hat{a}|\theta )$;}\\
+		\makecell[l]{\wuhao 6: \qquad \ \ 执xxx动作$a$并观xxx奖励$r$和下一状态$s^{\prime }$;}\\
+		\makecell[l]{\wuhao 7: \qquad \ \ 将经验$(\Phi ({{s}}),a,r,\Phi ({s^{\prime }}))$存储xxxx缓存$D$;}\\
+		\makecell[l]{\wuhao 8: \qquad \ \ 从$D$中XXXX择$c$个样本$(\Phi ({{s_j}}),a_j,r_j,\Phi ({{s_j}^{\prime }}))$，并XXXXXXX计算$y_j$;
+		}\\
+		\makecell[l]{\wuhao 9: \qquad \ \ 根据xxxxx差;}\\
+		\makecell[l]{\wuhao 10: \qquad xxxxxxx下降法更新$\theta$;}\\
+		\makecell[l]{\wuhao 11: \quad \textbf{end for}}\\
+		\makecell[l]{\wuhao 12: \textbf{end for}}\\
+		\bottomrule[1.5pt]
+	\end{tabular}
+	\label{tab:2.1} 
+\end{table}
+
+
+\section{公式格式}
+
+\begin{equation}
+\left\{ \begin{aligned}
+0.794 \le \zeta  \le 1 ~~~~~~~~~~~\\
+0.631 \le \gamma  = \frac{{0.631}}{{{\zeta ^2}}} \le 1~~~~~~ \\
+- \frac{1}{{2\gamma }} \le \delta  \le \frac{1}{{2\gamma }}~~~~~~~~~~~ \\
+{Z_{c,low,f}} = 2{R_{opt}}(\gamma  + j\delta )~~~~~\\
+{Z_{c,2f}} = {Z_{c,low,2f}} =  - j\frac{{3\pi }}{4}\gamma \delta {R_{opt}}
+\end{aligned} \right.
+\label{eq:3.1}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+v(\theta ) = V_{DD}\cdot(1 - \alpha cos(\theta  + \varphi ) + \beta cos(3\theta  + 3\varphi ))\\
+\cdot(1 - \gamma \sin (\theta  + \varphi )) ~~~~~- 1 \le \gamma  \le 1\
+\end{aligned}
+\label{eq:vd}
+\end{equation}
+
+\begin{equation}
+\begin{aligned}
+att\left( {{\bm{q}},{\bm{k}},{\bm{v}}} \right) = softmax\left( {\frac{{{\bm{qk}}^{\rm T} }}
+	{{\sqrt {d_{\bm{k}} } }}} \right){\bm{v}}
+\end{aligned}
+\label{eq:2.12}
+\end{equation}
+
+
+
+
+\noindent
+公式格式测试。${\mathbf{\Theta }} = \left\{ {{\theta _k}\left( n \right),\forall k,n} \right\}$
+
+\section{印制要求}
+涉密学位论文的印刷、制作、传递、存档等，须符合国家、学校相关保密要求。学位论文一律左侧装订。
+
+中文摘要之前的前置部分（封面、中、英文题名页、独创性声明和使用授权书），采用单面印刷。
+
+从中文摘要开始，采用双面印刷。
+
+中文摘要及之后的前置部分，包括中文摘要、ABSTRACT、目录、图目录（如有）、表目录（如有）、主要符号表（如有）、缩略词表（如有），在双面印刷时，若某部分页数为奇数，则该部分最后一页单面印刷。例如：若“摘要”只有1页，则其页码是“Ⅰ”，第“Ⅰ”页纸的背面为空白（无页眉或页码）；“ABSTRACT”用新的一张纸印刷，页码从“Ⅱ”开始。
+
+从第1章第1页开始，至论文最后1页，所有页面均双面印刷。例如：若第1章的最后1页为第17页，则第2章的第1页在第17页的背面印刷，页码为“18”（页眉是“重庆邮电大学博士（硕士）学位论文”）。
+
+一次性双面打印整本学位论文技巧：除用于打印的版本外，电子版论文中一律不得出现空白页。论文打印建议使用PDF格式。为方便一次性双面打印，有时可在单面印刷的部分（如封面、中、英文题名页、独创性声明和使用授权书），或者双面打印只有1页的某部分内容（如摘要、ABSTRACT等）后插入1页空白页，该空白页不编排页眉页码；论文中出现的页码应前后连续，不得中断。
+
+
+\section{本章小结}
+本章介绍了……

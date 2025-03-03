@@ -1,0 +1,64 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Multi-party Federated Recommendation Based on Semi-supervised Learning.aux
+Reallocating 'name_of_file' (item size: 1) to 10 items.
+The style file: IEEEtranN.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Database file #1: references.bib
+-- IEEEtranN.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+** Natbib version - not for normal IEEE work.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Warning--empty booktitle in liu2010pedersen
+
+Done.
+You've used 65 entries,
+            4855 wiz_defined-function locations,
+            1291 strings with 22424 characters,
+and the built_in function-call counts, 66483 in all, are:
+= -- 5453
+> -- 2727
+< -- 451
++ -- 1314
+- -- 662
+* -- 3977
+:= -- 9705
+add.period$ -- 142
+call.type$ -- 65
+change.case$ -- 130
+chr.to.int$ -- 1124
+cite$ -- 66
+duplicate$ -- 4230
+empty$ -- 4643
+format.name$ -- 786
+if$ -- 15014
+int.to.chr$ -- 4
+int.to.str$ -- 66
+missing$ -- 715
+newline$ -- 219
+num.names$ -- 195
+pop$ -- 1912
+preamble$ -- 1
+purify$ -- 65
+quote$ -- 2
+skip$ -- 4681
+stack$ -- 0
+substring$ -- 2721
+swap$ -- 3221
+text.length$ -- 86
+text.prefix$ -- 0
+top$ -- 6
+type$ -- 1039
+warning$ -- 1
+while$ -- 303
+width$ -- 0
+write$ -- 757
+(There was 1 warning)

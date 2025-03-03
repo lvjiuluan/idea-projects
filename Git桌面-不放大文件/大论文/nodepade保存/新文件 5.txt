@@ -1,0 +1,12 @@
+设参与方 A 的特征空间为 $ \Phi^A = \{\varphi^A_1, \varphi^A_2, ..., \varphi^A_{m_A}\} $，$ m_A $ 表示 A 方的特征维数，即 A 方拥有 $ m_A $ 个特征。$ \varphi^A_p \in \mathbb{R}^{n_{al}} $ 表示 A 方第 $ p $ 个特征在对齐样本集 $ \mathcal{D}^A_{al} $ 上的观测向量，$ \varphi^A_p = [\varphi^A_{p1}, \varphi^A_{p2}, ..., \varphi^A_{pn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
+
+同理，参与方 B 的特征空间为 $ \Phi^B = \{\varphi^B_1, \varphi^B_2, ..., \varphi^B_{m_B}\} $，$ m_B $ 表示 B 方的特征维数，即 B 方拥有 $ m_B $ 个特征。$ \varphi^B_q \in \mathbb{R}^{n_{al}} $ 表示 B 方第 $ q $ 个特征在对齐样本集 $ \mathcal{D}^B_{al} $上的观测向量。$ \varphi^B_q = [\varphi^B_{q1}, \varphi^B_{q2}, ..., \varphi^B_{qn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
+
+对于任意特征列 $ \varphi^A_p $，计算其秩向量（Rank Vector）：
+$$
+R^A_p = [r^A_{p1}, r^A_{p2}, ..., r^A_{pn_{al}}]
+$$
+$ r^A_{pi} $ 表示样本 $ i $ 在特征 $ \varphi^A_p $ 上的秩次（Rank），即该样本在该特征列中的排序位置，若存在相同值，则采用平均秩（Average Rank）处理。类似地，B 方的特征列 $ \varphi^B_q $ 也可以计算出对应的秩向量：
+$$
+R^B_q = [r^B_{q1}, r^B_{q2}, ..., r^B_{qn_{al}}]
+$$
