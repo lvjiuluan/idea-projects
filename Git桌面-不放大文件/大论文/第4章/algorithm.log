@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2024.7.6)  2 MAR 2025 16:42
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.10) (preloaded format=xelatex 2024.7.6)  3 MAR 2025 11:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -190,7 +190,7 @@ Missing character: There is no 者 in font [lmroman12-regular]:mapping=tex-text;
 Missing character: There is no 姓 in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no 名 in font [lmroman12-regular]:mapping=tex-text;!
 
-Overfull \hbox (8.72752pt too wide) in paragraph at lines 57--61
+Overfull \hbox (8.72752pt too wide) in paragraph at lines 58--62
 [] $\OMS/cmsy/m/n/10 8\OT1/cmr/m/n/10 (\OT1/cmr/bx/n/10 x[]\OML/cmm/m/it/10 ; \
 OT1/cmr/bx/n/10 x[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 2 S[]\OML/cmm/m/it/10 ;  
 [] \OT1/cmr/m/n/10 = []$ 
@@ -202,7 +202,7 @@ OT1/cmr/bx/n/10 x[]\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 2 S[]\OML/cmm/m/it/10 ;
 Here is how much of TeX's memory you used:
  2457 strings out of 410532
  36248 string characters out of 2820405
- 372477 words of memory out of 3000000
+ 373477 words of memory out of 3000000
  23627 multiletter control sequences out of 15000+600000
  476602 words of font info for 66 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191

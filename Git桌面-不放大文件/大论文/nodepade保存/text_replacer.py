@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+import re  # 添加正则表达式模块，用于处理\cite{...}模式
 
 def process_text():
     # 获取输入文本
@@ -19,6 +20,11 @@ def process_text():
             to_text = custom_entries[i][1].get().strip()
             if from_text:  # 只有当"替换前"不为空时才执行替换
                 output_text = output_text.replace(from_text, to_text)
+    
+    # 执行cite替换
+    if cite_replace_var.get():
+        # 使用正则表达式查找并替换\cite{...}
+        output_text = re.sub(r'\\cite\{([^}]*)\}', r'\\textsuperscript{\\cite{\1}}', output_text)
     
     # 清空输出文本框并插入处理后的文本
     output_textbox.delete("1.0", tk.END)
@@ -52,14 +58,20 @@ default_cb = ttk.Checkbutton(options_frame, text="使用默认替换规则 (\\( 
                              variable=default_replace_var)
 default_cb.grid(row=0, column=0, sticky=tk.W, pady=5)
 
+# 添加cite替换选项
+cite_replace_var = tk.BooleanVar(value=False)
+cite_cb = ttk.Checkbutton(options_frame, text="将\\cite{...}替换为\\textsuperscript{\\cite{...}}", 
+                         variable=cite_replace_var)
+cite_cb.grid(row=1, column=0, sticky=tk.W, pady=5)
+
 # 自定义替换选项
 custom_replace_var = tk.BooleanVar(value=False)
 custom_cb = ttk.Checkbutton(options_frame, text="使用自定义替换规则", variable=custom_replace_var)
-custom_cb.grid(row=1, column=0, sticky=tk.W, pady=5)
+custom_cb.grid(row=2, column=0, sticky=tk.W, pady=5)
 
 # 自定义替换规则框架
 custom_frame = ttk.Frame(options_frame)
-custom_frame.grid(row=2, column=0, sticky=tk.W, padx=20)
+custom_frame.grid(row=3, column=0, sticky=tk.W, padx=20)
 
 custom_entries = []
 for i in range(3):

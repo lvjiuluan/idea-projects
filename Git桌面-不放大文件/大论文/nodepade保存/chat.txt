@@ -1,0 +1,15 @@
+\begin{algorithm}
+		\caption{Process of Generating Data Using Vertical Federated Semi-supervised Method}
+		\begin{algorithmic}[1]
+			\Require $X_{al}^A$, $X_{nl}^A$, $\mathcal{L}_B$, $\tau$
+			\Ensure $X^B$
+			\State Initialization: $X^B = \emptyset$, $\mathcal{L}_B^{\text{predict}} = \{(\mu_q, f^B_q) \in \mathcal{L}_B \mid u_q > \tau\}$
+			\For{$(\mu_q, f^B_q) \in \mathcal{L}_B^{\text{predict}}$}
+			\State $X_{al}^{B}=\{x_{i}^{B}\}_{i=1}^{n_{al}}$
+			\State $X_{nl}^{B}=\{x_{i}^{B}\}_{i=n_{al}+1}^{n_{B}}$
+			\State $p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^B, X_{nl}^B, f^B_q)$
+			\State $X^{B} = X^{B} \cup \{p\}$
+			\EndFor
+			\Return $X^{B}$
+		\end{algorithmic}
+	\end{algorithm}
