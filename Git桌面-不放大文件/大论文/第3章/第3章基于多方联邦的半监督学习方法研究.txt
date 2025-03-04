@@ -9,7 +9,7 @@
 \xiaosi % 可能是自定义的命令，通常用于调整字体大小或格式，需要在前文定义
 
 
-\section{本章引言}
+\section{引言}
 在当今数据驱动的世界中，机器学习模型在众多现实世界的应用领域中发挥着至关重要的作用，例如金融风控\textsuperscript{\cite{hardt2016equality, rudin2019stop}}、医疗诊断 \textsuperscript{\cite{esteva2017dermatologist, miotto2018deep}}、智能制造\textsuperscript{\cite{lee2015cyber, tao2018digital}}以及智能交通\textsuperscript{\cite{wang2019deep, zhang2019short}}等。这些模型的训练通常依赖于大规模数据集，其中包含敏感信息，例如个人身份信息、行为数据、社交关系以及上下文数据（如地理位置、时间戳和环境状态）。为了提升模型的预测性能，传统方法通常采用集中式数据存储和处理方式，即将所有数据汇总至中央服务器进行训练。然而，这种集中式存储方式带来了显著的隐私风险，包括数据泄露、未经授权的访问以及潜在的数据滥用。此外，由于数据通常由多个机构或组织分别持有，并受到严格的隐私保护法规（如 GDPR 和 CCPA）的约束，跨多个数据所有者整合数据以训练高效的机器学习模型变得越来越困难，甚至在某些情况下是不可能的。
 
 为了解决这一问题，联邦学习（Federated Learning, FL）作为一种分布式机器学习方法\textsuperscript{\cite{mcmahan2017communication}}，提供了一种隐私保护的解决方案。联邦学习允许多个数据所有者（客户端）在不共享原始数据的情况下，通过交换中间参数（如模型梯度或模型权重）来协同训练机器学习模型。现有的联邦学习研究主要集中于监督学习场景，即假设所有客户端都拥有完全标记的数据。然而，在许多实际应用中，数据通常是不完全标记的，这可能是由于标注成本高昂、缺乏领域专家、资源受限或标注工具不足等因素所导致的。因此，近年来，一些研究开始探索半监督学习（Semi-Supervised Learning, SSL）在联邦学习中的应用，特别是仅涉及正样本和未标记数据的问题，这类问题被称为PU（Positive and Unlabeled）学习问题。针对 PU 问题以及其他有限标记数据场景，研究人员提出了一些方法，例如：FedPU 算法\textsuperscript{\cite{lin2022federated}}：针对联邦学习环境中的 PU 问题，每个客户端仅对其数据集的一小部分进行标记，并利用 PU 学习策略提升模型性能。RSCFed 算法\textsuperscript{\cite{liang2022rscfed}}：通过聚合多个子共识模型来更新全局模型，以解决非独立同分布（Non-IID）本地客户端的不均匀可靠性问题。FedMatch 算法\textsuperscript{\cite{jeong2020federated}}：通过优化客户端间的一致性和参数分解，提高有限标记数据下的联邦学习效果。AdaFedSemi 算法\textsuperscript{\cite{wang2022enhancing}}：利用设备上的标记数据和云端的未标记数据，基于多臂赌博机算法优化客户端参与度和伪标签质量。

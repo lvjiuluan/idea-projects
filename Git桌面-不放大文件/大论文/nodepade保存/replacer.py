@@ -93,6 +93,24 @@ class TextProcessorApp:
         main_container = ttk.Frame(self.root, padding="10")
         main_container.pack(fill=tk.BOTH, expand=True)
         
+        # 创建处理按钮框架 - 移到最上面
+        process_frame = ttk.Frame(main_container)
+        process_frame.pack(fill=tk.X, pady=(0, 5))
+        
+        # 处理按钮
+        process_button = ttk.Button(process_frame, text="处理文本", command=self.process_text)
+        process_button.pack(side=tk.LEFT, padx=5)
+        
+        # 复制按钮
+        copy_button = ttk.Button(process_frame, text="输出→输入", command=self.copy_output_to_input)
+        copy_button.pack(side=tk.LEFT, padx=5)
+        
+        # 状态栏
+        self.status_var = tk.StringVar()
+        self.status_var.set("就绪")
+        status_label = ttk.Label(process_frame, textvariable=self.status_var)
+        status_label.pack(side=tk.LEFT, padx=10)
+        
         # 创建规则管理框架
         rule_frame = ttk.LabelFrame(main_container, text="规则管理", padding="5")
         rule_frame.pack(fill=tk.X, pady=(0, 10))
@@ -111,106 +129,45 @@ class TextProcessorApp:
         rules_list_frame = ttk.Frame(rule_frame)
         rules_list_frame.pack(fill=tk.BOTH, expand=True, pady=5)
         
-        # 创建树形视图显示规则
-        self.rules_tree = ttk.Treeview(rules_list_frame, columns=("序号", "名称"), show="headings", height=5)
-        self.rules_tree.heading("序号", text="序号")
-        self.rules_tree.heading("名称", text="规则名称")
-        #self.rules_tree.heading("描述", text="描述")
+        # 规则列表
+        self.rules_listbox = tk.Listbox(rules_list_frame, height=5)
+        self.rules_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        self.rules_tree.column("序号", width=50, anchor="center")
-        self.rules_tree.column("名称", width=150, anchor="center")
-        #self.rules_tree.column("描述", width=450, anchor="w")
+        # 规则列表滚动条
+        rules_scrollbar = ttk.Scrollbar(rules_list_frame, orient=tk.VERTICAL, command=self.rules_listbox.yview)
+        rules_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.rules_listbox.config(yscrollcommand=rules_scrollbar.set)
         
-        self.rules_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        
-        # 为树形视图添加滚动条
-        tree_scroll = ttk.Scrollbar(rules_list_frame, orient="vertical", command=self.rules_tree.yview)
-        tree_scroll.pack(side=tk.RIGHT, fill=tk.Y)
-        self.rules_tree.configure(yscrollcommand=tree_scroll.set)
-        
-        # 创建文本处理面板
-        panel_frame = ttk.PanedWindow(main_container, orient=tk.VERTICAL)
-        panel_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # 输入框架
-        input_frame = ttk.LabelFrame(panel_frame, text="输入文本", padding="5")
-        panel_frame.add(input_frame, weight=1)
+        # 创建文本处理区域
+        text_paned = ttk.PanedWindow(main_container, orient=tk.VERTICAL)
+        text_paned.pack(fill=tk.BOTH, expand=True)
         
         # 输入文本框
+        input_frame = ttk.LabelFrame(text_paned, text="输入文本", padding="5")
+        text_paned.add(input_frame, weight=1)
+        
         self.input_text = scrolledtext.ScrolledText(input_frame, wrap=tk.WORD)
-        self.input_text.pack(fill=tk.BOTH, expand=True, pady=(0, 5))
-        
-        # 处理按钮
-        process_frame = ttk.Frame(input_frame)
-        process_frame.pack(fill=tk.X, pady=(0, 5))
-        
-        ttk.Button(process_frame, text="处理文本", command=self.process_text).pack(side=tk.LEFT, padx=5)
-        ttk.Button(process_frame, text="清空输入", command=lambda: self.input_text.delete("1.0", tk.END)).pack(side=tk.LEFT, padx=5)
-        ttk.Button(process_frame, text="复制结果到输入", command=self.copy_output_to_input).pack(side=tk.LEFT, padx=5)
-        
-        # 输出框架
-        output_frame = ttk.LabelFrame(panel_frame, text="输出文本", padding="5")
-        panel_frame.add(output_frame, weight=1)
+        self.input_text.pack(fill=tk.BOTH, expand=True)
         
         # 输出文本框
+        output_frame = ttk.LabelFrame(text_paned, text="输出文本", padding="5")
+        text_paned.add(output_frame, weight=1)
+        
         self.output_text = scrolledtext.ScrolledText(output_frame, wrap=tk.WORD)
         self.output_text.pack(fill=tk.BOTH, expand=True)
-        
-        # 添加状态栏
-        self.status_var = tk.StringVar()
-        self.status_var.set("就绪")
-        status_bar = ttk.Label(self.root, textvariable=self.status_var, relief=tk.SUNKEN, anchor=tk.W)
-        status_bar.pack(side=tk.BOTTOM, fill=tk.X)
-    
-    def update_rules_list(self):
-        # 清除现有项
-        for item in self.rules_tree.get_children():
-            self.rules_tree.delete(item)
-        
-        # 按顺序添加规则
-        for index, rule_id in enumerate(self.rule_order):
-            if rule_id in self.rules:
-                rule_info = self.rules[rule_id]
-                self.rules_tree.insert("", "end", iid=rule_id, values=(index+1, rule_info["name"], rule_info["description"]))
-    
-    def move_rule(self, direction):
-        # 获取选中的规则
-        selected = self.rules_tree.selection()
-        if not selected:
-            return
-        
-        rule_id = selected[0]
-        
-        # 获取当前位置
-        current_index = self.rule_order.index(rule_id)
-        new_index = current_index + direction
-        
-        # 检查是否可移动
-        if new_index < 0 or new_index >= len(self.rule_order):
-            return
-        
-        # 移动规则
-        self.rule_order.pop(current_index)
-        self.rule_order.insert(new_index, rule_id)
-        
-        # 保存规则顺序
-        self.save_rule_order()
-        
-        # 更新显示
-        self.update_rules_list()
-        self.rules_tree.selection_set(rule_id)
     
     def parse_rule_code(self, code):
-        # 从文档字符串中提取名称和描述
+        """从代码中解析规则信息"""
+        # 提取函数文档字符串
         doc_match = re.search(r'def\s+process_text.*?"""(.*?)"""', code, re.DOTALL)
         if doc_match:
-            docstring = doc_match.group(1).strip()
-            doc_lines = docstring.split('\n')
-            name = doc_lines[0].strip()
-            description = '\n'.join(doc_lines[1:]).strip() if len(doc_lines) > 1 else ""
+            doc_string = doc_match.group(1).strip()
+            lines = doc_string.split('\n')
+            name = lines[0].strip()
+            description = '\n'.join(lines[1:]).strip() if len(lines) > 1 else ""
         else:
             name = "未命名规则"
-            description = ""
+            description = "无描述"
         
         return {
             "name": name,
@@ -218,23 +175,43 @@ class TextProcessorApp:
             "code": code
         }
     
-    def show_add_rule_dialog(self):
-        self._show_rule_dialog(is_edit=False)
-    
-    def show_edit_rule_dialog(self):
-        selected = self.rules_tree.selection()
-        if not selected:
-            messagebox.showinfo("提示", "请先选择一个规则")
-            return
+    def update_rules_list(self):
+        """更新规则列表显示"""
+        self.rules_listbox.delete(0, tk.END)
         
-        rule_id = selected[0]
-        self._show_rule_dialog(is_edit=True, rule_id=rule_id)
+        for rule_id in self.rule_order:
+            if rule_id in self.rules:
+                rule_info = self.rules[rule_id]
+                self.rules_listbox.insert(tk.END, f"{rule_info['name']} ({rule_id})")
     
-    def _show_rule_dialog(self, is_edit=False, rule_id=None):
-        rule_code = self.rules[rule_id]["code"] if is_edit else '''def process_text(text: str) -> str:
+    def show_add_rule_dialog(self):
+        """显示添加规则对话框"""
+        dialog = tk.Toplevel(self.root)
+        dialog.title("添加规则")
+        dialog.geometry("600x500")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        
+        # 规则ID
+        id_frame = ttk.Frame(dialog, padding="5")
+        id_frame.pack(fill=tk.X)
+        
+        ttk.Label(id_frame, text="规则ID:").pack(side=tk.LEFT)
+        id_entry = ttk.Entry(id_frame, width=30)
+        id_entry.pack(side=tk.LEFT, padx=5)
+        
+        # 代码编辑器
+        code_frame = ttk.LabelFrame(dialog, text="规则代码", padding="5")
+        code_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        code_editor = scrolledtext.ScrolledText(code_frame, wrap=tk.WORD, font=("Courier New", 10))
+        code_editor.pack(fill=tk.BOTH, expand=True)
+        
+        # 设置默认代码模板
+        default_code = '''def process_text(text: str) -> str:
     """
-    处理规则名称
-    这里是规则的详细描述，可以多行。
+    规则名称
+    规则描述，说明这个规则的作用。
     
     参数：
         text (str): 原始文本。
@@ -243,104 +220,175 @@ class TextProcessorApp:
         str: 处理后的文本。
     """
     # 在这里编写处理逻辑
-    processed_text = text.upper()  # 例如：将文本转为大写
-    return processed_text
+    return text
 '''
+        code_editor.insert(tk.END, default_code)
         
-        dialog = tk.Toplevel(self.root)
-        dialog.title("编辑规则" if is_edit else "添加规则")
-        dialog.geometry("700x500")
-        dialog.transient(self.root)
-        dialog.grab_set()
-        
-        # 规则ID输入框（仅添加模式）
-        if not is_edit:
-            id_frame = ttk.Frame(dialog, padding="5")
-            id_frame.pack(fill=tk.X)
-            
-            ttk.Label(id_frame, text="规则ID:").pack(side=tk.LEFT, padx=(0, 5))
-            rule_id_entry = ttk.Entry(id_frame, width=40)
-            rule_id_entry.pack(side=tk.LEFT, fill=tk.X, expand=True)
-        
-        # 代码编辑器
-        code_frame = ttk.LabelFrame(dialog, text="规则代码", padding="5")
-        code_frame.pack(fill=tk.BOTH, expand=True, pady=5, padx=5)
-        
-        code_text = scrolledtext.ScrolledText(code_frame, height=20, font=("Courier New", 10))
-        code_text.pack(fill=tk.BOTH, expand=True)
-        code_text.insert(tk.END, rule_code)
-        
-        def save_rule():
-            nonlocal rule_id
-            
-            # 获取规则ID（如果在添加模式下）
-            if not is_edit:
-                rule_id = rule_id_entry.get().strip()
-                if not rule_id:
-                    messagebox.showerror("错误", "规则ID不能为空", parent=dialog)
-                    return
-                    
-                if rule_id == "default" and "default" in self.rules:
-                    messagebox.showerror("错误", "不能使用'default'作为规则ID", parent=dialog)
-                    return
-                
-                if rule_id in self.rules:
-                    overwrite = messagebox.askyesno("确认", f"规则'{rule_id}'已存在，是否覆盖？", parent=dialog)
-                    if not overwrite:
-                        return
-            
-            code = code_text.get("1.0", tk.END)
-            
-            # 验证代码
-            try:
-                compile(code, "<string>", "exec")
-            except Exception as e:
-                messagebox.showerror("代码错误", f"规则代码有语法错误:\n{str(e)}", parent=dialog)
-                return
-            
-            # 检查代码中是否包含process_text函数
-            if "def process_text" not in code:
-                messagebox.showerror("错误", "代码必须包含 process_text 函数", parent=dialog)
-                return
-            
-            # 保存规则
-            try:
-                rule_info = self.parse_rule_code(code)
-                self.rules[rule_id] = rule_info
-                self.save_rule(rule_id, code)
-                
-                # 如果是新规则，添加到规则顺序列表末尾
-                if not is_edit and rule_id not in self.rule_order:
-                    self.rule_order.append(rule_id)
-                    self.save_rule_order()
-                
-                self.update_rules_list()
-                
-                dialog.destroy()
-                action = "更新" if is_edit else "添加"
-                self.status_var.set(f"已{action}规则: {rule_id}")
-            except Exception as e:
-                messagebox.showerror("错误", f"保存规则时出错:\n{str(e)}", parent=dialog)
-        
-        # 按钮
+        # 按钮框架
         button_frame = ttk.Frame(dialog, padding="5")
         button_frame.pack(fill=tk.X)
         
+        def save_new_rule():
+            rule_id = id_entry.get().strip()
+            code = code_editor.get("1.0", tk.END)
+            
+            if not rule_id:
+                messagebox.showerror("错误", "规则ID不能为空")
+                return
+            
+            if rule_id in self.rules and rule_id != "default":
+                messagebox.showerror("错误", f"规则ID '{rule_id}' 已存在")
+                return
+            
+            try:
+                # 尝试解析和执行代码
+                rule_info = self.parse_rule_code(code)
+                
+                # 创建命名空间以执行代码
+                namespace = {}
+                exec(code, namespace)
+                
+                if "process_text" not in namespace:
+                    raise Exception("代码中必须包含 process_text 函数")
+                
+                # 保存规则
+                self.rules[rule_id] = rule_info
+                self.save_rule(rule_id, code)
+                
+                # 添加到规则顺序
+                if rule_id not in self.rule_order:
+                    self.rule_order.append(rule_id)
+                    self.save_rule_order()
+                
+                # 更新UI
+                self.update_rules_list()
+                self.status_var.set(f"已添加规则: {rule_info['name']}")
+                
+                dialog.destroy()
+            except Exception as e:
+                messagebox.showerror("错误", f"保存规则时出错:\n{str(e)}")
+        
+        ttk.Button(button_frame, text="保存", command=save_new_rule).pack(side=tk.RIGHT, padx=5)
         ttk.Button(button_frame, text="取消", command=dialog.destroy).pack(side=tk.RIGHT, padx=5)
-        save_label = "保存" if is_edit else "添加"
-        ttk.Button(button_frame, text=save_label, command=save_rule).pack(side=tk.RIGHT, padx=5)
     
-    def delete_rule(self):
-        selected = self.rules_tree.selection()
-        if not selected:
+    def show_edit_rule_dialog(self):
+        """显示编辑规则对话框"""
+        # 获取选中的规则
+        selection = self.rules_listbox.curselection()
+        if not selection:
             messagebox.showinfo("提示", "请先选择一个规则")
             return
         
-        rule_id = selected[0]
+        index = selection[0]
+        if index >= len(self.rule_order):
+            return
+        
+        rule_id = self.rule_order[index]
+        rule_info = self.rules[rule_id]
+        
+        dialog = tk.Toplevel(self.root)
+        dialog.title(f"编辑规则 - {rule_info['name']}")
+        dialog.geometry("600x500")
+        dialog.transient(self.root)
+        dialog.grab_set()
+        
+        # 规则ID (只读)
+        id_frame = ttk.Frame(dialog, padding="5")
+        id_frame.pack(fill=tk.X)
+        
+        ttk.Label(id_frame, text="规则ID:").pack(side=tk.LEFT)
+        id_var = tk.StringVar(value=rule_id)
+        ttk.Entry(id_frame, textvariable=id_var, state="readonly", width=30).pack(side=tk.LEFT, padx=5)
+        
+        # 代码编辑器
+        code_frame = ttk.LabelFrame(dialog, text="规则代码", padding="5")
+        code_frame.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        code_editor = scrolledtext.ScrolledText(code_frame, wrap=tk.WORD, font=("Courier New", 10))
+        code_editor.pack(fill=tk.BOTH, expand=True)
+        
+        # 加载当前代码
+        code_editor.insert(tk.END, rule_info["code"])
+        
+        # 按钮框架
+        button_frame = ttk.Frame(dialog, padding="5")
+        button_frame.pack(fill=tk.X)
+        
+        def save_edited_rule():
+            code = code_editor.get("1.0", tk.END)
+            
+            try:
+                # 尝试解析和执行代码
+                rule_info = self.parse_rule_code(code)
+                
+                # 创建命名空间以执行代码
+                namespace = {}
+                exec(code, namespace)
+                
+                if "process_text" not in namespace:
+                    raise Exception("代码中必须包含 process_text 函数")
+                
+                # 保存规则
+                self.rules[rule_id] = rule_info
+                self.save_rule(rule_id, code)
+                
+                # 更新UI
+                self.update_rules_list()
+                self.status_var.set(f"已更新规则: {rule_info['name']}")
+                
+                dialog.destroy()
+            except Exception as e:
+                messagebox.showerror("错误", f"保存规则时出错:\n{str(e)}")
+        
+        ttk.Button(button_frame, text="保存", command=save_edited_rule).pack(side=tk.RIGHT, padx=5)
+        ttk.Button(button_frame, text="取消", command=dialog.destroy).pack(side=tk.RIGHT, padx=5)
+    
+    def move_rule(self, direction):
+        """移动规则位置"""
+        selection = self.rules_listbox.curselection()
+        if not selection:
+            messagebox.showinfo("提示", "请先选择一个规则")
+            return
+        
+        index = selection[0]
+        if index >= len(self.rule_order):
+            return
+        
+        new_index = index + direction
+        if new_index < 0 or new_index >= len(self.rule_order):
+            return  # 超出范围
+        
+        # 交换位置
+        self.rule_order[index], self.rule_order[new_index] = self.rule_order[new_index], self.rule_order[index]
+        
+        # 保存规则顺序
+        self.save_rule_order()
+        
+        # 更新UI
+        self.update_rules_list()
+        self.rules_listbox.selection_clear(0, tk.END)
+        self.rules_listbox.selection_set(new_index)
+        self.rules_listbox.see(new_index)
+    
+    def delete_rule(self):
+        """删除规则"""
+        selection = self.rules_listbox.curselection()
+        if not selection:
+            messagebox.showinfo("提示", "请先选择一个规则")
+            return
+        
+        index = selection[0]
+        if index >= len(self.rule_order):
+            return
+        
+        rule_id = self.rule_order[index]
+        
+        # 不允许删除默认规则
         if rule_id == "default":
             messagebox.showinfo("提示", "默认规则不能删除")
             return
         
+        # 确认删除
         confirm = messagebox.askyesno("确认删除", f"确定要删除规则 '{self.rules[rule_id]['name']}' 吗？")
         if not confirm:
             return
