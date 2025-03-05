@@ -4,19 +4,64 @@
 % 设置参考文献的样式为 'unsrt'，这是一种按文献在文中引用顺序排列的样式。
 % 'unsrt' 样式会生成一个按引用顺序编号的参考文献列表，而不是按作者姓氏字母顺序。
 % unsrt 格式只有正文引用过才会出现在最后的参考文献列表中
-\bibliographystyle{unsrt}
+%\bibliographystyle{unsrt}
 
 % 告诉 LaTeX 使用名为 'ref.bib' 的 BibTeX 文件来生成参考文献列表。
 % 'ref' 是 BibTeX 文件的名称（不包括 '.bib' 扩展名），该文件包含所有引用的文献条目。
-\bibliography{ref}
+%\bibliography{ref}
 
 % 设置当前页面的页眉和页脚样式为 'others'。
 % 'others' 是一个自定义的页面样式，可能在文档的其他地方定义，用于控制参考文献页面的格式。
+%\thispagestyle{others}
+
+
+
+%% 设置参考文献字体大小
+%\wuhao
+%% 设置行间距
+%\linespread{1}\selectfont
+%% 缩小条目间行距
+%\setlength{\itemsep}{-1.4ex}
+%% 设置当前页面样式
+%\thispagestyle{others}
+%% 设置页面样式
+%\pagestyle{others}
+%
+%% 重新定义参考文献标签格式，使其左对齐
+%\makeatletter
+%\renewcommand\@biblabel[1]{[#1]\hfill}
+%\makeatother
+%% 设置标签与内容之间的间距
+%\setlength{\labelsep}{0cm}
+%
+%% 设置参考文献样式，这里使用unsrt样式，你可以根据需要修改
+%\bibliographystyle{unsrt}
+%% 引入bib文件，假设你的bib文件名为ref.bib
+%\bibliography{ref}
+
+
+
+% 设置参考文献字体大小
+\wuhao
+% 设置行间距
+\linespread{1}\selectfont
+% 缩小条目间行距
+\setlength{\itemsep}{-1.4ex}
+% 设置当前页面样式
 \thispagestyle{others}
+% 设置页面样式
+\pagestyle{others}
 
+% 使用固定宽度的盒子包含标签，确保对齐一致
+\makeatletter
+\renewcommand\@biblabel[1]{\makebox[2.5em][l]{[#1]}}
+\makeatother
+% 设置标签与内容之间的间距
+\setlength{\labelsep}{0pt}
 
-
-
-
+% 设置参考文献样式
+\bibliographystyle{unsrt}
+% 引入bib文件
+\bibliography{ref}
 
 \clearpage

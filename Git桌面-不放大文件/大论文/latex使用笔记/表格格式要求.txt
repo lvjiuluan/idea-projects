@@ -1,0 +1,13 @@
+% \begin{table}[h]  % 开始表格环境，h表示尽量将表格放在当前位置
+% 	\renewcommand{\arraystretch}{1.5}  % 设置表格行距为1.5倍
+% 	\centering  % 表格居中
+% 	\bicaption[\xiaosi 电流类型对效率的影响]{\wuhao 电流类型对效率的影响}{\wuhao Current type impact on efficiency}  % 双语标题，方括号内是目录中显示的标题（小四号字），第一个花括号内是中文标题（五号字），第二个花括号内是英文标题（五号字）
+% 	\begin{tabular}{p{3cm}p{3cm}p{3cm}p{3cm}}  % 开始表格内容，定义4列，每列宽度为3厘米，p表示允许文本自动换行
+% 		\toprule[1.5pt]  % 顶部粗线，粗细为1.5pt
+% 		\makecell[c]{\songti\wuhao 电流类型}&\makecell[c]{\songti\wuhao A}&\makecell[c]{\songti\wuhao B}&\makecell[c]{\songti\wuhao C}\\  % 表头行，\makecell[c]表示单元格内容居中，\songti表示宋体，\wuhao表示五号字
+% 		\hline  % 普通横线
+% 		\makecell[c]{\wuhao aaa}&\makecell[c]{\wuhao aa1}&\makecell[c]{\wuhao bb1}&\makecell[c]{\wuhao cc1}\\  % 数据行，格式同上
+% 		\bottomrule[1.5pt]  % 底部粗线，粗细为1.5pt
+% 	\end{tabular}
+%    \label{tab:3.1}  % 表格标签，用于交叉引用	
+% \end{table}

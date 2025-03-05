@@ -136,6 +136,10 @@ class TextProcessorApp:
         copy_output_button = ttk.Button(process_frame, text="复制输出", command=self.copy_output)
         copy_output_button.pack(side=tk.LEFT, padx=5)
 
+        # 选择文件按钮
+        select_file_button = ttk.Button(process_frame, text="选择文件", command=self.select_file)
+        select_file_button.pack(side=tk.LEFT, padx=5)
+
         # 状态栏
         self.status_var = tk.StringVar()
         self.status_var.set("就绪")
@@ -611,6 +615,19 @@ class TextProcessorApp:
             messagebox.showerror("处理错误", f"处理文本时出错:\n{str(e)}")
             print(error_message)  # 在控制台打印详细错误信息
 
+    def select_file(self):
+        """选择文件并读取内容到输入文本框"""
+        from tkinter import filedialog
+        file_path = filedialog.askopenfilename()
+        if file_path:
+            try:
+                with open(file_path, 'r', encoding='utf-8') as file:
+                    content = file.read()
+                    self.input_text.delete("1.0", tk.END)
+                    self.input_text.insert(tk.END, content)
+                    self.status_var.set(f"已读取文件: {file_path}")
+            except Exception as e:
+                messagebox.showerror("错误", f"读取文件时出错:\n{str(e)}")
 
 def main():
     root = tk.Tk()
