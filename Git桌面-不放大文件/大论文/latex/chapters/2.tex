@@ -42,7 +42,7 @@
 联邦学习可根据特征空间和样本空间的重叠情况，主要划分为横向联邦学习（Horizontal Federated Learning）、纵向联邦学习（Vertical Federated Learning）以及联邦迁移学习（Federated Transfer Learning）\textsuperscript{\cite{yang2019federated,li2020federated}}，如图 \ref{FedClass} 所示。这种划分方式能够帮助研究人员与工程实践者在不同场景下选择适宜的联邦学习方案，从而更高效地利用分布式数据进行模型训练。
 
 %调整图片与上方文字之间的间距
-%\vspace{-0.1cm}
+\vspace{-0.1cm}
 \begin{figure}[!h]
 	\centering
 	\subfigure[]{
@@ -62,17 +62,13 @@
 	{\centering \wuhao Federated Learning Classification. (a) Horizontal Federated Learning; (b) Vertical Federated Learning; (c) Transfer Federated Learning}	
 	\label{fig:FedClass}
 \end{figure}
-
-
 %调整图片与下方文字之间的间距
-%\vspace{-0.35cm}
+\vspace{-0.35cm}
+在横向联邦学习（HFL）中，各数据拥有方在特征空间上较为相似，但用户或样本并不重叠\textsuperscript{\cite{yang2019federated,liu2019communication}}，如图 \ref{fig:FedClass}\subref{FedClassA} 所示。举例来说，若多家银行都想联合训练一个信用风险评估模型，但它们各自的用户群体并无明显重叠，且每家银行都有较为类似的特征字段（如年龄、职业、收入等），这种场景便适合采用横向联邦学习。通过让各银行保留本地数据，仅传递模型参数或梯度进行聚合，既能提升模型的泛化能力，又在最大程度上保护了用户隐私。
 
+与之相对，纵向联邦学习（VFL）则适用于样本空间高度重叠，但特征集差异较大的场景\textsuperscript{\cite{liu2020secure,chen2020vafl}}，如图 \ref{fig:FedClass}\subref{FedClassB} 所示。例如，某些银行与电商平台在用户群体上可能有很大交集，却掌握了不同维度的用户信息：银行侧有用户财务信用数据，电商侧则有用户消费行为数据。在这种情形下，联合建模可以充分利用双方不同来源的特征信息，从而获得更全面、更准确的刻画。当各方在训练过程中只需对对齐后的公共用户进行联合梯度更新时，无需共享原始数据，依然能够保证个人隐私与数据安全。
 
-在横向联邦学习（HFL）中，各数据拥有方在特征空间上较为相似，但用户或样本并不重叠\textsuperscript{\cite{yang2019federated,liu2019communication}}，如图 \ref{fig:FedClass} \subref{FedClassA} 所示。举例来说，若多家银行都想联合训练一个信用风险评估模型，但它们各自的用户群体并无明显重叠，且每家银行都有较为类似的特征字段（如年龄、职业、收入等），这种场景便适合采用横向联邦学习。通过让各银行保留本地数据，仅传递模型参数或梯度进行聚合，既能提升模型的泛化能力，又在最大程度上保护了用户隐私。
-
-与之相对，纵向联邦学习（VFL）则适用于样本空间高度重叠，但特征集差异较大的场景\textsuperscript{\cite{liu2020secure,chen2020vafl}}，如图 \ref{fig:FedClass} \subref{FedClassB} 所示。例如，某些银行与电商平台在用户群体上可能有很大交集，却掌握了不同维度的用户信息：银行侧有用户财务信用数据，电商侧则有用户消费行为数据。在这种情形下，联合建模可以充分利用双方不同来源的特征信息，从而获得更全面、更准确的刻画。当各方在训练过程中只需对对齐后的公共用户进行联合梯度更新时，无需共享原始数据，依然能够保证个人隐私与数据安全。
-
-第三种形式是联邦迁移学习（FTL），其特点在于样本空间与特征空间均不完全重叠\textsuperscript{\cite{yang2019federated,chen2020vafl}}，如图 \ref{fig:FedClass} \subref{FedClassC} 所示。在部分数据量较少或者特征不足的场景里，可以通过迁移学习的方法来补充数据或特征不足的问题。此时，不同组织或机构拥有的用户群体与特征集合可能仅存在少量重叠，但依然可通过联邦迁移学习的思想，将部分预训练模型的知识进行迁移，从而提升任务的性能或模型的泛化能力。这种方法特别适用于小样本或垂域知识不足的情景，有效地拓展了联邦学习在更多应用场景下的可行性。
+第三种形式是联邦迁移学习（FTL），其特点在于样本空间与特征空间均不完全重叠\textsuperscript{\cite{yang2019federated,chen2020vafl}}，如图 \ref{fig:FedClass}\subref{FedClassC} 所示。在部分数据量较少或者特征不足的场景里，可以通过迁移学习的方法来补充数据或特征不足的问题。此时，不同组织或机构拥有的用户群体与特征集合可能仅存在少量重叠，但依然可通过联邦迁移学习的思想，将部分预训练模型的知识进行迁移，从而提升任务的性能或模型的泛化能力。这种方法特别适用于小样本或垂域知识不足的情景，有效地拓展了联邦学习在更多应用场景下的可行性。
 
 综上所述，横向联邦学习、纵向联邦学习及联邦迁移学习分别应对了特征空间或样本空间上的不同重叠情况。它们在数据类型、业务场景和技术实现上各有侧重，却都遵循了联邦学习的核心理念：在不直接交换数据的前提下，实现多方协作与知识共享。这种多元化的联邦学习形式为不同行业和应用需求提供了灵活的选择，也在隐私保护和跨域协作方面展现出巨大的潜力。
 
