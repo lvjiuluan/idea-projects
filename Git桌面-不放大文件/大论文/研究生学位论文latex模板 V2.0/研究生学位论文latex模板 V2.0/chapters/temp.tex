@@ -1,3 +1,82 @@
+\vspace{0.1cm} 
+\begin{table}[!htb]
+	\setlength{\belowcaptionskip}{6pt}
+	\setlength{\abovecaptionskip}{6pt}
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{p{13.2cm}}
+		\toprule[1.5pt]
+		\makecell[l]{\songti\wuhao 算法3-1 VFPU 算法训练过程}\\
+		\midrule[0.75pt]
+		\makecell[l]{\wuhao \textbf{输入:} 参与方 $B,C$。对齐的数据集 ${{\mathsf{\mathcal{D}}}_{B}}\text{,}{{\mathsf{\mathcal{D}}}_{C}}$ 和 ID 集合 ${{\mathsf{\mathcal{I}}}_{B}}\text{,}\ {{\mathsf{\mathcal{I}}}_{C}}$。最大}\\
+		\makecell[l]{\wuhao \quad 迭代次数 $M$，随机采样迭代次数 $T$ 和 $\theta$，其中 $\theta$ 是}\\
+		\makecell[l]{\wuhao \quad 可靠正样本的采样率。}\\
+		\makecell[l]{\wuhao \textbf{输出:} $R$，可靠正样本的集合。}\\
+		\makecell[l]{\wuhao \textbf{参与方 C 执行:}}\\
+		\makecell[l]{\wuhao 1: \ \ \textbf{for} $m=1,2,\ldots,M$ \textbf{do}}\\
+		\makecell[l]{\wuhao 2: \quad \ \ ${{P}_{m}}=\{i|\mathsf{\mathcal{Y}}_{i}^{C}=1, \ i\in {{\mathsf{\mathcal{I}}}_{C}}\}$}\\
+		\makecell[l]{\wuhao 3: \quad \ \ ${{U}_{m}}=\{i|\mathsf{\mathcal{Y}}_{i}^{C}=-1, \ i\in {{\mathsf{\mathcal{I}}}_{C}}\}$}\\
+		\makecell[l]{\wuhao 4: \quad \ \ \textbf{for} $t=1,2,\ldots,T$ \textbf{do}}\\
+		\makecell[l]{\wuhao 5: \qquad \ \ $N_{m}^{t}=\{从 {{U}_{m}} 中随机选择 |{{P}_{m}}| 个元素\}$}\\
+		\makecell[l]{\wuhao 6: \qquad \ \ $O_{m}^{t}={{U}_{m}}-N_{m}^{t}$}\\
+		\makecell[l]{\wuhao 7: \qquad \ \ 加密并发送 $N_{m}^{t}$、${P_m}$ 和 $O_{m}^{t}$ 给其他参与方。}\\
+		\makecell[l]{\wuhao 8: \qquad \ \ 通知参与方设置训练数据和测试数据。}\\
+		\makecell[l]{\wuhao 9: \qquad \ \ $S_m^t$ = Base\_Estimator\_Learning()}\\
+		\makecell[l]{\wuhao 10: \quad \textbf{end for}}\\
+		\makecell[l]{\wuhao 11: \quad ${{\mathsf{\mathcal{P}}}_{m}}(u)={\sum\nolimits_{t=1}^{T}{S_{m}^{t}}}(u)/{\sum\nolimits_{t=1}^{T}{I(u\in O_{m}^{t})\text{,}\ \ \forall \text{u}\in }}\;{{U}_{m}}$}\\
+		\makecell[l]{\wuhao 12: \quad ${{R}_{m}}=\{从 {{\mathsf{\mathcal{P}}}_{m}} 中选择前 |{{U}_{m}}| \times \theta 个 ID\}$}\\
+		\makecell[l]{\wuhao 13: \quad $\mathsf{\mathcal{Y}}_{r}^{C}=1\text{,}\ \ \forall r\in {{R}_{m}}$}\\
+		\makecell[l]{\wuhao 14: \textbf{end for}}\\
+		\makecell[l]{\wuhao 15: $R=\bigcup\limits_{m=1}^{M}{{{R}_{m}}}$}\\
+		\makecell[l]{\wuhao \textbf{函数} Base\_Estimator\_Learning():}\\
+		\makecell[l]{\wuhao 16: \quad 服务器创建加密密钥对，将公钥发送给 $B$ 和 $C$}\\
+		\makecell[l]{\wuhao 17: \quad $B$ 和 $C$ 加密、交换梯度和损失。}\\
+		\makecell[l]{\wuhao 18: \quad $B$ 和 $C$ 添加掩码，将加密值发送给服务器。}\\
+		\makecell[l]{\wuhao 19: \quad 服务器解密并回传值。$B$ 和 $C$ 去除掩码，更新模型。}\\
+		\makecell[l]{\wuhao 20: \quad \textbf{返回} 测试数据上正类的预测概率。}\\
+		\bottomrule[1.5pt]
+	\end{tabular}
+	\label{tab:algo-vfpu} 
+\end{table}
+\vspace{-0.1cm}
+
+
+
+
+
+
+
+
+
+
+
+
+%调整图片与上方文字之间的间距
+\vspace{-0.1cm}
+\begin{figure}[!h]
+	\centering
+	\subfigure[]{
+		\label{FedClassA}
+		\includegraphics[width=0.3\textwidth]{chapters/imgs/FedClassA}}
+	\hspace{0.01\textwidth}
+	\subfigure[]{
+		\label{FedClassB}
+		\includegraphics[width=0.3\textwidth]{chapters/imgs/FedClassB}}
+	\hspace{0.01\textwidth}
+	\subfigure[]{
+		\label{FedClassC}
+		\includegraphics[width=0.3\textwidth]{chapters/imgs/FedClassC}}
+	
+	\bicaption[\xiaosi \songti 联邦学习分类]%
+	{\centering \wuhao 联邦学习分类。(a) 横向联邦学习；(b) 纵向联邦学习；(c) 迁移联邦学习}%
+	{\centering \wuhao Federated Learning Classification. (a) Horizontal Federated Learning; (b) Vertical Federated Learning; (c) Transfer Federated Learning}	
+	\label{fig:FedClass}
+\end{figure}
+
+
+
+
+
 % \vspace{0.1cm}  % 添加0.1厘米的垂直空间
 % 
 % \begin{table}[h]  % 开始表格环境，h表示尽量将表格放在当前位置

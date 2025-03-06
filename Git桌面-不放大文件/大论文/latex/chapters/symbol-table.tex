@@ -4,17 +4,37 @@
 
 
 
+
 \begin{table}[h]
-	\renewcommand{\arraystretch}{1.5}
+	\renewcommand{\arraystretch}{0.6}
 	\centering
+	{\songti \wuhao 
 	\begin{tabular}{p{2cm}p{10cm}p{1.5cm}}
 		\toprule[1.5pt]
-		\makecell[l]{\songti\xiaosi\bfseries 符号}&\makecell[l]{\songti\xiaosi\bfseries 说明}&\makecell[c]{\songti\xiaosi\bfseries 页码}\\
+		\makecell[c]{\songti\xiaosi\bfseries 符号}&\makecell[c]{\songti\xiaosi\bfseries 说明}&\makecell[c]{\songti\xiaosi\bfseries 页码}\\
 		\hline
-		\makecell[l]{\wuhao c}&\makecell[l]{\wuhao 电磁波的相平面速度}&\makecell[c]{\wuhao 10}\\
+		\makecell[c]{\wuhao ${{\mathsf{\mathcal{D}}}_{k}}$}&\makecell[c]{\wuhao 第k个数据所有者持有的数据矩阵}&\makecell[c]{\wuhao 16}\\
+		\makecell[c]{\wuhao $\mathsf{\mathcal{I}}$}&\makecell[c]{\wuhao 样本ID空间，包含所有样本的唯一标识符}&\makecell[c]{\wuhao 16}\\
+		\makecell[c]{\wuhao $\mathsf{\mathcal{X}}$}&\makecell[c]{\wuhao 特征空间，涵盖所有样本的全部特征维度}&\makecell[c]{\wuhao 17}\\
+		\makecell[c]{\wuhao $\mathsf{\mathcal{Y}}$}&\makecell[c]{\wuhao 标签空间，包含所有可能的分类标签或类别}&\makecell[c]{\wuhao 17}\\
+		\makecell[c]{\wuhao $P$}&\makecell[c]{\wuhao A方持有的正类样本集合}&\makecell[c]{\wuhao 18}\\
+		\makecell[c]{\wuhao $U$}&\makecell[c]{\wuhao B方和C方共同持有的未标注数据集}&\makecell[c]{\wuhao 18}\\
+		\makecell[c]{\wuhao $R$}&\makecell[c]{\wuhao 从未标注数据集$U$中成功提取出的可靠正类样本集合}&\makecell[c]{\wuhao 18}\\
+		\makecell[c]{\wuhao $P_m$}&\makecell[c]{\wuhao 第m次迭代中的正样本集}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $U_m$}&\makecell[c]{\wuhao 第m次迭代中的未标记样本集}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $N_m^t$}&\makecell[c]{\wuhao 第m次迭代第t轮中从$U_m$随机选择的伪负样本集}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $O_m^t$}&\makecell[c]{\wuhao 第m次迭代第t轮中的袋外样本集}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $S_m^t$}&\makecell[c]{\wuhao 第m次迭代第t轮中基础估计器学习的输出}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao ${{\mathsf{\mathcal{P}}}_{m}}$}&\makecell[c]{\wuhao 第m次迭代中样本属于正类的概率集合}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $R_m$}&\makecell[c]{\wuhao 第m次迭代中识别出的可靠正样本集合}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $\mathsf{\mathcal{Y}}_{i}^{C}$}&\makecell[c]{\wuhao C方标签空间中样本i的标签}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $\theta$}&\makecell[c]{\wuhao 可靠正样本的采样率}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $M$}&\makecell[c]{\wuhao 最大迭代次数}&\makecell[c]{\wuhao 19}\\
+		\makecell[c]{\wuhao $T$}&\makecell[c]{\wuhao 随机采样迭代次数}&\makecell[c]{\wuhao 19}\\
 		\bottomrule[1.5pt]
 	\end{tabular}
-     
+	}
+	\label{tab:symbols}
 \end{table}
 
 \clearpage

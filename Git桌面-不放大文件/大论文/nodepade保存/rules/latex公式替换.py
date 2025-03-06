@@ -9,6 +9,7 @@ def process_text(text: str) -> str:
         str: 处理后的文本。
     """
     # 在这里编写处理逻辑
+    text = text.replace('#', '').replace('*', '').replace(r'%',r'\%')
     processed_text = (
         text.replace("\\(", "$")
         .replace("\\)", "$")
@@ -16,5 +17,8 @@ def process_text(text: str) -> str:
         .replace("\\]", "$$")
         .replace("*", "")  # 替换 * 为 空字符串
     )
+ 
     return processed_text
+
+
 

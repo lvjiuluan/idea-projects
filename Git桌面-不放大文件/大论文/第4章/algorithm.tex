@@ -29,10 +29,10 @@
 		\end{algorithmic}
 	\end{algorithm}
 
-	\begin{algorithm}
+	\begin{algorithm} 
 		\caption{VFPU-M Algorithm}
 		\begin{algorithmic}[1]
-			\Require $X_{al}^A$, $X_{nl}^A$, $X_{al}^B$, $X_{nl}^B$, $y$, $\alpha$, $k$, $T$
+			\Require $X_{al}^A$: Aligned data of party A, $X_{nl}^A$: Non-aligned data of party A, $X_{al}^B$: Aligned data of party B, $X_{nl}^B$: Non-aligned data of party B, $y$: Labels for the aligned data, $\alpha$: Confidence threshold, $k$: Proportion of data selected per iteration,$T$: Number of iterations.  
 			\Ensure $\mathbf{y}^{\text{pseudo}}$
 			\State Initialize the federated model $f_\theta$
 			\State $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$
@@ -55,8 +55,8 @@
 			\State $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$
 			
 			\State \textbf{Pseudo-label Generation:}
-			\State $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \quad \hat{y}_j = \begin{cases}
-				\arg\max_c \mathbb{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{Classification} \\
+			\State $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \hat{y}_j = \begin{cases}
+				\arg\max_c P(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{Classification} \\
 				f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{Regression}
 			\end{cases}$
 			

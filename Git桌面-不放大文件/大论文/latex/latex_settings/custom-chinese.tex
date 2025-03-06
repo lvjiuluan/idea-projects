@@ -3,6 +3,7 @@
 
 \usepackage[final]{pdfpages}
 
+
 \usepackage{geometry}
 \usepackage{makecell}
 \usepackage{caption}
@@ -35,6 +36,10 @@
 %\usepackage{txfonts}
 \usepackage{diagbox}
 
+\usepackage{gbt7714}
+%\usepackage{ctex}%加载ctex宏包，中文支持
+%\usepackage[backend=biber,style=gb7714-2015]{biblatex}
+%\addbibresource[location=local]{ref.bib}
 
 \AtBeginDocument{\DeclareMathAlphabet{\mathbf}{OT1}{cmr}{bx}{n}}
 
@@ -181,14 +186,14 @@
     \fancyhf{}
     \fancyfoot[C]{\songti\xiaowu \thepage}
     \fancyhead[CO]{\songti\wuhao \rightmark}
-    \fancyhead[CE]{\songti\wuhao 重庆邮电大学博士学位论文}
+    \fancyhead[CE]{\songti\wuhao 重庆邮电大学硕士学位论文}
 }
 
 \fancypagestyle{others}{
 	\fancyhf{}
 	\fancyfoot[C]{\songti\xiaowu \thepage}
 	\fancyhead[CO]{\songti\wuhao \leftmark}
-	\fancyhead[CE]{\songti\wuhao 重庆邮电大学博士学位论文}
+	\fancyhead[CE]{\songti\wuhao 重庆邮电大学硕士学位论文}
 }
 
 
@@ -337,11 +342,11 @@
 \newcommand\degree{^\cire}
 
 % 定义文献引用格式,\cite正常引用 \supercite右上角引用
-\usepackage{cite}
-\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
-\newcommand\supercite[2][]{%
-\textsuperscript{\cite[#1]{#2}}
-}
+%\usepackage{cite}
+%\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+%\newcommand\supercite[2][]{%
+%\textsuperscript{\cite[#1]{#2}}
+%}
 
 \usepackage{enumitem}
 \setlist[description]{
