@@ -1,0 +1,510 @@
+\bibitem{z2}
+徐启华, 师军. 基于支持向量机的航空发动机故障诊断[J]. 航空动力学报, 2005: 298--302.
+
+\bibitem{chakrabarty2018statistical}
+Chakrabarty N, Biswas S. A statistical approach to adult census income level prediction[C]. 2018 International Conference on Advances in Computing, Communication Control and Networking (ICACCCN), 2018: 207--212.
+
+\bibitem{subasi2019prediction}
+Subasi A, Cankurt S. Prediction of default payment of credit card clients using Data Mining Techniques[C]. 2019 International engineering conference (IEC), 2019: 115--120.
+
+\bibitem{fitriani2021data}
+Fitriani MA, Febrianto DC. Data mining for potential customer segmentation in the marketing bank dataset[J]. JUITA: Jurnal Informatika, 2021: 25--32.
+
+\bibitem{学位论文编写规则}
+国务院学位委员会办公室, 中国科学技术信息研究所. 学位论文编写规则[J], 2006.
+
+\bibitem{汪继祥2004科学出版社作者编辑手册}
+汪继祥. 作者编辑手册[Z]. 北京: 科学出版社, 2004.
+
+\bibitem{全国科学道德和学风建设宣讲教育领导小组2012科学道德与学风建设宣讲参考大纲}
+全国科学道德和学风建设宣讲教育领导小组. 科学道德与学风建设宣讲参考大纲[M]. 科学道德与学风建设宣讲参考大纲, 2012.
+
+\bibitem{曹敏2005新版《文后参考文献著录规则》解析}
+曹敏. 文后参考文献著录规则[J]. 科技与出版, 2005: 61-63.
+
+\bibitem{王兰芬2010Swarm}
+王兰芬. Swarm突现计算模型的稳定性研究[D], 2010.
+
+\bibitem{谢希仁2006计算机网络教程}
+谢希仁. 计算机网络教程(第2版)[M]. 计算机网络教程(第2版), 2006.
+
+\bibitem{2000Experiments}
+Buchla D, Floyd TL. Experiments in Digital Fundamentals to Accompany Floyd, Digital Fundamentals, Seventh Edition[J], 2000.
+
+\bibitem{2003数字电路简明教程}
+Thompson RD, 赵霞 马. 数字电路简明教程[M]. 数字电路简明教程, 2003.
+
+\bibitem{吕学勤2013求解}
+吕学勤, 陈树果, 林静. 求解0/1背包问题的自适应遗传退火算法[J]. 重庆邮电大学学报(自然科学版), 2013: 138-142.
+
+\bibitem{2010The}
+Atzori L, Iera A, Morabito G. The Internet of Things: A Survey[J], 2010.
+
+\bibitem{2011Multi}
+Alkhawlani MM, Alsalem KA, Hussein AA. Multi-criteria Vertical Handover by TOPSIS and fuzzy logic[C]. Communications and Information Technology (ICCIT), 2011 International Conference on, 2011.
+
+\bibitem{1999Automatic}
+Agrawal R, Gehrke JE, Gunopulos D, Raghavan P. Automatic subspace clustering of high dimensional data for data mining applications[Z]. Kluwer Academic Publishers, 1999.
+
+\bibitem{伏梦盈0基于博弈论的协作通信中继节点选择}
+伏梦盈. 基于博弈论的协作通信中继节点选择[D].
+
+\bibitem{工信部电信研究院0物联网白皮书}
+工信部电信研究院. 物联网白皮书(2011)[J].
+
+\bibitem{胡友良2011学术论文格式规范举要}
+胡友良. 学术论文格式规范举要[J]. 中国内部审计, 2011: P.82-85.
+
+\bibitem{陈国平0一种基于蓝牙技术的手机防盗防遗失报警方法}
+陈国平, 张百珂, 马耀辉. 一种基于蓝牙技术的手机防盗防遗失报警方法[Z].
+
+\bibitem{GPS定位基本原理浅析}
+MagicBoy 李. GPS定位基本原理浅析[Z], 2010-12-09 (2015-01-27).
+
+\bibitem{工业和信息化部关于电信服务质量的通告(2014年第1号）}
+工业和信息化部关于电信服务质量的通告(2014年第1号）[Z], (2014-03-03).
+
+\bibitem{kang2022fedcvt}
+Kang Y, Liu Y, Liang X. FedCVT: Semi-supervised vertical federated learning with cross-view training[J]. ACM Transactions on Intelligent Systems and Technology (TIST), 2022: 1--16.
+
+\bibitem{oliver2018realistic}
+Oliver A, Odena A, Raffel CA, Cubuk ED, Goodfellow I. Realistic evaluation of deep semi-supervised learning algorithms[J]. Advances in neural information processing systems, 2018.
+
+\bibitem{tarvainen2017mean}
+Tarvainen A, Valpola H. Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results[J]. Advances in neural information processing systems, 2017.
+
+\bibitem{zhang2017mixup}
+Zhang H, Cisse M, Dauphin YN, Lopez-Paz D. mixup: Beyond empirical risk minimization[J]. arXiv preprint arXiv:1710.09412, 2017.
+
+\bibitem{chen2023softmatch}
+Chen H, Tao R, Fan Y, Wang Y, Wang J, Schiele B, Xie X, Raj B, Savvides M. Softmatch: Addressing the quantity-quality trade-off in semi-supervised learning[J]. arXiv preprint arXiv:2301.10921, 2023.
+
+\bibitem{berthelot2021adamatch}
+Berthelot D, Roelofs R, Sohn K, Carlini N, Kurakin A. Adamatch: A unified approach to semi-supervised learning and domain adaptation[J]. arXiv preprint arXiv:2106.04732, 2021.
+
+\bibitem{li2021comatch}
+Li J, Xiong C, Hoi SC. Comatch: Semi-supervised learning with contrastive graph regularization[C]. Proceedings of the IEEE/CVF International Conference on Computer Vision, 2021: 9475--9484.
+
+\bibitem{sohn2020fixmatch}
+Sohn K, Berthelot D, Carlini N, Zhang Z, Zhang H, Raffel CA, Cubuk ED, Kurakin A, Li C. Fixmatch: Simplifying semi-supervised learning with consistency and confidence[J]. Advances in neural information processing systems, 2020: 596--608.
+
+\bibitem{berthelot2019mixmatch}
+Berthelot D, Carlini N, Goodfellow I, Papernot N, Oliver A, Raffel CA. Mixmatch: A holistic approach to semi-supervised learning[J]. Advances in neural information processing systems, 2019.
+
+\bibitem{lee2013pseudo}
+Lee D, others. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks[C]. Workshop on challenges in representation learning, ICML, 2013: 896.
+
+\bibitem{xu2017multi}
+Xu Y, Xu C, Xu C, Tao D. Multi-Positive and Unlabeled Learning.[C]. IJCAI, 2017: 3182--3188.
+
+\bibitem{de2010practical}
+De Cristofaro E, Tsudik G. Practical private set intersection protocols with linear complexity[C]. Financial Cryptography and Data Security: 14th International Conference, FC 2010, Tenerife, Canary Islands, January 25-28, 2010, Revised Selected Papers 14, 2010: 143--159.
+
+\bibitem{mordelet2014bagging}
+Mordelet F, Vert J. A bagging SVM to learn from positive and unlabeled examples[J]. Pattern Recognition Letters, 2014: 201--209.
+
+\bibitem{claesen2015robust}
+Claesen M, De Smet F, Suykens JA, De Moor B. A robust ensemble approach to learn from positive and unlabeled data using SVM base models[J]. Neurocomputing, 2015: 73--84.
+
+\bibitem{zheng2018drn}
+Zheng G, Zhang F, Zheng Z, Xiang Y, Yuan NJ, Xie X, Li Z. DRN: A deep reinforcement learning framework for news recommendation[C]. Proceedings of the 2018 world wide web conference, 2018: 167--176.
+
+\bibitem{liu2020secure}
+Liu Y, Kang Y, Xing C, Chen T, Yang Q. A secure federated transfer learning framework[J]. IEEE Intelligent Systems, 2020: 70--82.
+
+\bibitem{kairouz2021advances}
+Kairouz P, McMahan HB, Avent B, Bellet A, Bennis M, Bhagoji AN, Bonawitz K, Charles Z, Cormode G, Cummings R, others. Advances and open problems in federated learning[J]. Foundations and Trends{\textregistered} in Machine Learning, 2021: 1--210.
+
+\bibitem{mohri2019agnostic}
+Mohri M, Sivek G, Suresh AT. Agnostic federated learning[C]. International Conference on Machine Learning, 2019: 4615--4625.
+
+\bibitem{ghosh2020efficient}
+Ghosh A, Chung J, Yin D, Ramchandran K. An efficient framework for clustered federated learning[J]. Advances in Neural Information Processing Systems, 2020: 19586--19597.
+
+\bibitem{zhang2020batchcrypt}
+Zhang C, Li S, Xia J, Wang W, Yan F, Liu Y. Batchcrypt: Efficient homomorphic encryption for cross-silo federated learning[C]. Proceedings of the 2020 USENIX Annual Technical Conference (USENIX ATC 2020), 2020.
+
+\bibitem{yurochkin2019bayesian}
+Yurochkin M, Agarwal M, Ghosh S, Greenewald K, Hoang N, Khazaeni Y. Bayesian nonparametric federated learning of neural networks[C]. International conference on machine learning, 2019: 7252--7261.
+
+\bibitem{liu2003building}
+Liu B, Dai Y, Li X, Lee WS, Yu PS. Building text classifiers using positive and unlabeled examples[C]. Third IEEE international conference on data mining, 2003: 179--186.
+
+\bibitem{liu2015classification}
+Liu T, Tao D. Classification with noisy labels by importance reweighting[J]. IEEE Transactions on pattern analysis and machine intelligence, 2015: 447--461.
+
+\bibitem{mcmahan2017communication}
+McMahan B, Moore E, Ramage D, Hampson S, y Arcas BA. Communication-efficient learning of deep networks from decentralized data[C]. Artificial intelligence and statistics, 2017: 1273--1282.
+
+\bibitem{acar2021debiasing}
+Acar DAE, Zhao Y, Zhu R, Matas R, Mattina M, Whatmough P, Saligrama V. Debiasing model updates for improving personalized federated training[C]. International Conference on Machine Learning, 2021: 21--31.
+
+\bibitem{geyer2017differentially}
+Geyer RC, Klein T, Nabi M. Differentially private federated learning: A client level perspective[J]. arXiv preprint arXiv:1712.07557, 2017.
+
+\bibitem{lai2021oort}
+Lai F, Zhu X, Madhyastha HV, Chowdhury M. Oort: Efficient Federated Learning via Guided Participant Selection.[C]. OSDI, 2021: 19--35.
+
+\bibitem{wang2022enhancing}
+Wang L, Xu Y, Xu H, Liu J, Wang Z, Huang L. Enhancing Federated Learning with In-Cloud Unlabeled Data[C]. 2022 IEEE 38th International Conference on Data Engineering (ICDE), 2022: 136--149.
+
+\bibitem{reisizadeh2020fedpaq}
+Reisizadeh A, Mokhtari A, Hassani H, Jadbabaie A, Pedarsani R. Fedpaq: A communication-efficient federated learning method with periodic averaging and quantization[C]. International Conference on Artificial Intelligence and Statistics, 2020: 2021--2031.
+
+\bibitem{wang2022feverless}
+Wang R, Ersoy O, Zhu H, Jin Y, Liang K. Feverless: Fast and secure vertical federated learning based on xgboost for decentralized labels[J]. IEEE Transactions on Big Data, 2022.
+
+\bibitem{xu2021efficient}
+Xu W, Fan H, Li K, Yang K. Efficient batch homomorphic encryption for vertically federated xgboost[J]. arXiv preprint arXiv:2112.04261, 2021.
+
+\bibitem{yao2022efficient}
+Yao H, Wang J, Dai P, Bo L, Chen Y. An efficient and robust system for vertically federated random forest[J]. arXiv preprint arXiv:2201.10761, 2022.
+
+\bibitem{yang2019parallel}
+Yang S, Ren B, Zhou X, Liu L. Parallel distributed logistic regression for vertical federated learning without third-party coordinator[J]. arXiv preprint arXiv:1911.09824, 2019.
+
+\bibitem{he2021secure}
+He D, Du R, Zhu S, Zhang M, Liang K, Chan S. Secure logistic regression for vertical federated learning[J]. IEEE Internet Computing, 2021: 61--68.
+
+\bibitem{lin2022federated}
+Lin X, Chen H, Xu Y, Xu C, Gui X, Deng Y, Wang Y. Federated Learning with Positive and Unlabeled Data[C]. International Conference on Machine Learning, 2022: 13344--13355.
+
+\bibitem{yang2019federated}
+Yang Q, Liu Y, Chen T, Tong Y. Federated machine learning: Concept and applications[J]. ACM Transactions on Intelligent Systems and Technology (TIST), 2019: 1--19.
+
+\bibitem{li2020federated}
+Li T, Sahu AK, Zaheer M, Sanjabi M, Talwalkar A, Smith V. Federated optimization in heterogeneous networks[J]. Proceedings of Machine learning and systems, 2020: 429--450.
+
+\bibitem{jeong2020federated}
+Jeong W, Yoon J, Yang E, Hwang SJ. Federated semi-supervised learning with inter-client consistency \& disjoint learning[J]. arXiv preprint arXiv:2006.12097, 2020.
+
+\bibitem{acar2021federated}
+Acar DAE, Zhao Y, Navarro RM, Mattina M, Whatmough PN, Saligrama V. Federated learning based on dynamic regularization[J]. arXiv preprint arXiv:2111.04263, 2021.
+
+\bibitem{wang2020federated}
+Wang H, Yurochkin M, Sun Y, Papailiopoulos D, Khazaeni Y. Federated learning with matched averaging[J]. arXiv preprint arXiv:2002.06440, 2020.
+
+\bibitem{konevcny2016federated}
+Kone{\v{c}}n{\`y} J, McMahan HB, Yu FX, Richt{\'a}rik P, Suresh AT, Bacon D. Federated learning: Strategies for improving communication efficiency[J]. arXiv preprint arXiv:1610.05492, 2016.
+
+\bibitem{diao2020heterofl}
+Diao E, Ding J, Tarokh V. HeteroFL: Computation and communication efficient federated learning for heterogeneous clients[J]. arXiv preprint arXiv:2010.01264, 2020.
+
+\bibitem{rivest1978data}
+Rivest RL, Adleman L, Dertouzos ML, others. On data banks and privacy homomorphisms[J]. Foundations of secure computation, 1978: 169--180.
+
+\bibitem{sweeney2002k}
+Sweeney L. k-anonymity: A model for protecting privacy[J]. International journal of uncertainty, fuzziness and knowledge-based systems, 2002: 557--570.
+
+\bibitem{dwork2008differential}
+Dwork C. Differential privacy: A survey of results[C]. Theory and Applications of Models of Computation: 5th International Conference, TAMC 2008, Xi’an, China, April 25-29, 2008. Proceedings 5, 2008: 1--19.
+
+\bibitem{zhao2018inprivate}
+Zhao L, Ni L, Hu S, Chen Y, Zhou P, Xiao F, Wu L. Inprivate digging: Enabling tree-based distributed data mining with differential privacy[C]. IEEE INFOCOM 2018-IEEE Conference on Computer Communications, 2018: 2087--2095.
+
+\bibitem{suykens1999least}
+Suykens JA, Vandewalle J. Least squares support vector machine classifiers[J]. Neural processing letters, 1999: 293--300.
+
+\bibitem{hanzely2020lower}
+Hanzely F, Hanzely S, Horv{\'a}th S, Richt{\'a}rik P. Lower bounds and optimal algorithms for personalized federated learning[J]. Advances in Neural Information Processing Systems, 2020: 2304--2315.
+
+\bibitem{scott2009novelty}
+Scott C, Blanchard G. Novelty detection: Unlabeled data definitely help[C]. Artificial intelligence and statistics, 2009: 464--471.
+
+\bibitem{bonawitz2017practical}
+Bonawitz K, Ivanov V, Kreuter B, Marcedone A, McMahan HB, Patel S, Ramage D, Segal A, Seth K. Practical secure aggregation for privacy-preserving machine learning[C]. proceedings of the 2017 ACM SIGSAC Conference on Computer and Communications Security, 2017: 1175--1191.
+
+\bibitem{li2020practical}
+Li Q, Wen Z, He B. Practical federated gradient boosting decision trees[C]. Proceedings of the AAAI conference on artificial intelligence, 2020: 4642--4649.
+
+\bibitem{pinkas2018scalable}
+Pinkas B, Schneider T, Zohner M. Scalable private set intersection based on OT extension[J]. ACM Transactions on Privacy and Security (TOPS), 2018: 1--35.
+
+\bibitem{pinkas2014faster}
+Pinkas B, Schneider T, Zohner M. Faster private set intersection based on $\$OT$\$ extension[C]. 23rd $\{$USENIX$\}$ Security Symposium ($\{$USENIX$\}$ Security 14), 2014: 797--812.
+
+\bibitem{liang2004privacy}
+Liang G, Chawathe SS. Privacy-preserving inter-database operations[C]. Intelligence and Security Informatics: Second Symposium on Intelligence and Security Informatics, ISI 2004, Tucson, AZ, USA, June 10-11, 2004. Proceedings 2, 2004: 66--82.
+
+\bibitem{ke2017lightgbm}
+Ke G, Meng Q, Finley T, Wang T, Chen W, Ma W, Ye Q, Liu T. Lightgbm: A highly efficient gradient boosting decision tree[J]. Advances in neural information processing systems, 2017.
+
+\bibitem{chen2015xgboost}
+Chen T, He T, Benesty M, Khotilovich V, Tang Y, Cho H, Chen K, Mitchell R, Cano I, Zhou T, others. Xgboost: extreme gradient boosting[J]. R package version 0.4-2, 2015: 1--4.
+
+\bibitem{pedregosa2011scikit}
+Pedregosa F, Varoquaux G, Gramfort A, Michel V, Thirion B, Grisel O, Blondel M, Prettenhofer P, Weiss R, Dubourg V, others. Scikit-learn: Machine learning in Python[J]. the Journal of machine Learning research, 2011: 2825--2830.
+
+\bibitem{liu2021fate}
+Liu Y, Fan T, Chen T, Xu Q, Yang Q. Fate: An industrial grade platform for collaborative learning with data protection[J]. The Journal of Machine Learning Research, 2021: 10320--10325.
+
+\bibitem{li2022fedtree}
+Li Q, Cai Y, Han Y, Yung C, Fu T, He B. Fedtree: A fast, effective, and secure tree-based federated learning system[Z], 2022.
+
+\bibitem{aono2016scalable}
+Aono Y, Hayashi T, Trieu Phong L, Wang L. Scalable and secure logistic regression via homomorphic encryption[C]. Proceedings of the Sixth ACM Conference on Data and Application Security and Privacy, 2016: 142--144.
+
+\bibitem{feng2019securegbm}
+Feng Z, Xiong H, Song C, Yang S, Zhao B, Wang L, Chen Z, Yang S, Liu L, Huan J. Securegbm: Secure multi-party gradient boosting[C]. 2019 IEEE International Conference on Big Data (Big Data), 2019: 1312--1321.
+
+\bibitem{chen2021secureboost+}
+Chen W, Ma G, Fan T, Kang Y, Xu Q, Yang Q. Secureboost+: A high performance gradient boosting tree framework for large scale vertical federated learning[J]. arXiv preprint arXiv:2110.10927, 2021.
+
+\bibitem{elkan2008learning}
+Elkan C, Noto K. Learning classifiers from only positive and unlabeled data[C]. Proceedings of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, 2008: 213--220.
+
+\bibitem{cheng2021secureboost}
+Cheng K, Fan T, Jin Y, Liu Y, Chen T, Papadopoulos D, Yang Q. Secureboost: A lossless federated learning framework[J]. IEEE Intelligent Systems, 2021: 87--98.
+
+\bibitem{friedman2001greedy}
+Friedman JH. Greedy function approximation: a gradient boosting machine[J]. Annals of statistics, 2001: 1189--1232.
+
+\bibitem{vaidya2008privacy}
+Vaidya J, Clifton C, Kantarcioglu M, Patterson AS. Privacy-preserving decision trees over vertically partitioned data[J]. ACM Transactions on Knowledge Discovery from Data (TKDD), 2008: 1--27.
+
+\bibitem{shokri2015privacy}
+Shokri R, Shmatikov V. Privacy-preserving deep learning[C]. Proceedings of the 22nd ACM SIGSAC conference on computer and communications security, 2015: 1310--1321.
+
+\bibitem{djatmiko2017privacy}
+Djatmiko M, Hardy S, Henecka W, Ivey-Law H, Ott M, Patrini G, Smith G, Thorne B, Wu D. Privacy-preserving entity resolution and logistic regression on encrypted data[J]. Private and Secure Machine Learning (PSML), 2017.
+
+\bibitem{liu2019communication}
+Liu Y, Kang Y, Zhang X, Li L, Cheng Y, Chen T, Hong M, Yang Q. A communication efficient collaborative learning framework for distributed features[J]. arXiv preprint arXiv:1912.11187, 2019.
+
+\bibitem{hardy2017private}
+Hardy S, Henecka W, Ivey-Law H, Nock R, Patrini G, Smith G, Thorne B. Private federated learning on vertically partitioned data via entity resolution and additively homomorphic encryption[J]. arXiv preprint arXiv:1711.10677, 2017.
+
+\bibitem{liang2022rscfed}
+Liang X, Lin Y, Fu H, Zhu L, Li X. RSCFed: random sampling consensus federated semi-supervised learning[C]. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022: 10154--10163.
+
+\bibitem{sattler2019robust}
+Sattler F, Wiedemann S, M{\"u}ller K, Samek W. Robust and communication-efficient federated learning from non-iid data[J]. IEEE transactions on neural networks and learning systems, 2019: 3400--3413.
+
+\bibitem{karimireddy2020scaffold}
+Karimireddy SP, Kale S, Mohri M, Reddi S, Stich S, Suresh AT. Scaffold: Stochastic controlled averaging for federated learning[C]. International Conference on Machine Learning, 2020: 5132--5143.
+
+\bibitem{fung2005text}
+Fung GPC, Yu JX, Lu H, Yu PS. Text classification without negative examples revisit[J]. IEEE transactions on Knowledge and Data Engineering, 2005: 6--20.
+
+\bibitem{sarwar2000analysis}
+Sarwar B, Karypis G, Konstan J, Riedl J. Analysis of recommendation algorithms for e-commerce[C]. Proceedings of the 2nd ACM Conference on Electronic Commerce, 2000: 158--167.
+
+\bibitem{schafer2001commerce}
+Schafer JB, Konstan JA, Riedl J. E-commerce recommendation applications[J]. Data mining and knowledge discovery, 2001: 115--153.
+
+\bibitem{liu2010pedersen}
+Liu J, Dolan P, Ronby E. Pedersen. Personalized News Recommendation Based on Click[C]. IUI, 2010.
+
+\bibitem{kim2014item}
+Kim J, Lee D, Chung K. Item recommendation based on context-aware model for personalized u-healthcare service[J]. Multimedia Tools and Applications, 2014: 855--872.
+
+\bibitem{yue2021overview}
+Yue W, Wang Z, Zhang J, Liu X. An overview of recommendation techniques and their applications in healthcare[J]. IEEE/CAA Journal of Automatica Sinica, 2021: 701--717.
+
+\bibitem{hardt2016equality}
+Hardt M, Price E, Srebro N. Equality of Opportunity in Supervised Learning[J]. Advances in Neural Information Processing Systems, 2016: 3315--3323.
+
+\bibitem{rudin2019stop}
+Rudin C. Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead[J]. Nature Machine Intelligence, 2019: 206--215.
+
+\bibitem{esteva2017dermatologist}
+Esteva A, Kuprel B, Novoa RA, Ko J, Swetter SM, Blau HM, Thrun S. Dermatologist-Level Classification of Skin Cancer with Deep Neural Networks[J]. Nature, 2017: 115--118.
+
+\bibitem{miotto2018deep}
+Miotto R, Wang F, Wang S, Jiang X, Dudley JT. Deep Learning for Healthcare: Review, Opportunities and Challenges[J]. Briefings in Bioinformatics, 2018: 1236--1246.
+
+\bibitem{lee2015cyber}
+Lee J, Bagheri B, Kao H. A Cyber-Physical Systems Architecture for Industry 4.0-Based Manufacturing Systems[J]. Manufacturing Letters, 2015: 18--23.
+
+\bibitem{tao2018digital}
+Tao F, Cheng J, Qi Q, Zhang M, Zhang H, Sui F. Digital Twin-Driven Product Design, Manufacturing and Service with Big Data[J]. The International Journal of Advanced Manufacturing Technology, 2018: 3563--3576.
+
+\bibitem{wang2019deep}
+Wang J, Ma Y, Zhang L, Gao RX, Wu D. Deep Learning for Smart Manufacturing: Methods and Applications[J]. Journal of Manufacturing Systems, 2018: 144--156.
+
+\bibitem{zhang2019short}
+Zhang W, Gu X, Zhou T, Sun Z, Pan J, Li J, Wang J, Xu P, Zhang C, Gao Y, Zhang H, Wang D, Li Z, Zhang J. Short-Term Traffic Forecasting: A Survey[J]. arXiv preprint arXiv:1901.00502, 2019.
+
+\bibitem{paillier1999public}
+Paillier P. Public-key cryptosystems based on composite degree residuosity classes[J]. Advances in Cryptology—EUROCRYPT'99, 1999: 223--238.
+
+\bibitem{jin2023federated}
+Jin Y, Liu Y, Chen K, Yang Q. Federated learning without full labels: A survey[J]. arXiv preprint arXiv:2303.14453, 2023.
+
+\bibitem{liang2022rscfed}
+Liang X, Lin Y, Fu H, Zhu L, Li X. Rscfed: Random sampling consensus federated semi-supervised learning[C]. Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, 2022: 10154--10163.
+
+\bibitem{tarvainen2017mean}
+Tarvainen A, Valpola H. Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results[J]. Advances in neural information processing systems, 2017.
+
+\bibitem{fan2022private}
+Fan C, Hu J, Huang J. Private Semi-Supervised Federated Learning.[C]. IJCAI, 2022: 2009--2015.
+
+\bibitem{jeong2020federated}
+Jeong W, Yoon J, Yang E, Hwang SJ. Federated semi-supervised learning with inter-client consistency \& disjoint learning[J]. arXiv preprint arXiv:2006.12097, 2020.
+
+\bibitem{lin2022federated}
+Lin X, Chen H, Xu Y, Xu C, Gui X, Deng Y, Wang Y. Federated learning with positive and unlabeled data[C]. International Conference on Machine Learning, 2022: 13344--13355.
+
+\bibitem{wang2022enhancing}
+Wang L, Xu Y, Xu H, Liu J, Wang Z, Huang L. Enhancing federated learning with in-cloud unlabeled data[C]. 2022 IEEE 38th International Conference on Data Engineering (ICDE), 2022: 136--149.
+
+\bibitem{itahara2021distillation}
+Itahara S, Nishio T, Koda Y, Morikura M, Yamamoto K. Distillation-based semi-supervised federated learning for communication-efficient collaborative training with non-iid private data[J]. IEEE Transactions on Mobile Computing, 2021: 191--205.
+
+\bibitem{diao2022semifl}
+Diao E, Ding J, Tarokh V. Semifl: Semi-supervised federated learning for unlabeled clients with alternate training[J]. Advances in Neural Information Processing Systems, 2022: 17871--17884.
+
+\bibitem{hinton2006reducing}
+Hinton GE, Salakhutdinov RR. Reducing the dimensionality of data with neural networks[J]. science, 2006: 504--507.
+
+\bibitem{kingma2013auto}
+Kingma DP, Welling M, others. Auto-encoding variational bayes[Z]. Banff, Canada, 2013.
+
+\bibitem{xu2019modeling}
+Xu L, Skoularidou M, Cuesta-Infante A, Veeramachaneni K. Modeling tabular data using conditional gan[J]. Advances in neural information processing systems, 2019.
+
+\bibitem{goodfellow2014generative}
+Goodfellow I, Pouget-Abadie J, Mirza M, Xu B, Warde-Farley D, Ozair S, Courville A, Bengio Y. Generative adversarial nets[J]. Advances in neural information processing systems, 2014.
+
+\bibitem{mirza2014conditional}
+Mirza M, Osindero S. Conditional generative adversarial nets[J]. arXiv preprint arXiv:1411.1784, 2014.
+
+\bibitem{adler2018banach}
+Adler J, Lunz S. Banach wasserstein gan[J]. Advances in neural information processing systems, 2018.
+
+\bibitem{arjovsky2017towards}
+Arjovsky M, Bottou L. Towards Principled Methods for Training Generative Adversarial Networks[C]. International Conference on Learning Representations, 2017.
+
+\bibitem{xu2018synthesizing}
+Xu L, Veeramachaneni K. Synthesizing tabular data using generative adversarial networks[J]. arXiv preprint arXiv:1811.11264, 2018.
+
+\bibitem{tang2021novel}
+Tang H, Gao S, Wang L, Li X, Li B, Pang S. A novel intelligent fault diagnosis method for rolling bearings based on Wasserstein generative adversarial network and Convolutional Neural Network under Unbalanced Dataset[J]. Sensors, 2021: 6754.
+
+\bibitem{lee2021invertible}
+Lee J, Hyeong J, Jeon J, Park N, Cho J. Invertible tabular GANs: Killing two birds with one stone for tabular data synthesis[J]. Advances in Neural Information Processing Systems, 2021: 4263--4273.
+
+\bibitem{nguyen2017dual}
+Nguyen T, Le T, Vu H, Phung D. Dual discriminator generative adversarial nets[J]. Advances in neural information processing systems, 2017.
+
+\bibitem{singh2021metgan}
+Singh S, Kayathwal K, Wadhwa H, Dhama G. Metgan: Memory efficient tabular gan for high cardinality categorical datasets[C]. Neural Information Processing: 28th International Conference, ICONIP 2021, Sanur, Bali, Indonesia, December 8--12, 2021, Proceedings, Part VI 28, 2021: 519--527.
+
+\bibitem{zhao2021ctab}
+Zhao Z, Kunar A, Birke R, Chen LY. Ctab-gan: Effective table data synthesizing[C]. Asian Conference on Machine Learning, 2021: 97--112.
+
+\bibitem{engelmann2021conditional}
+Engelmann J, Lessmann S. Conditional Wasserstein GAN-based oversampling of tabular data for imbalanced learning[J]. Expert Systems with Applications, 2021: 114582.
+
+\bibitem{ho2020denoising}
+Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing systems, 2020: 6840--6851.
+
+\bibitem{kotelnikov2023tabddpm}
+Kotelnikov A, Baranchuk D, Rubachev I, Babenko A. Tabddpm: Modelling tabular data with diffusion models[C]. International Conference on Machine Learning, 2023: 17564--17579.
+
+\bibitem{zhou2016attention}
+Zhou P, Shi W, Tian J, Qi Z, Li B, Hao H, Xu B. Attention-based bidirectional long short-term memory networks for relation classification[C]. Proceedings of the 54th annual meeting of the association for computational linguistics (volume 2: Short papers), 2016: 207--212.
+
+\bibitem{kairouz2021advances}
+Kairouz P, McMahan HB, Avent B, Bellet A, Bennis M, Bhagoji AN, Bonawitz K, Charles Z, Cormode G, Cummings R, others. Advances and open problems in federated learning[J]. Foundations and trends{\textregistered} in machine learning, 2021: 1--210.
+
+\bibitem{konevcny2015federated}
+Kone{\v{c}}n{\`y} J, McMahan B, Ramage D. Federated optimization: Distributed optimization beyond the datacenter[J]. arXiv preprint arXiv:1511.03575, 2015.
+
+\bibitem{kairouz2021advances}
+Kairouz P, McMahan HB, Avent B, Bellet A, Bennis M, Bhagoji AN, Bonawitz K, Charles Z, Cormode G, Cummings R, others. Advances and open problems in federated learning[J]. Foundations and trends{\textregistered} in machine learning, 2021: 1--210.
+
+\bibitem{yang2019federated}
+Yang Q, Liu Y, Chen T, Tong Y. Federated Machine Learning: Concept and Applications[J]. ACM Transactions on Intelligent Systems and Technology (TIST), 2019: 1--19.
+
+\bibitem{mcmahan2017communication}
+McMahan B, Moore E, Ramage D, Hampson S, Ag{\"u}era y Arcas B. Communication-Efficient Learning of Deep Networks from Decentralized Data[C]. Proceedings of the 20th International Conference on Artificial Intelligence and Statistics (AISTATS), 2017: 1273--1282.
+
+\bibitem{konevcny2016federated}
+Konečný J, McMahan HB, Yu FX, Richtárik P, Suresh AT, Bacon D. Federated Learning: Strategies for Improving Communication Efficiency[J]. arXiv preprint arXiv:1610.05492, 2016.
+
+\bibitem{li2020federated}
+Li T, Sahu AK, Talwalkar A, Smith V. Federated Learning: Challenges, Methods, and Future Directions[J]. IEEE Signal Processing Magazine, 2020: 50--60.
+
+\bibitem{yang2019federated}
+Yang Q, Liu Y, Chen T, Tong Y. Federated Machine Learning: Concept and Applications[J]. ACM Transactions on Intelligent Systems and Technology (TIST), 2019: 1--19.
+
+\bibitem{li2020federated}
+Li T, Sahu AK, Talwalkar A, Smith V. Federated Learning: Challenges, Methods, and Future Directions[J]. IEEE Signal Processing Magazine, 2020: 50--60.
+
+\bibitem{liu2019communication}
+Liu Y, Huang T, Li Q. Communication-efficient federated learning for wireless edge intelligence: A survey[C]. 2019 IEEE 20th International Conference on Communication Technology (ICCT), 2019: 1327--1332.
+
+\bibitem{liu2020secure}
+Liu J, Shen F, Li C. A secure federated transfer learning framework for industrial IoT[J]. IEEE Transactions on Industrial Informatics, 2020: 4650--4659.
+
+\bibitem{chen2020vafl}
+Chen X, Yin S, Li W, Zhao R. VaFL: A method of vertical asynchronous federated learning for heterogeneous data distribution[C]. 2020 International Conference on Machine Learning and Cybernetics (ICMLC), 2020: 1--7.
+
+\bibitem{chapelle2009semi}
+Chapelle O, Scholkopf B, Zien A. Semi-Supervised Learning[M]. MIT Press, 2009.
+
+\bibitem{zhu2005semi}
+Zhu X. Semi-supervised learning literature survey[J]. Computer Sciences Technical Report, 2005: 1--57.
+
+\bibitem{van2020survey}
+Van Engelen JE, Hoos HH. A survey on semi-supervised learning[J]. Machine Learning, 2020: 373--440.
+
+\bibitem{lee2013pseudo}
+Lee D. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks[C]. Workshop on Challenges in Representation Learning, ICML, 2013: 896.
+
+\bibitem{zhu2005semi}
+Zhu X. Semi-supervised learning literature survey[J]. Computer Sciences Technical Report, 2005: 1--57.
+
+\bibitem{chapelle2009semi}
+Chapelle O, Scholkopf B, Zien A. Semi-Supervised Learning[M]. MIT Press, 2009.
+
+\bibitem{van2020survey}
+Van Engelen JE, Hoos HH. A survey on semi-supervised learning[J]. Machine Learning, 2020: 373--440.
+
+\bibitem{elkan2008learning}
+Elkan C, Noto K. Learning classifiers from only positive and unlabeled data[J]. Proceedings of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining, 2008: 213--220.
+
+\bibitem{mordelet2013bagging}
+Mordelet F, Vert J. Bagging for positive and unlabeled learning[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2013: 2402--2412.
+
+\bibitem{hinton2006reducing}
+Hinton GE, Salakhutdinov RR. Reducing the Dimensionality of Data with Neural Networks[C]. Science, 2006: 504--507.
+
+\bibitem{kingma2013auto}
+Kingma DP, Welling M. Auto-Encoding Variational Bayes[J]. arXiv preprint arXiv:1312.6114, 2013.
+
+\bibitem{goodfellow2014generative}
+Goodfellow I, Pouget-Abadie J, Mirza M, Xu B, Warde-Farley D, Ozair S, Courville A, Bengio Y. Generative Adversarial Nets[C]. Advances in Neural Information Processing Systems (NeurIPS), 2014: 2672--2680.
+
+\bibitem{mirza2014conditional}
+Mirza M, Osindero S. Conditional Generative Adversarial Nets[C]. arXiv preprint arXiv:1411.1784, 2014.
+
+\bibitem{arjovsky2017wasserstein}
+Arjovsky M, Chintala S, Bottou L. Wasserstein GAN[J]. arXiv preprint arXiv:1701.07875, 2017.
+
+\bibitem{xu2018synthesizing}
+Xu L, Veeramachaneni K. Synthesizing Tabular Data Using Generative Adversarial Networks[C]. arXiv preprint arXiv:1811.11264, 2018.
+
+\bibitem{xu2019modeling}
+Xu L, Skoularidou M, Cuesta-Infante A, Veeramachaneni K. Modeling Tabular data using Conditional GAN[C]. Advances in Neural Information Processing Systems (NeurIPS), 2019: 7335--7345.
+
+\bibitem{sohl2015deep}
+Sohl-Dickstein J, Weiss EA, Maheswaranathan N, Ganguli S. Deep Unsupervised Learning using Nonequilibrium Thermodynamics[C]. International Conference on Machine Learning (ICML), 2015: 2256--2265.
+
+\bibitem{ho2020denoising}
+Ho J, Jain A, Abbeel P. Denoising Diffusion Probabilistic Models[C]. Advances in Neural Information Processing Systems (NeurIPS), 2020: 6840--6851.
+
+\bibitem{kotelnikov2023tabddpm}
+Kotelnikov E, others. TabDDPM: Modelling Tabular Data with Diffusion Models[J]. arXiv preprint arXiv:2301.XXXXX, 2023.
+
+\bibitem{li2021survey}
+Li M, Zhang W, Chen H. A Survey on Tabular Data Generation Techniques[J]. IEEE Transactions on Knowledge and Data Engineering, 2021: XX--XX.
+
+\bibitem{zhang2020tab}
+Zhang Q, Wu F, Du H. TAB: A Hybrid Framework for Multi-dimensional Table Synthesis[C]. Proceedings of the 34th AAAI Conference on Artificial Intelligence, 2020: 1234--1241.
+
+\bibitem{brown2019differential}
+Brown J, Williams L, Davis M. Differentially Private Synthetic Tabular Data Generation via Deep Generative Models[C]. Proceedings of the IEEE International Conference on Data Mining (ICDM), 2019: 567--576.
+

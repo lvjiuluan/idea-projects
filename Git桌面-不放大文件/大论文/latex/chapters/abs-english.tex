@@ -6,14 +6,19 @@
 \chapter{ABSTRACT}
 \xiaosi
 
-Dissertation /Thesis is postgraduate’s main academic performance to display her/his works of scientific research, which shows the author’s new invention, new theory or new opinion in her/his research. It is the crucial document for the graduate students to apply for degree, and it is also the important scientific research literature and the valuable wealth of society.
+With the increasing demand for data privacy protection and the widespread existence of distributed data environments, Federated Learning (FL) has rapidly developed as a distributed machine learning paradigm that safeguards data privacy. However, in practical applications, federated learning faces challenges such as scarcity of labeled data, heterogeneous data distributions, and insufficient sample alignment among participants. Semi-Supervised Learning (SSL), with its ability to effectively leverage a small amount of labeled data and a large amount of unlabeled data to improve model performance, has become a key approach to addressing these issues. This paper focuses on the study of sample generation methods based on federated semi-supervised learning, aiming to design innovative algorithms and frameworks that fully utilize unlabeled data and non-aligned samples while protecting data privacy, thereby enhancing the generalization capability and practical value of federated learning models.
 
-In order to further standardize the format of dissertation/thesis writing and improve graduate dissertation/thesis quality, this temolate is formulated with reference to the national standard "Rules for Dissertation Writing" (GB/T 7713.1-2006) and the reality of CQUPT.
+First, to address the issue of missing unlabeled data in multi-party federated learning, this paper proposes a multi-party federated semi-supervised learning method called VFPU. By analyzing the characteristics of the Unlabeled Data Deficiency Problem (UDD-PU), this method designs a federated learning framework that integrates Positive-Unlabeled (PU) learning techniques, leveraging collaboratively collected unlabeled data from multiple parties for model training. VFPU employs encrypted sample alignment, dynamic pseudo-label generation, and ensemble learning strategies to significantly improve the precision and recall of recommendation tasks while ensuring data privacy. Experiments demonstrate that on the Bank, Credit, and Census datasets, VFPU achieves AUC values of 0.886, 0.639, and 0.854, respectively. Compared to traditional centralized PU learning methods, the performance degradation is only 1.5\% to 3.2\%, validating an effective balance between privacy protection and model performance.
+
+Second, to tackle the limitations of Vertical Federated Learning (VFL), where the number of aligned samples is limited and non-aligned samples are underutilized, this paper proposes a sample generation method based on semi-supervised learning, VFPU-M-Syn. This method generates high-quality pseudo-labels and synthetic data through three strategies: cross-party feature correlation analysis, semi-supervised prediction, and generative model synthesis. Specifically, VFPU-M-Syn calculates cross-party feature correlations to identify dependencies between participant data, uses vertical federated semi-supervised learning to predict pseudo-labels for unlabeled samples, and introduces Generative Adversarial Networks (GANs) to synthesize data for features with low correlation.
+
+The research outcomes of this paper not only enrich the theoretical framework of federated semi-supervised learning but also provide feasible solutions for distributed learning scenarios requiring privacy protection, such as healthcare, finance, and intelligent manufacturing. Future work will further optimize the algorithm’s adaptability to Non-Independent and Identically Distributed (Non-IID) data, explore dynamic threshold adjustment mechanisms, and extend its applications to cross-modal data fusion, offering technical support for the efficient utilization and secure sharing of data elements.
+\\
 
 
 \noindent\textbf{Keywords：} 
 \begin{minipage}[t]{0.85\linewidth}
-	Dissertation/Thesis, Writing Specification, Thesis Template, Chongqing University of Posts and Telecommunications
+	Federated Learning; Semi-Supervised Learning; Sample Generation; Privacy Protection; Vertical Federated Learning
 \end{minipage}
 
 \clearpage
