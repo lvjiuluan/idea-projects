@@ -6,7 +6,8 @@
 \section{本章引言}
 联邦学习使多个参与方能够在不暴露私有数据的情况下协作构建机器学习模型。特别是，纵向联邦学习（VFL）利用对齐样本的分布式特征来构建联合模型。然而，VFL要求参与方共享足够大的对齐样本集——这一假设在实践中常常不成立，因为只有一小部分数据是对齐的，留下大部分未对齐的数据未被利用。
 
-受第3章讨论的局限性启发，本章提出了VFPU-Multitask-Synthesis（VFPU-M-Syn），一种基于纵向联邦半监督学习的样本生成方法，旨在在对齐样本有限时提升VFL性能。具体而言，VFPU-M-Syn估计缺失特征的表示。对于高度相关的特征，VFPU-M-Syn预测未标记样本的伪标签以扩展训练集；而对于相关性较低的特征，则采用生成模型合成数据。随后，VFPU-M-Syn在这些增强的数据视图上联合训练三个分类器，以提高整体VFL模型的性能。此外，VFPU-M-Syn通过确保参与方之间不交换原始数据或模型参数来保护数据隐私，满足联邦学习环境中的关键要求。
+受第3章讨论的局限性启发，本章
+FPU-Multitask-Synthesis（VFPU-M-Syn），一种基于纵向联邦半监督学习的样本生成方法，旨在在对齐样本有限时提升VFL性能。具体而言，VFPU-M-Syn估计缺失特征的表示。对于高度相关的特征，VFPU-M-Syn预测未标记样本的伪标签以扩展训练集；而对于相关性较低的特征，则采用生成模型合成数据。随后，VFPU-M-Syn在这些增强的数据视图上联合训练三个分类器，以提高整体VFL模型的性能。此外，VFPU-M-Syn通过确保参与方之间不交换原始数据或模型参数来保护数据隐私，满足联邦学习环境中的关键要求。
 
 本章的结构安排如下：3.2 节将对问题进行分析定义，3.3节将系统性地阐述基于半监督学习的纵向联邦参与方样本生成方法框架，并详细介绍 VFPU-M-Syn 的执行流程和算法设计。3.3 节在多个真实数据集上进行实验，验证 VFPU 方法的有效性，并对实验结果进行深入分析。最后，3.4 节对本章的研究工作进行总结。
 
@@ -161,7 +162,7 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 
 在该框架下，A方和B方的数据仍然保持隐私保护，即A方无法直接访问B方的原始数据，B方也无法直接获取A方的数据。然而，通过联邦学习的协作训练机制，A方可以利用自身数据和部分推测得到的B方数据进行模型训练，以优化对B方特征的预测能力。与此同时，B方的高相关性特征被逐列拆分，使得每一列特征都可以单独作为监督信号，从而有效地提升模型的学习能力。
 
-在本研究中，该问题被重新表述为一个纵向联邦半监督学习（Vertical Federated Semi-Supervised Learning, VFSSL）问题，其中特征集 $X^A$ 和 $X^{B_{\text{predict}}}$ 的数据被划分为有标签部分和无标签部分。文献 [1] 提出了VFPU（Vertical Federated Positive-Unlabeled Learning）算法来解决纵向联邦半监督学习问题。然而，VFPU 方法主要适用于PU（Positive-Unlabeled）学习，即仅包含正样本和未标记样本的情况，而在本研究中，$ f_q^B $ 特征列可能涉及二分类、多分类甚至回归任务，VFPU 方法无法直接适用。因此，本文在 VFPU 方法的基础上进行了改进，提出了一种新的方法——VFPU-M（Multi-task VFPU），使其能够适用于多种任务类型。VFPU-M 主要通过以下五个步骤实现纵向联邦半监督学习，如图 \ref{fig:VFPU-M-Syn} 所示。
+在本研究中，该问题被重新表述为一个纵向联邦半监督学习（Vertical Federated Semi-Supervised Learning, VFSSL）问题，其中特征集 $X^A$ 和 $X^{B_{\text{predict}}}$ 的数据被划分为有标签部分和无标签部分。Liu等人\textsuperscript{\cite{liu2023multi}}提出了VFPU（Vertical Federated Positive-Unlabeled Learning）算法来解决纵向联邦半监督学习问题。然而，VFPU 方法主要适用于PU（Positive-Unlabeled）学习，即仅包含正样本和未标记样本的情况，而在本研究中，$ f_q^B $ 特征列可能涉及二分类、多分类甚至回归任务，VFPU 方法无法直接适用。因此，本文在 VFPU 方法的基础上进行了改进，提出了一种新的方法——VFPU-M（Multi-task VFPU），使其能够适用于多种任务类型。VFPU-M 主要通过以下五个步骤实现纵向联邦半监督学习，如图 \ref{fig:VFPU-M-Syn} 所示。
 \begin{enumerate}
 	\item 基于对齐数据进行纵向联邦训练  
 	\item 利用训练好的基学习器对未对齐数据进行预测  
@@ -177,12 +178,13 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 
 本小节介绍了一种基于纵向联邦半监督学习（Vertical Federated Semi-supervised Learning, VFSL）的方法，用于生成 B 方缺失的数据。该方法的核心思想是利用 A 方与 B 方对齐数据之间的统计相关性，结合联邦学习框架，在保证数据隐私的前提下，对 B 方未对齐样本进行特征补全。算法 4-1 详细描述了该数据生成过程。
 
-\vspace{0.1cm} 
+\vspace{-0.1cm} 
 \begin{table}[!htb]
 	\setlength{\belowcaptionskip}{6pt}
 	\setlength{\abovecaptionskip}{6pt}
 	\centering
-	\renewcommand{\arraystretch}{1.2}
+	\renewcommand{\arraystretch}{0.6}
+	{\songti \wuhao
 	\begin{tabular}{p{13.2cm}}
 		\toprule[1.5pt]
 		\makecell[l]{\songti\wuhao  算法 4-1 纵向联邦半监督方法生成数据过程}\\
@@ -201,9 +203,10 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 		\makecell[l]{\wuhao 8: 得到 $X^{B_{predict}}$}\\
 		\bottomrule[1.5pt]
 	\end{tabular}
+}
 	\label{tab:algo-vfpu}
 \end{table}
-\vspace{-0.1cm}
+\vspace{-0.2cm}
 
 算法的输入包括以下几个关键元素：A 方对齐数据：$X_{al}^A \in \mathbbm{R}^{n_{al} \times d_A}$，表示 A 方与 B 方样本空间对齐的特征矩阵，其中 $n_{al}$ 为对齐样本的数量，$d_A$ 为 A 方特征维度。A 方未对齐数据：$X_{nl}^A \in \mathbbm{R}^{n_{nl} \times d_A}$，表示 A 方未对齐部分的特征矩阵，其中 $n_{nl}$ 为未对齐样本的数量。B 方相关系数列表：$\mathcal{L}_B = \{(\mu_q, \phi^B_q)\}_{q=1}^{d_B}$，其中 $\mu_q$ 表示 B 方特征列 $\phi^B_q$ 与 A 方数据的皮尔逊相关系数，$d_B$ 为 B 方特征维度。相关性阈值：$\tau$，用于筛选与 A 方数据具有显著相关性的 B 方特征列。该阈值的选取通常基于统计显著性检验，以确保筛选出的特征在统计上具有可靠性。
 
@@ -225,53 +228,6 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 \end{equation}
 该矩阵不仅保留了与 A 方数据的统计相关性，同时符合纵向联邦学习的隐私保护约束。
 
-\begin{table}[!htb]
-	\setlength{\belowcaptionskip}{6pt}
-	\setlength{\abovecaptionskip}{6pt}
-	\centering
-	\renewcommand{\arraystretch}{0.8}
-	\begin{tabular}{p{13.2cm}}
-		\toprule[1.5pt]
-		\makecell[l]{\songti\wuhao 算法 4-2 VFPU-M 算法} \\
-		\midrule[0.75pt]
-		\makecell[l]{\wuhao \textbf{输入:} $X_{al}^A$: 参与方A的对齐数据, $X_{nl}^A$: 参与方A的非对齐数据,} \\
-		\makecell[l]{\wuhao \qquad $X_{al}^B$: 参与方B的对齐数据，$X_{nl}^B$: 参与方B的非对齐数据,} \\
-		\makecell[l]{\wuhao \qquad $y$: 对齐数据的标签, $\alpha$: 置信度阈值, $T$: 迭代次数，$k$: 每次迭代选取比例。 }\\
-%		\makecell[l]{\wuhao \quad} \\
-		\makecell[l]{\wuhao \textbf{输出:} $\mathbf{y}^{\text{pseudo}}$} \\
-%		\makecell[l]{\wuhao 1: 初始化联邦模型 $f_\theta$} \\
-		\makecell[l]{\wuhao 2: $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$} \\
-		\makecell[l]{\wuhao 3: $\mathcal{D}_{U}^{(0)} = \{X_{nl}^A, X_{nl}^B\}$} \\
-		\makecell[l]{\wuhao 4: \textbf{for} $t = 1$ \textbf{to} $T$ \textbf{do}} \\
-%		\makecell[l]{\wuhao 5: \quad \textbf{联邦模型训练:}} \\
-		\makecell[l]{\wuhao 6: \quad $\theta^{(t)} \leftarrow \arg\min_\theta \sum_{(\mathbf{x}^A,\mathbf{x}^B,y)\in\mathcal{D}_L^{(t)}} \ell(f_\theta(\mathbf{x}^A,\mathbf{x}^B), y)$} \\
-%		\makecell[l]{\wuhao 7: \quad \textbf{置信度计算:}} \\
-		\makecell[l]{\wuhao 8: \quad 对 $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)}$，计算置信度:} \\
-		\makecell[l]{\wuhao 9: \quad $s_j = \begin{cases} 
-				\max_{c} \mathbbm{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类任务} \\
-				1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t} & \text{回归任务}
-			\end{cases}$} \\
-		\makecell[l]{\wuhao 10: \quad 其中 $\mu_t,\sigma_t$ 为当前预测均值和标准差} \\
-%		\makecell[l]{\wuhao 11: \quad \textbf{样本选择:}} \\
-		\makecell[l]{\wuhao 12: \quad $\mathcal{C}^{(t)} = \{(\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)} | s_j \geq \alpha\}$} \\
-		\makecell[l]{\wuhao 13: \quad 按置信度排序后选取前 $k$ 比例样本:} \\
-		\makecell[l]{\wuhao 14: \quad $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$} \\
-%		\makecell[l]{\wuhao 15: \quad \textbf{伪标签生成:}} \\
-		\makecell[l]{\wuhao 16: \quad $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \hat{y}_j = \begin{cases}
-				\arg\max_c P(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
-				f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{回归}
-			\end{cases}$} \\
-%		\makecell[l]{\wuhao 17: \quad \textbf{数据集更新:}} \\
-		\makecell[l]{\wuhao 18: \quad $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$} \\
-		\makecell[l]{\wuhao 19: \quad $\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$} \\
-		\makecell[l]{\wuhao 20: \textbf{end for}} \\
-		\makecell[l]{\wuhao 21: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$} \\
-		\makecell[l]{\wuhao 22: \textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\
-		\bottomrule[1.5pt]
-\end{tabular}
-\label{tab:algo-vfpu-m} 
-\end{table}
-
 (2) 算法2：VFPU-M算法
 
 本小节将介绍VFPU-M算法，如算法 4-2 所示，这是一种面向半监督联邦学习的创新方法，旨在处理这样一种场景：在两个参与方中，只有一部分数据（“对齐数据”）具有可靠的标签信息，而另一部分（“非对齐数据”）则缺乏标签，需要通过伪标签（Pseudo-Labeling）的方式来挖掘潜在信息。VFPU-M 在维护数据私密性的同时，通过迭代地对高置信度无标签样本进行伪标签生成并加入后续训练，有效提升了联邦模型在异构数据上的学习能力。
@@ -281,6 +237,45 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 	\min_{\theta} \sum_{(\mathbf{x}_j,\, y_j) \in \mathcal{D}_L^{(t)}} \ell \bigl(f_{\theta}(\mathbf{x}^A_j,\mathbf{x}^B_j),\, y_j\bigr),
 \end{equation}
 其中$\ell(\cdot)$可以是交叉熵损失、均方误差或其他根据任务需求设定的目标函数。通过这一过程，模型的预测能力在隐私保护的分布式框架下得到稳定提升。
+
+%\vspace{-0.1cm}
+\begin{table}[!htb]
+	\setlength{\belowcaptionskip}{2pt}  % 减小为2pt
+	\setlength{\abovecaptionskip}{2pt}  % 减小为2pt
+	\centering
+	\renewcommand{\arraystretch}{0.7}  % 减小行间距
+	\begin{tabular}{p{\textwidth}}
+		\toprule[1.5pt]
+		\makecell[l]{\songti\wuhao 算法 4-2 VFPU-M 算法} \\
+		\midrule[0.5pt]
+		\makecell[l]{\wuhao \textbf{输入:} $X_{al}^A$, $X_{nl}^A$: 参与方A的对齐/非对齐数据; $X_{al}^B$, $X_{nl}^B$: 参与方B的对齐/非对齐数据; } \\
+		\makecell[l]{\wuhao \qquad $y$: 标签; $\alpha$: 置信度阈值; $T$: 迭代次数; $k$: 选取比例} \\
+		\makecell[l]{\wuhao \textbf{输出:} $\mathbf{y}^{\text{pseudo}}$} \\
+		\makecell[l]{\wuhao 1: $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$, 
+			$\mathcal{D}_{U}^{(0)} = \{X_{nl}^A, X_{nl}^B\}$} \\
+		\makecell[l]{\wuhao 2: \textbf{for} $t = 1$ \textbf{to} $T$ \textbf{do}} \\
+		\makecell[l]{\wuhao 3: \quad $\theta^{(t)} \leftarrow \arg\min_\theta \sum_{(\mathbf{x}^A,\mathbf{x}^B,y)\in\mathcal{D}_L^{(t)}} \ell(f_\theta(\mathbf{x}^A,\mathbf{x}^B), y)$} \\
+		\makecell[l]{\wuhao 4: \quad 对 $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)}$，计算置信度:
+			$s_j = \begin{cases} 
+				\max_{c} \mathbbm{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
+				1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t} & \text{回归}
+			\end{cases}$} \\
+		\makecell[l]{\wuhao 5: \quad $\mathcal{C}^{(t)} = \{(\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)} | s_j \geq \alpha\}$; } \\
+		\makecell[l]{\wuhao 6: \quad 按置信度排序选取前 $k$ 比例: $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$}\\
+		\makecell[l]{\wuhao 7: \quad $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \hat{y}_j = \begin{cases}
+				\arg\max_c P(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
+				f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{回归}
+			\end{cases}$} \\
+		\makecell[l]{\wuhao 8: \quad $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$; 
+			$\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$} \\
+		\makecell[l]{\wuhao 9: \textbf{end for}} \\
+		\makecell[l]{\wuhao 10: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$; 
+			\textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\
+		\toprule[1.5pt]
+	\end{tabular}
+	\label{tab:algo-vfpu-m} 
+\end{table}
+%\vspace{-0.2cm}
 
 在完成训练后，算法会利用更新后的模型$f_{\theta^{(t)}}$对无标签数据集$\mathcal{D}_U^{(t)}$中的所有样本进行推断，并计算每个样本对应的置信度分数。对于分类任务，常用的做法是取模型输出的所有类别预测概率中最大的那一项作为置信度，这一数值越高表明模型对该样本的预测越有把握。而在回归任务中，则可以根据当前预测输出的整体分布情况，以
 \begin{equation}

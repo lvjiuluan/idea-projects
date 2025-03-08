@@ -1,67 +1,63 @@
-设参与方 A 的特征空间为 $ \Phi^A = \{\varphi^A_1, \varphi^A_2, ..., \varphi^A_{m_A}\} $，$ m_A $ 表示 A 方的特征维数，即 A 方拥有 $ m_A $ 个特征。$ \varphi^A_p \in \mathbb{R}^{n_{al}} $ 表示 A 方第 $ p $ 个特征在对齐样本集 $ \mathcal{D}^A_{al} $ 上的观测向量，$ \varphi^A_p = [\varphi^A_{p1}, \varphi^A_{p2}, ..., \varphi^A_{pn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
 
-同理，参与方 B 的特征空间为 $ \Phi^B = \{\varphi^B_1, \varphi^B_2, ..., \varphi^B_{m_B}\} $，$ m_B $ 表示 B 方的特征维数，即 B 方拥有 $ m_B $ 个特征。$ \varphi^B_q \in \mathbb{R}^{n_{al}} $ 表示 B 方第 $ q $ 个特征在对齐样本集 $ \mathcal{D}^B_{al} $上的观测向量。$ \varphi^B_q = [\varphi^B_{q1}, \varphi^B_{q2}, ..., \varphi^B_{qn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
-
-对于任意特征列 $ \varphi^A_p $，计算其秩向量（Rank Vector）：
-$$
-R^A_p = [r^A_{p1}, r^A_{p2}, ..., r^A_{pn_{al}}]
-$$
-$ r^A_{pi} $ 表示样本 $ i $ 在特征 $ \varphi^A_p $ 上的秩次（Rank），即该样本在该特征列中的排序位置，若存在相同值，则采用平均秩（Average Rank）处理。类似地，B 方的特征列 $ \varphi^B_q $ 也可以计算出对应的秩向量：
-$$
-R^B_q = [r^B_{q1}, r^B_{q2}, ..., r^B_{qn_{al}}]
-$$
-
-### 步骤 1 加密秩传输
-
-A 方 使用公钥 $ \text{pk} $ 对秩向量 $ R^A_p $ 进行同态加密，得到：
-$$
-[R^A_p] = \{\text{Enc}(r^A_{p1}), \text{Enc}(r^A_{p2}), ..., \text{Enc}(r^A_{pn_{al}})\}
-$$
-并将加密后的秩向量发送给 B 方。类似地，B 方 也对自己的秩向量 $ R^B_q $ 进行同态加密，得到：
-$$
-[R^B_q] = \{\text{Enc}(r^B_{q1}), \text{Enc}(r^B_{q2}), ..., \text{Enc}(r^B_{qn_{al}})\}
-$$
-
-### 步骤 2 秩差计算
-对于任意特征对 $ (f^A_p, f^B_q) $，B 方计算加密秩差向量：
-$$
-[D_{pq}] = \left[ \text{Enc}(r^A_{p1} - r^B_{q1}), ..., \text{Enc}(r^A_{pn_{al}} - r^B_{qn_{al}}) \right]
-$$
-其中，$ d_{pq}^i = r^A_{pi} - r^B_{qi} $ 表示样本 $ i $ 在 A 方特征 $ f^A_p $ 和 B 方特征 $ f^B_q $ 上的秩次之差，由于同态加密支持加法运算，B 方可以在加密状态下直接计算秩差，而无需解密。B 方将加密秩差向量 $ [D_{pq}] $ 发送给协调方 $ C $。
+\begin{algorithm}
+		\caption{Process of Generating Data Using Vertical Federated Semi-supervised Method}
+		\begin{algorithmic}[1]
+			\Require $X_{al}^A$, $X_{nl}^A$, $\mathcal{L}_B$, $\tau$,$n_{al}$, $n_{nl}$
+			\Ensure $X^{B_{predict}}$
+			\State Initialization: $X^{B_{predict}} = \emptyset$, $\mathcal{L}_B^{\text{predict}} = \{(\mu_q, \phi^B_q) \in \mathcal{L}_B \mid u_q > \tau\}$
+			\For{$(\mu_q, \phi^B_q) \in \mathcal{L}_B^{\text{predict}}$}
+			\State $X_{al}^{B_{predict}}=\{x_{i}^{B_{predict}}\}_{i=1}^{n_{al}}$
+			\State $X_{nl}^{B_{predict}}=\{x_{i}^{B_{predict}}\}_{i=n_{al}+1}^{n_{al}+n_{nl}}$
+			\State $p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^{B_{predict}}, X_{nl}^{B_{predict}}, \phi^B_q)$
+			\State $X^{B_{predict}} = X^{B_{predict}} \cup \{p\}$
+			\EndFor
+			\State
+			\Return $X^{B_{predict}}$
+		\end{algorithmic}
+	\end{algorithm}
 
 
+修改上面的latex为三线表算法
+三线表算法示例：
 
-### 步骤 3 Spearman相关性计算
-协调方 $ C $ 解密 $ [D_{pq}] $，得到：
-$$
-d_{pq}^i = r^A_{pi} - r^B_{qi}, \quad i = 1, ..., n_{al}
-$$
-然后计算 Spearman 相关系数：
-$$
-\rho_{pq} = 1 - \frac{6\sum_{i=1}^{n_{al}} (d_{pq}^i)^2}{n_{al}(n_{al}^2 - 1)}
-$$
-$ \rho_{pq} $ 表示 A 方特征 $ f^A_p $ 与 B 方特征 $ f^B_q $ 之间的 Spearman 相关系数。最终，构建跨方相关性矩阵：
-$$
-\mathbf{M} \in \mathbb{R}^{m_A \times m_B}, \quad \mathbf{M}(p,q) = \rho_{pq}
-$$
-$ \mathbf{M}(p,q) $ 存储 A 方第 $ p $ 个特征列与 B 方第 $ q $ 个特征列的 Spearman 相关系数。
-
-
-
-### 定义 2 特征关联强度
-对于 B 方的每个特征 $ f^B_q $，计算其与 A 方所有特征的平均关联强度：
-$$
-\mu_q = \frac{1}{m_A} \sum_{p=1}^{m_A} \rho_{pq}, \quad q=1,...,m_B
-$$
-$ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程度。
-
-### 步骤 4 生成排序列表
-构建特征重要性序列：
-$$
-\mathcal{L}_B = \{(\mu_q, f^B_q)\}_{q=1}^{m_B}
-$$
-按 $ \mu_q $ 降序排列，得到排序后的特征列表
-$$
-\mathcal{L}_B^{sorted}
-$$
-该列表用于指导利用联邦半监督学习对 B 方对齐样本的特征补全，优先使用联邦半监督学习方法补充与 A 方特征关联性强的维度。
+\vspace{0.1cm} 
+\begin{table}[!htb]
+	\setlength{\belowcaptionskip}{6pt}
+	\setlength{\abovecaptionskip}{6pt}
+	\centering
+	\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{p{13.2cm}}
+		\toprule[1.5pt]
+		\makecell[l]{\songti\wuhao 算法3-1 VFPU 算法训练过程}\\
+		\midrule[0.75pt]
+		\makecell[l]{\wuhao \textbf{输入:} 参与方 $B,C$。对齐的数据集 ${{\mathsf{\mathcal{D}}}_{B}}\text{,}{{\mathsf{\mathcal{D}}}_{C}}$ 和 ID 集合 ${{\mathsf{\mathcal{I}}}_{B}}\text{,}\ {{\mathsf{\mathcal{I}}}_{C}}$。最大}\\
+		\makecell[l]{\wuhao \quad 迭代次数 $M$，随机采样迭代次数 $T$ 和 $\theta$，其中 $\theta$ 是}\\
+		\makecell[l]{\wuhao \quad 可靠正样本的采样率。}\\
+		\makecell[l]{\wuhao \textbf{输出:} $R$，可靠正样本的集合。}\\
+		\makecell[l]{\wuhao \textbf{参与方 C 执行:}}\\
+		\makecell[l]{\wuhao 1: \ \ \textbf{for} $m=1,2,\ldots,M$ \textbf{do}}\\
+		\makecell[l]{\wuhao 2: \quad \ \ ${{P}_{m}}=\{i|\mathsf{\mathcal{Y}}_{i}^{C}=1, \ i\in {{\mathsf{\mathcal{I}}}_{C}}\}$}\\
+		\makecell[l]{\wuhao 3: \quad \ \ ${{U}_{m}}=\{i|\mathsf{\mathcal{Y}}_{i}^{C}=-1, \ i\in {{\mathsf{\mathcal{I}}}_{C}}\}$}\\
+		\makecell[l]{\wuhao 4: \quad \ \ \textbf{for} $t=1,2,\ldots,T$ \textbf{do}}\\
+		\makecell[l]{\wuhao 5: \qquad \ \ $N_{m}^{t}=\{从 {{U}_{m}} 中随机选择 |{{P}_{m}}| 个元素\}$}\\
+		\makecell[l]{\wuhao 6: \qquad \ \ $O_{m}^{t}={{U}_{m}}-N_{m}^{t}$}\\
+		\makecell[l]{\wuhao 7: \qquad \ \ 加密并发送 $N_{m}^{t}$、${P_m}$ 和 $O_{m}^{t}$ 给其他参与方。}\\
+		\makecell[l]{\wuhao 8: \qquad \ \ 通知参与方设置训练数据和测试数据。}\\
+		\makecell[l]{\wuhao 9: \qquad \ \ $S_m^t$ = Base\_Estimator\_Learning()}\\
+		\makecell[l]{\wuhao 10: \quad \textbf{end for}}\\
+		\makecell[l]{\wuhao 11: \quad ${{\mathsf{\mathcal{P}}}_{m}}(u)={\sum\nolimits_{t=1}^{T}{S_{m}^{t}}}(u)/{\sum\nolimits_{t=1}^{T}{I(u\in O_{m}^{t})\text{,}\ \ \forall \text{u}\in }}\;{{U}_{m}}$}\\
+		\makecell[l]{\wuhao 12: \quad ${{R}_{m}}=\{从 {{\mathsf{\mathcal{P}}}_{m}} 中选择前 |{{U}_{m}}| \times \theta 个 ID\}$}\\
+		\makecell[l]{\wuhao 13: \quad $\mathsf{\mathcal{Y}}_{r}^{C}=1\text{,}\ \ \forall r\in {{R}_{m}}$}\\
+		\makecell[l]{\wuhao 14: \textbf{end for}}\\
+		\makecell[l]{\wuhao 15: $R=\bigcup\limits_{m=1}^{M}{{{R}_{m}}}$}\\
+		\makecell[l]{\wuhao \textbf{函数} Base\_Estimator\_Learning():}\\
+		\makecell[l]{\wuhao 16: \quad 服务器创建加密密钥对，将公钥发送给 $B$ 和 $C$}\\
+		\makecell[l]{\wuhao 17: \quad $B$ 和 $C$ 加密、交换梯度和损失。}\\
+		\makecell[l]{\wuhao 18: \quad $B$ 和 $C$ 添加掩码，将加密值发送给服务器。}\\
+		\makecell[l]{\wuhao 19: \quad 服务器解密并回传值。$B$ 和 $C$ 去除掩码，更新模型。}\\
+		\makecell[l]{\wuhao 20: \quad \textbf{返回} 测试数据上正类的预测概率。}\\
+		\bottomrule[1.5pt]
+	\end{tabular}
+	\label{tab:algo-vfpu} 
+\end{table}
+\vspace{-0.1cm}

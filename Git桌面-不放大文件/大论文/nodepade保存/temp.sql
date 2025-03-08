@@ -52,9 +52,7 @@ LEFT JOIN (
              substr(date_add(concat(substr(c.dt,1,4), '-', substr(c.dt,5,2), '-', substr(c.dt,7,2)),1),1,10),
              case_id
 ) as t3 
-ON t1.month_tag = t3.assign_month 
-AND t3.assign_date <= t1.date_tag
-
+ON t1.month_tag = t3.assign_month AND t3.assign_date <= t1.date_tag
 LEFT JOIN (
     SELECT 
         nvl(t1.month_tag, t2.month_tag) AS month_tag,

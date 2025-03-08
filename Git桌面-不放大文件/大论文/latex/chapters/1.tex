@@ -19,20 +19,16 @@
 (1) 标签在客户端
 
 标注数据存于客户端，而服务器只能获取未标注数据。例如，某家公司欲利用智能手机拍摄的图片训练一个物体检测的联邦学习模型，但无法直接访问用户的本地数据，只能依赖用户的标注，如图 \ref{LabelAtClient} 所示。首先，对于不同的参与方（用户），样本ID是不同的，但参与方（用户）手机里的图片特征是一样的，所以构成了横向联邦的设置。其次，用户通常不愿为每张照片标注，给基于横向联邦的半监督学习创造了一个“客户端标注”（label-at-client）的环境。
-
-%调整图片与上方文字之间的间距
-%\vspace{-0.1cm}
-\begin{figure}[h] % 开始一个图形环境，选项[ h ]表示图形尽量出现在当前位置
-	\centering % 将图形居中显示
-	\includegraphics[width=10cm]{chapters/imgs/LabelAtClient} % 插入图像，设置图像的宽度为 10cm，图像的路径为 "chapters/31"
-	\bicaption[\xiaosi 标记数据在客户端的情况] % 设置双语标题，括号中的部分是用于生成目录中的标题，设置为“小四号字体”，标题内容是“不同缩放系数v的缩放效果”
-	{\wuhao 标记数据在客户端的情况} % 中文标题，设置字体为“无号”并且标题内容为“标记数据在客户端的情况”
-	{\wuhao Labeled data on the client side} % 英文标题，设置字体为“无号”并且标题内容为“Labeled the data on the client side”
-	\label{LabelAtClient} % 给图形一个标签，便于在文档中引用，标签为 "fig:3.1"
-\end{figure} % 结束图形环境
-%调整图片与下方文字之间的间距
-%\vspace{-0.35cm}
-
+\vspace{-0.1cm}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm]{chapters/imgs/LabelAtClient}
+	\bicaption[\xiaosi 标记数据在客户端的情况]
+	{\wuhao 标记数据在客户端的情况}
+	{\wuhao Labeled data on the client side}
+	\label{LabelAtClient}
+\end{figure}
+\vspace{-0.35cm}
 RSCFed\textsuperscript{\cite{liang2022rscfed}} 主要关注联邦半监督学习中的标签隔离问题和数据异质性问题。在局部训练中，采用师生模型\textsuperscript{\cite{tarvainen2017mean}}对无标签数据进行训练。为进一步解决数据异质性问题，RSCFed 提出了子共识抽样法和距离加权聚合法。在每一轮中，通过对所有参与者的多个子集进行独立抽样，从而聚合出多个子共识模型，这样每个子共识模型都有望包含拥有标记数据的参与者。此外，本地模型会根据它们与子共识模型的距离进行加权，这样偏差模型就会得到较低的权重，其影响也会降到最低。
 
 FedSSL\textsuperscript{\cite{fan2022private}}解决了标签隔离问题、数据隐私问题和数据异构问题。为了便于对未标记的客户端进行本地训练，FedSSL利用了伪标记技术。此外，为解决数据异构问题，FedSSL学习全局生成模型，从统一的特征空间生成数据，从而通过生成的数据缓解数据异构问题。最后，为了防止生成模型造成的隐私泄露，FedSSL利用差分隐私（DP）来限制生成模型中训练数据的信息泄露。
@@ -42,25 +38,23 @@ FedMatch\textsuperscript{\cite{jeong2020federated}}提出了一种客户端间�
 FedPU\textsuperscript{\cite{lin2022federated}}研究了半监督学习中更具挑战性的环境--正向和无标签学习，在这种环境中，每个客户端只有类的子集标签。在这种情况下，客户端只掌握所有类别中的一部分信息，从而导致严重的标签隔离问题。为了解决这个问题，FedPU提出了一个新颖的目标函数，即把学习客户端负类的任务交给拥有负类标签数据的其他客户端。这样，每个客户端只负责学习正类，并可自行进行局部训练。根据经验，在正类和无标签学习设置中，所提出的FedPU优于FedMatch。
 
 AdaFedSemi\textsuperscript{\cite{wang2022enhancing}}提出了一种系统，可在联合半监督学习中利用服务器端无标记数据实现效率与模型准确性之间的权衡。在每一轮学习中，模型都是通过客户端的标注数据进行训练，并在服务器端进行汇总。服务器端未标注数据通过伪标注纳入训练过程。AdaFedSemi确定了平衡效率和性能的两个关键参数，即客户端参与率P和伪标签的置信度阈值τ。较低的P可以降低通信成本和模型准确性，而较高的τ可以降低服务器端计算成本，同时也限制了未标记数据的使用。。实验表明，AdaFedSemi通过动态调整P和τ在不同的训练阶段实现了效率和准确性之间的良好平衡。
-
+\vspace{-0.1cm}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=10cm]{chapters/imgs/LabelAtServer}
+	\bicaption[\xiaosi 标记数据在服务端的情况]
+	{\wuhao 标记数据在服务端的情况}
+	{\wuhao Labeled data on the server side}
+	\label{LabelAtServer}
+\end{figure}
+\vspace{-0.35cm}
 DS-FL\textsuperscript{\cite{itahara2021distillation}}解决了与AdaFedSemi类似的问题，即客户端拥有标签数据，而服务器拥有非标签数据。它提出了一种集合伪标签解决方案来利用服务器端的非标签数据。具体来说，它不是对数据样本使用单一的伪标签，而是对所有客户端生成的伪标签进行平均，。这将创建一个客户端模型集合，并提供更好的性能。此外，由于只传输伪标签而不是模型参数，通信成本可以大大降低。此外，DS-FL发现在伪标签上进行训练会导致预测熵增大。因此，DS-FL提出了一种减少熵的聚合方法，即在聚合之前使局部输出。
 
 (2) 标签在服务器端
 
 标注数据存于服务器，而客户端只有未标注数据。例如，一家可穿戴设备公司希望利用联邦学习训练健康监测模型图，如图 \ref{LabelAtServer} 所示。在这种情况下，由于用户通常缺乏专业知识，无法标注健康相关数据，因此客户端的数据是未标注的。标签数据在客户端的情况比标签在服务器端设置更复杂，原因是所有客户端都只拥有未标记数据，无法为联邦模型提供额外的监督信号,仅使用无标签数据进行训练可能会导致遗忘从有标签数据中学到的知识，从而影响模型性能\textsuperscript{\cite{jeong2020federated,diao2022semifl}}。
 
-%调整图片与上方文字之间的间距
-%\vspace{-0.1cm}
-\begin{figure}[h] % 开始一个图形环境，选项[ h ]表示图形尽量出现在当前位置
-	\centering % 将图形居中显示
-	\includegraphics[width=10cm]{chapters/imgs/LabelAtServer} % 插入图像，设置图像的宽度为 10cm，图像的路径为 "chapters/31"
-	\bicaption[\xiaosi 标记数据在服务端的情况] % 设置双语标题，括号中的部分是用于生成目录中的标题，设置为“小四号字体”，标题内容是“不同缩放系数v的缩放效果”
-	{\wuhao 标记数据在服务端的情况} % 中文标题，设置字体为“无号”并且标题内容为“标记数据在客户端的情况”
-	{\wuhao Labeled data on the server side} % 英文标题，设置字体为“无号”并且标题内容为“Labeled the data on the client side”
-	\label{LabelAtServer} % 给图形一个标签，便于在文档中引用，标签为 "fig:3.1"
-\end{figure} % 结束图形环境
-%调整图片与下方文字之间的间距
-%\vspace{-0.35cm}
+
 
 为了解决标签数据和非标签数据之间的隔离问题，FedMatch\textsuperscript{\cite{jeong2020federated}}提出了一种不相干的学习方案，即分别为标签数据和非标签数据设置两套参数。在非标签数据上进行训练时，标签数据的参数是固定的，反之亦然，以防止知识被覆盖。非标记数据的参数会在参与者和服务器之间传输，而非标记数据的参数设置为稀疏的，这为通信效率带来了额外的好处。此外，为了解决不同客户端持有的异构数据问题，FedMatch 提出了客户端间一致性损失，这样不同参与者的本地模型就能在相同数据上产生相似的输出。
 
@@ -69,21 +63,16 @@ SemiFL\textsuperscript{\cite{diao2022semifl}}采用另一种方法来解决这�
 (3) 联邦半监督学习方法总结
 
 表 \ref{SummaryOfFedSemi} 总结了前文介绍的基于横向联邦的半监督学习方法，按照标签在客户端/服务器端划分。
-
+\vspace{-0.5cm}
 \begin{table}[h]
-	
-	\centering  % 表格居中
-	% 双语标题，其中中文部分用了 \songti 与 \wuhao
+	\centering
 	\bicaption[\xiaosi \songti 联邦半监督学习方法总]
 	{\songti \wuhao 联邦半监督学习方法总结}
 	{\songti \wuhao Summary of federated semi-supervised learning methods}
 	\label{SummaryOfFedSemi}
-	
-	% 使用 \resizebox 命令缩放表格到页面宽度
 	\resizebox{\textwidth}{!}{
-		% 整体使用 {\songti \wuhao ...} 包裹表格内容
 		{\songti \wuhao
-			\begin{tabular}{llllll}
+			\begin{tabular}{cccccc}
 				\toprule[1.5pt]
 				类别 & 方法 & 半监督学习算法 & 隐私保护方案 & 数据异质问题 & 性能 \\
 				\midrule
@@ -103,13 +92,11 @@ SemiFL\textsuperscript{\cite{diao2022semifl}}采用另一种方法来解决这�
 		}
 	}
 \end{table}
-
-
 \subsection{数据生成方法}
 生成合成数据的主要策略集中在生成模型上，这些模型旨在从现有数据集中学习丰富的表示，并随后生成新的样本。这些方法在多个领域中得到了应用，如医学研究、金融、教育和各种工业应用，其中高质量合成数据的生成对于隐私保护和有限数据集的增强都至关重要，以下将对常见的数据生成方法进行详细介绍。  
 生成合成数据的主要策略集中在生成模型上，这些模型旨在从现有数据集中学习丰富的表示，并随后生成新的样本。这些方法在多个领域中得到了应用，如医学研究、金融、教育以及各种工业应用，在这些领域中，生成高质量的合成数据对隐私保护和有限数据集的增强至关重要。
 
-基于自编码器的方法：这一类别中的先驱性工作是自编码器（Autoencoder，AE）\textsuperscript{\cite{hinton2006reducing}}，其训练目的是将高维输入映射到低维潜在编码中，然后从这些编码中重构原始数据。通过强制隐藏（潜在）层降维，AE有效地学习到了压缩表示。然而，纯粹的AE是确定性的，缺乏灵活采样的直接机制。变分自编码器（Variational Autoencoder，VAE）\textsuperscript{\cite{kingma2013auto}} 通过引入概率潜在变量框架解决了这一问题，从而可以从学习到的潜在分布中采样出新的、未见过的数据点。这一扩展极大地拓宽了基于自编码器模型在合成数据生成中的潜在应用范围。在AE和VAE的基础上，Xu,Lei等人\textsuperscript{\cite{xu2019modeling}} 提出了一种针对表格数据生成和重构的改进方法。其方法更准确地建模了潜在变量与表格特征的联合分布，而后者可能包含连续和离散属性。通过关注不同类型变量之间的相互作用，该方法确保生成的合成数据忠实地反映了真实世界表格数据集（如医疗和教育数据）中存在的复杂依赖关系。
+基于自编码器的方法：这一类别中的先驱性工作是自编码器（Autoencoder，AE）\textsuperscript{\cite{hinton2006reducing}}，其训练目的是将高维输入映射到低维潜在编码中，然后从这些编码中重构原始数据。通过强制隐藏（潜在）层降维，AE有效地学习到了压缩表示。然而，纯粹的AE是确定性的，缺乏灵活采样的直接机制。变分自编码器（Variational Autoencoder，VAE）\textsuperscript{\cite{kingma2013auto}} 通过引入概率潜在变量框架解决了这一问题，从而可以从学习到的潜在分布中采样出新的、未见过的数据点。这一扩展极大地拓宽了基于自编码器模型在合成数据生成中的潜在应用范围。在AE和VAE的基础上，Xu等人\textsuperscript{\cite{xu2019modeling}} 提出了一种针对表格数据生成和重构的改进方法。其方法更准确地建模了潜在变量与表格特征的联合分布，而后者可能包含连续和离散属性。通过关注不同类型变量之间的相互作用，该方法确保生成的合成数据忠实地反映了真实世界表格数据集（如医疗和教育数据）中存在的复杂依赖关系。
 
 基于生成对抗网络 (Generative Adversarial Networks，GANs)\textsuperscript{\cite{goodfellow2014generative}}的方法：自2014年引入以来，GANs对生成建模领域产生了重大影响。其基本概念基于博弈论：两个网络——生成器（Generator，G）和判别器（Discriminator，D）——在对抗循环中训练。判别器学习区分真实数据和合成数据，而生成器则试图生成能够欺骗判别器的样本。当判别器无法再区分真实数据与生成数据时，这个极小极大博弈就告一段落，这表明生成器已经捕捉到了底层分布的统计特征。在GANs出现后不久，\textsuperscript{\cite{mirza2014conditional}} 提出了条件生成对抗网络（Conditional Generative Adversarial Networks，CGANs），其中生成器和判别器均基于辅助信息（如类别标签或特定输入变量）进行条件化。这一扩展框架使得生成能够针对特定类别或属性进行定向，实际上将原本的无监督设置转变为有监督或半监督范式。尽管取得了这些进展，传统GANs往往仍然面临梯度消失或模式崩溃的问题,为了解决这些问题，Banach等人用Wasserstein距离替换了Jensen–Shannon (JS)和Kullback–Leibler (KL)散度，从而诞生了Wasserstein GAN (WGAN)\textsuperscript{\cite{adler2018banach,arjovsky2017towards}}。
 

@@ -33,7 +33,8 @@
 %\usepackage{unicode-math}
 %\usepackage{txfonts}
 \usepackage{diagbox}
-
+\usepackage{tabularray}
+\UseTblrLibrary{diagbox}
 
 \AtBeginDocument{\DeclareMathAlphabet{\mathbf}{OT1}{cmr}{bx}{n}}
 
@@ -53,6 +54,7 @@
 \setlength{\parskip}{0pt}
 %\setlength{\baselineskip}{20pt}
 % \setlength{\parindent}{0pt}
+%\setlength{\intextsep}{6pt}         % 调整正文中浮动体与文字之间的距离
 
 % 行间距={}*字体里面的第二个{}，对于xiaosi而言就是1等于20磅
 \linespread{1}\selectfont

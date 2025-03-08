@@ -1,0 +1,36 @@
+\begin{table}[h]
+    \centering  % 表格居中
+    
+    % 调整行高至约0.6cm
+    \renewcommand{\arraystretch}{1.8}
+    
+    % 双语标题，设置正确的字体和间距
+    \bicaption[\xiaosi \songti \rmfamily 联邦半监督学习方法总]
+    {\songti \rmfamily \wuhao 联邦半监督学习方法总结}
+    {\songti \rmfamily \wuhao Summary of federated semi-supervised learning methods}
+    \label{SummaryOfFedSemi}
+    
+    % 使用 \resizebox 命令缩放表格到页面宽度
+    \resizebox{\textwidth}{!}{
+        % 设置表格内容字体：中文宋体，英文Times New Roman，五号字
+        {\songti \rmfamily \wuhao
+            \begin{tabular}{cccccc}
+                \toprule[1.5pt]
+                类别 & 方法 & 半监督学习算法 & 隐私保护方案 & 数据异质问题 & 性能 \\
+                \midrule[0.75pt]
+                \multirow{6}{*}{标签在客户端} 
+                & RSCFed     & 教师学生模型 & 无     & 加权距离聚合   & 无                \\
+                & FedSSL     & 伪标记       & 差分隐私 & 全局生成模型     & 无               \\
+                & FedMatch   & 伪标记       & 无     & 客户端间一致性  & 分散学习和稀疏学习 \\
+                & FedPU      & PU Learning  & 无     & 客户端间一致性  & 无                \\
+                & AdaFedSemi & 伪标记       & 无     & 无             & 调整置信度阈值和参与率 \\
+                & DS-FL      & 集成未标记   & 无     & 无             & 传输日志、无参数     \\
+                \midrule
+                \multirow{2}{*}{标签在服务器端} 
+                & SemiFL     & 伪标记       & 无     & 减少熵的平均值   &                   \\
+                & FedMatch   & 伪标记       & 无     & 客户端间一致性   & 分散学习和稀疏学习   \\
+                \bottomrule[0.75pt]
+            \end{tabular}
+        }
+    }
+\end{table}
