@@ -72,8 +72,8 @@ Party B 拥有对齐样本的特征和标签：
 如图 \ref{fig:VFPU-M-Syn} 所示，VFPU-M-Syn 方法的核心包含三个主要流程，这三个流程共同协作以实现跨方数据的高效处理和特征生成。首先，在 Process I 中，算法通过计算跨方特征之间的相关性，评估和量化各个特征之间的相互依赖关系。这一过程的目标是确保在纵向联邦学习框架中，不同方的特征能够高效对齐，并通过特征相关性分析揭示不同数据源之间可能存在的潜在依赖结构，从而为后续的建模步骤提供更加精确和有针对性的特征信息。接下来，在 Process II 中，方法采用纵向联邦半监督学习算法来进行数据预测。在这一阶段，算法通过结合来自多个方的信息，并利用半监督学习的策略，有效地预测出缺失或未标记的数据。这一过程不仅保证了数据的完整性，还通过有效利用部分标记数据和大量未标记数据，增强了模型的预测能力和鲁棒性。通过这种方式，VFPU-M-Syn 方法能够在数据不完全或部分缺失的情况下，依然保持较高的预测精度。最后，在 Process III 中，VFPU-M-Syn 方法利用生成模型生成数据。通过对已预测数据和其他相关特征的建模，生成模型能够创造出与真实数据相似的合成数据。这些生成的数据不仅能够补充现有数据的不足，还可以用来进一步优化模型的训练过程，提升模型在实际应用中的泛化能力。生成的数据也有助于应对训练数据中可能出现的偏差或不均衡问题，进一步增强模型的稳定性和可靠性。下面的小节我将分别介绍这三个流程。
 
 %调整图片与上方文字之间的间距
-%\vspace{-0.1cm}
-\begin{figure}[h]  % 创建一个浮动图形环境，[h]表示尽量将图片放在当前位置(here)
+\vspace{-0.1cm}
+\begin{figure}[H]  % 创建一个浮动图形环境，[h]表示尽量将图片放在当前位置(here)
 	\centering     % 使图片居中显示
 	\includegraphics[width=0.9\textwidth]{chapters/imgs/VFPU-M-Syn}  
 	% 插入图片，宽度设为页面宽度的90%，图片路径为chapters/imgs/Figure 1 in JEPG format
@@ -87,7 +87,7 @@ Party B 拥有对齐样本的特征和标签：
 	\label{fig:VFPU-M-Syn}  % 为图片设置标签，可以在文中使用\ref{fig:VFPU}引用此图
 \end{figure}
 %调整图片与下方文字之间的间距
-%\vspace{-0.35cm}
+\vspace{-0.35cm}
 
 \subsection{Process I 计算跨方特征相关性}
 在纵向联邦学习（Vertical Federated Learning, VFL）框架中，不同参与方（Parties）拥有相同样本但不同特征的异构数据。为了有效利用对齐样本的特征信息，需要量化跨参与方特征之间的统计关联性。本节提出了一种基于隐私保护的Spearman秩相关分析方法，用于构建跨方特征相关性排序体系。
@@ -178,12 +178,10 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 
 本小节介绍了一种基于纵向联邦半监督学习（Vertical Federated Semi-supervised Learning, VFSL）的方法，用于生成 B 方缺失的数据。该方法的核心思想是利用 A 方与 B 方对齐数据之间的统计相关性，结合联邦学习框架，在保证数据隐私的前提下，对 B 方未对齐样本进行特征补全。算法 4-1 详细描述了该数据生成过程。
 
-\vspace{-0.1cm} 
-\begin{table}[!htb]
-	\setlength{\belowcaptionskip}{6pt}
-	\setlength{\abovecaptionskip}{6pt}
+\vspace{-0.2cm} 
+\begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.6}
+	\renewcommand{\arraystretch}{1.0}
 	{\songti \wuhao
 	\begin{tabular}{p{13.2cm}}
 		\toprule[1.5pt]
@@ -206,8 +204,7 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 }
 	\label{tab:algo-vfpu}
 \end{table}
-\vspace{-0.2cm}
-
+\vspace{-0.56cm}
 算法的输入包括以下几个关键元素：A 方对齐数据：$X_{al}^A \in \mathbbm{R}^{n_{al} \times d_A}$，表示 A 方与 B 方样本空间对齐的特征矩阵，其中 $n_{al}$ 为对齐样本的数量，$d_A$ 为 A 方特征维度。A 方未对齐数据：$X_{nl}^A \in \mathbbm{R}^{n_{nl} \times d_A}$，表示 A 方未对齐部分的特征矩阵，其中 $n_{nl}$ 为未对齐样本的数量。B 方相关系数列表：$\mathcal{L}_B = \{(\mu_q, \phi^B_q)\}_{q=1}^{d_B}$，其中 $\mu_q$ 表示 B 方特征列 $\phi^B_q$ 与 A 方数据的皮尔逊相关系数，$d_B$ 为 B 方特征维度。相关性阈值：$\tau$，用于筛选与 A 方数据具有显著相关性的 B 方特征列。该阈值的选取通常基于统计显著性检验，以确保筛选出的特征在统计上具有可靠性。
 
 算法的核心目标是利用 A 方数据预测 B 方未对齐样本的特征值，并生成完整的 B 方数据矩阵 $X^{B_{predict}}$。整个过程可分为以下三个主要步骤：
@@ -238,12 +235,10 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 \end{equation}
 其中$\ell(\cdot)$可以是交叉熵损失、均方误差或其他根据任务需求设定的目标函数。通过这一过程，模型的预测能力在隐私保护的分布式框架下得到稳定提升。
 
-%\vspace{-0.1cm}
-\begin{table}[!htb]
-	\setlength{\belowcaptionskip}{2pt}  % 减小为2pt
-	\setlength{\abovecaptionskip}{2pt}  % 减小为2pt
+\vspace{-0.1cm}
+\begin{table}[H]
 	\centering
-	\renewcommand{\arraystretch}{0.7}  % 减小行间距
+	\renewcommand{\arraystretch}{0.7}
 	\begin{tabular}{p{\textwidth}}
 		\toprule[1.5pt]
 		\makecell[l]{\songti\wuhao 算法 4-2 VFPU-M 算法} \\
@@ -269,14 +264,12 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 		\makecell[l]{\wuhao 8: \quad $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$; 
 			$\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$} \\
 		\makecell[l]{\wuhao 9: \textbf{end for}} \\
-		\makecell[l]{\wuhao 10: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$; 
-			\textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\
-		\toprule[1.5pt]
+		\makecell[l]{\wuhao 10: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$} \\
+		\makecell[l]{\wuhao 11: \textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\		\toprule[1.5pt]
 	\end{tabular}
 	\label{tab:algo-vfpu-m} 
 \end{table}
-%\vspace{-0.2cm}
-
+\vspace{-0.6cm}
 在完成训练后，算法会利用更新后的模型$f_{\theta^{(t)}}$对无标签数据集$\mathcal{D}_U^{(t)}$中的所有样本进行推断，并计算每个样本对应的置信度分数。对于分类任务，常用的做法是取模型输出的所有类别预测概率中最大的那一项作为置信度，这一数值越高表明模型对该样本的预测越有把握。而在回归任务中，则可以根据当前预测输出的整体分布情况，以
 \begin{equation}
 	1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t}
