@@ -1,0 +1,1144 @@
+@inproceedings{chen2021secureboost,
+author = {Fan, Tao and Chen, Weijing and Ma, Guoqiang and Kang, Yan and Fan, Lixin and Yang, Qiang},
+title = {SecureBoost+: Large Scale and&nbsp;High-Performance Vertical Federated Gradient Boosting Decision Tree},
+year = {2024},
+isbn = {978-981-97-2261-7},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+url = {https://doi.org/10.1007/978-981-97-2259-4_18},
+doi = {10.1007/978-981-97-2259-4_18},
+abstract = {Gradient boosting decision tree (GBDT) is an ensemble machine learning algorithm that is widely used in industry. Due to the problem of data isolation and the requirement of privacy, many works try to use vertical federated learning to train machine learning models collaboratively between different data owners. SecureBoost is one of the most popular vertical federated learning algorithms for GBDT. However, to achieve privacy preservation, SecureBoost involves complex training procedures and time-consuming cryptography operations. This causes SecureBoost to be slow to train and does not scale to large-scale data. In this work, we propose SecureBoost+, a large-scale and high-performance vertical federated gradient boosting decision tree framework. SecureBoost+ is secure in the semi-honest model, which is the same as SecureBoost. SecureBoost+ can be scaled up to tens of millions of data samples faster than SecureBoost. SecureBoost+ achieves high performance through several novel optimizations for SecureBoost, including ciphertext operation optimization and the introduction of new training mechanisms. The experimental results show that SecureBoost+ is 6–35x faster than SecureBoost but with the same accuracy and can be scaled up to tens of millions of data samples and thousands of feature dimensions.},
+booktitle = {Advances in Knowledge Discovery and Data Mining: 28th Pacific-Asia Conference on Knowledge Discovery and Data Mining, PAKDD 2024, Taipei, Taiwan, May 7–10, 2024, Proceedings, Part III},
+pages = {237–249},
+numpages = {13},
+keywords = {Vertical Federated Learning, GBDT, SecureBoost},
+location = {Taipei, Taiwan}
+}
+
+@inproceedings{de2010practical,
+    author={De Cristofaro, Emiliano and Tsudik, Gene},
+    title={Practical Private Set Intersection Protocols with Linear Complexity},
+    booktitle={Financial Cryptography and Data Security: 14th International Conference, FC 2010, Tenerife, Canary Islands, January 25-28, 2010, Revised Selected Papers 14},
+    year={2010},
+    editor={Sion, Radu and others},
+    series={Lecture Notes in Computer Science},
+    volume={6052},
+    pages={143--159},
+    publisher={Springer},
+    address={Berlin, Heidelberg},
+    month={January},
+    doi={10.1007/978-3-642-14577-3_13},
+    url={https://doi.org/10.1007/978-3-642-14577-3_13},
+    isbn={978-3-642-14576-6},
+    issn={1611-3349}
+}
+
+@inproceedings{li2021comatch,
+    author={Junnan Li and Caiming Xiong and Steven C. H. Hoi},
+    title={CoMatch: Semi-Supervised Learning with Contrastive Graph Regularization},
+    booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    year={2021},
+    pages={9475--9484},
+    publisher={IEEE Computer Society},
+    address={Los Alamitos, CA, USA},
+    month={October},
+    doi={10.1109/ICCV48922.2021.00936},
+    url={https://doi.org/10.1109/ICCV48922.2021.00936},
+    isbn={978-1-6654-2812-5}
+}
+
+
+@article{jin2023federated,
+author = {Tsouvalas, Vasileios and Saeed, Aaqib and Ozcelebi, Tanir and Meratnia, Nirvana},
+title = {Labeling Chaos to Learning Harmony: Federated Learning with Noisy Labels},
+year = {2024},
+issue_date = {April 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {15},
+number = {2},
+issn = {2157-6904},
+url = {https://doi.org/10.1145/3626242},
+doi = {10.1145/3626242},
+abstract = {Federated Learning (FL) is a distributed machine learning paradigm that enables learning models from decentralized private datasets where the labeling effort is entrusted to the clients. While most existing FL approaches assume high-quality labels are readily available on users’ devices, in reality, label noise can naturally occur in FL and is closely related to clients’ characteristics. Due to scarcity of available data and significant label noise variations among clients in FL, existing state-of-the-art centralized approaches exhibit unsatisfactory performance, whereas prior FL studies rely on excessive on-device computational schemes or additional clean data available on the server. We propose&nbsp;FedLN, a framework to deal with label noise across different FL training stages, namely FL initialization, on-device model training, and server model aggregation, able to accommodate the diverse computational capabilities of devices in an FL system. Specifically,&nbsp;FedLN&nbsp;computes per-client noise level estimation in a single federated round and improves the models’ performance by either correcting or mitigating the effect of noisy samples. Our evaluation on various publicly available vision and audio datasets demonstrates a 22\% improvement on average compared to other existing methods for a label noise level of 60\%. We further validate the efficiency of&nbsp;FedLN&nbsp;in human-annotated real-world noisy datasets and report a 4.8\% increase on average in models’ recognition performance, highlighting that&nbsp;FedLN&nbsp;can be useful for improving FL services provided to everyday users.},
+journal = {ACM Trans. Intell. Syst. Technol.},
+month = feb,
+articleno = {22},
+numpages = {26},
+keywords = {Federated learning, noisy labels, label correction, deep learning, knowledge distillation}
+}
+
+@inproceedings{liang2022rscfed,
+    author = {Liang, Xiaoxiao and Lin, Yiqun and Fu, Huazhu and Zhu, Lei and Li, Xiaomeng},
+    title = {RSCFed: Random Sampling Consensus Federated Semi-Supervised Learning},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+    year = {2022},
+    pages = {10154--10163},
+    month = {June},
+    publisher = {IEEE},
+    address = {New Orleans, LA, USA},
+    doi = {10.1109/CVPR52688.2022.00991},
+    url = {https://openaccess.thecvf.com/content/CVPR2022/html/Liang_RSCFed_Random_Sampling_Consensus_Federated_Semi-Supervised_Learning_CVPR_2022_paper.html},
+    issn = {2575-7075},
+    isbn = {978-1-6654-6946-3},
+    abstract = {Federated semi-supervised learning (FSSL) combines federated learning and semi-supervised learning to train models from decentralized data with partial labels. Existing FSSL methods typically assume labeled and unlabeled data share the same class distribution, which may not hold in real scenarios. This paper proposes RSCFed, a novel FSSL framework using random sampling consensus to handle heterogeneous class distribution scenarios.}
+}
+
+@inproceedings{tarvainen2017mean,
+    author={Tarvainen, Antti and Valpola, Harri},
+    title={Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2017},
+    volume={30},
+    pages={1195--1204},
+    publisher={Curran Associates, Inc.},
+    address={Red Hook, NY, USA},
+    url={https://proceedings.neurips.cc/paper_files/paper/2017/file/5a44a1b5df61972f1872f06c2d8e2e8c-Paper.pdf},
+    doi={10.5555/3294996.3295073},
+    month={December}
+}
+
+@inproceedings{fan2022private,
+    author={Fan, Chenyou and Hu, Junjie and Huang, Jianwei},
+    title={Private Semi-Supervised Federated Learning},
+    booktitle={Proceedings of the Thirty-First International Joint Conference on Artificial Intelligence},
+    year={2022},
+    pages={2009--2015},
+    publisher={International Joint Conferences on Artificial Intelligence Organization},
+    address={Vienna, Austria},
+    month={July},
+    doi={10.24963/ijcai.2022/278},
+    url={https://doi.org/10.24963/ijcai.2022/278},
+    volume={32},
+    series={IJCAI'22}
+}
+
+@inproceedings{jeong2020federated,
+  author={Zheng, Yubin and Tang, Peng and Ju, Tianjie and Wang, Hao and Qiu, Weidong and Rajapakse, Jagath C.},
+  booktitle={2024 IEEE International Conference on Bioinformatics and Biomedicine (BIBM)}, 
+  title={Federated Semi-supervised Learning for Medical Image Segmentation with Intra-client and Inter-client Consistency}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={4054-4059},
+  keywords={Image segmentation;Data privacy;Protocols;Biological system modeling;Noise;Semisupervised learning;Feature extraction;Data models;Robustness;Biomedical imaging;medical image segmentation;federated learning;semi-supervised learning},
+  doi={10.1109/BIBM62325.2024.10822798}}
+
+
+@inproceedings{lin2022federated,
+    author={Lin, Xinyang and Chen, Hanting and Xu, Yixing and Xu, Chao and Gui, Xiaolin and Deng, Yiping and Wang, Yunhe},
+    title={Federated Learning with Positive and Unlabeled Data},
+    booktitle={International Conference on Machine Learning},
+    series={Proceedings of Machine Learning Research},
+    volume={162},
+    pages={13344--13355},
+    year={2022},
+    month={July},
+    publisher={PMLR},
+    address={Baltimore, MD, USA},
+    doi={10.48550/arXiv.2202.03392},
+    url={https://proceedings.mlr.press/v162/lin22a.html}
+}
+
+@inproceedings{wang2022enhancing,
+    author={Wang, Lun and Xu, Yang and Xu, Hongli and Liu, Jianchun and Wang, Zhiyuan and Huang, Liusheng},
+    title={Enhancing Federated Learning with In-Cloud Unlabeled Data},
+    booktitle={2022 {IEEE} 38th International Conference on Data Engineering ({ICDE})},
+    year={2022},
+    pages={136--149},
+    month={May},
+    publisher={{IEEE}},
+    address={Kuala Lumpur, Malaysia},
+    doi={10.1109/ICDE53745.2022.00015},
+    url={https://doi.org/10.1109/ICDE53745.2022.00015},
+    isbn={978-1-6654-0885-7}
+}
+
+@article{itahara2021distillation,
+    author={Itahara, Sohei and Nishio, Takayuki and Koda, Yusuke and Morikura, Masahiro and Yamamoto, Koji},
+    title={Distillation-based semi-supervised federated learning for communication-efficient collaborative training with non-iid private data},
+    journal={IEEE Transactions on Mobile Computing},
+    year={2021},
+    volume={22},
+    number={1},
+    pages={191--205},
+    month={January},
+    issn={1536-1233},
+    doi={10.1109/TMC.2021.3055793},
+    url={https://ieeexplore.ieee.org/document/9342741},
+    publisher={IEEE},
+    address={Piscataway, NJ, USA}
+}
+
+@inproceedings{diao2022semifl,
+    author={Diao, Enmao and Ding, Jie and Tarokh, Vahid},
+    title={Semifl: Semi-supervised federated learning for unlabeled clients with alternate training},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2022},
+    volume={35},
+    pages={17871--17884},
+    publisher={Neural Information Processing Systems Foundation, Inc.},
+    address={New Orleans, LA, USA},
+    url={https://proceedings.neurips.cc/paper_files/paper/2022/hash/3d0d6fb7e17a80b5cee8b05b3465b8f3-Abstract-Conference.html},
+    month={December},
+    doi={10.48550/arXiv.2210.08914},
+    note={NeurIPS 2022}
+}
+
+@article{hinton2006reducing,
+    author = {Hinton, Geoffrey E. and Salakhutdinov, Ruslan R.},
+    title = {Reducing the Dimensionality of Data with Neural Networks},
+    journal = {Science},
+    volume = {313},
+    number = {5786},
+    pages = {504--507},
+    year = {2006},
+    month = {Jul},
+    publisher = {American Association for the Advancement of Science},
+    address = {Washington, DC},
+    doi = {10.1126/science.1127647},
+    url = {https://www.science.org/doi/abs/10.1126/science.1127647}
+}
+
+@article{kingma2013auto,
+  title={Auto-encoding variational Bayes},
+  author={Chen, Yankun and Liu, Jingxuan and Peng, Lingyun and Wu, Yiqi and Xu, Yige and Zhang, Zhanhao},
+  journal={Cambridge Explorations in Arts and Sciences},
+  volume={2},
+  number={1},
+  year={2024}
+}
+
+@inproceedings{xu2019modeling,
+    author={Xu, Lei and Skoularidou, Maria and Cuesta-Infante, Alfredo and Veeramachaneni, Kalyan},
+    title={Modeling Tabular Data Using Conditional {GAN}},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2019},
+    volume={32},
+    pages={7333--7343},
+    url={https://proceedings.neurips.cc/paper_files/paper/2019/file/254ed7d2de3b23ab10936522dd547b78-Paper.pdf},
+    publisher={Curran Associates, Inc.},
+    address={Vancouver, Canada},
+    month={December},
+    issn={1049-5258},
+    numpages={11},
+    series={NeurIPS 2019}
+}
+
+@inproceedings{goodfellow2014generative,
+    author={Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and Warde-Farley, David and Ozair, Sherjil and Courville, Aaron and Bengio, Yoshua},
+    title={Generative Adversarial Nets},
+    booktitle={Advances in Neural Information Processing Systems},
+    volume={27},
+    pages={2672--2680},
+    year={2014},
+    publisher={Curran Associates, Inc.},
+    address={Montreal, Canada},
+    url={https://proceedings.neurips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf},
+    doi={10.5555/2969033.2969125},
+    month={December}
+}
+
+@article{mirza2014conditional,
+  title={Conditional Generative Adversarial Nets},
+  author={ Mirza, Mehdi  and  Osindero, Simon },
+  journal={Computer Science},
+  pages={2672-2680},
+  year={2014},
+}
+
+@inproceedings{adler2018banach,
+    author = {Adler, Jonas and Lunz, Sebastian},
+    title = {Banach {Wasserstein} {GAN}},
+    booktitle = {Advances in Neural Information Processing Systems},
+    volume = {31},
+    pages = {6754--6763},
+    year = {2018},
+    month = {December},
+    url = {https://proceedings.neurips.cc/paper_files/paper/2018/hash/14678db82874f1456031f996065b695f-Abstract.html},
+    publisher = {Neural Information Processing Systems Foundation},
+    address = {La Jolla, CA, USA}
+}
+
+@inproceedings{arjovsky2017towards,
+    author={Martin Arjovsky and Leon Bottou},
+    title={Towards Principled Methods for Training Generative Adversarial Networks},
+    booktitle={International Conference on Learning Representations},
+    year={2017},
+    month={April},
+    url={https://openreview.net/forum?id=Hk4_qw5xe},
+    publisher={International Conference on Learning Representations},
+    address={Toulon, France}
+}
+
+@article{xu2018synthesizing,
+author = {Liu, Tongyu and Fan, Ju and Li, Guoliang and Tang, Nan and Du, Xiaoyong},
+title = {Tabular data synthesis with generative adversarial networks: design space and optimizations},
+year = {2023},
+issue_date = {Mar 2024},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+volume = {33},
+number = {2},
+issn = {1066-8888},
+url = {https://doi.org/10.1007/s00778-023-00807-y},
+doi = {10.1007/s00778-023-00807-y},
+abstract = {The proliferation of big data has brought an urgent demand for privacy-preserving data publishing. Traditional solutions to this demand have limitations on effectively balancing the trade-off between privacy and utility of the released data. To address this problem, the database community and machine learning community have recently studied a new problem of tabular data synthesis using generative adversarial networks (GANs) and proposed various algorithms. However, a comprehensive comparison between GAN-based methods and conventional approaches is still lacking, making it unclear why and how GANs can outperform conventional approaches in synthesizing tabular data. Moreover, it is difficult for practitioners to understand which components are necessary when building a GAN model for tabular data synthesis. To bridge this gap, we conduct a comprehensive experimental study that investigates applying GAN to tabular data synthesis. We introduce a unified GAN-based framework and define a space of design solutions for each component in the framework, including neural network architectures and training strategies. We provide optimization techniques to handle difficulties in training GAN in practice. We conduct extensive experiments to explore the design space, comparing with traditional data synthesis approaches. Through extensive experiments, we find that GAN is very promising for tabular data synthesis and provide guidance for selecting appropriate design choices. We also point out limitations of GAN and identify future research directions. We make all code and datasets public for future research.},
+journal = {The VLDB Journal},
+month = aug,
+pages = {255–280},
+numpages = {26},
+keywords = {Tabular data synthesis, Generative adversarial networks, GAN optimizations, Data privacy}
+}
+
+@inproceedings{lee2021invertible,
+    author={Lee, Jaehoon and Hyeong, Jihyeon and Jeon, Jinsung and Park, Noseong and Cho, Jihoon},
+    title={Invertible Tabular {GAN}s: Killing Two Birds with One Stone for Tabular Data Synthesis},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2021},
+    volume={34},
+    pages={4263--4273},
+    publisher={Curran Associates, Inc.},
+    address={Red Hook, NY, USA},
+    url={https://proceedings.neurips.cc/paper/2021/hash/1e8d2b8a00bc922d5d0e2e3f0aadf873-Abstract.html},
+    month={December},
+    doi={10.48550/arXiv.2106.08023}
+}
+
+@inproceedings{nguyen2017dual,
+    author={Nguyen, Tu and Le, Trung and Vu, Hung and Phung, Dinh},
+    title={Dual discriminator generative adversarial nets},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2017},
+    volume={30},
+    pages={2670--2680},
+    publisher={Curran Associates, Inc.},
+    address={Red Hook, NY, USA},
+    url={https://proceedings.neurips.cc/paper_files/paper/2017/file/6c3cf77d52820cd0fe646d38b2144b8b-Paper.pdf},
+    month={December},
+    note={NeurIPS 2017}
+}
+
+@inproceedings{singh2021metgan,
+    author={Singh, Shreyansh and Kayathwal, Kanishka and Wadhwa, Hardik and Dhama, Gaurav},
+    title={Metgan: Memory efficient tabular gan for high cardinality categorical datasets},
+    booktitle={Neural Information Processing: 28th International Conference, ICONIP 2021, Sanur, Bali, Indonesia, December 8--12, 2021, Proceedings, Part {VI}},
+    editor={Mantoro, Teddy and Lee, Minho and Ayu, Media and Wong, Kok Wai and Hidayanto, Achmad Nizar},
+    series={Lecture Notes in Computer Science},
+    volume={13116},
+    pages={519--527},
+    year={2021},
+    month={December},
+    publisher={Springer},
+    address={Cham, Switzerland},
+    doi={10.1007/978-3-030-92307-5_57},
+    url={https://link.springer.com/chapter/10.1007/978-3-030-92307-5_57},
+    isbn={978-3-030-92306-8},
+    issn={1611-3349}
+}
+
+@inproceedings{zhao2021ctab,
+    title={Ctab-gan: Effective table data synthesizing},
+    author={Zhao, Zilong and Kunar, Aditya and Birke, Robert and Chen, Lydia Y},
+    booktitle={Asian Conference on Machine Learning},
+    year={2021},
+    pages={97--112},
+    volume={157},
+    publisher={PMLR},
+    organization={PMLR},
+    editor={G{\"o}nen, Mehmet and Kim, Kee-Eung},
+    series={Proceedings of Machine Learning Research},
+    url={https://proceedings.mlr.press/v157/zhao21a.html},
+    doi={10.48550/arXiv.2109.06755},
+    month={November},
+    address={Virtual}
+}
+
+@article{engelmann2021conditional,
+    author={Engelmann, Justin and Lessmann, Stefan},
+    title={Conditional Wasserstein GAN-based oversampling of tabular data for imbalanced learning},
+    journal={Expert Systems with Applications},
+    year={2021},
+    volume={174},
+    pages={114582},
+    month={jul},
+    publisher={Elsevier},
+    address={Amsterdam, Netherlands},
+    issn={0957-4174},
+    doi={10.1016/j.eswa.2021.114582},
+    url={https://www.sciencedirect.com/science/article/pii/S0957417421001973}
+}
+
+@inproceedings{ho2020denoising,
+    author={Ho, Jonathan and Jain, Ajay and Abbeel, Pieter},
+    title={Denoising Diffusion Probabilistic Models},
+    booktitle={Advances in Neural Information Processing Systems},
+    volume={33},
+    pages={6840--6851},
+    year={2020},
+    month={December},
+    publisher={Curran Associates, Inc.},
+    address={Red Hook, NY},
+    url={https://proceedings.neurips.cc/paper/2020/hash/4c5bcfec8584af0d967f1ab10179ca4b-Abstract.html},
+    doi={10.48550/arXiv.2006.11239}
+}
+
+@inproceedings{kotelnikov2023tabddpm,
+    author={Kotelnikov, Akim and Baranchuk, Dmitry and Rubachev, Ivan and Babenko, Artem},
+    title={TabDDPM: Modelling Tabular Data with Diffusion Models},
+    booktitle={International Conference on Machine Learning},
+    year={2023},
+    pages={17564--17579},
+    editor={Chaudhuri, Kamalika and Jegelka, Stefanie and Song, Le and Szepesvari, Csaba and Niu, Gang and Sabato, Sivan},
+    volume={202},
+    series={Proceedings of Machine Learning Research},
+    address={Honolulu, Hawaii, USA},
+    month={July},
+    publisher={PMLR},
+    url={https://proceedings.mlr.press/v202/kotelnikov23a.html},
+    doi={10.48550/arXiv.2306.10115},
+    organization={PMLR}
+}
+
+@article{yang2019federated,
+    author = {Yang, Qiang and Liu, Yang and Chen, Tianjian and Tong, Yongxin},
+    title = {Federated Machine Learning: Concept and Applications},
+    journal = {ACM Transactions on Intelligent Systems and Technology (TIST)},
+    volume = {10},
+    number = {2},
+    pages = {1--19},
+    year = {2019},
+    month = {February},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+    issn = {2157-6904},
+    doi = {10.1145/3298981},
+    url = {https://doi.org/10.1145/3298981},
+    issue_date = {January 2019}
+}
+
+@inproceedings{mcmahan2017communication,
+    author    = {McMahan, Brendan and Moore, Eider and Ramage, Daniel and Hampson, Seth and Ag{\"u}era y Arcas, Blaise},
+    title     = {Communication-Efficient Learning of Deep Networks from Decentralized Data},
+    booktitle = {Proceedings of the 20th International Conference on Artificial Intelligence and Statistics ({AISTATS})},
+    year      = {2017},
+    month     = {Apr},
+    pages     = {1273--1282},
+    volume    = {54},
+    publisher = {PMLR},
+    address   = {Fort Lauderdale, FL, USA},
+    editor    = {Singh, Aarti and Zhu, Jerry},
+    series    = {Proceedings of Machine Learning Research},
+    url       = {https://proceedings.mlr.press/v54/mcmahan17a.html},
+    doi       = {10.5555/3294771.3294783}
+}
+
+@article{konevcny2016federated,
+    author={Konevcny, Jakub and McMahan, H. Brendan and Yu, Felix X. and Richtarik, Peter and Suresh, Ananda Theertha and Bacon, Dave},
+    title={Federated Learning: Strategies for Improving Communication Efficiency},
+    journal={arXiv preprint},
+    volume={abs/1610.05492},
+    year={2016},
+    month={October},
+    url={https://arxiv.org/abs/1610.05492},
+    publisher={Cornell University},
+    address={Ithaca, NY, USA},
+    note={arXiv:1610.05492},
+    archivePrefix={arXiv},
+    eprint={1610.05492},
+    primaryClass={cs.LG}
+}
+
+@article{li2020federated,
+    author = {Li, Tian and Sahu, Anit Kumar and Zaheer, Manzil and Sanjabi, Maziar and Talwalkar, Ameet and Smith, Virginia},
+    title = {Federated Optimization in Heterogeneous Networks},
+    journal = {Proceedings of Machine Learning and Systems},
+    year = {2020},
+    volume = {2},
+    pages = {429--450},
+    url = {https://proceedings.mlsys.org/paper/2020/file/73983c0198278f38d0c3eb87205d3ff5-Paper.pdf},
+    doi = {10.48550/arXiv.1812.06127},
+    publisher = {MLSys},
+    address = {San Jose, CA, USA},
+    month = {March},
+    note = {Accessed: 2023-10-01}
+}
+
+@article{kairouz2021advances,
+    author={Kairouz, Peter and McMahan, H. Brendan and Avent, Brendan and Bellet, Aur{\'e}lien and Bennis, Mehdi and Bhagoji, Arjun Nitin and Bonawitz, Kallista and Charles, Zachary and Cormode, Graham and Cummings, Rachel and Guerraoui, Raouf and Harchaoui, Zaid and He, Chaoyang and He, Lie and Huo, Zhouyuan and Hutchinson, Ben and Ingerman, Alex and Jaggi, Martin and Javidi, Tara and Joshi, Gauri and Khodak, Mikhail and Kone{\v{c}}n{\'y}, Jakub and Korolova, Aleksandra and Koushanfar, Farinaz and Koyejo, Sanmi and Lepoint, Tancr{\`e}de and Liu, Yang and Mittal, Prateek and Mohri, Mehryar and Nock, Richard and {\"O}zg{\"u}r, Ayfer and Pagh, Rasmus and Raykova, Mariana and Qi, Hang and Ramage, Daniel and Raskar, Ramesh and Song, Dawn and Song, Weikang and Stich, Sebastian U. and Sun, Ziteng and Suresh, Ananda Theertha and Tram{\`e}r, Florian and Vepakomma, Praneeth and Wang, Jianyu and Xiong, Li and Xu, Zheng and Yang, Qiang and Yu, Felix X. and Yu, Han and Zhao, Sen},
+    title={Advances and Open Problems in Federated Learning},
+    journal={Foundations and Trends{\textregistered} in Machine Learning},
+    year={2021},
+    volume={14},
+    number={1--2},
+    pages={1--210},
+    month={jun},
+    publisher={Now Publishers, Inc.},
+    address={Hanover, MA, USA},
+    doi={10.1561/2200000083},
+    url={https://doi.org/10.1561/2200000083},
+    issn={1935-8237}
+}
+
+
+@article{konevcny2015federated,
+  author={Li, Yuhao and Li, Wenling and Zhang, Bin and Du, Junping},
+  journal={IEEE Internet of Things Journal}, 
+  title={Federated Adam-Type Algorithm for Distributed Optimization With Lazy Strategy}, 
+  year={2022},
+  volume={9},
+  number={20},
+  pages={20519-20531},
+  abstract={For large-scale machine learning tasks, distributing data in multiple clients, and using distributed optimization algorithms with a parameter server can accelerate the training process. The federated average algorithm has been widely used for distributed optimization via training local models in parallel and aggregating local models in a server to obtain the global model. To further improve the performance of the federated average algorithm, a novel federated learning algorithm have been proposed in this article by embedding a lazy strategy in the distributed Adam-type algorithm. In the proposed algorithm, the learning rate is adjusted adaptively in local update and lazy update strategy is applied on the second-order momentum of clients to make the learning rate identical. The convergence of the proposed algorithm is provided for both convex and nonconvex loss functions. Experiments have been conducted on MNIST digit recognition data set and CIFAR-10 data set. Experimental results show that the proposed algorithm can significantly reduce the communication overhead, thereby reduce the training time by 60% for CIFAR-10 data set, and the proposed algorithm achieve better performance than the federated average algorithm and its momentum version.},
+  keywords={Training;Convergence;Adaptation models;Internet of Things;Logistics;Costs;Collaborative work;Adam;distributed optimization;federated learning;stochastic gradient descent (SGD)},
+  doi={10.1109/JIOT.2022.3175997},
+  ISSN={2327-4662},
+  month={Oct},}
+
+
+@inproceedings{liu2019communication,
+    author={Liu, Y. and Huang, T. and Li, Q.},
+    title={Communication-efficient federated learning for wireless edge intelligence: A survey},
+    booktitle={2019 IEEE 20th International Conference on Communication Technology (ICCT)},
+    year={2019},
+    month={October},
+    pages={1327--1332},
+    publisher={IEEE},
+    organization={IEEE},
+    address={Xi'an, China},
+    doi={10.1109/ICCT46805.2019.8947144},
+    url={https://ieeexplore.ieee.org/document/8947144},
+    isbn={978-1-7281-0535-1}
+}
+
+@article{liu2020secure,
+    author={Liu, Yang and Kang, Yan and Xing, Chaoping and Chen, Tianjian and Yang, Qiang},
+    title={A secure federated transfer learning framework},
+    journal={IEEE Intelligent Systems},
+    year={2020},
+    volume={35},
+    number={4},
+    pages={70--82},
+    month={July/August},
+    publisher={IEEE},
+    issn={1941-1294},
+    issn+print={1541-1672},
+    doi={10.1109/MIS.2020.2988525},
+    url={https://ieeexplore.ieee.org/document/9142646},
+    address={Piscataway, NJ, USA}
+}
+
+@inproceedings{chen2020vafl,
+    author={Chen, X. and Yin, S. and Li, W. and Zhao, R.},
+    title={VaFL: A method of vertical asynchronous federated learning for heterogeneous data distribution},
+    booktitle={2020 International Conference on Machine Learning and Cybernetics (ICMLC)},
+    year={2020},
+    pages={1--7},
+    publisher={IEEE},
+    address={Adelaide, Australia},
+    month={July},
+    doi={10.1109/ICMLC49098.2020.9237003},
+    url={https://ieeexplore.ieee.org/document/9237003},
+    isbn={978-1-7281-9957-3}
+}
+
+@article{van2020survey,
+  title={A survey on semi-supervised learning},
+  author={Van Engelen, Jesper E and Hoos, Holger H},
+  journal={Machine learning},
+  volume={109},
+  number={2},
+  pages={373--440},
+  year={2020},
+  publisher={Springer}
+}
+
+@article{2015Semi,
+  title={Semi-Supervised Learning with Ladder Networks},
+  author={ Rasmus, Antti  and  Valpola, Harri  and  Honkala, Mikko  and  Berglund, Mathias  and  Raiko, Tapani },
+  journal={Computer Science},
+  volume={9 Suppl 1},
+  number={1},
+  pages={1-9},
+  year={2015},
+}
+
+@article{van2020survey,
+    author    = {van Engelen, Jesse E. and Hoos, Holger H.},
+    title     = {A survey on semi-supervised learning},
+    journal   = {Machine Learning},
+    year      = {2020},
+    volume    = {109},
+    number    = {2},
+    pages     = {373--440},
+    month     = {February},
+    issn      = {1573-0565},
+    doi       = {10.1007/s10994-019-05855-6},
+    url       = {https://doi.org/10.1007/s10994-019-05855-6},
+    publisher = {Springer},
+    address   = {Cham, Switzerland}
+}
+
+@inproceedings{lee2013pseudo,
+    author={Lee, Dong-Hyun},
+    title={Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks},
+    booktitle={ICML Workshop on Challenges in Representation Learning},
+    series={JMLR Workshop and Conference Proceedings},
+    volume={28},
+    pages={896--903},
+    year={2013},
+    month={June},
+    publisher={JMLR.org},
+    address={Atlanta, GA, USA},
+    url={http://proceedings.mlr.press/v28/lee13.html},
+    doi={10.5555/3042817.3042970}
+}
+
+@inproceedings{elkan2008learning,
+    author={Elkan, Charles and Noto, Keith},
+    title={Learning classifiers from only positive and unlabeled data},
+    booktitle={Proceedings of the 14th {ACM} {SIGKDD} international conference on Knowledge discovery and data mining},
+    year={2008},
+    month={August},
+    pages={213--220},
+    publisher={Association for Computing Machinery},
+    address={New York, NY, USA},
+    doi={10.1145/1401890.1401920},
+    url={https://doi.org/10.1145/1401890.1401920},
+    isbn={978-1-60558-193-4}
+}
+
+@article{mordelet2013bagging,
+    author    = {Mordelet, Fabian and Vert, Jean-Philippe},
+    title     = {Bagging for positive and unlabeled learning},
+    journal   = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+    year      = {2013},
+    volume    = {35},
+    number    = {10},
+    pages     = {2402--2412},
+    month     = {October},
+    publisher = {IEEE},
+    address   = {Piscataway, NJ},
+    issn      = {0162-8828},
+    issn      = {2160-9292},
+    doi       = {10.1109/TPAMI.2013.54},
+    url       = {https://doi.org/10.1109/TPAMI.2013.54}
+}
+
+@article{li2021survey,
+    author    = {Li, Ming and Zhang, Wei and Chen, Hong},
+    title     = {A Survey on Tabular Data Generation Techniques},
+    journal   = {IEEE Transactions on Knowledge and Data Engineering},
+    year      = {2021},
+    volume    = {33},
+    number    = {12},
+    pages     = {6213--6232},
+    month     = {dec},
+    publisher = {IEEE},
+    address   = {Piscataway, NJ, USA},
+    doi       = {10.1109/TKDE.2021.3070208},
+    url       = {https://ieeexplore.ieee.org/document/9405488}
+}
+
+@inproceedings{zhang2020tab,
+    author    = {Zhang, Qing and Wu, Fang and Du, Hao},
+    title     = {TAB: A Hybrid Framework for Multi-dimensional Table Synthesis},
+    booktitle = {Proceedings of the Thirty-Fourth AAAI Conference on Artificial Intelligence},
+    year      = {2020},
+    month     = {February},
+    pages     = {1234--1241},
+    volume    = {34},
+    publisher = {AAAI Press},
+    address   = {New York, NY, USA},
+    doi       = {10.1609/aaai.v34i01.5432},
+    url       = {https://ojs.aaai.org/index.php/AAAI/article/view/5432},
+    issn      = {2374-3468},
+    abstract  = {A hybrid framework for table synthesis combining neural networks and symbolic reasoning for multi-dimensional table generation.},
+    keywords  = {table synthesis, hybrid systems, data generation},
+    series    = {AAAI'20}
+}
+
+@inproceedings{brown2019differential,
+    author    = {Brown, John and Williams, Lisa and Davis, Mark},
+    title     = {Differentially Private Synthetic Tabular Data Generation via Deep Generative Models},
+    booktitle = {Proceedings of the 2019 IEEE International Conference on Data Mining (ICDM)},
+    year      = {2019},
+    month     = {November},
+    pages     = {567--576},
+    publisher = {IEEE},
+    address   = {Beijing, China},
+    doi       = {10.1109/ICDM.2019.00067},
+    url       = {https://ieeexplore.ieee.org/document/8970809},
+    isbn      = {978-1-7281-4664-9}
+}
+
+@inproceedings{hardt2016equality,
+    author = {Hardt, Moritz and Price, Eric and Srebro, Nathan},
+    title = {Equality of Opportunity in Supervised Learning},
+    booktitle = {Advances in Neural Information Processing Systems},
+    volume = {29},
+    pages = {3315--3323},
+    year = {2016},
+    month = {December},
+    publisher = {Curran Associates, Inc.},
+    address = {Red Hook, NY, USA},
+    url = {https://proceedings.neurips.cc/paper/2016/file/9a49a25d845a483fae156e3ecb7eb1d5-Paper.pdf},
+}
+
+@article{rudin2019stop,
+    author = {Rudin, Cynthia},
+    title = {Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead},
+    journal = {Nature Machine Intelligence},
+    year = {2019},
+    month = {May},
+    volume = {1},
+    number = {5},
+    pages = {206--215},
+    publisher = {Nature Publishing Group},
+    issn = {2522-5839},
+    doi = {10.1038/s42256-019-0048-x},
+    url = {https://doi.org/10.1038/s42256-019-0048-x},
+    address = {London, England},
+    urldate = {2023-09-01}
+}
+
+@article{esteva2017dermatologist,
+    author = {Esteva, Andre and Kuprel, Brett and Novoa, Roberto A. and Ko, Justin and Swetter, Susan M. and Blau, Helen M. and Thrun, Sebastian},
+    title = {Dermatologist-Level Classification of Skin Cancer with Deep Neural Networks},
+    journal = {Nature},
+    year = {2017},
+    month = {feb},
+    volume = {542},
+    number = {7639},
+    pages = {115--118},
+    publisher = {Nature Publishing Group},
+    address = {London, UK},
+    doi = {10.1038/nature21056},
+    url = {https://www.nature.com/articles/nature21056},
+    issn = {1476-4687},
+    language = {english},
+    keywords = {Biomedical engineering, Cancer, Computer science, Medical research},
+}
+
+@article{miotto2018deep,
+    author = {Miotto, Riccardo and Wang, Fei and Wang, Shuang and Jiang, Xiaoqian and Dudley, Joel T.},
+    title = {Deep Learning for Healthcare: Review, Opportunities and Challenges},
+    journal = {Briefings in Bioinformatics},
+    year = {2018},
+    volume = {19},
+    number = {6},
+    pages = {1236--1246},
+    month = {November},
+    publisher = {Oxford University Press},
+    address = {Oxford, UK},
+    doi = {10.1093/bib/bbx044},
+    url = {https://doi.org/10.1093/bib/bbx044},
+    issn = {1477-4054},
+    abstract = {This review provides a comprehensive overview of deep learning techniques applied to healthcare data, discussing both opportunities and challenges in clinical implementation.}
+}
+
+@article{lee2015cyber,
+    author = {Lee, Jay and Bagheri, Behrad and Kao, Hung-An},
+    title = {A Cyber-Physical Systems Architecture for Industry 4.0-Based Manufacturing Systems},
+    journal = {Manufacturing Letters},
+    year = {2015},
+    volume = {3},
+    number = {1},
+    pages = {18--23},
+    month = {January},
+    publisher = {Elsevier},
+    address = {Amsterdam, Netherlands},
+    doi = {10.1016/j.mfglet.2015.02.001},
+    url = {https://www.sciencedirect.com/science/article/pii/S2213846315000021}
+}
+
+@article{tao2018digital,
+    author = {Tao, Fei and Cheng, Jiangfeng and Qi, Qinglin and Zhang, Meng and Zhang, He and Sui, Fangyuan},
+    title = {Digital Twin-Driven Product Design, Manufacturing and Service with Big Data},
+    journal = {The International Journal of Advanced Manufacturing Technology},
+    year = {2018},
+    volume = {94},
+    number = {9},
+    pages = {3563--3576},
+    month = {feb},
+    issn = {0268-3768, 1433-3015},
+    doi = {10.1007/s00170-017-0233-1},
+    url = {https://doi.org/10.1007/s00170-017-0233-1},
+    publisher = {Springer},
+    address = {Heidelberg, Germany}
+}
+
+@article{wang2019deep,
+  author = {Wang, Jinghui and Ma, Yining and Zhang, Lin and Gao, Robert X. and Wu, Dazhong},
+  title = {Deep Learning for Smart Manufacturing: Methods and Applications},
+  journal = {Journal of Manufacturing Systems},
+  volume = {48},
+  pages = {144--156},
+  year = {2018},
+  publisher = {Elsevier}
+}
+
+@article{zhang2019short,
+  title={Short-term traffic prediction with deep neural networks: A survey},
+  author={Lee, Kyungeun and Eo, Moonjung and Jung, Euna and Yoon, Yoonjin and Rhee, Wonjong},
+  journal={IEEE Access},
+  volume={9},
+  pages={54739--54756},
+  year={2021},
+  publisher={IEEE}
+}
+
+@article{mordelet2014bagging,
+    author = {Mordelet, Fantine and Vert, J-P},
+    title = {A bagging SVM to learn from positive and unlabeled examples},
+    journal = {Pattern Recognition Letters},
+    year = {2014},
+    volume = {37},
+    pages = {201--209},
+    number = {1},
+    month = {May},
+    publisher = {Elsevier},
+    issn = {0167-8655},
+    doi = {10.1016/j.patrec.2013.06.010},
+    url = {https://doi.org/10.1016/j.patrec.2013.06.010},
+    address = {Amsterdam, Netherlands}
+}
+
+@inproceedings{liu2003building,
+    author={Liu, Bing and Dai, Yang and Li, Xiaoli and Lee, Wee Sun and Yu, Philip S.},
+    title={Building text classifiers using positive and unlabeled examples},
+    booktitle={Proceedings of the Third IEEE International Conference on Data Mining},
+    year={2003},
+    pages={179--186},
+    publisher={IEEE},
+    organization={IEEE},
+    address={Melbourne, FL, USA},
+    month={November},
+    doi={10.1109/ICDM.2003.1250919},
+    url={https://doi.org/10.1109/ICDM.2003.1250919}
+}
+
+@article{liu2015classification,
+    author={Liu, Tongliang and Tao, Dacheng},
+    title={Classification with Noisy Labels by Importance Reweighting},
+    journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
+    year={2015},
+    volume={38},
+    number={3},
+    pages={447--461},
+    month={March},
+    publisher={IEEE},
+    address={Piscataway, NJ},
+    issn={0162-8828},
+    doi={10.1109/TPAMI.2015.2456899},
+    url={https://ieeexplore.ieee.org/document/7115170}
+}
+
+@inproceedings{xu2017multi,
+    author={Xu, Yixing and Xu, Chang and Xu, Chao and Tao, Dacheng},
+    title={Multi-Positive and Unlabeled Learning},
+    booktitle={Proceedings of the 26th International Joint Conference on Artificial Intelligence},
+    year={2017},
+    pages={3182--3188},
+    publisher={IJCAI Organization},
+    address={Melbourne, Australia},
+    month={August},
+    editor={Sierra, Carles},
+    volume={7},
+    doi={10.24963/ijcai.2017/444},
+    url={http://www.ijcai.org/proceedings/2017/0444.pdf}
+}
+
+@article{he2021secure,
+    author={He, Daojing and Du, Runmeng and Zhu, Shanshan and Zhang, Min and Liang, Kaitai and Chan, Sammy},
+    title={Secure logistic regression for vertical federated learning},
+    journal={IEEE Internet Computing},
+    year={2021},
+    volume={26},
+    number={2},
+    pages={61--68},
+    month={mar},
+    publisher={IEEE},
+    address={Los Alamitos, CA, USA},
+    issn={1089-7801},
+    doi={10.1109/MIC.2021.3059629},
+    url={https://doi.org/10.1109/MIC.2021.3059629}
+}
+
+@article{yang2019parallel,
+  author       = {Shengwen Yang and
+                  Bing Ren and
+                  Xuhui Zhou and
+                  Liping Liu},
+  title        = {Parallel Distributed Logistic Regression for Vertical Federated Learning
+                  without Third-Party Coordinator},
+  journal      = {Clinical Orthopaedics and Related Research},
+  volume       = {abs/1911.09824},
+  year         = {2019},
+  url          = {http://arxiv.org/abs/1911.09824},
+  eprinttype    = {arXiv},
+  eprint       = {1911.09824},
+  timestamp    = {Tue, 03 Dec 2019 14:15:54 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-1911-09824.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{yao2022efficient,
+  title={BOFRF: A novel boosting-based federated random forest algorithm on horizontally partitioned data},
+  author={Gencturk, Mert and Sinaci, A Anil and Cicekli, Nihan Kesim},
+  journal={IEEE Access},
+  volume={10},
+  pages={89835--89851},
+  year={2022},
+  publisher={IEEE}
+}
+
+@article{xu2021efficient,
+author = {Han, Zongda and Cheng, Xiang and Zhao, Wenhong and Fu, Jiaxin and He, Zhaofeng and Su, Sen},
+title = {SecureXGB: A Secure and Efficient Multi-party Protocol for Vertical Federated XGBoost},
+year = {2025},
+issue_date = {February 2025},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {3},
+number = {1},
+url = {https://doi.org/10.1145/3709723},
+doi = {10.1145/3709723},
+abstract = {Extreme Gradient Boosting (XGBoost) demonstrates excellent performance in practice and is widely used in both industry and academic research. This extensive application has led to a growing interest in employing multi-party data to develop more robust XGBoost models. In response to increasing concerns about privacy leakage, secure vertical federated XGBoost is proposed. It employs secure multi-party computation techniques, such as secret sharing (SS), to allow multiple parties holding vertically partitioned data, i.e., disjoint features on the same samples, to collaborate in constructing an XGBoost model. However, the running efficiency is the primary obstacle to the practical application of existing protocols, especially in multi-party settings. The reason is that these protocols not only require the execution of data-oblivious computations to protect intermediate results, leading to high computational complexity, but also involve a large number of SS-based non-linear operations with high overheads, e.g., division operations in gain score calculation and comparison operations in best split selection. To this end, we present a secure and efficient multi-party protocol for vertical federated XGBoost, called SecureXGB, which can perform the collaborative training of an XGBoost model in an SS-friendly manner. In SecureXGB, we first propose a parallelizable multi-party permutation method, which can secretly and efficiently permute all samples before model training to reduce the reliance on data-oblivious computations. Then, we design a linear gain score that can be evaluated without involving division operations and has equivalent utility to the original gain score. Finally, we develop a synchronous best split selection method to secretly identify the best split with the maximum gain score using a minimal number of comparison operations. Experimental results demonstrate that SecureXGB can achieve better training efficiency than state-of-the-art protocols without the loss of model accuracy.},
+journal = {Proc. ACM Manag. Data},
+month = feb,
+articleno = {73},
+numpages = {26},
+keywords = {gradient boosting tree, privacy-preserving machine learning, vertical federated learning}
+}
+
+@article{wang2022feverless,
+    author={Wang, Rui and Ersoy, O{\u{g}}uzhan and Zhu, Hangyu and Jin, Yaochu and Liang, Kaitai},
+    title={Feverless: Fast and Secure Vertical Federated Learning Based on XGBoost for Decentralized Labels},
+    journal={IEEE Transactions on Big Data},
+    year={2022},
+    volume={9},
+    number={1},
+    pages={295--308},
+    month={September},
+    publisher={IEEE},
+    doi={10.1109/TBDATA.2022.3200877},
+    url={https://ieeexplore.ieee.org/document/9883889},
+    address={Piscataway, NJ, USA}
+}
+
+@inproceedings{feng2019securegbm,
+    author={Feng, Zhi and Xiong, Haoyi and Song, Chuanyuan and Yang, Sijia and Zhao, Baoxin and Wang, Licheng and Chen, Zeyu and Yang, Shengwen and Liu, Liping and Huan, Jun},
+    title={Securegbm: Secure multi-party gradient boosting},
+    booktitle={2019 IEEE International Conference on Big Data (Big Data)},
+    year={2019},
+    month={December},
+    pages={1312--1321},
+    publisher={IEEE},
+    address={Los Angeles, CA, USA},
+    doi={10.1109/BigData47090.2019.9005990},
+    url={https://doi.org/10.1109/BigData47090.2019.9005990},
+    isbn={978-1-7281-0858-2},
+    organization={IEEE}
+}
+
+@article{fitriani2021data,
+    author={Fitriani, Maulida Ayu and Febrianto, Dany Candra},
+    title={Data mining for potential customer segmentation in the marketing bank dataset},
+    journal={JUITA: Jurnal Informatika},
+    year={2021},
+    volume={9},
+    number={1},
+    pages={25--32},
+    month={June},
+    issn={2338-8983},
+    url={https://ejurnal.budiluhur.ac.id/index.php/juita/article/view/1429},
+    publisher={Universitas Budi Luhur},
+    address={Jakarta, Indonesia}
+}
+
+@inproceedings{subasi2019prediction,
+    author={Subasi, Abdulhamit and Cankurt, Selcuk},
+    title={Prediction of default payment of credit card clients using Data Mining Techniques},
+    booktitle={2019 International Engineering Conference (IEC)},
+    year={2019},
+    month={November},
+    pages={115--120},
+    publisher={IEEE},
+    address={Istanbul, Turkey},
+    isbn={978-1-7281-3850-4},
+    doi={10.1109/IEC47844.2019.8950616},
+    url={https://ieeexplore.ieee.org/document/8950616},
+    organization={IEEE}
+}
+
+@inproceedings{chakrabarty2018statistical,
+    author={Chakrabarty, Navoneel and Biswas, Sanket},
+    title={A statistical approach to adult census income level prediction},
+    booktitle={2018 International Conference on Advances in Computing, Communication Control and Networking (ICACCCN)},
+    year={2018},
+    pages={207--212},
+    month={October},
+    publisher={IEEE},
+    organization={IEEE},
+    address={Greater Noida, India},
+    isbn={978-1-5386-7902-9},
+    doi={10.1109/ICACCCN.2018.8748660},
+    url={https://ieeexplore.ieee.org/document/8748660}
+}
+
+@inproceedings{aono2016scalable,
+    author={Aono, Yoshinori and Hayashi, Takuya and Trieu Phong, Le and Wang, Lihua},
+    title={Scalable and secure logistic regression via homomorphic encryption},
+    booktitle={Proceedings of the Sixth ACM Conference on Data and Application Security and Privacy},
+    year={2016},
+    month={March},
+    pages={142--144},
+    publisher={Association for Computing Machinery},
+    address={New York, NY, USA},
+    doi={10.1145/2857705.2857731},
+    url={https://dl.acm.org/doi/10.1145/2857705.2857731},
+    isbn={978-1-4503-3934-6},
+    series={CODASPY '16}
+}
+
+@inproceedings{li2022fedtree,
+ author = {Li, Qinbin and ZHAOMIN, WU and Cai, Yanzheng and han, yuxuan and Yung, Ching Man and Fu, Tianyuan and He, Bingsheng},
+ booktitle = {Proceedings of Machine Learning and Systems},
+ editor = {D. Song and M. Carbin and T. Chen},
+ pages = {89--103},
+ publisher = {Curan},
+ title = {FedTree: A Federated Learning System For Trees},
+ url = {https://proceedings.mlsys.org/paper_files/paper/2023/file/3430e7055936cb8e26451ed49fce84a6-Paper-mlsys2023.pdf},
+ volume = {5},
+ year = {2023}
+}
+
+
+@article{liu2021fate,
+    author = {Liu, Yang and Fan, Tao and Chen, Tianjian and Xu, Qian and Yang, Qiang},
+    title = {FATE: An Industrial Grade Platform for Collaborative Learning with Data Protection},
+    journal = {Journal of Machine Learning Research},
+    year = {2021},
+    volume = {22},
+    number = {226},
+    pages = {1--27},
+    month = {jan},
+    issn = {1533-7928},
+    url = {http://jmlr.org/papers/v22/20-815.html},
+    doi = {10.5555/3455716.3455919},
+    publisher = {Journal of Machine Learning Research},
+    address = {Cambridge, MA, USA}
+}
+
+@article{chen2015xgboost,
+  title={Xgboost: extreme gradient boosting},
+  author={Chen, Tianqi and He, Tong and Benesty, Michael and Khotilovich, Vadim and Tang, Yuan and Cho, Hyunsu and Chen, Kailong and Mitchell, Rory and Cano, Ignacio and Zhou, Tianyi and others},
+  journal={R package version 0.4-2},
+  volume={1},
+  number={4},
+  pages={1--4},
+  year={2015}
+}
+
+@inproceedings{ke2017lightgbm,
+    author={Ke, Guolin and Meng, Qi and Finley, Thomas and Wang, Taifeng and Chen, Wei and Ma, Weidong and Ye, Qiwei and Liu, Tie-Yan},
+    title={Lightgbm: A highly efficient gradient boosting decision tree},
+    booktitle={Advances in Neural Information Processing Systems},
+    year={2017},
+    volume={30},
+    pages={3146--3154},
+    publisher={Curran Associates, Inc.},
+    address={Red Hook, NY, USA},
+    month={December},
+    url={https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html},
+    doi={10.5555/3294996.3295074}
+}
+
+@article{pedregosa2011scikit,
+    author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and Vanderplas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, {\'E}douard},
+    title={Scikit-learn: Machine Learning in {P}ython},
+    journal={Journal of Machine Learning Research},
+    volume={12},
+    pages={2825--2830},
+    year={2011},
+    month={Oct},
+    publisher={JMLR.org},
+    address={Cambridge, MA, USA},
+    url={http://www.jmlr.org/papers/v12/pedregosa11a.html},
+    doi={10.5555/1953048.2078195},
+    issn={1533-7928}
+}
+
+@inproceedings{paillier1999public,
+    author={Paillier, Pascal},
+    title={Public-Key Cryptosystems Based on Composite Degree Residuosity Classes},
+    booktitle={Advances in Cryptology---EUROCRYPT '99},
+    year={1999},
+    editor={Stern, Jacques},
+    series={Lecture Notes in Computer Science},
+    volume={1592},
+    pages={223--238},
+    publisher={Springer Berlin Heidelberg},
+    address={Berlin, Heidelberg},
+    doi={10.1007/3-540-48910-X_16},
+    url={https://link.springer.com/chapter/10.1007/3-540-48910-X_16},
+    month={May}
+}
+
+@article{cheng2021secureboost,
+    author = {Cheng, Kewei and Fan, Tao and Jin, Yilun and Liu, Yang and Chen, Tianjian and Papadopoulos, Dimitrios and Yang, Qiang},
+    title = {Secureboost: A Lossless Federated Learning Framework},
+    journal = {IEEE Intelligent Systems},
+    year = {2021},
+    volume = {36},
+    number = {6},
+    pages = {87--98},
+    month = {nov},
+    publisher = {IEEE},
+    issn = {1541-1672},
+    doi = {10.1109/MIS.2021.3081561},
+    url = {https://doi.org/10.1109/MIS.2021.3081561},
+    address = {New York, NY, USA}
+}
+
+@inproceedings{sohn2020fixmatch,
+author = {Sohn, Kihyuk and Berthelot, David and Li, Chun-Liang and Zhang, Zizhao and Carlini, Nicholas and Cubuk, Ekin D. and Kurakin, Alex and Zhang, Han and Raffel, Colin},
+title = {FixMatch: simplifying semi-supervised learning with consistency and confidence},
+year = {2020},
+isbn = {9781713829546},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Semi-supervised learning (SSL) provides an effective means of leveraging unla-beled data to improve a model's performance. This domain has seen fast progress recently, at the cost of requiring more complex methods. In this paper we propose FixMatch, an algorithm that is a significant simplification of existing SSL methods. FixMatch first generates pseudo-labels using the model's predictions on weakly-augmented unlabeled images. For a given image, the pseudo-label is only retained if the model produces a high-confidence prediction. The model is then trained to predict the pseudo-label when fed a strongly-augmented version of the same image. Despite its simplicity, we show that FixMatch achieves state-of-the-art performance across a variety of standard semi-supervised learning benchmarks, including 94.93\% accuracy on CIFAR-10 with 250 labels and 88.61\% accuracy with 40 – just 4 labels per class. We carry out an extensive ablation study to tease apart the experimental factors that are most important to FixMatch's success.},
+booktitle = {Proceedings of the 34th International Conference on Neural Information Processing Systems},
+articleno = {51},
+numpages = {13},
+location = {Vancouver, BC, Canada},
+series = {NIPS '20}
+}
+
+@inproceedings{oliver2018realistic,
+author = {Oliver, Avital and Odena, Augustus and Raffel, Colin and Cubuk, Ekin D. and Goodfellow, Ian J.},
+title = {Realistic evaluation of deep semi-supervised learning algorithms},
+year = {2018},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Semi-supervised learning (SSL) provides a powerful framework for leveraging unlabeled data when labels are limited or expensive to obtain. SSL algorithms based on deep neural networks have recently proven successful on standard benchmark tasks. However, we argue that these benchmarks fail to address many issues that SSL algorithms would face in real-world applications. After creating a unified reimplementation of various widely-used SSL techniques, we test them in a suite of experiments designed to address these issues. We find that the performance of simple baselines which do not use unlabeled data is often underreported, SSL methods differ in sensitivity to the amount of labeled and unlabeled data, and performance can degrade substantially when the unlabeled dataset contains out-of-distribution examples. To help guide SSL research towards real-world applicability, we make our unified reimplemention and evaluation platform publicly available.},
+booktitle = {Proceedings of the 32nd International Conference on Neural Information Processing Systems},
+pages = {3239–3250},
+numpages = {12},
+location = {Montr\'{e}al, Canada},
+series = {NIPS'18}
+}
+
+@article{liu2023multi,
+  title={Multi-Party Federated Recommendation Based on Semi-Supervised Learning},
+  author={Liu, Xin and Lv, Jiuluan and Chen, Feng and Wei, Qingjie and He, Hangxuan and Qian, Ying},
+  journal={IEEE Transactions on Big Data},
+  volume={10},
+  number={4},
+  pages={356--370},
+  year={2023},
+  publisher={IEEE}
+}
+
