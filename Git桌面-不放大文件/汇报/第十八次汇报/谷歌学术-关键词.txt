@@ -1,0 +1,39 @@
+你想实现的场景是：基于已有的数据（CSV读取的df），生成新的数据或扩充数据集（Data Augmentation）。
+
+你可以用以下关键词在谷歌学术上搜索相关论文和最新研究成果：
+
+### 一、通用关键词（数据扩充相关）
+- **Data Augmentation**（数据增强）
+- **Synthetic Data Generation**（合成数据生成）
+- **Tabular Data Augmentation**（表格数据增强）
+- **Generative Models**（生成模型）
+- **Data Imputation**（数据插补）
+
+### 二、具体技术方法关键词
+- **GAN**（生成对抗网络, Generative Adversarial Networks）
+- **VAE**（变分自编码器, Variational Autoencoder）
+- **Diffusion Models**（扩散模型，当前较新、流行的生成方法）
+- **CTGAN / TVAE**（专门用于表格数据生成的GAN和VAE变体）
+- **Copula-based Augmentation**（基于Copula函数的数据扩充方法）
+- **SMOTE / ADASYN**（少样本数据合成方法，常用于不平衡数据）
+- **Conditional GAN (cGAN)**（条件GAN，可以基于已有数据生成受控数据）
+
+### 三、推荐一些组合关键词示例：
+- `Tabular Data Generation using GAN`
+- `Synthetic data augmentation diffusion models`
+- `Recent methods for tabular data augmentation`
+- `Conditional generative models for structured data`
+- `State-of-the-art techniques for data augmentation`
+
+---
+
+### 如何查询：
+将上面推荐的关键词或组合关键词输入到 **Google Scholar（谷歌学术）** 进行检索，可以迅速找到最新的相关论文。
+
+你可以尝试先使用以下示例关键词，快速定位到最新研究趋势：
+
+```
+"tabular data augmentation" OR "synthetic data generation" AND (GAN OR VAE OR diffusion)
+```
+
+这样你能获得最接近你需求的最新技术成果与论文资料。
