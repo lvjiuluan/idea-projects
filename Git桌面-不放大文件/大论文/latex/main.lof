@@ -1,0 +1,39 @@
+\addvspace {10.0pt}
+\addvspace {10.0pt}
+\addvspace {10.0pt}
+\addvspace {10.0pt}
+\addvspace {10.0pt}
+\contentsline {figure}{\numberline {1-1}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 标记数据在客户端的情况}}{2}{figure.caption.17}%
+\contentsline {figure}{\numberline {1-2}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 标记数据在服务端的情况}}{4}{figure.caption.18}%
+\addvspace {10.0pt}
+\contentsline {figure}{\numberline {2-1}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 联邦学习系统架构}}{11}{figure.caption.20}%
+\contentsline {figure}{\numberline {2-2}{\ignorespaces \fontsize {12pt}{20pt}\selectfont \songti 联邦学习分类}}{12}{figure.caption.21}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{12}{figure.caption.21}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{12}{figure.caption.21}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{12}{figure.caption.21}%
+\addvspace {10.0pt}
+\contentsline {figure}{\numberline {3-1}{\ignorespaces \fontsize {12pt}{20pt}\selectfont VFPU算法总体流程}}{23}{figure.caption.22}%
+\contentsline {figure}{\numberline {3-2}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 不同基学器在不同可靠正样本数量下的性能}}{38}{figure.caption.25}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{38}{figure.caption.25}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{38}{figure.caption.25}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{38}{figure.caption.25}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{38}{figure.caption.25}%
+\contentsline {figure}{\numberline {3-3}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 不同基学器在不同可靠正样本数量下的性能}}{38}{figure.caption.26}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{38}{figure.caption.26}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{38}{figure.caption.26}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{38}{figure.caption.26}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{38}{figure.caption.26}%
+\contentsline {figure}{\numberline {3-4}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 不同基学器在不同可靠正样本数量下的性能}}{39}{figure.caption.27}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{39}{figure.caption.27}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{39}{figure.caption.27}%
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {}}}{39}{figure.caption.27}%
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {}}}{39}{figure.caption.27}%
+\contentsline {figure}{\numberline {3-5}{\ignorespaces \fontsize {12pt}{20pt}\selectfont 不同半监督方法在纵向联邦学习（VFL）中的准确推荐百分比}}{45}{figure.caption.30}%
+\addvspace {10.0pt}
+\contentsline {figure}{\numberline {4-1}{\ignorespaces \fontsize {12pt}{20pt}\selectfont \songti 纵向联邦样本未对齐缺失情况}}{48}{figure.caption.31}%
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {}}}{48}{figure.caption.31}%
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {}}}{48}{figure.caption.31}%
+\contentsline {figure}{\numberline {4-2}{\ignorespaces \fontsize {12pt}{20pt}\selectfont VFPU-M-Syn算法总体流程}}{50}{figure.caption.32}%
+\addvspace {10.0pt}
+\addvspace {10.0pt}
+\contentsfinish 
