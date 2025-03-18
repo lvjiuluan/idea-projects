@@ -284,7 +284,101 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 
 为更好地应对A方特征与目标特征间低相关性（即$\mu_q \leq \tau$）给半监督学习带来的预测性能下降问题，VFPU-M-Syn引入了生成模型技术，通过捕捉低相关性特征的分布规律来合成数据，从而实现对缺失特征的合理补全。将其在B方进行本地生成模型的训练，并将训练好的生成模型用于生成B方缺少样本中的相关属性值。可采用的生成模型例如：CTGAN、TableGAN、CTABGAN、VAE和TabDDPM等。
 \section{实验结果与分析}
-\subsection{数据集}
-\subsection{实验一的设计与结果分析}
-\subsection{实验二的设计与结果分析}
+本节描述了 FedPSG-PUM 方法的实验设计和评估。首先，提供了数据集和实验设置 的概述。随后，提出了一组用于指导实验的研究问题，然后根据每个研究问题展示 并讨论实验结果。
+\subsection{数据集和实验设置} \label{subsec:data_experiment}
+本文选取了四个来自UCI机器学习库中的数据集进行方法的验证，具体包括银行营销数据集（Bank）、德国信贷数据集（Credit）、字母识别数据集（Letter）和在线新闻传播度数据集（News）。其中，银行营销数据集包含45,211个样本，记录了葡萄牙某银行直邮营销活动的16项特征，用于预测客户定期存款订阅行为；德国信贷数据集涵盖1,000条贷款记录，通过20个混合类型特征（含14个分类属性和6个数值属性）评估借款人信用等级；字母识别数据集收录了20,000个手写英文字母样本，提取了16个几何与拓扑特征用于分类任务；在线新闻传播度数据集则包含39,644篇新闻的60项指标，涉及文本内容、社交媒体互动及时间维度，旨在预测传播热度。这些数据集均经过领域专家验证，完成了缺失值填充、类别编码、特征标准化（z-score）等预处理，数值型特征与分类变量分别采用标准化和one-hot编码处理，并按"6:3:1"比例划分为训练集、验证集和测试集。后续实验将简称为Bank、Credit、Letter、News四个数据集，通过多领域数据的交叉验证，全面评估模型在连续/离散特征、样本规模及二分类/多分类任务中的泛化性能。
+
+在针对Bank和Credit数据集的实验中，各参与方按照特征所有权进行了纵向数据划分：其中，参与方A负责管理客户相关属性，而参与方B专门处理银行相关属性。具体来说，在Bank数据集中（不含ID列），参与方A和B各自持有8个属性列；而对于Credit数据集（不含ID列），参与方A拥有9个属性列，参与方B则管理余下的11个属性列。此外，实验还利用Letter和News数据集模拟纵向联邦学习的典型场景，这两个数据集的属性列均按照字段顺序平均分配给参与方A和B进行管理。
+
+在验证本方法有效性的系列实验中，重点研究了图 \ref{fig:Missing}\subref{MissingOne} 所示的B方样本缺失的场景，本方法同样适用图 \ref{fig:Missing}\subref{MissingTwo} 所示的双方样本都缺失的扩展场景。实验评估中，在B方样本缺失的前提条件下，设置了参与方B不同级别的样本缺失率：当缺失率为0.2时，表示B方80\%的样本能与A方形成匹配，剩余20\%样本在A方无对应数据。其中，$\tau$ 表示用于预测的相关性阈值，用于控制为B方缺失样本利用联邦半监督的方法生成数据列的数量，$\tau$越高，表示用预测的方式生成数据的列越少，MisR-B则特指B方相对于A方的样本缺失率。
+\subsection{实验一：FedPSG-PUM 不同的设置}
+在实验一中，采用均方根误差（RMSE）[23]作为样本生成效果的评估指标，该指标用于量化生成样本数据与真实数据之间的平均偏离程度。本实验基于第\ref{subsec:data_experiment}小节所述的Bank和Credit数据集设计了三种实验配置，其中Bank数据集代表大样本量场景，Credit数据集对应小样本量场景。在模型参数设置方面，对于GAN类模型（联邦和非联邦架构）及本文提出的生成模型统一使用Adam优化器，学习率为0.001，训练迭代次数为10000次，每轮迭代包含10个epoch；联邦半监督VFPU-M算法的样本选取比例$k=0.01$，最大迭代次数为$T=500$；逻辑回归（LR）模型采用L2正则化系数为0.8，批处理大小为64，学习率为0.001；集成树模型（GBDT、RF和LGB）的树数量统一设为500，最大深度为6，学习率为0.1。
+
+实验设置1：在FedPSG-PUM方法框架中，固定B方低相关属性列的填补模型（采用VF-GAIN作为数据填补模型），通过调节相关性系数阈值$\tau$的取值，评估模型性能以确定最优参数配置。如图 \ref{Chapter4Exp1Setting1} 所示，当$\tau \in [0.5,0.6]$时，在不同样本缺失率（$\text{MisR-B} \in \{0.2,0.5,0.8\}$）条件下，FedPSG-PUM的RMSE指标均达到最优水平。相比之下，当$\tau = 1.0$时，FedPSG-CAG的RMSE数值表现较差——该参数配置下，B方中缺失样本的所有属性均由纵向联邦填补模型生成。实验结果表明，采用联邦半监督学习预测高相关属性列数据，再结合纵向联邦填补剩余属性的混合策略具有显著优势。进一步分析发现，基于属性相关性为缺失样本优先生成高相关属性特征，这种分层次处理策略产生的合成数据具有更低的RMSE值，其数据分布更接近真实样本。然而，图 \ref{Chapter4Exp1Setting1} 显示当$\tau < 0.6 $时，随着$\tau$减小，说明用联邦半监督方法预测的列增多，RMSE呈现单调上升趋势。这些结果表明，使用联邦半监督方法为B方预测更多相关属性列数据并非一定更优。实际上，一些非高相关属性更适合通过联邦填补生成。联邦填补能够充分利用多方之间的数据协作来提高数据生成的精确性。因此，生成部分高相关属性，并结合联邦填补来生成剩余属性，可以在一定程度上帮助确保生成样本的质量。
+
+%调整图片与上方文字之间的间距
+%\vspace{-0.1cm}
+\begin{figure}[!h]
+	\centering
+	\subfigure[]{
+		\label{Chapter4Exp1Setting1a}
+		\includegraphics[width=0.45\textwidth]{chapters/imgs/Chapter4Exp1Setting1a}}
+	\hspace{0.01\textwidth}  % 适当增加间距
+	\subfigure[]{
+		\label{Chapter4Exp1Setting1b}
+		\includegraphics[width=0.45\textwidth]{chapters/imgs/Chapter4Exp1Setting1b}}
+	
+	\bicaption[\xiaosi \songti 使用 FedPSG-PUM 在不同相关性阈值（$\tau$）下获得的 RMSE 线图]%
+	{\centering \wuhao FedPSG-PUM 方法在不同缺失率下和不同相关性阈值（$\tau$）下的 RMSE 指标 。 (a) Bank数据集；(b) Credit数据集}%
+	{\centering \wuhao The RMSE line graph generated using FedPSG-PUM for different correlation thresholds ($\tau$). (a) Bank Dataset; (b) Credit Dataset}    
+	\label{Chapter4Exp1Setting1}
+\end{figure}
+%调整图片与下方文字之间的间距
+%\vspace{-0.35cm}
+
+实验设置2：本部分实验旨在通过固定相关系数阈值$\tau$并采用不同基学习器模型，验证所提方法的有效性并确定最优基学习器。具体而言，$\tau$值依据实验设置1的优化结果设定为5，并选用四类基学习器进行对比分析：VFPU\_LR（基于逻辑回归）、VFPU\_GBDT（基于梯度提升决策树）、VFPU\_RF（基于随机森林）及VFPU\_LGB（基于LightGBM）。实验过程中，FedPSG-PUM方法持续采用VF-GAIN作为核心数据填补模型。
+
+在超参数配置方面，针对不同模型特性进行差异化设置：(1) 对于基于逻辑回归（Logistic Regression, LR）的算法，采用L2正则化（惩罚系数0.8）以平衡模型复杂度，设置学习率为0.001、小批量训练样本数为64，该参数组合通过预实验优化确定，可在保证收敛速度的同时维持良好泛化能力；(2) 对于基于树的集成算法（包括GBDT、RF和LGB），统一设置基学习器数量为500以控制模型规模，为防止过拟合将最大树深限制为6层，同时梯度提升学习率设定为0.1。所有参数配置均通过交叉验证进行校准，确保实验结果的可靠性。
+
+表 \ref{Chapter4Exp1Setting2} 展示了不同基学习器在固定相关系数阈值$\tau=5$下的性能对比。从实验数据可以观察到，基学习器的选择对FedPSG-PUM方法的预测精度产生了显著影响，且这种影响在不同缺失率环境下表现出一致性。对Bank数据集的分析表明，VFPU\_GBDT在所有缺失率水平（0.2、0.5、0.8）下均表现出明显优势，平均RMSE值比次优模型VFPU\_RF低20.5\%。特别是在低缺失率($\text{MisR-B}=0.2$)条件下，VFPU\_GBDT的RMSE仅为0.2097，较VFPU\_RF（0.2640）降低了20.6\%，较传统VFPU\_LR（0.3146）降低了33.3\%。值得注意的是，随着缺失率提高至0.8，VFPU\_GBDT依然保持了相对稳定的性能（RMSE为0.2311），仅比低缺失率环境下增加了10.2\%。在Credit数据集上，各基学习器之间的性能差异虽然相对减小，但VFPU\_GBDT仍然在所有缺失率条件下取得最优结果。具体而言，当$\text{MisR-B}=0.2$时，VFPU\_GBDT的RMSE为0.3487，相比VFPU\_RF（0.3591）和VFPU\_LR（0.3596）分别降低了2.9\%和3.0\%；当缺失率增至0.5时，这一优势进一步扩大至约6.6\%；在高缺失率（0.8）情况下，VFPU\_GBDT仍保持了约3.0\%的性能优势。综合两个数据集的实验结果，可以得出结论：基于梯度提升决策树的VFPU\_GBDT在不同数据集和各缺失率条件下均表现出最优性能，基于以上分析，确定VFPU\_GBDT作为FedPSG-PUM方法的最优基学习器，并将在后续实验中继续采用该配置。
+
+\begin{table}
+	\centering
+	\bicaption[\xiaosi FedPSG-PUG 在 Bank 和 Credit 数据集上使用不同基学习器获得到的 RMSE]
+	{\wuhao FedPSG-PUG 在 Bank 和 Credit 数据集上使用不同基学习器获得到的 RMSE}
+	{\wuhao  RMSE obtained by FedPSG-PUG with different base estimators for Bank and Credit Dataset}
+	\label{Chapter4Exp1Setting2}
+	\resizebox{\textwidth}{!}{
+	{\wuhao \songti
+	\begin{tblr}{
+			cell{1}{1} = {c=2}{},
+			cell{2}{1} = {r=3}{},
+			cell{5}{1} = {r=3}{},
+			 colspec = {Q[c] Q[c] Q[c] Q[c] Q[c] Q[c]}, % 左对齐+居中
+			hline{1,8} = {1.5pt}, % 顶部和底部 1.5pt
+			hline{2,5} = {0.75pt} % 中间分隔线 0.75pt
+		}
+		\diagbox{Datasets \& MisR-B}{Base Estimator} &     & VFPU\_LR & VFPU\_RF & VFPU\_GBDT & VFPU\_LGB \\
+		Bank                   & 0.2 & 0.3146   & 0.2640   & 0.2097     & 0.3887    \\
+		& 0.5 & 0.3233   & 0.2727   & 0.2335     & 0.3974    \\
+		& 0.8 & 0.3400   & 0.2894   & 0.2311     & 0.4141    \\
+		Creditk                & 0.2 & 0.3596   & 0.3591   & 0.3487     & 0.3666    \\
+		& 0.5 & 0.3947   & 0.3942   & 0.3681     & 0.4017    \\
+		& 0.8 & 0.4289   & 0.4284   & 0.4153     & 0.4359    
+	\end{tblr}
+}
+}
+\end{table}
+
+
+实验设置3：本部分实验旨在探究置信度阈值$\alpha$对模型性能的影响机制，通过系统调节伪标签数据的选择严格度来优化半监督学习效果。基于前序实验的优化结果，本阶段固定相关系数阈值τ=5（实验设置1的最优参数）并采用VFPU\_GBDT作为基学习器（实验设置2的优选模型）。置信度阈值$\alpha$的取值区间设定为[0.5, 0.9]，以0.05为步长进行精细调节，共形成9个对比实验组。该参数范围的设定基于以下考量：(1) 当<0.5时，模型可能引入大量低置信度伪标签，导致噪声数据污染训练过程；(2) 当$\alpha$>0.9时，筛选条件过于严苛，可能遗漏具有潜在价值的未标记样本；(3) 0.05的步长设计在保证实验效率的同时，可有效捕捉模型性能随置信度变化的敏感区间。通过该实验设计，揭示置信度阈值对伪标签质量与数量的权衡机制，并据此确定FedPSG-PUM框架的最优$\alpha$配置。
+
+在超参数配置方面，针对不同模型特性进行差异化设置：(1) 对于基于逻辑回归（Logistic Regression, LR）的算法，采用L2正则化（惩罚系数0.4）以平衡模型复杂度，设置学习率为0.002、小批量训练样本数为128，该参数组合通过预实验优化确定，可在保证收敛速度的同时维持良好泛化能力；(2) 对于基于树的集成算法（包括GBDT、RF和LGB），统一设置基学习器数量为500以控制模型规模，为防止过拟合将最大树深限制为6层，同时梯度提升学习率设定为0.1。所有参数配置均通过交叉验证进行校准，确保实验结果的可靠性。
+
+图 \ref{Chapter4Exp1Setting3} 展示了不同置信度阈值$\alpha$和B方缺失率(MisR-B)组合下的RMSE评估结果。实验结果表明，置信度阈值$\alpha$对模型性能具有一定影响，呈现“U型”的分布特征。随着$\alpha$从0.5逐步提高至0.7，RMSE值持续下降，当$\alpha$超过0.7后，RMSE值开始显著回升。具体而言，在Bank数据集的三种缺失率场景(0.2、0.5和0.8)下，$\alpha=0.7$均产生最优性能，RMSE分别达到0.2097、0.2335和0.2311，较两端端点平均降低约29.8\%的误差。Credit数据集同样呈现相似趋势，在缺失率为0.2和0.5的条件下，$\alpha=0.7$时分别获得0.3487和0.3681的最优RMSE；仅在高缺失率(0.8)场景下，$\alpha=0.75$略优于$\alpha=0.7$，但差异仅为3.4\%。当$\alpha$<0.7时，模型纳入更多低置信度样本扩大训练集规模，但同时引入噪声标签降低学习质量；当$\alpha$>0.7时，筛选条件过于严格，高质量伪标签数量减少，导致模型泛化能力受限。综上所述，实验结果有力支持将置信度阈值$\alpha$设定为0.7，作为FedPSG-PUM框架的最优置信度阈值,并将在后续实验中继续采用该配置。
+
+%调整图片与上方文字之间的间距
+%\vspace{-0.1cm}
+\begin{figure}[!h]
+	\centering
+	\subfigure[]{
+		\label{Chapter4Exp1Setting3a}
+		\includegraphics[width=0.45\textwidth]{chapters/imgs/Chapter4Exp1Setting3a}}
+	\hspace{0.01\textwidth}  % 适当增加间距
+	\subfigure[]{
+		\label{Chapter4Exp1Setting3b}
+		\includegraphics[width=0.45\textwidth]{chapters/imgs/Chapter4Exp1Setting3b}}
+	
+	\bicaption[\xiaosi \songti 使用 FedPSG-PUM 在不同置信度阈值（$\alpha$）下获得的 RMSE 线图]%
+	{\centering \wuhao FedPSG-PUM 方法在不同缺失率下和不同置信度阈值（$\alpha$）下的 RMSE 指标 。 (a) Bank数据集；(b) Credit数据集}%
+	{\centering \wuhao The RMSE line graph generated using FedPSG-PUM for different confidence thresholds ($\alpha$). (a) Bank Dataset; (b) Credit Dataset}    
+	\label{Chapter4Exp1Setting3}
+\end{figure}
+%调整图片与下方文字之间的间距
+%\vspace{-0.35cm}
+
+
+\subsection{实验二：基线对比实验}
+
+
 \subsection{实验三的设计与结果分析}
