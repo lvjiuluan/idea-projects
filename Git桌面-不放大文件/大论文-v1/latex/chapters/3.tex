@@ -246,9 +246,9 @@ VFPU 算法采用迭代方式运行，并通过双层方法增强正样本识别
 
 在实践中，可以通过精确度、召回率或用户满意度等指标来评估这一最终步骤的有效性，这些指标量化了由于精心筛选出的集合 $R$ 而提升的推荐质量。例如，更高的精确度表明推荐项中相关的比例更大，而召回率的提升则反映了系统从数据集中检索出更广泛相关项的能力。这些可衡量的结果突显了算法在提升推荐系统性能方面所作的贡献，验证了迭代过程及随后 $R$ 应用的重要性。因此，这一收尾阶段不仅完成了算法工作流程，也确立了其作为解决现实推荐挑战的实际方案的价值。  
 
-\section{实验结果与分析}
+\section{实验过程及结果分析}
 本节描述了 VFPU 算法的实验设计和评估。首先，提供了数据集和实验设置的概述。随后，提出了一组用于指导实验的研究问题，然后根据每个研究问题展示并讨论实验结果。
-\subsection{数据集和实验设置}
+\subsection{数据集介绍与实验准备}
 在实验中，利用了三个多样且成熟的数据集来评估所提出方法的有效性：Bank Marketing Datasetg\textsuperscript{\cite{fitriani2021data}}、Default of Credit Card Clients Dataset\textsuperscript{\cite{subasi2019prediction}} 以及 Adult Census Dataset\textsuperscript{\cite{chakrabarty2018statistical}}。每个数据集的选择都经过精心考虑，以代表不同的真实世界领域和预测挑战，从而使能够在多样化的场景下对方法的鲁棒性进行评估。
 
 Bank Marketing Dataset 源自 UCI 机器学习库，数据来自葡萄牙某银行针对定期存款产品进行的直销电话营销活动。这些活动通过电话直接与客户沟通，旨在说服他们订购定期存款产品。完整的数据集包含四个版本，但在本研究中，专门采用了“bank-additional-full”版本，该版本包含 41,188 个样本和 20 个输入特征。这些特征涵盖了客户的各种属性，包括年龄、工作类型、婚姻状况、教育程度以及诸如是否有住房贷款或个人贷款等金融细节，同时也包括了营销活动相关变量，如联系次数和以往互动的结果。数据按照日期顺序排列，涵盖了从 2008 年 5 月到 2010 年 11 月的时间段，反映了此期间营销工作的时间演变。该数据集的主要分类目标是预测客户是否会订购定期存款，由变量“y”（是/否）表示的二元结果。此数据集在客户关系管理方面具有实际意义，并且由于大多数客户并未订购，从而带来了类别不平衡的问题，这为预测建模带来了实际挑战。
@@ -263,7 +263,7 @@ Adult Census Dataset 同样源自 UCI 机器学习库，是一个广泛认可的
 
 在垂直联邦预测不确定性（VFPU）算法的联邦训练和预测阶段，通过集成针对垂直联邦学习（VFL）场景量身定制的多样化基学习器，对其性能进行了严格评估。具体而言，垂直联邦逻辑回归（VFPU\_LR）的实现改编自 Aono 等人的基础性工作 \textsuperscript{\cite{aono2016scalable}}，该工作利用安全多方计算（SMC）协议在梯度交换过程中保护数据隐私。对于基于树的方法，则使用 FedTree 库 \textsuperscript{\cite{li2022fedtree}} 开发了垂直联邦梯度提升决策树（VFPU\_GBDT）和垂直联邦随机森林（VFPU\_RF），该库是一个针对分布式树构建并支持同态加密的最先进框架。此外，垂直联邦 LightGBM（VFPU\_LGB）的实现则基于 FATE（Federated AI Technology Enabler）框架 \textsuperscript{\cite{liu2021fate}}，该框架为跨异构数据分区的安全联邦模型训练和推断提供了强大的基础设施。  
 
-为建立全面的基准对比体系，研究采用传统集中式机器学习范式，在聚合数据集上训练了多种经典模型以模拟非联邦学习场景。具体涵盖逻辑回归（LR）、梯度提升决策树（GBDT）、随机森林（RF）等基于scikit-learn框架\textsuperscript{\cite{pedregosa2011scikit}}的模型，以及通过原生库实现的XGBoost（XGB）\textsuperscript{\cite{chen2015xgboost}}和LightGBM（LGB）\textsuperscript{\cite{ke2017lightgbm}}两类高性能集成算法。通过将联邦学习框架与上述集中式模型置于相同评估指标下进行横向对比，本研究有效揭示了联邦范式与经典机器学习范式在数据分散场景下的性能差异与适用边界。
+为建立全面的基准对比体系，研究采用传统集中式机器学习范式，在聚合数据集上训练了多种经典模型以模拟非联邦学习场景。具体涵盖逻辑回归（LR）、梯度提升决策树（GBDT）、随机森林（RF）等基于scikit-learn框架\textsuperscript{\cite{pedregosa2011scikit}}的模型，以及通过原生库实现的XGBoost（XGB）\textsuperscript{\cite{chen2015xgboost}}和LightGBM（LGB）\textsuperscript{\cite{ke2017lightgbm}}两类高性能集成算法。通过与联邦学习框架进行横向对比，揭示了两者在数据分散场景下的性能差异与适用边界。
 
 
 实验中统一了超参数配置以确保公平性。为平衡计算效率与模型收敛性，最大迭代次数 $ M $ 固定为 5，而特征采样率 $ \theta $ 被设置为 0.02，以缓解高维数据场景中的过拟合问题。为确保随机优化的稳定性，随机采样迭代次数 $ T $ 设定为 10。针对 VFL 中固有的数据隐私问题，在跨方计算中采用了密钥长度为 512 位的 Paillier 加密系统 \textsuperscript{\cite{paillier1999public}} 对中间输出进行加密。此密钥长度在加密安全性与计算开销之间提供了务实的折衷。所有实验均假定默认的两方设置 \textsuperscript{\cite{li2022fedtree}}，反映了现实中拥有互补特征空间的组织间常见的 VFL 协作模式。  
@@ -272,119 +272,19 @@ Adult Census Dataset 同样源自 UCI 机器学习库，是一个广泛认可的
 采用了多维度评估框架以全面评估模型性能。准确率（acc）和 F 分数（F）\textsuperscript{\cite{cheng2021secureboost}} 分别量化了整体预测正确性和类别特定的平衡性。精确率和召回率 \textsuperscript{\cite{liu2003building}} 被用来评估第一类/第二类错误的权衡，这在不平衡分类任务中尤为关键。ROC 曲线下面积（AUC）\textsuperscript{\cite{cheng2021secureboost}} 提供了一个与阈值无关的正负类别可分性度量。  
 
 AUC 指标来源于接收器操作特征（ROC）曲线，对于在不同决策阈值下评估模型鲁棒性尤其具有信息量，因为它量化了所有分类阈值下真正率（灵敏度）与假正率（1-特异性）之间的关系。与此同时，F 分数被定义为精确率与召回率的调和平均值，在类别分布偏斜或误分类成本不对称的场景下，作为模型稳定性的统一指标。这些指标均通过 5 折交叉验证在独立测试集上计算，以确保统计可靠性。  
-\subsection{实验一：比较联邦和非联邦的 PU 学习的性能}
+\subsection{实验设计与基线模型介绍}
 
-在本小节中，深入研究了联邦学习对正类和无标签（PU）学习性能的影响。具体来说，比较了使用VFPU算法的联邦PU学习与非联邦PU学习在多种基础估计器和数据集上的表现。核心目标是评估在其他算法参数和实验配置保持不变的情况下，联邦学习对分类质量的影响程度。
+实验一：比较联邦和非联邦的 PU 学习的性能，在本实验设计中，深入研究了联邦学习对正类和无标签（PU）学习性能的影响。具体来说，比较了使用VFPU算法的联邦PU学习与非联邦PU学习在多种基础估计器和数据集上的表现。核心目标是评估在其他算法参数和实验配置保持不变的情况下，联邦学习对分类质量的影响程度。
 
 使用了四种常用的基础估计器——逻辑回归（LR）、随机森林（RF）、梯度提升决策树（GBDT）和LightGBM（LGB）——在三个真实世界的数据集上进行实验：银行营销数据集、信用卡客户违约数据集和成人普查数据集。对于逻辑回归（LR），使用了L2惩罚系数为0.8、学习率为0.001、批处理大小为64的配置，确保在联邦和非联邦运行中收敛行为保持一致。对于基于决策树的算法（RF、GBDT和LGB），将树的数量设置为50，最大深度为6，学习率为0.1。这些设置经过精心选择，以平衡模型复杂度、训练时间和泛化能力。
 
-表 \ref{RQ1} 展示了在三个数据集上的实验结果，详细列出了每种算法-数据集组合在联邦（Fed）和非联邦（No\_Fed）模式下的四种性能指标——准确率（acc）、召回率（recall）、精确率（precision）和AUC。发现一致表明，联邦变体（Fed）在准确率、召回率、精确率和AUC方面略低于非联邦版本（No\_Fed）。尽管这种差异在所有基础估计器和数据集上都有观察到，但重要的是要强调，在实际应用中，这种差异非常小。
-\vspace{-0.1cm}
-\begin{table}[H]
-	\renewcommand{\arraystretch}{0.8}
-	\centering
-	\bicaption[\xiaosi 有无联邦学习的PU学习性能比较]{\wuhao 有无联邦学习的PU学习性能比较}{\wuhao Performance comparison of PU Learning with and without federation}
-	\label{RQ1}
-	\resizebox{\textwidth}{!}{
-		{\songti \wuhao
-			\begin{tabular}{llllllll} 
-				\toprule[1.5pt]
-				\multirow{2}{*}{Base Estimator} & \multirow{2}{*}{Metrics} & \multicolumn{2}{l}{The Bank Marketing} & \multicolumn{2}{l}{\begin{tabular}[c]{@{}l@{}}The Default of \\Credit Card Clients\end{tabular}} & \multicolumn{2}{l}{The Adult Census}  \\ 
-				\cmidrule[0.75pt]{3-8}
-				&                          & Fed   & No\_Fed                        & Fed   & No\_Fed                                                                                  & Fed   & No\_Fed                       \\ 
-				\midrule[0.75pt]
-				\multirow{4}{*}{LR}             & acc~↑                    & 0.923 & 0.948                          & 0.822 & 0.843                                                                                    & 0.814 & 0.852                         \\
-				& recall↑                  & 0.194 & 0.219                          & 0.179 & 0.206                                                                                    & 0.126 & 0.141                         \\
-				& precision↑               & 0.520 & 0.546                          & 0.502 & 0.513                                                                                    & 0.804 & 0.820                         \\
-				& AUC↑                     & 0.658 & 0.685                          & 0.621 & 0.643                                                                                    & 0.854 & 0.858                         \\
-				\multirow{4}{*}{RF}             & acc~↑                    & 0.935 & 0.952                          & 0.826 & 0.851                                                                                    & 0.848 & 0.852                         \\
-				& recall↑                  & 0.219 & 0.248                          & 0.190 & 0.212                                                                                    & 0.154 & 0.165                         \\
-				& precision↑               & 0.587 & 0.613                          & 0.546 & 0.562                                                                                    & 0.755 & 0.770                         \\
-				& AUC↑                     & 0.882 & 0.909                          & 0.625 & 0.639                                                                                    & 0.805 & 0.854                         \\
-				\multirow{4}{*}{GBDT}           & acc~↑                    & 0.943 & 0.945                          & 0.847 & 0.851                                                                                    & 0.862 & 0.873                         \\
-				& recall↑                  & 0.239 & 0.241                          & 0.224 & 0.229                                                                                    & 0.188 & 0.205                         \\
-				& precision↑               & 0.594 & 0.599                          & 0.581 & 0.586                                                                                    & 0.922 & 0.933                         \\
-				& AUC↑                     & 0.886 & 0.891                          & 0.639 & 0.647                                                                                    & 0.854 & 0.869                         \\
-				\multirow{4}{*}{LGB}            & acc~↑                    & 0.896 & 0.914                          & 0.815 & 0.843                                                                                    & 0.828 & 0.852                         \\
-				& recall↑                  & 0.186 & 0.197                          & 0.167 & 0.182                                                                                    & 0.142 & 0.155                         \\
-				& precision↑               & 0.518 & 0.542                          & 0.496 & 0.524                                                                                    & 0.354 & 0.373                         \\
-				& AUC↑                     & 0.587 & 0.612                          & 0.569 & 0.582                                                                                    & 0.705 & 0.721                         \\
-				\bottomrule[1.5pt]
-			\end{tabular}
-		}
-	}
-\end{table}
-\vspace{-0.35cm}
-仔细观察数据可以揭示这种微妙的性能差距。例如，在成人普查数据集中，使用GBDT作为基础估计器，联邦方法达到了0.862的准确率、0.188的召回率、0.922的精确率和0.854的AUC。相比之下，非联邦方法报告了略高的0.873、0.205、0.933和0.869的准确率、召回率、精确率和AUC。差距分别为0.011、0.017、0.011和0.015。从数值上看，这些指标的平均差异为0.0135，仍然非常小，表明性能的妥协微不足道。
-
-此外，在所有数据集、四种指标和四种基础估计器上平均，差异为0.0174——进一步证明虽然性能下降是持续观察到的，但这种下降的幅度是适度的。这些观察结果强调了VFPU算法在实际应用中的潜在可行性，在这些应用中，数据隐私和安全问题可能超过预测性能的微小下降。
-
-实验证据因此表明，将联邦学习集成到PU学习中仍然保留了稳健的分类效果。尽管非联邦方法保持了轻微的优势，但这种差异不足以掩盖联邦学习提供的隐私和数据保密优势。因此，对于在敏感领域——如医疗保健或金融——操作的从业者和研究人员来说，VFPU代表了一个引人注目的选择，因为在这些领域，数据访问受到严格监管。该方法使多个参与方能够在不共享原始数据的情况下进行协作建模，从而在模型准确性和隐私要求合规性之间取得了吸引人的平衡。
-
-总体而言，这些实验强调了虽然联邦和非联邦PU学习之间存在适度的性能差距，但VFPU算法仍然提供了稳健的结果。这为数据隐私法规不可妥协的领域提供了一个实用且有效的解决方案，确认了在准确率、召回率、精确率和AUC方面轻微的降低是增强数据安全和保密性的合理权衡。
-
-\subsection{实验二：分析不同基分类器器对 VFPU 性能的影响}
-
-在这一部分，对集成在VFPU框架中的不同基估计器进行了深入评估，这些估计器包括VFPU\_LR、VFPU\_GBDT、VFPU\_RF和VFPU\_LGB，它们被用于解决UDD-PU问题。为了全面评估它们的性能，进行了一系列实验，重点关注四个关键评估指标：精确度（Precision）、召回率（Recall）、F-score以及精确度-召回率曲线。本次评估的主要目标是分析这些指标随着可靠正样本数量增加的变化趋势，并根据这些观察到的趋势，确定方法的最佳基估计器。
+实验二：分析不同基分类器器对 VFPU 性能的影响，在这一部分，对集成在VFPU框架中的不同基估计器进行了深入评估，这些估计器包括VFPU\_LR、VFPU\_GBDT、VFPU\_RF和VFPU\_LGB，它们被用于解决UDD-PU问题。为了全面评估它们的性能，进行了一系列实验，重点关注四个关键评估指标：精确度（Precision）、召回率（Recall）、F-score以及精确度-召回率曲线。本次评估的主要目标是分析这些指标随着可靠正样本数量增加的变化趋势，并根据这些观察到的趋势，确定方法的最佳基估计器。
 
 在实验中，采用随机抽样策略从一个未标记的数据集中选择可靠的正样本子集。这种方法不仅模拟了现实情况下可能已知少量正实例的条件，还严格测试了每个基估计器在利用这些有限样本时的鲁棒性。实验结果详见图 \ref{RQ2.1} 至 图 \ref{RQ2.3}。
 
 对于基于逻辑回归（LR）的算法，配置了以下特定超参数：应用了L2惩罚，系数设置为0.8，学习率为0.001，小批量大小为64。这些参数基于初步实验精心选择，以确保收敛速度和模型泛化能力之间的平衡。另一方面，对于所有基于树的算法——即梯度提升决策树（GBDT）、随机森林（RF）和LightGBM（LGB）——将树的数量设置为50，树深限制为6以避免过拟合，并使用0.1的学习率。这种在三个数据集上的统一设置，使得在一致的实验条件下公平比较它们的性能成为可能。
-\begin{figure}[H]
-	\centering
-	\subfigure[]{\label{RQ2.1.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (1) in JEPG format}}
-	\subfigure[]{\label{RQ2.1.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (2) in JEPG format}}
-	\subfigure[]{\label{RQ2.1.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (3) in JEPG format}}
-	\subfigure[]{\label{RQ2.1.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (4) in JEPG format}}
-	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
-	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Bank）}
-	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
-	\label{RQ2.1}
-\end{figure}
 
-\vspace{-0.5cm} 
-
-
-\begin{figure}[H]
-	\centering
-	\subfigure[]{\label{RQ2.2.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (1) in JEPG format}}
-	\subfigure[]{\label{RQ2.2.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (2) in JEPG format}}
-	\subfigure[]{\label{RQ2.2.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (3) in JEPG format}}
-	\subfigure[]{\label{RQ2.2.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (4) in JEPG format}}
-	
-	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
-	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Credit）}
-	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
-	\label{RQ2.2}
-\end{figure}
-图 \ref{RQ2.1} 展示了在银行营销数据集上的实验结果。在图 \ref{RQ2.1.sub1} 至 图 \ref{RQ2.1.sub3} 中，x轴表示分类器获得的可靠正样本数量，范围从大约100到2293个可靠样本。这些子图中的y轴分别对应于准确度、召回率和F-score的评估指标；在此背景下，y轴上的值越高表示分类性能越好。此外，图 \ref{RQ2.1.sub4} 展示了精确度-召回率曲线，其中x轴为精确度，y轴为召回率。曲线上更接近图右上角的模型表明其性能更强，特别是在数据分布不平衡的情况下。
-
-
-
-
-对图 \ref{RQ2.1} 的探索表明，VFPU\_GBDT估计器在银行营销数据集上的表现优于其他模型。例如，如图 \ref{RQ2.1.sub1} 所示，当利用1500个可靠正样本时，VFPU\_LR、VFPU\_GBDT、VFPU\_RF、VFPU\_LGB和基于随机抽样的模型分别实现了44.43\%、51.94\%、49.81\%、43.72\%和4.73\%的精确度。相应的召回率记录为14.78\%、17.28\%、15.24\%、14.55\%和4.61\%，而这些模型的F-score分别为0.22、0.26、0.23、0.22和0.05。尽管VFPU\_RF估计器在某些情况下显示出相对可比较的精确度，但随着可靠样本数量的增加，其性能（特别是在召回率和F-score方面）下降得更快。相比之下，VFPU\_LR和VFPU\_LGB模型虽然在不同样本大小下表现稳定，但并未达到VFPU\_GBDT在精确度和召回率方面表现出的整体性能。因此，图 \ref{RQ2.1.sub1} 清楚地表明，VFPU\_GBDT不仅提供了更高的精确度，而且在召回率之间保持了平衡的权衡，从而在评估的模型中实现了最高的F-score。
-\vspace{-0.1cm}
-\begin{figure}[H]
-	\centering
-	\subfigure[]{\label{RQ2.3.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (1) in JEPG format}}
-	\subfigure[]{\label{RQ2.3.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (2) in JEPG format}}
-	\subfigure[]{\label{RQ2.3.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (3) in JEPG format}}
-	\subfigure[]{\label{RQ2.3.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (4) in JEPG format}}
-	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
-	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Census）}
-	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
-	\label{RQ2.3}
-\end{figure}
-\vspace{-0.35cm}
-此外，图 \ref{RQ2.1.sub4} 中的精确度-召回率曲线进一步验证了VFPU\_GBDT的鲁棒性。通过在各种阈值设置下绘制精确度对召回率的曲线，该曲线有效地捕捉了分类器的性能动态，特别是在类不平衡是关键问题的场景中。VFPU\_GBDT曲线更接近图的右上象限，表明其在多个阈值下的强大性能——这是不平衡分类任务中高性能模型的标志。
-
-图 \ref{RQ2.2}和 图 \ref{RQ2.3} 提供了VFPU\_GBDT估计器有效性的进一步支持证据。这些图报告了在信用卡违约和成人普查数据集上进行的类似实验。尽管数据集在内在特性和分布属性上有所不同，但这些情况下的实验结果反映了与图 \ref{RQ2.1} 中观察到的相似趋势。VFPU\_GBDT在不同数据集上的一致优越性增强了其在VFPU框架中作为基估计器时的可靠性和有效性。
-
-总结来说，三个基准数据集上的实验结果一致表明，VFPU\_GBDT优于VFPU\_LR、VFPU\_RF、VFPU\_LGB以及基线随机抽样技术。VFPU\_GBDT的优越性能，表现为更高的精确度、召回率和平衡的F-score，使其成为在解决UDD-PU问题时VFPU算法最可靠和推荐的基估计器。因此，在所有后续实验中，采用GBDT作为VFPU方法的基估计器，利用其在挑战性条件下实现准确和平衡分类的明显优势。
-
-\subsection{实验三：基线对比实验}
-
-在本节中，对所提出的针对UDD-PU问题的方法进行了全面探讨，特别是在垂直联邦学习（VFL）的设定下，为评估该方法的有效性设计了严谨的分析。为此，开展了两个不同的实验。第一个实验旨在识别最有效的解决正-未标记（PU）问题的半监督学习方法。这些方法虽广泛应用于UDD-PU问题的研究，但通常是在非联邦环境下考虑。第二个实验则基于第一个实验的结果，将前四种半监督技术在实现UDD-PU问题的VFL环境中进行比较。
+实验三：基线对比实验，在本实验设计中，对所提出的针对UDD-PU问题的方法进行了全面探讨，特别是在垂直联邦学习（VFL）的设定下，为评估该方法的有效性设计了严谨的分析。为此，开展了两个不同的实验。第一个实验旨在识别最有效的解决正-未标记（PU）问题的半监督学习方法。这些方法虽广泛应用于UDD-PU问题的研究，但通常是在非联邦环境下考虑。第二个实验则基于第一个实验的结果，将前四种半监督技术在实现UDD-PU问题的VFL环境中进行比较。
 
 在第一个实验中，对比了No\_Fed\_VFPU\_GBDT方法与另外九种在非联邦环境下运行的知名半监督学习方法。该对比结果在表 \ref{RQ3.1} 中进行了全面展示。以下段落进一步介绍了每种方法的背景及其在本研究中的具体实现细节。
 
@@ -434,7 +334,106 @@ AUC 指标来源于接收器操作特征（ROC）曲线，对于在不同决策�
 
 此外，对于Match系列算法——即FixMatch、CoMatch、AdaMatch和SoftMatch，采用了\textsuperscript{\cite{oliver2018realistic}}中的Wide ResNet-28模型。该模型因其在半监督环境中具有强大的特征提取能力而受到认可。然而，选择这一深度学习架构引入了一定的复杂性，尤其是在数据极度不平衡的情况下（如PU问题中常见），这可能导致模型过拟合。
 
-表 \ref{RQ3.1} 显示，提出的No\_Fed\_VFPU\_GBDT方法在所有测试数据集上以及对于各个不同的$num$值均持续优于其他九种半监督方法。例如，在Census数据集中，当$num=1000$时，的方法实现了最高的推荐准确率99\%。这一显著性能与基线方法形成了鲜明对比：\_GBDT、2Step\_GBDT和Bagging\_GBDT分别仅达到64\%、62\%和55\%的准确率。同时，基于深度学习的方法——MixMatch、FixMatch、CoMatch、AdaMatch和SoftMatch——的推荐准确率明显较低，分别为35.94\%、37.06\%、33.39\%、37.28\%和35.86\%。
+\subsection{实验结果分析}
+实验一：比较联邦和非联邦的 PU 学习的性能，表 \ref{RQ1} 展示了在三个数据集上的实验结果，详细列出了每种算法-数据集组合在联邦（Fed）和非联邦（No\_Fed）模式下的四种性能指标——准确率（acc）、召回率（recall）、精确率（precision）和AUC。发现一致表明，联邦变体（Fed）在准确率、召回率、精确率和AUC方面略低于非联邦版本（No\_Fed）。尽管这种差异在所有基础估计器和数据集上都有观察到，但重要的是要强调，在实际应用中，这种差异非常小。
+
+\vspace{-0.1cm}
+\begin{table}[H]
+	\renewcommand{\arraystretch}{0.8}
+	\centering
+	\bicaption[\xiaosi 有无联邦学习的PU学习性能比较]{\wuhao 有无联邦学习的PU学习性能比较}{\wuhao Performance comparison of PU Learning with and without federation}
+	\label{RQ1}
+	\resizebox{\textwidth}{!}{
+		{\songti \wuhao
+			\begin{tabular}{llllllll} 
+				\toprule[1.5pt]
+				\multirow{2}{*}{Base Estimator} & \multirow{2}{*}{Metrics} & \multicolumn{2}{l}{The Bank Marketing} & \multicolumn{2}{l}{\begin{tabular}[c]{@{}l@{}}The Default of \\Credit Card Clients\end{tabular}} & \multicolumn{2}{l}{The Adult Census}  \\ 
+				\cmidrule[0.75pt]{3-8}
+				&                          & Fed   & No\_Fed                        & Fed   & No\_Fed                                                                                  & Fed   & No\_Fed                       \\ 
+				\midrule[0.75pt]
+				\multirow{4}{*}{LR}             & acc~↑                    & 0.923 & 0.948                          & 0.822 & 0.843                                                                                    & 0.814 & 0.852                         \\
+				& recall↑                  & 0.194 & 0.219                          & 0.179 & 0.206                                                                                    & 0.126 & 0.141                         \\
+				& precision↑               & 0.520 & 0.546                          & 0.502 & 0.513                                                                                    & 0.804 & 0.820                         \\
+				& AUC↑                     & 0.658 & 0.685                          & 0.621 & 0.643                                                                                    & 0.854 & 0.858                         \\
+				\multirow{4}{*}{RF}             & acc~↑                    & 0.935 & 0.952                          & 0.826 & 0.851                                                                                    & 0.848 & 0.852                         \\
+				& recall↑                  & 0.219 & 0.248                          & 0.190 & 0.212                                                                                    & 0.154 & 0.165                         \\
+				& precision↑               & 0.587 & 0.613                          & 0.546 & 0.562                                                                                    & 0.755 & 0.770                         \\
+				& AUC↑                     & 0.882 & 0.909                          & 0.625 & 0.639                                                                                    & 0.805 & 0.854                         \\
+				\multirow{4}{*}{GBDT}           & acc~↑                    & 0.943 & 0.945                          & 0.847 & 0.851                                                                                    & 0.862 & 0.873                         \\
+				& recall↑                  & 0.239 & 0.241                          & 0.224 & 0.229                                                                                    & 0.188 & 0.205                         \\
+				& precision↑               & 0.594 & 0.599                          & 0.581 & 0.586                                                                                    & 0.922 & 0.933                         \\
+				& AUC↑                     & 0.886 & 0.891                          & 0.639 & 0.647                                                                                    & 0.854 & 0.869                         \\
+				\multirow{4}{*}{LGB}            & acc~↑                    & 0.896 & 0.914                          & 0.815 & 0.843                                                                                    & 0.828 & 0.852                         \\
+				& recall↑                  & 0.186 & 0.197                          & 0.167 & 0.182                                                                                    & 0.142 & 0.155                         \\
+				& precision↑               & 0.518 & 0.542                          & 0.496 & 0.524                                                                                    & 0.354 & 0.373                         \\
+				& AUC↑                     & 0.587 & 0.612                          & 0.569 & 0.582                                                                                    & 0.705 & 0.721                         \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		}
+	}
+\end{table}
+\vspace{-0.35cm}
+
+仔细观察数据可以揭示这种微妙的性能差距。例如，在成人普查数据集中，使用GBDT作为基础估计器，联邦方法达到了0.862的准确率、0.188的召回率、0.922的精确率和0.854的AUC。相比之下，非联邦方法报告了略高的0.873、0.205、0.933和0.869的准确率、召回率、精确率和AUC。差距分别为0.011、0.017、0.011和0.015。从数值上看，这些指标的平均差异为0.0135，仍然非常小，表明性能的妥协微不足道。
+
+此外，在所有数据集、四种指标和四种基础估计器上平均，差异为0.0174——进一步证明虽然性能下降是持续观察到的，但这种下降的幅度是适度的。这些观察结果强调了VFPU算法在实际应用中的潜在可行性，在这些应用中，数据隐私和安全问题可能超过预测性能的微小下降。
+
+实验证据因此表明，将联邦学习集成到PU学习中仍然保留了稳健的分类效果。尽管非联邦方法保持了轻微的优势，但这种差异不足以掩盖联邦学习提供的隐私和数据保密优势。因此，对于在敏感领域——如医疗保健或金融——操作的从业者和研究人员来说，VFPU代表了一个引人注目的选择，因为在这些领域，数据访问受到严格监管。该方法使多个参与方能够在不共享原始数据的情况下进行协作建模，从而在模型准确性和隐私要求合规性之间取得了吸引人的平衡。
+
+总体而言，这些实验强调了虽然联邦和非联邦PU学习之间存在适度的性能差距，但VFPU算法仍然提供了稳健的结果。这为数据隐私法规不可妥协的领域提供了一个实用且有效的解决方案，确认了在准确率、召回率、精确率和AUC方面轻微的降低是增强数据安全和保密性的合理权衡。
+
+实验二：分析不同基分类器器对 VFPU 性能的影响，图 \ref{RQ2.1} 展示了在银行营销数据集上的实验结果。在图 \ref{RQ2.1.sub1} 至 图 \ref{RQ2.1.sub3} 中，x轴表示分类器获得的可靠正样本数量，范围从大约100到2293个可靠样本。这些子图中的y轴分别对应于准确度、召回率和F-score的评估指标；在此背景下，y轴上的值越高表示分类性能越好。此外，图 \ref{RQ2.1.sub4} 展示了精确度-召回率曲线，其中x轴为精确度，y轴为召回率。曲线上更接近图右上角的模型表明其性能更强，特别是在数据分布不平衡的情况下。
+
+对图 \ref{RQ2.1} 的探索表明，VFPU\_GBDT估计器在银行营销数据集上的表现优于其他模型。例如，如图 \ref{RQ2.1.sub1} 所示，当利用1500个可靠正样本时，VFPU\_LR、VFPU\_GBDT、VFPU\_RF、VFPU\_LGB和基于随机抽样的模型分别实现了44.43\%、51.94\%、49.81\%、43.72\%和4.73\%的精确度。相应的召回率记录为14.78\%、17.28\%、15.24\%、14.55\%和4.61\%，而这些模型的F-score分别为0.22、0.26、0.23、0.22和0.05。尽管VFPU\_RF估计器在某些情况下显示出相对可比较的精确度，但随着可靠样本数量的增加，其性能（特别是在召回率和F-score方面）下降得更快。相比之下，VFPU\_LR和VFPU\_LGB模型虽然在不同样本大小下表现稳定，但并未达到VFPU\_GBDT在精确度和召回率方面表现出的整体性能。因此，图 \ref{RQ2.1.sub1} 清楚地表明，VFPU\_GBDT不仅提供了更高的精确度，而且在召回率之间保持了平衡的权衡，从而在评估的模型中实现了最高的F-score。
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{\label{RQ2.1.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (1) in JEPG format}}
+	\subfigure[]{\label{RQ2.1.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (2) in JEPG format}}
+	\subfigure[]{\label{RQ2.1.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (3) in JEPG format}}
+	\subfigure[]{\label{RQ2.1.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 2 (4) in JEPG format}}
+	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
+	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Bank）}
+	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
+	\label{RQ2.1}
+\end{figure}
+
+\vspace{-0.5cm} 
+
+
+\begin{figure}[H]
+	\centering
+	\subfigure[]{\label{RQ2.2.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (1) in JEPG format}}
+	\subfigure[]{\label{RQ2.2.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (2) in JEPG format}}
+	\subfigure[]{\label{RQ2.2.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (3) in JEPG format}}
+	\subfigure[]{\label{RQ2.2.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 3 (4) in JEPG format}}
+	
+	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
+	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Credit）}
+	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
+	\label{RQ2.2}
+\end{figure}
+
+\vspace{-0.1cm}
+\begin{figure}[H]
+	\centering
+	\subfigure[]{\label{RQ2.3.sub1}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (1) in JEPG format}}
+	\subfigure[]{\label{RQ2.3.sub2}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (2) in JEPG format}}
+	\subfigure[]{\label{RQ2.3.sub3}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (3) in JEPG format}}
+	\subfigure[]{\label{RQ2.3.sub4}\includegraphics[width=0.45\textwidth,height=4.1cm]{chapters/imgs/Figure 4 (4) in JEPG format}}
+	\bicaption[\xiaosi 不同基学器在不同可靠正样本数量下的性能]
+	{\centering \songti \wuhao 不同基学器的性能：（a）精度；（b）召回率；（c）F-score；（d）精度-召回率（Census）}
+	{\centering \wuhao Base estimators performance: (a) Precision; (b) Recall; (c) F-score; (d) Precision-Recall}
+	\label{RQ2.3}
+\end{figure}
+\vspace{-0.35cm}
+此外，图 \ref{RQ2.1.sub4} 中的精确度-召回率曲线进一步验证了VFPU\_GBDT的鲁棒性。通过在各种阈值设置下绘制精确度对召回率的曲线，该曲线有效地捕捉了分类器的性能动态，特别是在类不平衡是关键问题的场景中。VFPU\_GBDT曲线更接近图的右上象限，表明其在多个阈值下的强大性能——这是不平衡分类任务中高性能模型的标志。
+
+图 \ref{RQ2.2}和 图 \ref{RQ2.3} 提供了VFPU\_GBDT估计器有效性的进一步支持证据。这些图报告了在信用卡违约和成人普查数据集上进行的类似实验。尽管数据集在内在特性和分布属性上有所不同，但这些情况下的实验结果反映了与图 \ref{RQ2.1} 中观察到的相似趋势。VFPU\_GBDT在不同数据集上的一致优越性增强了其在VFPU框架中作为基估计器时的可靠性和有效性。
+
+总结来说，三个基准数据集上的实验结果一致表明，VFPU\_GBDT优于VFPU\_LR、VFPU\_RF、VFPU\_LGB以及基线随机抽样技术。VFPU\_GBDT的优越性能，表现为更高的精确度、召回率和平衡的F-score，使其成为在解决UDD-PU问题时VFPU算法最可靠和推荐的基估计器。因此，在所有后续实验中，采用GBDT作为VFPU方法的基估计器，利用其在挑战性条件下实现准确和平衡分类的明显优势。
+
+实验三：基线对比实验，表 \ref{RQ3.1} 显示，提出的No\_Fed\_VFPU\_GBDT方法在所有测试数据集上以及对于各个不同的$num$值均持续优于其他九种半监督方法。例如，在Census数据集中，当$num=1000$时，的方法实现了最高的推荐准确率99\%。这一显著性能与基线方法形成了鲜明对比：\_GBDT、2Step\_GBDT和Bagging\_GBDT分别仅达到64\%、62\%和55\%的准确率。同时，基于深度学习的方法——MixMatch、FixMatch、CoMatch、AdaMatch和SoftMatch——的推荐准确率明显较低，分别为35.94\%、37.06\%、33.39\%、37.28\%和35.86\%。
 \vspace{-0.1cm}
 \begin{table}[H]
 	\centering
@@ -442,8 +441,8 @@ AUC 指标来源于接收器操作特征（ROC）曲线，对于在不同决策�
 	\bicaption[\xiaosi 不同半监督方法的准确推荐百分比（无联邦）]{\wuhao 不同半监督方法的准确推荐百分比（无联邦）}{\wuhao Accurate recommendations  of semi-supervised methods (non-federated)}
 	\label{RQ3.1}
 	\resizebox{\textwidth}{!}{
-%		{\songti \wuhao
-		\begin{tblr}{
+		%		{\songti \wuhao
+			\begin{tblr}{
 					cells = {c},
 					cell{1}{1} = {c=2}{},
 					cell{2}{1} = {r=10}{},
@@ -484,8 +483,8 @@ AUC 指标来源于接收器操作特征（ROC）曲线，对于在不同决策�
 				& Pseudo-Labelling    & 42.90\%          & 29.30\%          & 28.40\%          & 41.40\%          & 37.30\%          & 45.30\%          \\
 				& No\_Fed\_VFPU\_GBDT & \textbf{99.00\%} & \textbf{99.43\%} & \textbf{94.57\%} & \textbf{84.08\%} & \textbf{80.08\%} & \textbf{75.08\%} 
 			\end{tblr}
-%		}	
-}
+			%		}	
+	}
 \end{table}
 \vspace{-0.5cm}
 Match系列算法尽管是半监督学习领域最新的进展，但表现不佳可以归因于两个关键因素。首先，这些方法本质上需要大量标记数据，涵盖正类和负类。然而，在PU问题情境下，负样本并未被明确标记，这使得这些算法处于明显的不利地位。其次，使用Wide ResNet-28模型这一相对复杂的深度学习网络，在面对类分布极度不平衡的数据集时，可能无意中导致过拟合。这种过拟合会削弱模型的泛化能力，从而导致整体性能较低。
@@ -554,5 +553,6 @@ Match系列算法尽管是半监督学习领域最新的进展，但表现不佳
 图  \ref{fig:GBDT} 提供了表 \ref{RQ3.2} 中讨论的银行营销数据集实验结果的可视化表示。在该图中，x轴表示被选为可靠正样本的评分最高的未标记样本数量，而y轴表示这些被选择样本中真正为正样本的百分比。图中清晰地说明，随着$num$从100增加到1000，VFPU\_GBDT识别的隐藏正样本数量迅速减少。这种观察到的减少可归因于几个因素。最初，与正类表现出强烈相似性或与负类有明显差异的未标记数据样本被迅速识别和选择。然而，随着选择过程的继续，剩余的未标记数据往往在正负类之间表现出特征重叠，这给分类器带来干扰。这种干扰导致错误分类，从而降低了准确推荐的百分比。虽然其他方法在不同$num$值下表现相对稳定，但这种表面上的稳定性并不一定是有利的。这些方法始终较低的准确推荐百分比表明它们在可靠识别隐藏正样本方面能力有限。此外，考虑到未标记数据集中只有约2500个真正的正样本，当选择的正样本数量超过这个阈值时，VFPU\_GBDT的准确率自然会下降。
 
 总之，实验结果提供了强有力的证据，表明VFPU\_GBDT算法在VFL环境中推荐可靠正样本方面非常有效。尽管需要额外的计算时间，但推荐准确率的显著提升使VFPU\_GBDT相比其他半监督方法成为更优方案。这项实验突显了在联邦学习环境中应用VFPU\_GBDT算法解决未标记数据缺乏的PU（UDD-PU）学习推荐问题的显著优势，强调了它在高准确率至关重要的实际应用中的潜力。
+
 \section{本章小结}
 本章主要介绍了未标记数据缺乏的PU（UDD-PU）学习问题，其中需要模型训练的一方仅持有正样本数据，而其他参与方拥有大量未标记数据。为解决UDD-PU问题，本章提出了一种基于半监督学习的多方联邦推荐方法。具体而言，设计了VFPU算法作为该方法的核心，该算法有效整合了两种PU学习技术，并将其适配到垂直联邦学习框架中。通过这种方式，VFPU能够利用有限的标记数据（正样本）和丰富的未标记数据来提高推荐模型的性能。在三个数据集上评估了所提出的方法，并将其与其他半监督学习方法进行了比较。实验结果明确表明，VFPU算法在确保数据隐私的同时，与非联邦方法相比只有很小的性能下降，就能达到令人满意的性能。此外，证明了VFPU算法在垂直联邦学习环境中发现隐藏正样本方面始终优于其他半监督学习方法。而且，对不同基础估计器的分析表明，梯度提升决策树（VFPU\_GBDT）在精确率、召回率和F值方面持续展现出卓越的性能。这一发现强调了为VFPU算法选择适当基础估计器的重要性，以便在各种实际应用中优化其性能。
