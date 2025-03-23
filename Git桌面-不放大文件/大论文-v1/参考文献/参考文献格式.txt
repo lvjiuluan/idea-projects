@@ -1,0 +1,7 @@
+期刊论文格式：作者. 文题[J]. 期刊名, 年, 卷(期): 起-止页码.
+例子：
+WU D, YAN J, WANG H,et al. Social attribute aware incentive mechanism for device-to-device video distribution[J]. IEEE Transactions on Multimedia, 2017, 19(8): 1908-1920.
+HEWITT J A. Technical services in 1983[J]. Library Resource Services, 1984, 28(3): 205-218.
+会议论文格式：作者. 文题[C]. 会议名, 会议地, 会议年: 起-止页码.
+例子：
+BERGAMASCO F, ALBARELLI A, COSMO L, et al. Adopting an unconstrained ray model in light-field cameras for 3D shape reconstruction[C]. IEEE Conference on Computer Vision and Pattern Recognition, Boston, USA, 2015: 3003-3012.

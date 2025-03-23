@@ -24,7 +24,7 @@
 	\mathcal{D}^B := \{(X^B_i, Y^B_i)\}_{i=1}^{n^B}
 \end{equation}
 式中，$X^B_i$ 是第 $i$ 个样本的特征向量，$Y^B_i \in \{0,1\}^C$ 是对应的独热编码（one-hot encoding）真实标签，$C$ 表示类别数，$n^B$ 是样本数量。Party B 拥有标签，这在 VFL 中至关重要，因为标签通常用于监督学习任务。然而，Party B 缺乏足够的特征来单独构建一个准确的模型，因此需要利用 Party A 提供的补充特征，如图 \ref{fig:Missing}\subref{MissingTwo} 所示。
-%调整图片与上方文字之间的间距
+
 \vspace{-0.1cm}
 \begin{figure}[!h]
 	\centering
@@ -41,7 +41,6 @@
 	{\centering \wuhao Vertical Federated Learning with Unaligned Samples. (a) Missing data in party B; (b) Missing data in both parties}    
 	\label{fig:Missing}
 \end{figure}
-%调整图片与下方文字之间的间距
 \vspace{-0.35cm}
 
 需要强调的是，$\mathcal{D}^A$ 和 $\mathcal{D}^B$ 分别由 Party A 和 Party B 私有保存，双方不能互相暴露其数据集。
@@ -72,25 +71,22 @@ Party B 拥有对齐样本的特征和标签：
 
 本章提出了一种新的方法  FedPSG-PUM ，旨在充分利用非对齐样本 $\mathcal{D}^A_{nl}$ 和 $\mathcal{D}^B_{nl}$，以提升纵向联邦学习（VFL）模型的性能。该方法结合了 纵向联邦半监督学习 和 表格数据生成技术，通过将对齐样本 $\mathcal{D}_{al}$ 视为有标签数据（其中 $X^A_{al}$ 的“标签”可看作 $X^B_{al}$ 的特征值），而将非对齐样本 $\mathcal{D}^A_{nl}$ 视为无标签数据，利用半监督学习从对齐样本中学习以增强模型的泛化能力，同时采用表格数据生成技术填补与 Party A 相关性较弱的特征缺失值，并与纵向联邦学习相结合优化数据补全。相比传统 VFL 方法， FedPSG-PUM  不仅利用了对齐样本 $\mathcal{D}_{al}$，还充分利用了非对齐样本 $\mathcal{D}^A_{nl}$ 和 $\mathcal{D}^B_{nl}$，显著提高了数据利用率；通过纵向联邦半监督学习，模型能从无标签数据中提取有用信息，进一步提升泛化能力；而表格数据生成技术的引入则使得缺失特征的填补更加合理，从而优化了数据填补策略并提高了模型整体性能。总之， FedPSG-PUM  在传统 VFL 框架基础上引入创新技术，充分利用非对齐样本，在对齐样本有限的情况下显著提升了 VFL 模型的准确性和泛化能力。
 \section{基于半监督学习的纵向联邦参与方样本生成方法方法框架}
-如图 \ref{fig: FedPSG-PUM } 所示， FedPSG-PUM  方法的核心包含三个主要流程，这三个流程共同协作以实现跨方数据的高效处理和特征生成。首先，在 Process I 中，算法通过计算跨方特征之间的相关性，评估和量化各个特征之间的相互依赖关系。这一过程的目标是确保在纵向联邦学习框架中，不同方的特征能够高效对齐，并通过特征相关性分析揭示不同数据源之间可能存在的潜在依赖结构，从而为后续的建模步骤提供更加精确和有针对性的特征信息。接下来，在 Process II 中，方法采用纵向联邦半监督学习算法来进行数据预测。在这一阶段，算法通过结合来自多个方的信息，并利用半监督学习的策略，有效地预测出缺失或未标记的数据。这一过程不仅保证了数据的完整性，还通过有效利用部分标记数据和大量未标记数据，增强了模型的预测能力和鲁棒性。通过这种方式， FedPSG-PUM  方法能够在数据不完全或部分缺失的情况下，依然保持较高的预测精度。最后，在 Process III 中， FedPSG-PUM  方法利用生成模型生成数据。通过对已预测数据和其他相关特征的建模，生成模型能够创造出与真实数据相似的合成数据。这些生成的数据不仅能够补充现有数据的不足，还可以用来进一步优化模型的训练过程，提升模型在实际应用中的泛化能力。生成的数据也有助于应对训练数据中可能出现的偏差或不均衡问题，进一步增强模型的稳定性和可靠性。下面的小节我将分别介绍这三个流程。
+如图 \ref{fig: FedPSG-PUM } 所示， FedPSG-PUM  方法的核心包含三个主要流程，这三个流程共同协作以实现跨方数据的高效处理和特征生成。
 
-%调整图片与上方文字之间的间距
 \vspace{-0.1cm}
-\begin{figure}[H]  % 创建一个浮动图形环境，[h]表示尽量将图片放在当前位置(here)
+\begin{figure}[h]  % 创建一个浮动图形环境，[h]表示尽量将图片放在当前位置(here)
 	\centering     % 使图片居中显示
 	\includegraphics[width=0.9\textwidth]{chapters/imgs/FedPSG-PUM }  
-	% 插入图片，宽度设为页面宽度的90%，图片路径为chapters/imgs/Figure 1 in JEPG format
-	
-	\bicaption[\xiaosi  FedPSG-PUM 算法总体流程]{\wuhao  FedPSG-PUM 算法总体流程}{\wuhao The overall process of the proposed  FedPSG-PUM  algorithm}
-	% 使用bicaption命令创建双语标题
-	% [\xiaosi VFPU算法总体流程] - 目录中显示的标题，使用小四号字体
-	% {\wuhao VFPU算法总体流程} - 中文标题，使用五号字体 
-	% {\wuhao The overall process...} - 英文标题，使用五号字体
-	
+	\bicaption[\xiaosi  FedPSG-PUM 算法总体流程]
+	{\wuhao  FedPSG-PUM 算法总体流程}
+	{\wuhao The overall process of the proposed  FedPSG-PUM  algorithm}
 	\label{fig: FedPSG-PUM }  % 为图片设置标签，可以在文中使用\ref{fig:VFPU}引用此图
 \end{figure}
-%调整图片与下方文字之间的间距
 \vspace{-0.35cm}
+
+首先，在 Process I 中，算法通过计算跨方特征之间的相关性，评估和量化各个特征之间的相互依赖关系。这一过程的目标是确保在纵向联邦学习框架中，不同方的特征能够高效对齐，并通过特征相关性分析揭示不同数据源之间可能存在的潜在依赖结构，从而为后续的建模步骤提供更加精确和有针对性的特征信息。接下来，在 Process II 中，方法采用纵向联邦半监督学习算法来进行数据预测。在这一阶段，算法通过结合来自多个方的信息，并利用半监督学习的策略，有效地预测出缺失或未标记的数据。这一过程不仅保证了数据的完整性，还通过有效利用部分标记数据和大量未标记数据，增强了模型的预测能力和鲁棒性。通过这种方式， FedPSG-PUM  方法能够在数据不完全或部分缺失的情况下，依然保持较高的预测精度。最后，在 Process III 中， FedPSG-PUM  方法利用生成模型生成数据。通过对已预测数据和其他相关特征的建模，生成模型能够创造出与真实数据相似的合成数据。这些生成的数据不仅能够补充现有数据的不足，还可以用来进一步优化模型的训练过程，提升模型在实际应用中的泛化能力。生成的数据也有助于应对训练数据中可能出现的偏差或不均衡问题，进一步增强模型的稳定性和可靠性。下面的小节我将分别介绍这三个流程。
+
+
 
 \subsection{计算跨方特征相关性}
 在纵向联邦学习（Vertical Federated Learning, VFL）框架中，不同参与方（Parties）拥有相同样本但不同特征的异构数据。为了有效利用对齐样本的特征信息，需要量化跨参与方特征之间的统计关联性。本节提出了一种基于隐私保护的Spearman秩相关分析方法，用于构建跨方特征相关性排序体系。
@@ -157,16 +153,10 @@ $\mu_q$表示B方特征$f^B_q$对A方特征空间的综合依赖程度。这一�
 
 将数据缺失问题建模为纵向联邦半监督学习（Vertical Federated Semi-Supervised Learning, VFSSL）框架，其中特征集$X^A$与$X^{B_{\text{predict}}}$包含有标签和无标签两类数据。尽管Liu等人\textsuperscript{\cite{liu2023multi}}提出的VFPU（Vertical Federated Positive-Unlabeled Learning）算法为纵向联邦半监督学习提供了解决方案，但其主要局限于仅含正样本与未标记样本的PU学习场景。针对本研究中$f_q^B$特征列可能涉及的二分类、多分类及回归等多任务需求，本文创新性地提出改进型VFPU-M（Multi-task VFPU）方法。该方法通过纵向联邦协同训练构建特征预测模型，利用基学习器对未对齐数据进行多轮预测与置信度评估，动态筛选高可信度样本扩充训练集，迭代优化直至收敛（如图\ref{fig: FedPSG-PUM }所示）。相较于传统VFPU，VFPU-M不仅突破单一任务限制，还能通过联邦机制有效融合跨域无标签数据的分布特征，显著提升多任务场景下的模型泛化能力。实验验证表明，该方法在分类与回归任务中均取得优于基准方法的性能表现，证实了其跨任务适应性和特征补全有效性。
 
-在本阶段的研究工作中，主要需要执行两个核心算法，以确保数据处理和模型训练的有效性。这两个算法分别为：算法1——基于纵向联邦半监督学习（Vertical Federated Semi-Supervised Learning, VFSSL）的方法用于数据生成的过程，以及算法2——VFPU-M（Vertical Federated PU Learning with Model Adaptation）算法。在后续章节中，我们将对这两个算法的理论基础、实现细节及其在本研究中的具体应用进行详细介绍。
-
-算法4-1提出了一种基于纵向联邦半监督学习（Vertical Federated Semi-supervised Learning, VFSL）的缺失数据生成方法。该方法通过挖掘参与方A与B之间对齐样本的统计关联特性，在联邦学习框架下构建特征补全模型，实现在保护各方数据隐私的前提下，高效补全B方未对齐样本的缺失特征。如算法4-1所述，其核心流程包含联邦模型协同训练、跨域特征关联分析以及隐私保护下的数据生成三个关键环节，详细阐述了从未对齐样本中生成可信特征值的完整实现过程。
-
-算法的输入包括以下几个关键元素：A 方对齐数据：$X_{al}^A \in \mathbbm{R}^{n_{al} \times d_A}$，表示 A 方与 B 方样本空间对齐的特征矩阵，其中 $n_{al}$ 为对齐样本的数量，$d_A$ 为 A 方特征维度。A 方未对齐数据：$X_{nl}^A \in \mathbbm{R}^{n_{nl} \times d_A}$，表示 A 方未对齐部分的特征矩阵，其中 $n_{nl}$ 为未对齐样本的数量。B 方相关系数列表：$\mathcal{L}_B = \{(\mu_q, \phi^B_q)\}_{q=1}^{d_B}$，其中 $\mu_q$ 表示 B 方特征列 $\phi^B_q$ 与 A 方数据的皮尔逊相关系数，$d_B$ 为 B 方特征维度。相关性阈值：$\tau$，用于筛选与 A 方数据具有显著相关性的 B 方特征列。该阈值的选取通常基于统计显著性检验，以确保筛选出的特征在统计上具有可靠性。
-
 \vspace{-0.2cm} 
-\begin{table}[H]
+\begin{table}[h]
+	\renewcommand{\arraystretch}{0.6}
 	\centering
-	\renewcommand{\arraystretch}{1.0}
 	{\songti \wuhao
 		\begin{tabular}{p{\textwidth}}
 			\toprule[1.5pt]
@@ -189,7 +179,13 @@ $\mu_q$表示B方特征$f^B_q$对A方特征空间的综合依赖程度。这一�
 	}
 	\label{tab:algo-vfpu}
 \end{table}
-\vspace{-0.56cm}
+\vspace{-0.4cm}
+
+在本阶段的研究工作中，主要需要执行两个核心算法，以确保数据处理和模型训练的有效性。这两个算法分别为：算法1——基于纵向联邦半监督学习（Vertical Federated Semi-Supervised Learning, VFSSL）的方法用于数据生成的过程，以及算法2——VFPU-M（Vertical Federated PU Learning with Model Adaptation）算法。在后续章节中，我们将对这两个算法的理论基础、实现细节及其在本研究中的具体应用进行详细介绍。
+
+算法4-1提出了一种基于纵向联邦半监督学习（Vertical Federated Semi-supervised Learning, VFSL）的缺失数据生成方法。该方法通过挖掘参与方A与B之间对齐样本的统计关联特性，在联邦学习框架下构建特征补全模型，实现在保护各方数据隐私的前提下，高效补全B方未对齐样本的缺失特征。如算法4-1所述，其核心流程包含联邦模型协同训练、跨域特征关联分析以及隐私保护下的数据生成三个关键环节，详细阐述了从未对齐样本中生成可信特征值的完整实现过程。
+
+算法的输入包括以下几个关键元素：A 方对齐数据：$X_{al}^A \in \mathbbm{R}^{n_{al} \times d_A}$，表示 A 方与 B 方样本空间对齐的特征矩阵，其中 $n_{al}$ 为对齐样本的数量，$d_A$ 为 A 方特征维度。A 方未对齐数据：$X_{nl}^A \in \mathbbm{R}^{n_{nl} \times d_A}$，表示 A 方未对齐部分的特征矩阵，其中 $n_{nl}$ 为未对齐样本的数量。B 方相关系数列表：$\mathcal{L}_B = \{(\mu_q, \phi^B_q)\}_{q=1}^{d_B}$，其中 $\mu_q$ 表示 B 方特征列 $\phi^B_q$ 与 A 方数据的皮尔逊相关系数，$d_B$ 为 B 方特征维度。相关性阈值：$\tau$，用于筛选与 A 方数据具有显著相关性的 B 方特征列。该阈值的选取通常基于统计显著性检验，以确保筛选出的特征在统计上具有可靠性。
 
 算法的核心目标是利用 A 方数据预测 B 方未对齐样本的特征值，并生成完整的 B 方数据矩阵 $X^{B_{predict}}$。整个过程可分为以下三个主要步骤：
 
@@ -209,6 +205,44 @@ $\mu_q$表示B方特征$f^B_q$对A方特征空间的综合依赖程度。这一�
 \end{equation}
 该矩阵不仅保留了与 A 方数据的统计相关性，同时符合纵向联邦学习的隐私保护约束。
 
+\vspace{-0.2cm}
+\begin{table}[h]
+	\centering
+	\renewcommand{\arraystretch}{0.6}
+	{\songti \wuhao
+		\begin{tabular}{p{\textwidth}}
+			\toprule[1.5pt]
+			\makecell[l]{\songti\wuhao 算法 4-2 VFPU-M 算法} \\
+			\midrule[0.5pt]
+			\makecell[l]{\wuhao \textbf{输入:} $X_{al}^A$, $X_{nl}^A$: 参与方A的对齐/非对齐数据; $X_{al}^B$, $X_{nl}^B$: 参与方B的对齐/非对齐数据; } \\
+			\makecell[l]{\wuhao \qquad $y$: 标签; $\alpha$: 置信度阈值; $T$: 迭代次数; $k$: 选取比例} \\
+			\makecell[l]{\wuhao \textbf{输出:} $\mathbf{y}^{\text{pseudo}}$} \\
+			\makecell[l]{\wuhao 1: $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$, 
+				$\mathcal{D}_{U}^{(0)} = \{X_{nl}^A, X_{nl}^B\}$} \\
+			\makecell[l]{\wuhao 2: \textbf{for} $t = 1$ \textbf{to} $T$ \textbf{do}} \\
+			\makecell[l]{\wuhao 3: \quad $\theta^{(t)} \leftarrow \arg\min_\theta \sum_{(\mathbf{x}^A,\mathbf{x}^B,y)\in\mathcal{D}_L^{(t)}} \ell(f_\theta(\mathbf{x}^A,\mathbf{x}^B), y)$} \\
+			\makecell[l]{\wuhao 4: \quad 对 $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)}$，计算置信度:
+				$s_j = \begin{cases} 
+					\max_{c} \mathbbm{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
+					1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t} & \text{回归}
+				\end{cases}$} \\
+			\makecell[l]{\wuhao 5: \quad $\mathcal{C}^{(t)} = \{(\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)} | s_j \geq \alpha\}$; } \\
+			\makecell[l]{\wuhao 6: \quad 按置信度排序选取前 $k$ 比例: $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$}\\
+			\makecell[l]{\wuhao 7: \quad $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \hat{y}_j = \begin{cases}
+					\arg\max_c P(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
+					f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{回归}
+				\end{cases}$} \\
+			\makecell[l]{\wuhao 8: \quad $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$; 
+				$\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$} \\
+			\makecell[l]{\wuhao 9: \textbf{end for}} \\
+			\makecell[l]{\wuhao 10: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$} \\
+			\makecell[l]{\wuhao 11: \textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\		\toprule[1.5pt]
+		\end{tabular}
+	}
+	\label{tab:algo-vfpu-m} 
+\end{table}
+\vspace{-0.4cm}
+
 下面将介绍VFPU-M算法，如算法 4-2 所示，这是一种面向半监督联邦学习的创新方法，旨在处理这样一种场景：在两个参与方中，只有一部分数据（“对齐数据”）具有可靠的标签信息，而另一部分（“非对齐数据”）则缺乏标签，需要通过伪标签（Pseudo-Labeling）的方式来挖掘潜在信息。VFPU-M 在维护数据私密性的同时，通过迭代地对高置信度无标签样本进行伪标签生成并加入后续训练，有效提升了联邦模型在异构数据上的学习能力。
 
 VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大量无标签的非对齐数据同时纳入训练过程，并在保证原始数据隐私的基础上，不断对高置信度的无标签样本赋予伪标签，使其得以融入有标签数据集中，从而迭代式地壮大可监督训练集。在具体实现中，算法首先对对齐数据构成的有标签数据集记为$\mathcal{D}_L^{(0)}$，并将各参与方非对齐的剩余数据聚合至无标签数据集$\mathcal{D}_U^{(0)}$。接下来，VFPU-M初始化一个联邦模型$f_{\theta}$，模型的参数$\theta$在分布式环境下进行更新，参与方只共享必要的模型梯度或参数信息，不会直接交换任何原始数据。每一轮迭代中，算法都在现有的有标签数据集上训练模型，最小化以下损失函数：
@@ -217,41 +251,6 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 \end{equation}
 式中，$\ell(\cdot)$可以是交叉熵损失、均方误差或其他根据任务需求设定的目标函数。通过这一过程，模型的预测能力在隐私保护的分布式框架下得到稳定提升。
 
-\vspace{-0.1cm}
-\begin{table}[H]
-	\centering
-	\renewcommand{\arraystretch}{0.7}
-	\begin{tabular}{p{\textwidth}}
-		\toprule[1.5pt]
-		\makecell[l]{\songti\wuhao 算法 4-2 VFPU-M 算法} \\
-		\midrule[0.5pt]
-		\makecell[l]{\wuhao \textbf{输入:} $X_{al}^A$, $X_{nl}^A$: 参与方A的对齐/非对齐数据; $X_{al}^B$, $X_{nl}^B$: 参与方B的对齐/非对齐数据; } \\
-		\makecell[l]{\wuhao \qquad $y$: 标签; $\alpha$: 置信度阈值; $T$: 迭代次数; $k$: 选取比例} \\
-		\makecell[l]{\wuhao \textbf{输出:} $\mathbf{y}^{\text{pseudo}}$} \\
-		\makecell[l]{\wuhao 1: $\mathcal{D}_{L}^{(0)} = \{X_{al}^A, X_{al}^B, y\}$, 
-			$\mathcal{D}_{U}^{(0)} = \{X_{nl}^A, X_{nl}^B\}$} \\
-		\makecell[l]{\wuhao 2: \textbf{for} $t = 1$ \textbf{to} $T$ \textbf{do}} \\
-		\makecell[l]{\wuhao 3: \quad $\theta^{(t)} \leftarrow \arg\min_\theta \sum_{(\mathbf{x}^A,\mathbf{x}^B,y)\in\mathcal{D}_L^{(t)}} \ell(f_\theta(\mathbf{x}^A,\mathbf{x}^B), y)$} \\
-		\makecell[l]{\wuhao 4: \quad 对 $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)}$，计算置信度:
-			$s_j = \begin{cases} 
-				\max_{c} \mathbbm{P}(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
-				1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t} & \text{回归}
-			\end{cases}$} \\
-		\makecell[l]{\wuhao 5: \quad $\mathcal{C}^{(t)} = \{(\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{D}_U^{(t)} | s_j \geq \alpha\}$; } \\
-		\makecell[l]{\wuhao 6: \quad 按置信度排序选取前 $k$ 比例: $\mathcal{S}^{(t)} = \text{TopK}(\mathcal{C}^{(t)}, k)$}\\
-		\makecell[l]{\wuhao 7: \quad $\forall (\mathbf{x}^A_j,\mathbf{x}^B_j) \in \mathcal{S}^{(t)}, \hat{y}_j = \begin{cases}
-				\arg\max_c P(y=c|f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j)) & \text{分类} \\
-				f_{\theta^{(t)}}(\mathbf{x}^A_j,\mathbf{x}^B_j) & \text{回归}
-			\end{cases}$} \\
-		\makecell[l]{\wuhao 8: \quad $\mathcal{D}_L^{(t+1)} \leftarrow \mathcal{D}_L^{(t)} \cup \{(\mathbf{x}^A_j,\mathbf{x}^B_j,\hat{y}_j)\}_{j\in\mathcal{S}^{(t)}}$; 
-			$\mathcal{D}_U^{(t+1)} \leftarrow \mathcal{D}_U^{(t)} \setminus \mathcal{S}^{(t)}$} \\
-		\makecell[l]{\wuhao 9: \textbf{end for}} \\
-		\makecell[l]{\wuhao 10: $\mathbf{y}^{\text{pseudo}} = \left[ y, \bigcup_{t=1}^{T} \{\hat{y}_j\}_{j \in \mathcal{S}^{(t)}} \right]$} \\
-		\makecell[l]{\wuhao 11: \textbf{return} $\mathbf{y}^{\text{pseudo}}$} \\		\toprule[1.5pt]
-	\end{tabular}
-	\label{tab:algo-vfpu-m} 
-\end{table}
-\vspace{-0.6cm}
 在完成训练后，算法会利用更新后的模型$f_{\theta^{(t)}}$对无标签数据集$\mathcal{D}_U^{(t)}$中的所有样本进行推断，并计算每个样本对应的置信度分数。对于分类任务，常用的做法是取模型输出的所有类别预测概率中最大的那一项作为置信度，这一数值越高表明模型对该样本的预测越有把握。而在回归任务中，则可以根据当前预测输出的整体分布情况，以
 \begin{equation}
 	1 - \frac{|\hat{y}_j - \mu_t|}{\sigma_t}
@@ -264,7 +263,7 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 
 总的来说，VFPU-M算法为半监督学习与联邦学习的紧密结合提供了一种新颖而高效的范式。它在吸收对齐数据中已有标签信息的同时，充分利用非对齐无标签数据所蕴含的潜在价值，借助高置信度伪标签的迭代式筛选与生成，达到在分布式环境中同步提升模型精度与鲁棒性的目标。在未来的研究中，可以继续探讨如何动态更新置信度阈值$\alpha$、引入更先进的自适应策略，以及在多方恶意节点存在或标签噪声更为复杂的条件下增强算法的稳定性。通过与其他联邦学习或半监督学习技术有机结合，VFPU-M有望进一步拓展应用广度，在更多跨领域合作中发挥关键作用，为数据隐私与机器学习性能的双重需求提供行之有效的解决方案。
 
-为更好地应对A方特征与目标特征间低相关性（即$\mu_q \leq \tau$）给半监督学习带来的预测性能下降问题， FedPSG-PUM 引入了生成模型技术，通过捕捉低相关性特征的分布规律来合成数据，从而实现对缺失特征的合理补全。将其在B方进行本地生成模型的训练，并将训练好的生成模型或者填补模型用于生成B方缺少样本中的相关属性值。可采用的生成模型例如：CTGAN、TableGAN、CTABGAN、VAE和TabDDPM等；可采用的填补模型例如:GAIN、VGAIN、VF\_GAIN等。
+为更好地应对A方特征与目标特征间低相关性（即$\mu_q \leq \tau$）给半监督学习带来的预测性能下降问题， FedPSG-PUM 引入了生成模型技术，通过捕捉低相关性特征的分布规律来合成数据，从而实现对缺失特征的合理补全。将其在B方进行本地生成模型的训练，并将训练好的生成模型或者填补模型用于生成B方缺少样本中的相关属性值。可采用的生成模型例如：CTGAN\textsuperscript{\cite{CTGAN}}、TableGAN\textsuperscript{\cite{TableGAN}}、CTABGAN\textsuperscript{\cite{CTABGAN}}、VAE\textsuperscript{\cite{kingma2013auto}}和TabDDPM\textsuperscript{\cite{kotelnikov2023tabddpm}}等；可采用的填补模型例如:GAIN\textsuperscript{\cite{GAIN}}、VGAIN\textsuperscript{\cite{VGAIN}}、VF\_GAIN等。
 \section{实验过程及结果分析}
 本节描述了 FedPSG-PUM 方法的实验设计和评估。首先，提供了数据集和实验设置 的概述。随后，提出了一组用于指导实验的研究问题，然后根据每个研究问题展示 并讨论实验结果。
 \subsection{数据集介绍与实验准备} \label{subsec:data_experiment}
@@ -354,9 +353,10 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 
 表 \ref{Chapter4Exp1Setting2} 展示了不同基学习器在固定相关系数阈值$\tau=5$下的性能对比。从实验数据可以观察到，基学习器的选择对FedPSG-PUM方法的预测精度产生了显著影响，且这种影响在不同缺失率环境下表现出一致性。对Bank数据集的分析表明，VFPU\_GBDT在所有缺失率水平（0.2、0.5、0.8）下均表现出明显优势，平均RMSE值比次优模型VFPU\_RF低20.5\%。特别是在低缺失率($\text{MisR-B}=0.2$)条件下，VFPU\_GBDT的RMSE仅为0.2097，较VFPU\_RF（0.2640）降低了20.6\%，较传统VFPU\_LR（0.3146）降低了33.3\%。值得注意的是，随着缺失率提高至0.8，VFPU\_GBDT依然保持了相对稳定的性能（RMSE为0.2311），仅比低缺失率环境下增加了10.2\%。在Credit数据集上，各基学习器之间的性能差异虽然相对减小，但VFPU\_GBDT仍然在所有缺失率条件下取得最优结果。具体而言，当$\text{MisR-B}=0.2$时，VFPU\_GBDT的RMSE为0.3487，相比VFPU\_RF（0.3591）和VFPU\_LR（0.3596）分别降低了2.9\%和3.0\%；当缺失率增至0.5时，这一优势进一步扩大至约6.6\%；在高缺失率（0.8）情况下，VFPU\_GBDT仍保持了约3.0\%的性能优势。综合两个数据集的实验结果，可以得出结论：基于梯度提升决策树的VFPU\_GBDT在不同数据集和各缺失率条件下均表现出最优性能，基于以上分析，确定VFPU\_GBDT作为FedPSG-PUM方法的最优基学习器，并将在后续实验中继续采用该配置。
 
-%调整图片与上方文字之间的间距
+图 \ref{Chapter4Exp1Setting3} 展示了不同置信度阈值$\alpha$和B方缺失率(MisR-B)组合下的RMSE评估结果。实验结果表明，置信度阈值$\alpha$对模型性能具有一定影响，呈现"U型"的分布特征。随着$\alpha$从0.5逐步提高至0.7，RMSE值持续下降，当$\alpha$超过0.7后，RMSE值开始显著回升。具体而言，在Bank数据集的三种缺失率场景(0.2、0.5和0.8)下，$\alpha=0.7$均产生最优性能，RMSE分别达到0.2097、0.2335和0.2311，较两端端点平均降低约29.8\%的误差。Credit数据集同样呈现相似趋势，在缺失率为0.2和0.5的条件下，$\alpha=0.7$时分别获得0.3487和0.3681的最优RMSE；仅在高缺失率(0.8)场景下，$\alpha=0.75$略优于$\alpha=0.7$，但差异仅为3.4\%。当$\alpha$<0.7时，模型纳入更多低置信度样本扩大训练集规模，但同时引入噪声标签降低学习质量；当$\alpha$>0.7时，筛选条件过于严格，高质量伪标签数量减少，导致模型泛化能力受限。综上所述，实验结果有力支持将置信度阈值$\alpha$设定为0.7，作为FedPSG-PUM框架的最优置信度阈值,并将在后续实验中继续采用该配置。
+
 \vspace{-0.1cm}
-\begin{figure}[!h]
+\begin{figure}[h]
 	\centering
 	\subfigure[]{
 		\label{Chapter4Exp1Setting3a}
@@ -371,12 +371,11 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 	{\centering \wuhao The RMSE line graph generated using FedPSG-PUM for different confidence thresholds ($\alpha$). (a) Bank Dataset; (b) Credit Dataset}    
 	\label{Chapter4Exp1Setting3}
 \end{figure}
-%调整图片与下方文字之间的间距
-\vspace{-0.4cm}
-
-图 \ref{Chapter4Exp1Setting3} 展示了不同置信度阈值$\alpha$和B方缺失率(MisR-B)组合下的RMSE评估结果。实验结果表明，置信度阈值$\alpha$对模型性能具有一定影响，呈现"U型"的分布特征。随着$\alpha$从0.5逐步提高至0.7，RMSE值持续下降，当$\alpha$超过0.7后，RMSE值开始显著回升。具体而言，在Bank数据集的三种缺失率场景(0.2、0.5和0.8)下，$\alpha=0.7$均产生最优性能，RMSE分别达到0.2097、0.2335和0.2311，较两端端点平均降低约29.8\%的误差。Credit数据集同样呈现相似趋势，在缺失率为0.2和0.5的条件下，$\alpha=0.7$时分别获得0.3487和0.3681的最优RMSE；仅在高缺失率(0.8)场景下，$\alpha=0.75$略优于$\alpha=0.7$，但差异仅为3.4\%。当$\alpha$<0.7时，模型纳入更多低置信度样本扩大训练集规模，但同时引入噪声标签降低学习质量；当$\alpha$>0.7时，筛选条件过于严格，高质量伪标签数量减少，导致模型泛化能力受限。综上所述，实验结果有力支持将置信度阈值$\alpha$设定为0.7，作为FedPSG-PUM框架的最优置信度阈值,并将在后续实验中继续采用该配置。
+\vspace{-0.35cm}
 
 实验二：基线对比实验，第一组实验在Bank和Credit两个数据集上进行。如表 \ref{Chapter4Exp2Table1} 所示，在单方本地生成模型中，TabDDPM在各缺失率条件下表现最优，其RMSE值分别为Bank数据集（0.4227、0.4728、0.5236）和Credit数据集（0.4478、0.5363、0.575），这验证了扩散模型在表格数据生成任务上的优越性。FedPSG-PUM方法在所有条件下均显著优于单方模型，且性能提升幅度显著。
+
+以Bank数据集为例，FedPSG-PUM(VF-GAIN)在MisR-B=0.2时的RMSE仅为0.2097，相比最佳基线模型TabDDPM（0.4227）降低了50.4\%，体现了联邦学习框架在样本生成任务中的显著优势。随着缺失率MisR-B从0.2增加到0.8，所有模型性能均有所下降，但FedPSG-PUM方法的性能降幅明显小于单方模型。例如，在Bank数据集上，TabDDPM的RMSE增加了23.9\%（0.4227→0.5236），而FedPSG-PUM(VF-GAIN)仅增加了10.2\%（0.2097→0.2311）。在FedPSG-PUM框架下，基于VF-GAIN的实现略优于基于TabDDPM的实现，特别是在高缺失率条件下差异更为明显，这表明VF-GAIN在联邦环境中能更有效地捕获数据分布特征。
 
 \vspace{-0.1cm}
 \begin{table}[H]
@@ -408,8 +407,6 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 	}
 \end{table}
 \vspace{-0.4cm}
-
-以Bank数据集为例，FedPSG-PUM(VF-GAIN)在MisR-B=0.2时的RMSE仅为0.2097，相比最佳基线模型TabDDPM（0.4227）降低了50.4\%，体现了联邦学习框架在样本生成任务中的显著优势。随着缺失率MisR-B从0.2增加到0.8，所有模型性能均有所下降，但FedPSG-PUM方法的性能降幅明显小于单方模型。例如，在Bank数据集上，TabDDPM的RMSE增加了23.9\%（0.4227→0.5236），而FedPSG-PUM(VF-GAIN)仅增加了10.2\%（0.2097→0.2311）。在FedPSG-PUM框架下，基于VF-GAIN的实现略优于基于TabDDPM的实现，特别是在高缺失率条件下差异更为明显，这表明VF-GAIN在联邦环境中能更有效地捕获数据分布特征。
 
 \vspace{-0.1cm}
 \begin{table}[H]

@@ -1,0 +1,37 @@
+图：
+
+上：29px
+
+下：28px
+
+表：
+
+上：37px
+
+下：25px
+
+算法：
+最近
+
+# vspace
+
+图：-0.1， -0.35
+
+算法：\vspace{-0.2cm} ，\vspace{-0.5cm}
+
+
+算法行高 32px
+
+
+表格行高35px
+表格\renewcommand{\arraystretch}{0.8}
+算法\renewcommand{\arraystretch}{0.6}
+
+
+算法 \vspace{-0.2cm}  \vspace{-0.4cm}
+
+图和表:  \vspace{-0.1cm}  \vspace{-0.35cm}
+
+不用改成一样的，每个图、表、算法有特定之情况
+
+H和小h都可以，不用统一，达成目标即可
