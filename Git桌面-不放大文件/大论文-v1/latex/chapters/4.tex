@@ -19,11 +19,11 @@
 \begin{equation}
 	\mathcal{D}^A := \{X^A_i\}_{i=1}^{n^A}
 \end{equation}
-其中，$X^A_i$ 是第 $i$ 个样本的特征向量，$n^A$ 是样本数量。Party A 的数据仅包含特征，不包含标签。接着，Party B 拥有数据集：
+式中，$X^A_i$ 是第 $i$ 个样本的特征向量，$n^A$ 是样本数量。Party A 的数据仅包含特征，不包含标签。接着，Party B 拥有数据集：
 \begin{equation}
 	\mathcal{D}^B := \{(X^B_i, Y^B_i)\}_{i=1}^{n^B}
 \end{equation}
-其中，$X^B_i$ 是第 $i$ 个样本的特征向量，$Y^B_i \in \{0,1\}^C$ 是对应的独热编码（one-hot encoding）真实标签，$C$ 表示类别数，$n^B$ 是样本数量。Party B 拥有标签，这在 VFL 中至关重要，因为标签通常用于监督学习任务。然而，Party B 缺乏足够的特征来单独构建一个准确的模型，因此需要利用 Party A 提供的补充特征，如图 \ref{fig:Missing}\subref{MissingTwo} 所示。
+式中，$X^B_i$ 是第 $i$ 个样本的特征向量，$Y^B_i \in \{0,1\}^C$ 是对应的独热编码（one-hot encoding）真实标签，$C$ 表示类别数，$n^B$ 是样本数量。Party B 拥有标签，这在 VFL 中至关重要，因为标签通常用于监督学习任务。然而，Party B 缺乏足够的特征来单独构建一个准确的模型，因此需要利用 Party A 提供的补充特征，如图 \ref{fig:Missing}\subref{MissingTwo} 所示。
 %调整图片与上方文字之间的间距
 \vspace{-0.1cm}
 \begin{figure}[!h]
@@ -50,7 +50,7 @@
 \begin{equation}
 	\mathcal{D}_{al} := \{X^A_{i_{al}}, X^B_{i_{al}}, Y^B_{i_{al}}\}_{i=1}^{n_{al}}
 \end{equation}
-其中，$n_{al}$ 是对 齐样本的数量。Party A 拥有对齐样本的特征：
+式中，$n_{al}$ 是对 齐样本的数量。Party A 拥有对齐样本的特征：
 \begin{equation}
 	\mathcal{D}^A_{al} := \{X^A_{i_{al}}\}_{i=1}^{n_{al}}
 \end{equation}
@@ -95,69 +95,59 @@ Party B 拥有对齐样本的特征和标签：
 \subsection{计算跨方特征相关性}
 在纵向联邦学习（Vertical Federated Learning, VFL）框架中，不同参与方（Parties）拥有相同样本但不同特征的异构数据。为了有效利用对齐样本的特征信息，需要量化跨参与方特征之间的统计关联性。本节提出了一种基于隐私保护的Spearman秩相关分析方法，用于构建跨方特征相关性排序体系。
 
-设协调方（Coordinator）$ C $ 作为可信第三方，负责生成同态加密（Homomorphic Encryption, HE）密钥对 $ \{\text{pk}, \text{sk}\} $，其中：
-- $ \text{pk} $ 为公钥（Public Key），用于加密数据；
-- $ \text{sk} $ 为私钥（Secret Key），用于解密数据。
+设协调方（Coordinator）$ C $ 作为可信第三方，负责生成同态加密（Homomorphic Encryption, HE）密钥对 $ \{\text{pk}, \text{sk}\} $，式中：$ \text{pk} $ 为公钥（Public Key），用于加密数据；$ \text{sk} $ 为私钥（Secret Key），用于解密数据。
 
 协调方 $ C $ 将公钥 $ \text{pk} $ 分发给参与方 A（Party A）和参与方 B（Party B），以便它们对数据进行加密计算，而不直接暴露原始数据，具体计算流程如下：
 
-定义 1 特征列秩向量：设参与方 A 的特征空间为 $ \Phi^A = \{\varphi^A_1, \varphi^A_2, ..., \varphi^A_{m_A}\} $，$ m_A $ 表示 A 方的特征维数，即 A 方拥有 $ m_A $ 个特征。$ \varphi^A_p \in \mathbbm{R}^{n_{al}} $ 表示 A 方第 $ p $ 个特征在对齐样本集 $ \mathcal{D}^A_{al} $ 上的观测向量，$ \varphi^A_p = [\varphi^A_{p1}, \varphi^A_{p2}, ..., \varphi^A_{pn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
+定义特征列秩向量，设参与方 A 的特征空间为 $ \Phi^A = \{\varphi^A_1, \varphi^A_2, ..., \varphi^A_{m_A}\} $，$ m_A $ 表示 A 方的特征维数，即 A 方拥有 $ m_A $ 个特征。$ \varphi^A_p \in \mathbbm{R}^{n_{al}} $ 表示 A 方第 $ p $ 个特征在对齐样本集 $ \mathcal{D}^A_{al} $ 上的观测向量，$ \varphi^A_p = [\varphi^A_{p1}, \varphi^A_{p2}, ..., \varphi^A_{pn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
 
 同理，参与方 B 的特征空间为 $ \Phi^B = \{\varphi^B_1, \varphi^B_2, ..., \varphi^B_{m_B}\} $，$ m_B $ 表示 B 方的特征维数，即 B 方拥有 $ m_B $ 个特征。$ \varphi^B_q \in \mathbbm{R}^{n_{al}} $ 表示 B 方第 $ q $ 个特征在对齐样本集 $ \mathcal{D}^B_{al} $上的观测向量。$ \varphi^B_q = [\varphi^B_{q1}, \varphi^B_{q2}, ..., \varphi^B_{qn_{al}}] $ 表示该特征在所有对齐样本上的取值，$ n_{al} $ 为对齐样本的数量。
 
-对于任意特征列 $ \varphi^A_p $，计算其秩向量（Rank Vector）：
+为了计算特征间的相关性，需要首先将特征值转换为秩次。对于任意特征列$\varphi^A_p$，计算其秩向量（Rank Vector）：
 \begin{equation}
 	R^A_p = [r^A_{p1}, r^A_{p2}, ..., r^A_{pn_{al}}]
 \end{equation}
-$ r^A_{pi} $ 表示样本 $ i $ 在特征 $ \varphi^A_p $ 上的秩次（Rank），即该样本在该特征列中的排序位置，若存在相同值，则采用平均秩（Average Rank）处理。类似地，B 方的特征列 $ \varphi^B_q $ 也可以计算出对应的秩向量：
+这里$r^A_{pi}$表示样本$i$在特征$\varphi^A_p$上的秩次（Rank），即该样本在该特征列中的排序位置，若存在相同值，则采用平均秩（Average Rank）处理。这种转换可以有效减轻异常值对相关性分析的影响，提高方法的稳健性。类似地，B方的特征列$\varphi^B_q$也可以计算出对应的秩向量：
 \begin{equation}
 	R^B_q = [r^B_{q1}, r^B_{q2}, ..., r^B_{qn_{al}}]
 \end{equation}
-
-步骤 1 加密秩传输：A 方 使用公钥 $ \text{pk} $ 对秩向量 $ R^A_p $ 进行同态加密，得到：
+基于上述定义，设计了一个安全高效的跨方特征相关性计算流程。首先进行加密秩传输，A方使用公钥$\text{pk}$对秩向量$R^A_p$进行同态加密，得到：
 \begin{equation}
 	[R^A_p] = \{\text{Enc}(r^A_{p1}), \text{Enc}(r^A_{p2}), ..., \text{Enc}(r^A_{pn_{al}})\}
 \end{equation}
-并将加密后的秩向量发送给 B 方。类似地，B 方 也对自己的秩向量 $ R^B_q $ 进行同态加密，得到：
+并将加密后的秩向量发送给B方。通过同态加密技术，A方可以安全地将自己的特征秩信息分享给B方，而不泄露原始数据。类似地，B方也对自己的秩向量$R^B_q$进行同态加密，得到：
 \begin{equation}
 	[R^B_q] = \{\text{Enc}(r^B_{q1}), \text{Enc}(r^B_{q2}), ..., \text{Enc}(r^B_{qn_{al}})\}
 \end{equation}
-
-步骤 2 秩差计算：对于任意特征对 $ (f^A_p, f^B_q) $，B 方计算加密秩差向量：
+接下来进行秩差计算，对于任意特征对$(f^A_p, f^B_q)$，B方计算加密秩差向量：
 \begin{equation}
 	[D_{pq}] = \left[ \text{Enc}(r^A_{p1} - r^B_{q1}), ..., \text{Enc}(r^A_{pn_{al}} - r^B_{qn_{al}}) \right]
 \end{equation}
-其中，$ d_{pq}^i = r^A_{pi} - r^B_{qi} $ 表示样本 $ i $ 在 A 方特征 $ f^A_p $ 和 B 方特征 $ f^B_q $ 上的秩次之差，由于同态加密支持加法运算，B 方可以在加密状态下直接计算秩差，而无需解密。B 方将加密秩差向量 $ [D_{pq}] $ 发送给协调方 $ C $。
-
-步骤 3 Spearman相关性计算：协调方 $ C $ 解密 $ [D_{pq}] $，得到：
+式中，$d_{pq}^i = r^A_{pi} - r^B_{qi}$表示样本$i$在A方特征$f^A_p$和B方特征$f^B_q$上的秩次之差。这里利用了同态加密的一个重要特性：支持加法运算，使B方可以在加密状态下直接计算秩差，而无需解密原始数据，从而保证了计算过程的隐私安全。计算完成后，B方将加密秩差向量$[D_{pq}]$发送给协调方$C$。在获得加密的秩差向量后，协调方$C$使用私钥$\text{sk}$解密$[D_{pq}]$，得到：
 \begin{equation}
 	d_{pq}^i = r^A_{pi} - r^B_{qi}, \quad i = 1, ..., n_{al}
 \end{equation}
-然后计算 Spearman 相关系数：
+协调方然后基于这些秩差值计算Spearman相关系数，该系数是衡量两个变量单调关系强度的非参数度量：
 \begin{equation}
 	\rho_{pq} = 1 - \frac{6\sum_{i=1}^{n_{al}} (d_{pq}^i)^2}{n_{al}(n_{al}^2 - 1)}
 \end{equation}
-$ \rho_{pq} $ 表示 A 方特征 $ f^A_p $ 与 B 方特征 $ f^B_q $ 之间的 Spearman 相关系数。最终，构建跨方相关性矩阵：
+$\rho_{pq}$表示A方特征$f^A_p$与B方特征$f^B_q$之间的Spearman相关系数。相较于Pearson相关系数，Spearman相关系数对数据分布不敏感，能够捕获非线性单调关系，更适合异构数据场景。通过计算所有特征对的相关系数，最终可以构建完整的跨方相关性矩阵：
 \begin{equation}
 	\mathbf{M} \in \mathbbm{R}^{m_A \times m_B}, \quad \mathbf{M}(p,q) = \rho_{pq}
 \end{equation}
-$ \mathbf{M}(p,q) $ 存储 A 方第 $ p $ 个特征列与 B 方第 $ q $ 个特征列的 Spearman 相关系数。
-
-定义 2 特征关联强度：对于 B 方的每个特征 $ f^B_q $，计算其与 A 方所有特征的平均关联强度：
+$\mathbf{M}(p,q)$存储A方第$p$个特征列与B方第$q$个特征列的Spearman相关系数，该矩阵全面反映了两方特征空间之间的关联结构。在获得特征间相关性矩阵后，进一步定义特征关联强度的概念。对于B方的每个特征$f^B_q$，计算其与A方所有特征的平均关联强度：
 \begin{equation}
 	\mu_q = \frac{1}{m_A} \sum_{p=1}^{m_A} \rho_{pq}, \quad q=1,...,m_B
 \end{equation}
-$ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程度。
-
-步骤 4 生成排序列表：构建特征重要性序列：
+$\mu_q$表示B方特征$f^B_q$对A方特征空间的综合依赖程度。这一指标综合考虑了B方特征与A方所有特征的关联性，可以有效评估该特征在跨方联合建模中的重要程度。关联强度高的特征通常包含更多与对方特征空间相关的信息，在后续的联邦建模中具有更高的价值。最后，基于特征关联强度生成排序列表。具体而言，构建特征重要性序列：
 \begin{equation}
 	\mathcal{L}_B = \{(\mu_q, f^B_q)\}_{q=1}^{m_B}
 \end{equation}
-按 $ \mu_q $ 降序排列，得到排序后的特征列表
+按$\mu_q$降序排列，得到排序后的特征列表：
 \begin{equation}
 	\mathcal{L}_B^{sorted}
 \end{equation}
-该列表用于指导利用联邦半监督学习对 B 方对齐样本的特征补全，优先使用联邦半监督学习方法补充与 A 方特征关联性强的维度。
+这一排序结果为后续的联邦学习过程提供了重要指导，尤其在特征补全任务中具有关键价值。通过该列表，可以识别出与A方特征高度相关的B方特征，优先使用联邦半监督学习方法补充这些维度，从而最大化信息利用效率，提高模型性能。这种基于特征关联性的排序机制，有效解决了纵向联邦学习中的特征选择与优先级确定问题，为资源有限情况下的模型构建提供了理论依据。
 \subsection{纵向联邦半监督方法预测数据}
 如图 \ref{fig: FedPSG-PUM } 所示，在计算跨方相关性列表之后，研究进入 Process II 阶段。在该阶段，我们从 B 方 中选择一部分与 A 方 具有较高相关性的列，以此作为生成过程的基础。具体而言，该选择过程基于前一阶段计算得到的跨方相关性列表，确保所选列能够最大程度地保留和反映 A 方 的特征信息，从而提高后续生成过程的准确性和有效性。在 Process II 阶段，列的选择标准通常依赖于相关性阈值设定，即仅保留那些与 A 方 相关性超过某一特定阈值的列。
 
@@ -211,7 +201,7 @@ $ \mu_q $ 表示 B 方特征 $ f^B_q $ 对 A 方特征空间的综合依赖程�
 \begin{equation}
 	p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^{B_{predict}}, X_{nl}^{B_{predict}}, \phi^B_q)
 \end{equation}
-其中：对齐部分 $X_{al}^{B_{predict}}$ 直接使用 B 方已有的特征值。未对齐部分 $X_{nl}^{B_{predict}}$ 通过 VFPU-M 进行预测，生成伪标签数据。该过程确保了 B 方数据的补全，同时符合联邦学习的隐私保护要求。
+式中：对齐部分 $X_{al}^{B_{predict}}$ 直接使用 B 方已有的特征值。未对齐部分 $X_{nl}^{B_{predict}}$ 通过 VFPU-M 进行预测，生成伪标签数据。该过程确保了 B 方数据的补全，同时符合联邦学习的隐私保护要求。
 
 数据合成：将 VFPU-M 预测得到的伪标签向量 $p$ 合并至目标数据集 $X^{B_{predict}}$，完成当前特征列的数据生成。迭代执行：通过遍历所有满足相关性筛选条件的特征列，最终生成完整的 B 方数据矩阵：
 \begin{equation}
@@ -225,7 +215,7 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 \begin{equation}
 	\min_{\theta} \sum_{(\mathbf{x}_j,\, y_j) \in \mathcal{D}_L^{(t)}} \ell \bigl(f_{\theta}(\mathbf{x}^A_j,\mathbf{x}^B_j),\, y_j\bigr),
 \end{equation}
-其中$\ell(\cdot)$可以是交叉熵损失、均方误差或其他根据任务需求设定的目标函数。通过这一过程，模型的预测能力在隐私保护的分布式框架下得到稳定提升。
+式中，$\ell(\cdot)$可以是交叉熵损失、均方误差或其他根据任务需求设定的目标函数。通过这一过程，模型的预测能力在隐私保护的分布式框架下得到稳定提升。
 
 \vspace{-0.1cm}
 \begin{table}[H]
@@ -284,7 +274,7 @@ VFPU-M算法的核心思想是将拥有有限可靠标签的对齐数据和大�
 
 在验证本方法有效性的系列实验中，重点研究了图 \ref{fig:Missing}\subref{MissingOne} 所示的B方样本缺失的场景，本方法同样适用图 \ref{fig:Missing}\subref{MissingTwo} 所示的双方样本都缺失的扩展场景。实验评估中，在B方样本缺失的前提条件下，设置了参与方B不同级别的样本缺失率：当缺失率为0.2时，表示B方80\%的样本能与A方形成匹配，剩余20\%样本在A方无对应数据。其中，$\tau$ 表示用于预测的相关性阈值，用于控制为B方缺失样本利用联邦半监督的方法生成数据列的数量，$\tau$越高，表示用预测的方式生成数据的列越少，MisR-B则特指B方相对于A方的样本缺失率。
 \subsection{实验设计与基线模型介绍}
-实验一：FedPSG-PUM 不同的设置，在实验一中，采用均方根误差（RMSE）作为样本生成效果的评估指标，该指标用于量化生成样本数据与真实数据之间的平均偏离程度。本实验基于第\ref{subsec:data_experiment}小节所述的Bank和Credit数据集设计了三种实验配置，其中Bank数据集代表大样本量场景，Credit数据集对应小样本量场景。在模型参数设置方面，对于GAN类模型（联邦和非联邦架构）及本文提出的生成模型统一使用Adam优化器，学习率为0.001，训练迭代次数为10000次，每轮迭代包含10个epoch；联邦半监督VFPU-M算法的样本选取比例$k=0.01$，最大迭代次数为$T=500$；逻辑回归（LR）模型采用L2正则化系数为0.8，批处理大小为64，学习率为0.001；集成树模型（GBDT、RF和LGB）的树数量统一设为500，最大深度为6，学习率为0.1。
+实验一：FedPSG-PUM 不同的设置，在实验一中，采用均方根误差（Root Mean Square Error，RMSE）作为样本生成效果的评估指标，该指标用于量化生成样本数据与真实数据之间的平均偏离程度。本实验基于第\ref{subsec:data_experiment}小节所述的Bank和Credit数据集设计了三种实验配置，其中Bank数据集代表大样本量场景，Credit数据集对应小样本量场景。在模型参数设置方面，对于GAN类模型（联邦和非联邦架构）及本文提出的生成模型统一使用Adam优化器，学习率为0.001，训练迭代次数为10000次，每轮迭代包含10个epoch；联邦半监督VFPU-M算法的样本选取比例$k=0.01$，最大迭代次数为$T=500$；逻辑回归（LR）模型采用L2正则化系数为0.8，批处理大小为64，学习率为0.001；集成树模型（GBDT、RF和LGB）的树数量统一设为500，最大深度为6，学习率为0.1。
 
 实验设置1：在FedPSG-PUM方法框架中，固定B方低相关属性列的填补模型（采用VF-GAIN作为数据填补模型），通过调节相关性系数阈值$\tau$的取值，评估模型性能以确定最优参数配置。
 
