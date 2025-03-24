@@ -258,7 +258,7 @@ Adult Census Dataset 同样源自 UCI 机器学习库，是一个广泛认可的
 
 各数据集均由各自数据提供方预先划分为训练集和测试集，确保模型训练与在未见数据上的评估有初步的分离。为了与实验设计保持一致，该设计模拟了分布式学习环境，进一步将训练数据纵向划分为三个不同部分，分别分配给三个假想方：A、B 和 C。该纵向划分意味着每个方持有整个样本集中的一部分独特特征，这反映了数据在多个实体间分布的场景，正如联邦学习框架中常见的情况。为模拟标签数据稀缺或分布不均的情况，从方 B 和 C 持有的数据中移除了数据标签，从而生成了统称为 U 的未标记数据。对于方 A，在其训练数据子集中识别出所有属于正类的样本，并随机选择其中 10\% 的样本保留其标签，构成正样本集 P。而对于其余 90\% 的正样本以及所有负样本，其标签均被忽略，在方 A 的数据中这些样本实际上被视为未标记。因此，实验设置由仅供方 A 使用的一小部分标记正样本集 P，以及分布于三个方的更大未标记数据集 U 组成，从而使能够探讨方法在分布式环境下利用有限标记数据的能力。
 
-在纵向联邦预测不确定性（VFPU）算法的联邦训练和预测阶段，通过集成针对纵向联邦学习（VFL）场景量身定制的多样化基学习器，对其性能进行了严格评估。具体而言，纵向联邦逻辑回归（VFPU\_LR）的实现改编自 Aono 等人的基础性工作 \textsuperscript{\cite{aono2016scalable}}，该工作利用安全多方计算（SMC）协议在梯度交换过程中保护数据隐私。对于基于树的方法，则使用 FedTree 库 \textsuperscript{\cite{li2022fedtree}} 开发了纵向联邦梯度提升决策树（VFPU\_GBDT）和纵向联邦随机森林（VFPU\_RF），该库是一个针对分布式树构建并支持同态加密的最先进框架。此外，纵向联邦 LightGBM（VFPU\_LGB）的实现则基于 FATE（Federated AI Technology Enabler）框架 \textsuperscript{\cite{liu2021fate}}，该框架为跨异构数据分区的安全联邦模型训练和推断提供了强大的基础设施。  
+在纵向联邦预测不确定性（VFPU）算法的联邦训练和预测阶段，通过集成针对纵向联邦学习（VFL）场景量身定制的多样化基学习器，对其性能进行了严格评估。具体而言，纵向联邦逻辑回归（VFPU\_LR）的实现改编自 Aono\textsuperscript{\cite{aono2016scalable}}等人的基础性工作，该工作利用安全多方计算（SMC）协议在梯度交换过程中保护数据隐私。对于基于树的方法，则使用 FedTree 库 \textsuperscript{\cite{li2022fedtree}} 开发了纵向联邦梯度提升决策树（VFPU\_GBDT）和纵向联邦随机森林（VFPU\_RF），该库是一个针对分布式树构建并支持同态加密的最先进框架。此外，纵向联邦 LightGBM（VFPU\_LGB）的实现则基于 FATE（Federated AI Technology Enabler）框架 \textsuperscript{\cite{liu2021fate}}，该框架为跨异构数据分区的安全联邦模型训练和推断提供了强大的基础设施。  
 
 为建立全面的基准对比体系，研究采用传统集中式机器学习范式，在聚合数据集上训练了多种经典模型以模拟非联邦学习场景。具体涵盖逻辑回归（LR）、梯度提升决策树（GBDT）、随机森林（RF）等基于scikit-learn框架\textsuperscript{\cite{pedregosa2011scikit}}的模型，以及通过原生库实现的XGBoost（XGB）\textsuperscript{\cite{chen2015xgboost}}和LightGBM（LGB）\textsuperscript{\cite{ke2017lightgbm}}两类高性能集成算法。通过与联邦学习框架进行横向对比，揭示了两者在数据分散场景下的性能差异与适用边界。
 
