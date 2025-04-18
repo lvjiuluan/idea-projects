@@ -164,11 +164,11 @@ Party B 拥有对齐样本的特征和标签：
 			\makecell[l]{\wuhao \quad 对齐数据集样本数量 $n_{al}$，标记数据集的样本数量 $n_{nl}$，相关性阈值 $\tau$}\\
 			\makecell[l]{\wuhao \textbf{输出:} $X^{B_{predict}}$: 最终通过预测方法生成的B方数据}\\
 			\makecell[l]{\wuhao \textbf{Process:}}\\
-			\makecell[l]{\wuhao 1: Initialize $X^{B_{predict}} = \emptyset$, $\mathcal{L}_B^{\text{predict}} = \{(\mu_q, \phi^B_q) \in \mathcal{L}_B \mid u_q > \tau\}$}\\
-			\makecell[l]{\wuhao 2: \textbf{for} $(\mu_q, \phi^B_q) \in \mathcal{L}_B^{\text{predict}}$ \textbf{do}}\\
+			\makecell[l]{\wuhao 1: Initialize $X^{B_{predict}} = \emptyset$, $\mathcal{L}_B^{\text{predict}} = \{(\mu_q, x^B_q) \in \mathcal{L}_B \mid u_q > \tau\}$}\\
+			\makecell[l]{\wuhao 2: \textbf{for} $(\mu_q, x^B_q) \in \mathcal{L}_B^{\text{predict}}$ \textbf{do}}\\
 			\makecell[l]{\wuhao 3: \quad $X_{al}^{B_{predict}} = \{x_{i}^{B_{predict}}\}_{i=1}^{n_{al}}$}\\
 			\makecell[l]{\wuhao 4: \quad $X_{nl}^{B_{predict}} = \{x_{i}^{B_{predict}}\}_{i=n_{al}+1}^{n_{al}+n_{nl}}$}\\
-			\makecell[l]{\wuhao 5: \quad $p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^{B_{predict}}, X_{nl}^{B_{predict}}, \phi^B_q)$}\\
+			\makecell[l]{\wuhao 5: \quad $p = \text{VFPU-M}(X_{al}^A, X_{nl}^A, X_{al}^{B_{predict}}, X_{nl}^{B_{predict}}, x^B_q)$}\\
 			\makecell[l]{\wuhao 6: \quad $X^{B_{predict}} = X^{B_{predict}} \cup \{p\}$}\\
 			\makecell[l]{\wuhao 7: \textbf{end for}}\\
 			\makecell[l]{\wuhao 8: 得到 $X^{B_{predict}}$}\\
