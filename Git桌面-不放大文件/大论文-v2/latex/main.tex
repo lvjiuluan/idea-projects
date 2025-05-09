@@ -1,0 +1,170 @@
+% !TEX root = main.tex
+% 在某些 LaTeX 编辑器（如 TeXworks、TeXStudio、VS Code 的 LaTeX Workshop 插件等）中，
+% 这一行被称为“magic comment”（魔法注释）。
+% 它告诉编辑器当前文件的主文件（root file）是 main.tex，
+% 当你在这份子文件里按下编译按钮时，编辑器会自动去编译 main.tex 而不是单独编译这个子文件。
+% 这样可以让编辑器正确找到所有引用、配置等，从而顺利生成最终 PDF。
+
+% 文章的主体架构章节数均在此设计编辑。
+
+
+\documentclass[UTF8,twoside,zihao=-4,AutoFakeBold,scheme=chinese,openany]{ctexbook}
+% 选择文档类为 `ctexbook`，适用于中文书籍排版
+% 其中的可选参数含义如下：
+% UTF8          % 指定文档编码为 UTF-8
+% twoside       % 采用双面打印格式（适用于书籍）
+% zihao=-4      % 设置默认字号为小四（-4 表示小四号）
+% AutoFakeBold  % 自动伪粗体（用于不支持粗体的字体）
+% scheme=chinese % 采用 `chinese` 方案（适用于中文排版）
+% openany       % 允许章节在奇偶页均可开始（默认 `openright` 只在奇数页开始）
+
+\usepackage{graphicx}
+% 引入 `graphicx` 宏包，用于插入和处理图片
+% 提供 `\includegraphics` 命令，可用于插入图片
+% 允许对图片进行缩放、旋转、裁剪等操作
+
+% 输入配置文件，例如调用的宏包（公式，插图等）
+\input{latex_settings/custom-chinese}
+% \input 命令用于插入并执行外部 LaTeX 文件的内容
+% 这里插入的是 `latex_settings/custom-chinese.tex` 文件
+% 作用类似于直接在此处粘贴该文件的内容
+% 
+% `latex_settings/custom-chinese` 是文件路径（不需要写 `.tex` 扩展名）
+% 该文件可能包含一些自定义的中文排版设置，如：
+% - 字体设置
+% - 行距、段落格式调整
+% - 额外的宏定义
+% - 其他 LaTeX 预设
+%
+% 这样做的好处是让主文件结构更清晰，便于管理和复用
+
+
+%取消章节编号
+\makeatletter
+\newcommand\specialsectioning{
+	\setcounter{secnumdepth}{-2}
+}
+\makeatother
+
+
+
+
+\begin{document}
+	
+% 封面页及扉页
+\pagestyle{empty}
+\input{chapters/coverpage}
+
+
+% 原创性声明
+\input{chapters/original}
+
+\clearpage
+
+%前序部分（中英文摘要，目录等，chapter后面不编号）
+\frontmatter
+
+%开始以大写罗马字母计页码
+\pagenumbering{Roman}
+
+\pagestyle{plain}
+%页面格式
+%\pagestyle{plain}
+
+% 中文摘要页
+\input{chapters/abs-chinese}
+
+
+% 英文摘要页
+\input{chapters/abs-english}
+
+
+% 目录
+%\begin{spacing}{1.14}
+\tableofcontents
+
+
+\begingroup
+\renewcommand*{\addvspace}[1]{}
+%图目录
+%\newcommand{\loflabel}{图}
+%\renewcommand{\numberline}[1]{\loflabel~#1\hspace*{1em}}
+%\listoffigures
+
+%表目录
+%\newcommand{\lotlabel}{表}
+%\renewcommand{\numberline}[1]{\lotlabel~#1\hspace*{1em}}
+%\listoftables
+\endgroup
+
+%\end{spacing}
+
+
+
+
+
+%主要符号表
+%\input{chapters/symbol-table}
+
+%缩略词表
+%\input{chapters/abbreviation-table}
+
+\clearpage
+
+%% 开始章节写作,chapter后面开始编号，显示特定页眉页脚
+\mainmatter
+\pagenumbering{arabic}
+
+%正文页眉避免英文全部大写
+\renewcommand\thechapter{\arabic{chapter}}
+\renewcommand{\chaptermark}[1]{\markboth{第 \thechapter 章 \ #1}{}}
+
+
+
+
+% 第1章
+\include{chapters/1}
+
+% 第2章
+\include{chapters/2}
+
+% 第3章
+\include{chapters/3}
+
+% 第4章
+\include{chapters/4}
+
+% 总结
+\include{chapters/conclusion}
+
+%如果要增加章节数请在此加项
+
+\backmatter
+
+%取消后续章节的页眉上的章节编号
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+%参考文献
+\include{chapters/reference}
+
+%如果没有附录请自行删除以下页面
+
+%附录A
+%\include{chapters/appdendixA}
+
+%附录B
+%\include{chapters/appdendixB}
+
+%附录C
+%\include{chapters/appdendixC}
+
+%作者简介
+\include{chapters/CV}
+
+% 致谢
+\include{chapters/thanks}
+
+
+
+
+\end{document}
