@@ -32,7 +32,7 @@
 \end{figure}
 \vspace{-0.35cm}
 
-LIANG\textsuperscript{\cite{liang2022rscfed}} 等人提出了随机采样共识联邦半监督学习（Random Sampling Consensus Federated Semi-Supervised Learning, RSCFed），通过将多个子集模型聚合与距离加权策略相结合，缓解了标签隔离与数据异质性问题。随后，FAN\textsuperscript{\cite{fan2022private}} 等人提出了私有联邦半监督学习（Private Semi-Supervised Federated Learning, FedSSL），利用伪标签与差分隐私机制进一步解决了未标注客户端的训练需求与潜在的隐私泄露风险。而针对在客户端间建立一致性损失以缓解数据分布不一致问题，ZHENG\textsuperscript{\cite{jeong2020federated}} 等人则提出了联邦匹配（Federated Match, FedMatch），通过在各客户端与其邻近客户端之间增加一致性约束来提升模型鲁棒性。为更好地在服务器端利用未标记数据并在效率与准确性之间取得平衡，WANG\textsuperscript{\cite{wang2022enhancing}} 等人提出了增强型联邦半监督学习（Enhancing Federated Learning with In-Cloud Unlabeled Data, AdaFedSemi），通过自适应地调整客户端参与率与伪标签阈值改善了全局模型性能与通信成本。为了在服务器端未标记数据的基础上实现更高效的协同训练，ITAHARA\textsuperscript{\cite{itahara2021distillation}} 等人开发了基于蒸馏的联邦半监督学习（Distillation-based Semi-Supervised Federated Learning, DS-FL），使用多客户端伪标签平均生成的集合标签来提升模型泛化能力。最后，对于一个更具挑战性的半监督学习设置，即PU学习设置，Lin\textsuperscript{\cite{FedPU}}等人提出了联邦PU学习（Federated Positive and Unlabeled Learning, FedPU）方法，推导出了一种新的目标函数，使得学习客户端的负类任务可以转交给其他在负类上有标签数据的客户端。通过这种方式，每个客户端只需要负责学习正类，并且可以独立进行本地训练。
+LIANG等人\textsuperscript{\cite{liang2022rscfed}}提出了随机采样共识联邦半监督学习（Random Sampling Consensus Federated Semi-Supervised Learning, RSCFed），通过将多个子集模型聚合与距离加权策略相结合，缓解了标签隔离与数据异质性问题。随后，FAN 等人\textsuperscript{\cite{fan2022private}}提出了私有联邦半监督学习（Private Semi-Supervised Federated Learning, FedSSL），利用伪标签与差分隐私机制进一步解决了未标注客户端的训练需求与潜在的隐私泄露风险。而针对在客户端间建立一致性损失以缓解数据分布不一致问题，ZHENG 等人\textsuperscript{\cite{jeong2020federated}}则提出了联邦匹配（Federated Match, FedMatch），通过在各客户端与其邻近客户端之间增加一致性约束来提升模型鲁棒性。为更好地在服务器端利用未标记数据并在效率与准确性之间取得平衡，WANG 等人\textsuperscript{\cite{wang2022enhancing}}提出了增强型联邦半监督学习（Enhancing Federated Learning with In-Cloud Unlabeled Data, AdaFedSemi），通过自适应地调整客户端参与率与伪标签阈值改善了全局模型性能与通信成本。为了在服务器端未标记数据的基础上实现更高效的协同训练，ITAHARA 等人\textsuperscript{\cite{itahara2021distillation}}开发了基于蒸馏的联邦半监督学习（Distillation-based Semi-Supervised Federated Learning, DS-FL），使用多客户端伪标签平均生成的集合标签来提升模型泛化能力。最后，对于一个更具挑战性的半监督学习设置，即PU学习设置，Lin 等人\textsuperscript{\cite{FedPU}}提出了联邦PU学习（Federated Positive and Unlabeled Learning, FedPU）方法，推导出了一种新的目标函数，使得学习客户端的负类任务可以转交给其他在负类上有标签数据的客户端。通过这种方式，每个客户端只需要负责学习正类，并且可以独立进行本地训练。
 
 \vspace{-0.1cm}
 \begin{figure}[h]
@@ -50,7 +50,7 @@ LIANG\textsuperscript{\cite{liang2022rscfed}} 等人提出了随机采样共识�
 标记数据存储于服务器，而客户端只有未标记数据。例如，一家可穿戴设备公司希望利用联邦学习训练健康监测模型，如图 \ref{LabelAtServer} 所示。在这种情况下，由于用户通常缺乏专业知识，无法标注健康相关数据，因此客户端的数据是未标记的。标签数据在服务端的情况比标签在客户器端更复杂，原因是所有客户端都只拥有未标记数据，无法为联邦模型提供额外的监督信号，仅使用无标签数据进行训练可能会导致遗忘从有标签数据中学到的知识，从而影响模型性能\textsuperscript{\cite{jeong2020federated,diao2022semifl}}。
 
 
-为了解决标签数据和非标签数据之间的隔离问题，ZHENG\textsuperscript{\cite{jeong2020federated}}等人提出了一种不相干的学习方案，即分别为标签数据和非标签数据设置一套参数。在非标签数据上进行训练时，标签数据的参数是固定的，以防止知识被覆盖。非标记数据的参数会在参与者和服务器之间传输，而非标记数据的参数设置为稀疏的，这为通信效率带来了额外的好处。此外，为了解决不同客户端持有的异构数据问题，ZHENG\textsuperscript{\cite{jeong2020federated}}等人提出了客户端间一致性损失，这样不同参与者的本地模型就能在相同数据上产生相似的输出。
+为了解决标签数据和非标签数据之间的隔离问题，ZHENG 等人\textsuperscript{\cite{jeong2020federated}}提出了一种不相干的学习方案，即分别为标签数据和非标签数据设置一套参数。在非标签数据上进行训练时，标签数据的参数是固定的，以防止知识被覆盖。非标记数据的参数会在参与者和服务器之间传输，而非标记数据的参数设置为稀疏的，这为通信效率带来了额外的好处。此外，为了解决不同客户端持有的异构数据问题，ZHENG 等人\textsuperscript{\cite{jeong2020federated}}提出了客户端间一致性损失，这样不同参与者的本地模型就能在相同数据上产生相似的输出。
 
 \vspace{-0.1cm}
 \begin{table}[h]
@@ -83,7 +83,7 @@ LIANG\textsuperscript{\cite{liang2022rscfed}} 等人提出了随机采样共识�
 \end{table}
 \vspace{-0.35cm}
 
-DIAO\textsuperscript{\cite{diao2022semifl}}等人提出了半监督联邦学习方法（Semi-supervised Federated Learning, SemiFL），为应对上述挑战提供了另一种思路。该方法首先利用带标注数据对全局模型进行微调，从而提升模型质量并减轻因客户端无监督训练而带来的遗忘现象；同时，该方法主张增强客户端模型与全局模型间的一致性，而非在客户端之间对模型输出进行正则化。
+DIAO 等人\textsuperscript{\cite{diao2022semifl}}提出了半监督联邦学习方法（Semi-supervised Federated Learning, SemiFL），为应对上述挑战提供了另一种思路。该方法首先利用带标注数据对全局模型进行微调，从而提升模型质量并减轻因客户端无监督训练而带来的遗忘现象；同时，该方法主张增强客户端模型与全局模型间的一致性，而非在客户端之间对模型输出进行正则化。
 
 (3) 联邦半监督学习方法总结
 
@@ -127,5 +127,7 @@ DIAO\textsuperscript{\cite{diao2022semifl}}等人提出了半监督联邦学习�
 
 第5章为总结与展望。该章对全文研究内容进行了归纳总结，提炼了基于联邦半监督学习的样本生成方法的核心成果与贡献，分析了所提方法的理论意义和实践价值。同时，针对研究中存在的不足之处，提出了未来工作的改进方向。
 \clearpage
+
+
 
 
