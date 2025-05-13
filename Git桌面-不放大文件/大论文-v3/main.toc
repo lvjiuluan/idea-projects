@@ -1,0 +1,54 @@
+\contentsline {chapter}{摘\hskip 1em\relax 要}{I}{chapter*.8}%
+\contentsline {chapter}{ABSTRACT}{II}{chapter*.9}%
+\contentsline {chapter}{\numberline {第1章\hspace {.3em}}绪论}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}研究背景及意义}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}国内外研究现状}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}联邦半监督学习}{2}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}数据生成方法}{5}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}论文研究的主要内容}{6}{section.1.3}%
+\contentsline {section}{\numberline {1.4}论文组织结构}{7}{section.1.4}%
+\contentsline {chapter}{\numberline {第2章\hspace {.3em}}相关理论介绍}{8}{chapter.2}%
+\contentsline {section}{\numberline {2.1}本章引言}{8}{section.2.1}%
+\contentsline {section}{\numberline {2.2}联邦学习}{8}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}联邦学习概念}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}联邦学习分类}{10}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}半监督学习}{11}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}半监督学习概念}{11}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}半监督学习方法}{12}{subsection.2.3.2}%
+\contentsline {section}{\numberline {2.4}表格数据生成}{14}{section.2.4}%
+\contentsline {section}{\numberline {2.5}本章小结}{15}{section.2.5}%
+\contentsline {chapter}{\numberline {第3章\hspace {.3em}}基于多方联邦的半监督学习方法}{16}{chapter.3}%
+\contentsline {section}{\numberline {3.1}本章引言}{16}{section.3.1}%
+\contentsline {section}{\numberline {3.2}问题分析与定义}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}基于多方联邦的半监督学习方法}{19}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}数据预处理与加密样本对齐}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}基于正样本与未标记数据的纵向联邦学习}{22}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}实验过程及结果分析}{29}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}数据集介绍与实验准备}{29}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}实验设计与基线模型介绍}{32}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}实验结果分析}{35}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}本章小结}{40}{section.3.5}%
+\contentsline {chapter}{\numberline {第4章\hspace {.3em}}基于联邦半监督学习的参与方样本生成方法}{45}{chapter.4}%
+\contentsline {section}{\numberline {4.1}本章引言}{45}{section.4.1}%
+\contentsline {section}{\numberline {4.2}问题分析与定义}{46}{section.4.2}%
+\contentsline {section}{\numberline {4.3}基于联邦半监督学习的参与方样本生成方法框架}{48}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}计算跨方特征相关性}{49}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}纵向联邦半监督方法预测数据}{51}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}联邦半监督学习框架设计}{51}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}多任务联邦半监督学习算法}{54}{subsubsection.4.3.2.2}%
+\contentsline {subsection}{\numberline {4.3.3}生成模型与纵向联邦半监督学习的协同框架}{60}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}实验过程及结果分析}{63}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}数据集介绍与实验准备}{63}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}实验设计与基线模型介绍}{64}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}实验结果分析}{66}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}本章小结}{73}{section.4.5}%
+\contentsline {chapter}{\numberline {第5章\hspace {.3em}}总结与展望}{74}{chapter.5}%
+\contentsline {section}{\numberline {5.1}研究总结}{74}{section.5.1}%
+\contentsline {section}{\numberline {5.2}未来工作展望}{75}{section.5.2}%
+\contentsline {chapter}{参考文献}{76}{chapter*.35}%
+\contentsline {chapter}{作者简介}{82}{chapter*.36}%
+\contentsline {section}{1. \ 攻读学位期间的研究成果}{82}{section*.37}%
+\contentsline {subsection}{1.1 \ 发表的学术论文和著作}{82}{subsection*.38}%
+\contentsline {subsection}{1.2 \ 参与的科研项目及获奖}{82}{subsection*.39}%
+\contentsline {chapter}{致 \hskip 1em\relax 谢}{83}{chapter*.40}%
+\contentsfinish 
