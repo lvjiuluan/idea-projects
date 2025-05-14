@@ -1,0 +1,1292 @@
+%% 
+%% Copyright 2007-2025 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.3 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for Elsevier's document class `elsarticle'
+%% with harvard style bibliographic references
+\documentclass[final,1p,times]{elsarticle}
+%\documentclass[final,3p,times]{elsarticle}
+%\documentclass[5p, times,preprint,12pt]{elsarticle}
+\usepackage{stmaryrd}
+\usepackage{lmodern}
+\usepackage{booktabs}  % 处理 \toprule, \midrule, \bottomrule
+\usepackage{multirow}  % 处理 \multirow
+\usepackage{graphicx}   % 处理表格自动缩放
+\usepackage{diagbox}
+\usepackage{xcolor}      % 颜色支持
+\usepackage{colortbl}    % 允许表格着色
+\usepackage{makecell}
+%% Use the option review to obtain double line spacing
+%% \documentclass[preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsmath package provides various useful equation environments.
+\usepackage{amsmath}
+\usepackage{hyperref} % 允许交叉引用，并提供超链接
+\usepackage{pifont}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{stfloats}  % 允许算法自动换栏
+%\usepackage[ruled,vlined]{algorithm2e}
+%%\llbracket d_i \rrbracket
+
+%%\textcircled{1} 
+
+
+
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
+
+\journal{Knowledge-Based Systems}
+\begin{document}
+
+
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for theassociated footnote;
+%% use the fnref command within \author or \affiliation for footnotes;
+%% use the fntext command for theassociated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for theassociated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \affiliation{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+%% \fntext[label3]{}
+
+\title{Participants sample generation based on association rules and data imputation in vertical federated learning} %% Article title
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{}
+%% \affiliation[label1]{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+%%
+%% \affiliation[label2]{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+
+\author[1]{Xin Liu}%	\fnref{fn1}} %% Author name
+\ead{liuxin@cqupt.edu.cn}
+\author[1]{Hangxuan He}
+\ead{s211231006@stu.cqupt.edu.cn}
+\author[1]{Weihao Tan}
+\ead{s231231055@stu.cqupt.edu.cn}
+\author[1]{Feng Chen}
+\ead{chenfeng@cqupt.edu.cn}
+\author[1]{Ying Qian\corref{cor1}}
+\ead{qianying@cqupt.edu.cn}
+\author[1]{Qingjie Wei}
+\ead{weiqj@cqupt.edu.cn}
+\author[1]{Hongjun Zhu}
+\ead{zhuhi@cqupt.edu.cn}
+
+
+\cortext[cor1]{Corresponding author}
+%\fntext[fn1]{This is a footnote.}
+%% Author affiliation
+\affiliation[1]{organization={School of Software Engineering},
+	organization={Chongqing University of Posts and Telecommunications},
+            %addressline={}, 
+            city={Chongqing},
+            postcode={400065}, 
+            %state={},
+            country={China}}
+
+%% Abstract
+\begin{abstract}
+	
+%% Text of abstract
+In vertical federated learning, when multiple parties align their data, some participants may have missing samples that other participants possess. This leads to an insufficient number of joint samples, which can negatively impact the overall model performance. To address this issue, we propose a novel Participants Sample Generation method based on Association Rules and data imputation in vertical federated learning, abbreviated as FedPSG-AR. FedPSG-AR completes missing samples in two stages. First, it generates partial attributes using Vertical Federated Association Rules (VF-AR) by computing multi-party attribute correlations, identifying highly correlated attributes, and establishing relationships between them. If certain highly correlated attributes are missing in some parties, their values are then inferred from correlated attributes of other parties while ensuring data privacy. Next, FedPSG-AR employs a vertical federated imputation framework based on GANs to generate the remaining attributes of those missing samples. To enhance its effectiveness, we redesign the model structure, loss function and training process within the GANs framework. Experiments on various public datasets have thoroughly validated that FedPSG-AR outperforms the state-of-the-art baseline models currently available for participants sample generation in vertical federation learning.
+
+\end{abstract}
+
+%%Graphical abstract
+%\begin{graphicalabstract}
+%%\includegraphics{grabs}
+%\end{graphicalabstract}
+
+%%Research highlights
+%\begin{highlights}
+%\item Research highlight 1
+%\item Research highlight 2
+%\end{highlights}
+
+%% Keywords
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+
+%% PACS codes here, in the form: \PACS code \sep code
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+Participants sample generation \sep Vertical federated learning \sep Attribute correlation \sep Association rule \sep  Data imputation
+
+\end{keyword}
+
+\end{frontmatter}
+
+%% Add \usepackage{lineno} before \begin{document} and uncomment 
+%% following line to enable line numbers
+%% \linenumbers
+
+%% main text
+
+%% Use \section commands to start a section
+\section{Introduction}
+\label{sec1}
+
+%% Labels are used to cross-reference an item using \ref command.
+Nowadays, with the development of AI, machine learning often needs to deal with data from multiple participants, where the same object has different attributes. For example, when conducting credit risk assessment, banks and e-commerce companies have a large amount of historical data available for evaluation. However, the data they hold on the same entity have different attributes. By combining the different attributes from both sources to assess the credit risk of the common entity, more valuable results can undoubtedly be obtained. However, due to security and privacy protection constraints, it is difficult for participants to share their data with others for training machine learning models. As a result, vertical federated learning(VFL) has emerged. In the process of VFL, sample entities with the same ID but held by different participants need to undergo encrypted sample alignment. After this alignment, we refer to the multi-party samples with the same ID as joint samples under vertical federated learning. The joint sample set leverages additional attributes from multiple parties to enhance the training of VFL models. In many real-world applications, when multiple participants engage in VFL, the sample entities available for alignment are not always completely identical across all participants. As shown in Fig.\ref{fig:align}(a), Party B has fewer samples compared to Party A. Similarly, as shown in Fig.\ref{fig:align}(b), either Party A relative to Party B or Party B relative to Party A has a portion of missing samples. After performing encrypted sample alignment across multiple participants, the number of joint samples will be significantly smaller than the complete sample size in each participant's independent dataset. As is well known, sample size is a crucial factor affecting the performance of machine learning model training. Therefore, in vertical federated learning, to address the issue of insufficient joint samples after multi-party alignment, generating samples for participants with missing samples is a valuable research direction. It is essential to explore scientific methods to acquire larger and higher-quality federated training datasets.
+\begin{figure}[t]
+	\centering 
+	\includegraphics[width=0.7\textwidth]{align}
+	\caption{Illustration of participants with missing samples} 
+	\label{fig:align}
+\end{figure}
+
+Two approaches can be used to address the issue of insufficient joint samples after multi-party sample alignment: \ding{172} Generating new joint samples. The unaligned samples will be discarded. New joint samples will be generated based on the aligned joint samples to expand the joint sample set. \ding{173} Generating samples for participants with missing samples. Retain the unaligned samples, and generate samples for the participants with missing samples to participate in multi-party sample alignment. Complete joint samples are formed using the unaligned samples and the generated samples. Subsequently, a larger set of joint samples can be acquired.
+
+The first approach involves generating new joint samples. Currently, several methods based on Vertical Federated Learning(VFL) can used to generate the joint samples from multiple participants. For instance, generation methods based on Generative Adversarial Network: FedDA\cite{2}, VertiGAN\cite{3}, VFLGAN\cite{4}, GTV\cite{5}, and tabular data generation methods based on Markov Random Fields(MRFs): VertiMRF\cite{6}. They are all methods within the VFL framework. However, in machine learning model training, both the sample size important and the quality of the sample data are crucial. Vertical federated generation methods yield completely new joint samples, and the data across all parties is synthesized and non-real. Moreover, when the missing sample ratio of some participants is high, the additional unaligned samples of other participants cannot be incorporated into the joint sample set. As a result, only a few joint samples are available for training the vertical federated generation model, making it difficult to develop a high-quality model. Therefore, methods for generating joint samples do not ensure the acquisition of high-quality joint samples. The first approach of ‘generating new joint samples’ is not the optimal solution.
+
+The second approach involves generating samples for participants with missing samples. Currently, various methods are available for generating these missing samples, such as Generative Adversarial Network\cite{7}, Autoencoder\cite{8} and Denoising Diffusion Probabilistic Model\cite{9}. These methods are capable of generating high-quality data by learning the underlying data distribution and then creating synthetic samples. When generating samples for participant with missing samples, these methods learn locally from the data of such participant and do not consider the influence of other parties. However, in vertical federated learning applications, there are inherent associations among the data of all participants within the joint samples. Although some deep learning-based generation methods, such as the before mentioned examples, perform well, these models applied locally within each party overlook the role and impact of multi-party data associations on the generation results. To generate high-quality samples for participants with missing samples, we need to collaboratively integrate data from other parties. Meanwhile, the problem of 'generating samples for participants' can also be regarded as the problem of 'imputing missing data in joint samples' within the context of vertical federation learning. Therefore, we need a highly effective method to generate or impute these missing sample data in this scenario to obtain a complete joint sample.
+
+To address these challenges, this paper proposes a Participants Sample Generation method based on association rules and data imputation in VFL, referred to FedPSG-AR. It aims to generate samples for participants with missing samples while ensuring the privacy of multi-party data, thereby providing more high-quality joint samples for vertical federated machine learning. The contributions of this paper are as follows:
+
+(1) To generate the missing samples, this paper proposes an attribute generation method based on vertical federated association rules(VF-AR). This method generates partial attribute values in the missing samples of participants, and these attributes are highly correlated with those of other parties. The calculation and generation process is executed under secure privacy protection. 
+
+(2) Based on the attributes generated by VF-AR, we construct a framework of vertical federated imputation to generate the remaining attributes. In this framework, we redesign the model structure, loss function and training process based on GANs. It amplifies the impact of other participants' data in the imputation process, thereby maximizing the potential of multi-party collaborative learning.
+
+(3) This paper proposes a novel Participants Sample Generation method based on vertical federated learning, which designs an effective strategy for generating the missing samples of participants. This method first generates partial attributes of the missing samples by VF-AR, and then imputes the remaining attributes by vertical federated imputation models. 
+
+The paper is organized as follows: Section \ref{sec2} discusses related work on data generation, and data imputation. In Section \ref{sec3}, we introduce our method of participants samples generation. Experimental results are presented in Section \ref{sec4}, followed by conclusions in Section \ref{sec5}.
+
+\section{Related Word}
+\label{sec2}
+
+%% Use \subsection commands to start a subsection.
+\subsection{Data generation methods}
+
+\label{subsec21}
+In addition to early machine learning-based data generation methods, state-of-the-art approac-hes include Autoencoders(AEs), Generative Adversarial Networks(GANs), and Diffusion Probabilistic Models(DDPMs), among others. These methods are designed to generate new sample data by learning underlying patterns from existing samples. 
+
+Autoencoder-based generative models include Variational Autoencoder(VAE)\cite{10} and others. L. Xu et al.\cite{11} an improved VAE that explicitly models the joint distribution of hidden variables and tabular data features, enabling effective generation and reconstruction of both continuous and discrete features.  
+ 
+Proposed by I. J. Goodfellow et al.\cite{7} in 2014, Generative Adversarial Networks(GAN) is inspired by Game Theory. Internally, it consists of a generator(G) and a discriminator(D) network, which engage in an adversarial game against each other to efficiently generate data. M. Mirza et al.\cite{12}  proposed Conditional Generative Adversarial Nets (CGANs) to introduce conditional variables into the modeling of both the generative and discriminative models, to transform GANs from unsupervised to supervised learning. L. Xu et al.\cite{11} proposed CTGAN, which is based on Conditional GAN, to generate tabular data for modeling tabular data distributions and samples. J. Lee et al.\cite{13} proposed a generalized GAN framework for tabular data synthesis, integrating adversarial training with the negative log-density regularization of invertible neural networks to enhance the overall quality of the generated data. S. Singh et al.\cite{14} introduced MeTGAN, which employs sparse linear layers to address the memory bottleneck of CTGAN, significantly reducing memory consumption during training. Z. Zhao et al.\cite{15} proposed CTAB-GAN based on CTGAN for modeling different data types, including continuous variables, categorical variables, and mixed-feature variables. J. Engelmann et al.\cite{16} proposed a conditional Wasserstein GAN-based approach for modeling tabular datasets with both numerical and categorical variables, incorporating an auxiliary classifier to specifically enhance performance on classification tasks.
+
+The Diffusion Probabilistic Model(DDPM)\cite{9} was proposed by J. Ho et al. It transforms the data distribution into a standard normal distribution via a forward step-by-step noise-addition process and then learns an inverse denoising process to generate high-quality target data. A. Kotelnikov et al.\cite{17} proposed TabDDPM, a diffusion-model-based tabular data generation method. This method can efficiently capture the complex relationships between numerical and categorical features through a specific noise-addition and denoising process.
+
+\subsection{Data imputation methods}
+\label{subsec22}
+
+With the rapid development and application of artificial intelligence and big data technologies, data generation methods based on Generative Adversarial Networks(GANs) and Diffusion Probabilistic Models(DDPMs) have become prominent in recent years. However, when certain data elements are missing in samples, these methods fail to provide high-quality training samples for machine learning tasks such as classification and prediction. Consequently, generating and imputing missing data elements has emerged as a critical research direction. Currently, the main data imputation methods include statistical-based imputation methods, traditional machine learning-based imputation methods, and deep learning-based imputation methods. 
+
+Statistical-based imputation methods primarily replace missing values using statistical characteristics. Mean Imputation\cite{18} substitutes missing values with the feature mean. K-Nearest Neighbors Imputation(KNNI)\cite{19} selects the K most similar neighbors of the missing sample using the KNN method and imputes the missing values with their mean or mode, thereby preserving the local data structure.
+
+Traditional machine learning-based imputation methods attempt to predict missing values by learning complex feature relationships. XGBoost Imputation(XGBI)\cite{20} constructs a prediction model with XGBoost to predict the missing values either in a regression or classification manner. MissForest Imputation(MissFI)\cite{21} iteratively predicts the missing values based on the Random Forest algorithm, and it can maintain high imputation accuracy under nonlinear relationships. Multiple Imputation by Chained Equations(MICE)\cite{22} iteratively creates an imputation model for each variable via linear regression or generalized linear models.  
+
+Deep learning-based imputation algorithms, leveraging the powerful capabilities of deep generative models, achieve high-quality imputation by modeling data distributions either implicitly or explicitly. Autoencoders(AEs), which embed data in the latent space through an encoding-decoding structure, preserve key data features in low-dimensional representations and impute the missing values during the decoding process. S. Ryu et al.\cite{23} employed an autoencoder-based approach to impute missing data in smart meters. Generative Adversarial Networks(GANs) leverage adversarial training between a generator and a discriminator to produce synthetic samples and imputed values that align with the real distribution. They are commonly used for missing data reconstruction in complex, high-dimensional scenarios. J. Yoon et al.\cite{24} proposed GAIN, which utilizes GAN to impute missing data. S. E. Awan et al.\cite{25} proposed Conditional Generative Adversarial Imputation Network(CGAIN), inspired by CGAN. CGAIN takes the sample classification labels as inputs for generator and discriminator to impute the missing values in samples, simultaneously, addresses the problem of sample imbalance. Y. Wang et al.\cite{26} proposed Pseudo-label Conditional Generative Adversarial Imputation Networks(PC-GAIN). PC-GAIN pre-trains on low-missing-rate data to learn category information, employs pseudo-labels to determine an auxiliary classifier, and integrates it into a GAN framework to enhance data imputation. X. Miao et al.\cite{27} proposed VGAIN, an imputation model that integrates the concept of Variational Autoencoders(VAEs) into the GAN framework. By incorporating VAE's latent variable regularization and reconstruction loss into the generator, VGAIN enhances the robustness of representation learning, effectively preventing mode collapse and improving the quality of missing data imputation. Diffusion model-based imputation methods, exemplified by TabCSDI\cite{28}, reconstruct missing values through a forward noise addition process followed by a reverse denoising process. This approach enables a more flexible and smooth approximation of the data distribution.
+
+\subsection{Vertical federated data generation and data imputation methods}
+\label{subsec23}
+
+Federated Learning(FL), initially proposed by B. McMahan et al.\cite{29}, is a distributed machine learning framework that allows multiple participants to collaboratively train a global model while preserving data privacy and security, without exchanging raw data. Depending on the application scenario, FL can be categorized into different types, such as horizontal federated learning and vertical federated learning. Among them, Vertical Federated Learning(VFL)\cite{30} is suited for scenarios where different participants possess data with the same sample space but different feature attributes. By leveraging distributed computing and privacy-preserving techniques, VFL provides an effective solution for feature-level collaborative model training across organizations.
+
+In the application scenario of vertical federated learning, when the size of the joint samples in the training dataset is insufficient, data augmentation can be achieved through sample generation. Currently, there are several sample generation methods based on Vertical Federated Learning(VFL), mainly including GAN-based methods and Markov Random Field(MRF)-based methods. J. Zhang et al.\cite{2} proposed FedDA, a vertical federated learning data augmentation method based on the Generative Adversarial Network. X. Jiang et al.\cite{3} proposed VertiGAN, a GAN-based model that comprises a multi-output global generator and multiple local discriminators to generate a high-utility synthetic integrated dataset. X. Yuan et al.\cite{4} proposed VFLGAN, another vertical federated learning method based on generative adversarial networks. GTV\cite{5} is a VFL framework specialized in generating high-fidelity synthetic tabular data. W. Lin et al.\cite{6} proposed VertiMRF to generate synthetic data in the vertical federated learning setting while ensuring differential privacy protection for all shared information.
+
+In practical applications, when some data elements are missing in samples from multiple local datasets, it becomes challenging to provide high-quality joint samples for training models in vertical federated learning tasks (e.g., federated classification, prediction, etc.). Data from different parties typically exhibit certain associations. Therefore, vertical federated imputation models are essential for imputing missing data elements in this context. W. Du et al.\cite{31} stated in their paper that research on missing-data imputation in vertical federated application scenarios is still relatively unexplored. They also proposed a privacy-protected vertical federated KNN feature imputation method. However, the KNN computation method could not meet the requirements for high-quality sample data imputation.
+
+In summary, various advanced data generation and imputation methods have been developed. However, data generation and imputation methods in vertical federated scenarios are uncommon. Although existing research has demonstrated the feasibility of generating data in VFL using models such as Generative Adversarial Networks, numerous challenges remain across various practical application scenarios. For example, one such challenge is the issue highlighted in the introduction section of this paper.
+
+\section{Participants sample generation method}
+\label{sec3}
+This paper proposes a participants sample generation method based on association rules and data imputation in vertical federated learning, abbreviated as FedPSG-AR. This method integrates with attribute correlations, association rules, and imputation techniques in the VFL framework. FedPSG-AR primarily consists of two stages, as shown in Fig.\ref{fig:overall}. The first stage involves an attribute generation method based on vertical federated association rules(VF-AR). It includes the following three processes implemented under vertical federated learning: Computing multi-party attribute correlations; Establishing relationship of attribute values; Generating attribute values by VF-AR. First, attribute correlations between different parties are computed to construct a multi-party attribute correlation matrix. Next, a strongly correlated attribute pair is identified from the matrix, and the correspondences between their attribute values are established. Finally, for the missing samples in the participants, association rules are established to generate their attributes correlated with those of other parties. The second stage involves a vertical federated imputation based on GANs. After partial attribute values are generated by VF-AR, the vertical federated imputation is used to generate the remaining attribute values of these missing samples.
+\begin{figure}[t]
+	\centering 
+	\includegraphics[width=0.5\textwidth]{overall}
+	\caption{Overall Schematic of Participants Sample Generation Method proposed in this paper} 
+	\label{fig:overall}
+\end{figure}
+
+\subsection{Data description}
+\label{subsec31}
+Suppose there are N data owners (N participants) and a central server in a given vertical federated learning scenario. To clearly illustrate the methodology of this paper, we take the example of two participants: Party A and Party B, with their trusted collaborator C serving as the central server. Party A and Party B possess sensitive data and are required to safeguard data privacy during their collaborative model-training process. Assume that the label column of the joint samples is held by Party B.
+
+We apply various preprocessing techniques to the data held by Parties A and B, including data cleaning, normalization, and other relevant methods. After preprocessing, the two parties securely align their samples based on ID spaces. To protect data privacy during this alignment, we employ the Blind RSA-based Private Set Intersection (PSI) protocol\cite{32}. This protocol allows both parties to securely compute the intersection of their datasets without revealing any additional information about the samples they hold. Throughout the vertical federated learning process in the proposed method, fully homomorphic encryption (Cheon-Kim-Kim-Song, CKKS \cite{33}) is utilized for secure data computation.
+
+Suppose the sample set in Party A as $D_A$, $D_A=\{X_1^A,\ldots,X_i^A,\ldots,X_{N_A}^A\}$, 
+$X_i^A=(x_{i1}^A,\ldots,x_{im}^A,$
+$\ldots,x_{id_A}^A)$,where $X_i^A$ is the $i$-th sample of Party A, $x_{im}^A$ is the $m$-th attribute of the $i$-th sample, $i=1,\ldots,N_{A}$, $m=1,\ldots,d_A$. $N_A$ denotes the number of samples in Party A and $d_A$ denotes the number of attributes in Party A's samples. In Party B, the sample set is represented as $D_B$,$D_B=\{X_1^B,\ldots,X_i^B,\ldots,X_{N_B}^B\}$, $X_{i}^{B}=(x_{i1}^{B},\ldots$, $x_{in}^{B},\ldots,$
+$x_{id_B}^{B})$,where $X_i^B$ is the $i$-th sample of Party B, $x_{in}^B$ is the $n$-th attribute of the $i$-th sample, $i=1,\ldots,N_B$, $n=1,\ldots,d_B$. $N_B$ denotes the number of samples in Party B, and $d_B$ denotes the number of attributes in Party B's samples. Parties A and B align their sample sets, $D_A$ and $D_B$, based on their sample IDs through encrypted matching, resulting in $N_{A \cap B}$ aligned samples.The $N_A-N_{A \cap B}$ samples in Party A cannot find corresponding aligned samples in Party B. The $N_B - N_{{A}\cap {B}}$ samples in Party B cannot find corresponding aligned samples in Party A. In Party A, the aligned sample set is represented as $D_{Align}^{A}$, $D_{Align}^{A}$ $=\{X_{1}^{A},\ldots,X_{N_{{A}\cap {B}}}^{A}\}$, and the unaligned sample set is $D_{UnAlign}^A$
+$=\{X_{N_{{A}\cap {B}}+1}^A,\ldots,X_{N_{A}}^A\}$.In Party B, the aligned sample set is represented as $D_{Align}^B$, $D_{Align}^B=\{X_1^B,...,X_{N_{A\cap B}}^B\}$,
+and the unaligned sample set is $D_{UnAlign}^{B}=\{X_{N_{{A}\cap {B}}+1}^{B},\ldots,X_{N_{B}}^{B}\}$.
+As illustrated in Fig.\ref{fig:align}, the number of samples in $D_{Align}^A$ equals that in $D_{Align}^B$, and they have identical sample IDs.
+
+\subsection{Attribute generation method based on vertical federated association rules }
+\label{subsec32}
+Attribute generation method based on vertical federated association rules (i.e., an attribute generation method through VF-AR) utilizes the correlations between the attributes of the participant with missing samples and those of other parties. The attributes in these missing samples are generated using association rules derived from these correlations within the vertical federation framework. The process of this attribute generation method is illustrated in the Fig.\ref{fig:AR}.
+\begin{figure*}[t]
+	\centering 
+	\includegraphics[width=\textwidth]{AR}%[scale=0.7]
+	\caption{The process of the attribute generation method based on VF-AR (Taking Party B as an example)} 
+	\label{fig:AR}
+\end{figure*}
+
+(1) Computing multi-party attribute correlations
+
+The specific process for calculating the correlation coefficient $\rho_{X_m^A,X_n^B}$ between the $m$-th attribute of Party A and the $n$-th attribute of Party B is as follows:
+
+As the coordinator, Party C generates a key pair and distributes the public key to Parties A and B for use throughout the entire process of attribute generation based on vertical federated association rules.For the $m$-th attribute columns $X_{m}^{A}=(x_{1m}^{A},...,x_{im}^{A},...,x_{N_{{A}\cap {B}}m}^{A})$ of the samples from Party A, iterate over each attribute value $x_{im}^A$ in $X_m^A$, and assign ranking to them, where $i=1,...,N_{{A}\cap {B}}$. The rankings start from 1. For values with the same ranking, the average ranking is used (that is, the rankings of the same values are averaged). The ranking $Rank_{im}^A$ of each attribute value $x_{im}^A$ is obtained and then encrypted , and then sent to Party B. For the $n$-th attribute columns $X_n^B=(x_{1n}^B,...,x_{in}^B,...,x_{N_{A\cap B}n}^B)$ of the samples from Party B, iterate over each attribute value $x_{in}^B$ in $X_n^B$, and assign ranking to them, where $i=1,...,N_{{A} \cap {B}}$. The ranking $Rank_{in}^B$ of each attribute value $x_{in}^B$ is obtained and then encrypted. The difference $ \llbracket d_i \rrbracket $ between encrypted $Rank_{im}^A$ and $Rank_{in}^B$ is calculated as follows:
+
+\begin{equation}
+\llbracket d_i \rrbracket = \llbracket {Rank}_{im}^A \rrbracket - \llbracket {Rank}_{in}^B \rrbracket
+\label{eq.1}
+\end{equation}
+
+The Spearman's association coefficient\cite{add1} is calculated based on the differences $\llbracket d_i \rrbracket$, and the correlation coefficient $\rho_{X_m^A,X_n^B}$ is obtained. The calculation formula is as follows:
+
+\begin{equation}
+	\rho_{X_m^A,X_n^B}=1-\frac{6\sum_{i=1}^{num}\llbracket d_i \rrbracket^2}{num(num^2-1)}
+	\label{eq.2}
+\end{equation}
+
+where, num is the number of aligned samples, i.e.$num=N_{A\cap B}$.
+
+For all attributes from Party A and all attributes from Party B, the correlation  coefficient between them can be calculated using Eq.(\ref{eq.2}). The multi-party correlation coefficient matrix $M$ is represented as follows:
+
+\begin{equation}
+	M=\begin{bmatrix}\rho_{X_1^A,X_1^B}&\cdots&\rho_{X_1^A,X_{b}^B}\\\vdots&\ddots&\vdots\\\rho_{X_{a}^A,X_1^B}&\cdots&\rho_{X_{a}^A,X_{b}^B}\end{bmatrix}
+	\label{eq.3}
+\end{equation}
+
+In particular, when more than two parties are involved in the multi-party collaborative learning process, the correlation coefficient matrix can be computed between all attribute columns of participants with unaligned samples and those of participants with missing samples.
+
+(2) Establishing relationship of attribute values
+
+Based on the multi-party correlation coefficient matrix, this process first identifies attributes with high correlations between the parties, and determines correlated attribute pairs Then, a correspondence relationship is established for all of their values in the attribute pair. The detailed procedure is as follows:
+
+\ding{172}Loop through each value in the correlation coefficient matrix $M$ to identify the largest correlation coefficient $ \rho_{{X}_m^A, {X}_n^B} $ and determine the attribute pairs with strong correlations $({X_m^A,X_n^B})$.
+
+\ding{173}Party B initializes an empty table $R_{B_n}^{A_m}=\{\}$ to store the correspondence relationship between the values from $X_m^A$ and the values from $X_n^B$.
+
+\ding{174}Assume that the attribute columns $X_m^A$ contain a total of $s$ distinct values, represented as $Value_m^A=[v_{m_1}^A,v_{m_2}^A,...,v_{m_k}^A,...,v_{m_s}^A]$, where ${v_{m_{k}}^{A}}$ is the $k$-th value. Similarly, attribute columns $X_n^B$ contains a total of $t$ distinct values, represented as $Value_{n}^{B}=[v_{n_{1}}^{B},v_{n_{2}}^{B},...,v_{n_{q}}^{B},...,v_{n_{t}}^{B}]$, where ${v_{n_{q}}^{B}}$ is the $q$-th value. Loop through all the values in \(X_m^A\) and \(X_n^B\) corresponding to the attribute pair \((X_m^A,X_n^B)\). Party B computes the sample counts for each attribute value \( v_{n_q}^B \), denoted as \( {count}_{n_q}^B \), where \( q \in \{1,2,\dots,t\} \). Party A computes the sample counts for each attribute value \( v_{m_k}^A \), denoted as \( {count}_{m_k}^A \), where \( k \in \{1,2,\dots,s\} \).Party A and Party B respectively look up the values ${v_{m_{k}}^{A}}$ and ${v_{n_{q}}^{B}}$ of the attributes $x_{im}^A$ and $x_{in}^B$ for the $i$-th sample in $X_m^A$ and $X_n^B$, and then encrypt them to obtain $\llbracket {v_{m_{k}}^{A}} \rrbracket$ and $\llbracket {v_{n_{q}}^{B}} \rrbracket$.Party A sent the encrypted value $\llbracket {v_{m_{k}}^{A}}\rrbracket$ to Party B, and Party B records the attribute value $\llbracket {v_{n_{q}}^{B}}\rrbracket$ corresponding to $x_{in}^B$ when $x_{im}^A$ takes the value of $\llbracket {v_{m_{k}}^{A}} \rrbracket$.The correspondence between $x_{im}^A$ and $x_{in}^B$ is represented as $(\llbracket{v_{m_k}^A}\rrbracket,\llbracket{v_{n_q}^B}\rrbracket)$.Simultaneously,Party B records the sample counts \( {count}_{m_k}^{n_q} \) for the attribute values \( \llbracket v_{m_k}^A \rrbracket \) that correspond to the value \( \llbracket v_{n_q}^B \rrbracket \), and records the sample counts \( {count}_{n_q}^{m_k} \) for the attribute values \( \llbracket v_{n_q}^B \rrbracket \) that correspond to the value \( \llbracket v_{m_k}^A \rrbracket \). Then, these different correspondences are stored in the relationship table ${R_{B_n}^{A_m}}$, along with \( \text{count}_{n_q}^B \), \( \text{count}_{m_k}^A \), \( \text{count}_{m_k}^{n_q} \), and \( \text{count}_{n_q}^{m_k} \).
+
+\ding{175}Resets $ \rho_{{X}_m^A, {X}_n^B} $ to 0.
+
+Repeat this process from step \ding{172} to step \ding{175} until he total number of attributes in the participant with missing samples meets the specified requirement. These attributes are highly correlated with those of other parties. And, they need to be generated using vertical federation association rules. The number of selected correlated attributes also represents the degree of correlation between the attributes of Parties A and B.
+
+(3) Generating attribute values by VF-AR 
+
+According to the correspondence table established based on attribute correlations, association rules are utilized to generate these attributes of missing samples for the participants. Association rules\cite{34} are used to discover hidden relationships between data items and are widely applied in fields such as data mining and market basket analysis. They identify strong associations between items by analyzing their co-occurrence patterns. For example, in retail analysis, customers who buy product A are likely to also purchase product B. Association rules are typically expressed in an 'if-then' format. During the process of participants sample generation, association rules assist in establishing value mappings between two attribute columns, which are then used to infer and generate relevant data.
+
+When Party A's samples are missing:
+
+%Party B traverses all attribute values in $X_n^B$ and compute the sample counts for each attribute value ${v_{n_{q}}^{B}}$, denoted as ${count_{n_{q}}^{B}}$, where ${q}\in\{1,2,\ldots,t\}$. Simultaneously, Party B send the correspondence table ${R_{B_n}^{A_m}}$ to Party A. Party A traverses all attributes values in $X_m^A$. Based on ${R_{B_n}^{A_m}}$ between $X_m^A$ and $X_n^B$, Party A records the sample counts ${count_{m_k}^{n_q}}$ for the attribute values $\llbracket {v}_{{m_{k}}}^{{A}} \rrbracket$ in $X_m^A$ that correspond to the value $\llbracket {v_{n_{q}}^{B}} \rrbracket$ and send it to Party B.
+
+Based on \( R_{B_n}^{A_m} \) between \( X_m^A \) and \( X_n^B \), Party B calculates the ratio ${\beta_{m_k}^{n_q}}$, where ${count}_{{m_k}}^{{n_q}}$  corresponds to ${count}_{{n_q}}^{{B}}$:
+
+\begin{equation}
+	{\beta_{m_k}^{n_q}=\frac{count_{m_k}^{n_q}}{count_{n_q}^B}}
+\end{equation}
+
+Party B creates an association rule ${Rule_m^{n_q}}$ for attribute columns $X_n^B$ and $X_m^A$:
+\begin{equation}
+	\begin{aligned}
+		& Rule_m^{n_q} =\{\llbracket v_{n_q}^B \rrbracket \to (\llbracket v_{m_1}^A \rrbracket (\beta_{m_1}^{n_q}),..., \llbracket v_{m_k}^A \rrbracket (\beta_{m_k}^{n_q}),...,\llbracket v_{m_s}^A \rrbracket (\beta_{m_s}^{n_q}))\}
+	\end{aligned}
+\end{equation}
+
+
+where, $\llbracket v_{m_k}^A \rrbracket (\beta_{m_k}^{n_q})$ represents the probability that a sample with attribute value $\llbracket v_{n_q}^B \rrbracket$ in $X_n^B$ also has attribute value $\llbracket v_{m_k}^A \rrbracket$ in $X_m^A$,denoted as ${\beta_{m_{k}}^{n_{q}}}$, ${k}\in\{1,2,...,s\}$ and ${q}\in\{1,2,\ldots,{t}\}$.
+
+The sample value $x_{jm}^A$ in the attribute column $X_m^A$ of Party A is determined by the association rule ${Rule_m^{n_q}}$ corresponding to the attribute value $v_{n_q}^B$ of $x_{jn}^B$ in Party B for that sample. In Party B, when the attribute value of $x_{jn}^B$ is $\llbracket v_{n_q}^B \rrbracket$, Party B looks up ${Rule_m^{n_q}}$, and selects the value $\llbracket v_{m_k}^A \rrbracket$ corresponding to the largest ${\beta_{m_k}^{n_q}}$ from ${Rule_m^{n_q}}$. If each \( \beta_{m_k}^{n_q} \) (for \( k=1,\dots,s \)) is identical, then \( \llbracket v_{m_k}^A \rrbracket \) is randomly drawn from \( {Rule}_m^{n_q} \). Then, Party B sends \( \llbracket v_{m_k}^A \rrbracket \) to Party A. Party A initializes a random mask $R_A$, computes ${\llbracket v_{m_k}^A \rrbracket}+ \llbracket {R_A} \rrbracket$, and sends it to Party C. Party C decrypts ${\llbracket v_{m_k}^A \rrbracket}+ \llbracket {R_A} \rrbracket$ to obtain ${v_{m_{k}}^A+R_A}$, and sends it to Party A. Party A removes the random mask $R_A$ to obtain ${v_{m_k}^A}$ and assigns it to $x_{jm}^B$, where, ${j=N_{{A}\cap {B}}+1,\ldots,N_{A}}$.
+
+When Party B's samples are missing:
+
+%Step 1: Party A traverses all attribute values in $X_m^B$ and compute the sample counts for each attribute value ${v_{m_{k}}^{A}}$, denoted as ${count_{m_{k}}^{A}}$, where ${k}\in\{1,2,\ldots,t\}$. Simultaneously, Party B traverses all attributes values in $X_n^B$. Based on ${R_{B_n}^{A_m}}$ between $X_m^A$ and $X_n^B$, Party B records the sample counts ${count_{n_q}^{m_k}}$ for the attribute values $\llbracket {v}_{{n_{q}}}^{{B}} \rrbracket$ in $X_n^B$ that correspond to the value $\llbracket {v_{m_{k}}^{A}} \rrbracket$ and send it to Party B.
+
+Based on \( R_{B_n}^{A_m} \) between \( X_m^A \) and \( X_n^B \), Party B calculates the ratio ${\beta_{n_q}^{m_k}}$, where ${count}_{n_q}^{m_k}$  corresponds to ${count}_{{m_k}}^{{A}}$:
+
+\begin{equation}
+	{\beta_{n_q}^{m_k}=\frac{count_{n_q}^{m_k}}{count_{m_k}^A}}
+\end{equation}\textbf{}
+
+Party B creates an association rule ${Rule_n^{m_k}}$ for attribute columns $X_n^B$ and $X_m^A$:
+\begin{equation}
+	\begin{aligned}
+		&Rule_n^{m_k}=\{\llbracket v_{m_k}^A \rrbracket \to (\llbracket v_{n_1}^B \rrbracket (\beta_{n_1}^{m_k}),..., \llbracket v_{n_q}^B \rrbracket (\beta_{n_q}^{m_k}),...,\llbracket v_{n_t}^B \rrbracket (\beta_{n_t}^{m_k}))\}
+	\end{aligned}
+\end{equation}
+
+where, $\llbracket v_{n_q}^B \rrbracket (\beta_{n_q}^{m_k})$ represents the probability that a sample with attribute value $\llbracket v_{m_k}^A \rrbracket$ in $X_m^A$ also has attribute value $\llbracket v_{n_q}^B \rrbracket$ in $X_n^B$,denoted as ${\beta_{n_{q}}^{m_{k}}}$,  ${k}\in\{1,2,...,s\}$ and ${q}\in\{1,2,\ldots,{t}\}.$
+
+The sample value $x_{jn}^B$ in the attribute column $X_n^B$ of Party B is determined by the association rule ${Rule_n^{m_k}}$ corresponding to the attribute value $v_{m_k}^A$ of $x_{jm}^A$ in Party A for that sample. In Party A, when the attribute value of $x_{jm}^A$ is $\llbracket v_{m_k}^A \rrbracket$, Party A sends \( \llbracket v_{m_k}^A \rrbracket \) to Party B. Based on the received \( \llbracket v_{m_k}^A \rrbracket \), Party B looks up ${Rule_n^{m_k}}$, and selects the value $\llbracket v_{n_q}^B \rrbracket$ corresponding to the largest ${\beta_{n_q}^{m_k}}$ from ${Rule_n^{m_k}}$. If each \( \beta_{n_q}^{m_k} \) (for \( q=1,\dots,t \)) is identical, then \( \llbracket v_{n_q}^B \rrbracket \) is randomly drawn from \( \text{Rule}_n^{m_k} \).Party B initializes a random mask $R_B$, computes ${\llbracket v_{n_q}^B \rrbracket}+ \llbracket {R_B} \rrbracket$, and sends it to Party C. Party C decrypts ${\llbracket v_{n_q}^B \rrbracket}+ \llbracket {R_B} \rrbracket$ to obtain ${v_{n_{q}}^B+R_B}$, and sends it back to Party B. Party B removes the random mask $R_B$ to obtain ${v_{n_q}^B}$ and assigns it to $x_{jn}^B$, where, ${j=N_{{A}\cap {B}}+1,\ldots,N_{B}}$.
+
+\subsection{Vertical federated imputation based on GANs}
+\label{subsec33}
+
+After partial attributes in the missing samples of the participants are generated by VF-AR, we need to generate the remaining attributes in order to obtain the complete samples. This paper propose a Vertical federated imputation framework based on Generative Adversarial Networks(GANs) to impute the remaining attributes of the missing samples. This framework use GANs to perform collaborative imputation with multi-party data, while ensuring data security and privacy protection. This vertical federated imputation framework includes bottom models of each party and top model, as shown in Fig.\ref{fig:FedGAIN}. 
+\begin{figure*}[t]
+	\centering 
+	\includegraphics[width=\textwidth]{FedGAIN}%[scale=0.4]
+	\caption{The framework of vertical federated imputation based on GANs} 
+	\label{fig:FedGAIN}
+\end{figure*}
+
+(1) Mask vector 
+
+The mask vector plays a crucial role in the data imputation process. It indicates the locations of the remaining attributes in the sample that need to be imputed. During the vertical federated imputation process, the generator from each party uses this information to impute the remaining attribute values based on the observed and generated data from all the parties in the joint sample. 
+
+In this paper, the federated imputation models based on GANs normalize numerical variables using Min-Max normalization and encode categorical variables with One-Hot encoding. Set the encoding vectors of the feature attributes as \( X^A \) for Party A's sample, \(X^A = [x_1^A, \dots, x_d^A, \dots, x_{d'_A}^A]\), where \( d = 1, \dots, d'_A \),  \( d'_A \) represents the dimensionality of the sample vector of Party A. And, set the encoding vectors of the feature attributes as \( X^B \) for Party B's sample, \(X^B = [x_1^B, \dots, x_d^B, \dots, x_{d'_B}^B]\), where \( d = 1, \dots, d'_B \), \( d'_B \) represents the dimensionality of the sample vector of Party B. The mask vector of Party A is denoted as \(M^A = [M_1^A, \dots, M_d^A\) \(,\dots,M_{d'_A}^A]\), and the mask vector of Party B is denoted as \(M^B = [M_1^B, \dots, M_d^B, \dots, M_{d'_B}^B]\). 
+
+The remaining sample data that needs to be imputed for Party A and Party B is referred to as the missing data of Party A and Party B, and the missing samples are represented by the vectors \( X^{Am} \) and \( X^{Bm} \), respectively:
+\begin{equation}
+	\small
+	\begin{split}
+		X_{d}^{Am} = 
+		\begin{cases} 
+			X_d^A,   & \text{if } {M}_d^A = 1 \\ 
+			\text{NaN}, & \text{if } {M}_d^A = 0 
+		\end{cases}\\
+		X_{d}^{Bm} = 
+		\begin{cases} 
+			X_d^B,   & \text{if } {M}_d^B = 1 \\ 
+			\text{NaN}, & \text{if } {M}_d^B = 0 
+		\end{cases}
+	\end{split}
+\end{equation}
+that is,
+
+\begin{equation}
+	\begin{split}
+		X^{Am}\odot{M}^A=X^A\odot{M}^A \\
+		X^{Bm}\odot{M}^B=X^B\odot{M}^B
+	\end{split}
+\end{equation}
+Where, $\odot$ denotes element-wise multiplication between vectors.
+
+(2) Generator 
+
+Each party's bottom model comprises generator and discriminator. The main task of each local generator is to generate reasonable data for the missing values in participants with missing samples. The bottom generators learn collaboratively from each party's local data by means of federated encryption. 
+
+In the experiments in Section \ref{sec4}, we mention a variety of vertical federation imputation models based on GANs including VF-GAIN, VF-CGAIN and VF-VGAIN. These vertical federated imputation models are similar in overall architecture, and the differences are the network structure of the generator in their respective bottom models. The bottom generators of each party in VF-GAIN, VF-CGAIN and VF-VGAIN have the same structure as that of GAIN\cite{24}, CGAIN\cite{25}, VGAIN\cite{27}.
+
+In the federated learning process, the inputs of Party A's bottom generator include:  \( X^{Am} \), $M^A$ and random noise vector $Z^A$. And, the inputs of Party B's bottom generator include: \( X^{Bm} \), $M^B$ and random noise vector $Z^B$. The outputs of the bottom generators of Parties A and B are:
+\begin{equation}
+	\begin{split}
+		\tilde{X}^A=G_{bottom}^A\left(X^{Am},M^A,Z^A\right)\\
+		\tilde{X}^B=G_{bottom}^B\left(X^{Bm},M^B,Z^B\right)
+	\end{split}
+\end{equation}
+
+The joint sample $\tilde{X}_{A\infty B}$, comprising $\tilde{X}^{A}$ generated by Party A and $\tilde{X}^{B}$ generated by Party B, is represented as follows:
+\begin{equation}
+	\tilde{X}_{A\infty B}=\tilde{X}^A\oplus_\infty\tilde{X}^B
+\end{equation}
+where, $\oplus_{\infty}$ denotes the concatenation under vertical federated learning, which is not a direct concatenation of the data from Parties A and B.
+
+The imputed samples $\tilde{X}_{g}^{A}$ is obtained from the generated vectors $\tilde{X}^A$ and the observed data from the missing sample vectors $X^{Am}$:
+\begin{equation}
+	\begin{split}
+		\tilde{X}_g^A=(1-M^A)\odot\tilde{X}^A+M^A\odot X^{Am} 
+	\end{split}
+\end{equation}
+
+The imputed samples $\tilde{X}_{g}^{B}$ is obtained from the generated vectors $\tilde{X}^B$  and the observed data from the missing sample vectors $X^{Bm}$:
+\begin{equation}
+	\begin{split}
+	\tilde{X}_g^B=(1-M^B)\odot\tilde{X}^B+M^B\odot X^{Bm}
+	\end{split}
+\end{equation}
+
+Under such circumstances, the imputation operation can be viewed as being performed based on joint samples from Parties A and B. The imputed joint sample is denoted as $\tilde{X}_{g}^{A\infty B}$, which consists of $\tilde{X}_g^A$ from party A and $\tilde{X}_g^B$ from party B, as shown in Eq.(\ref{eq:13}):
+\begin{equation}
+	\tilde{X}_g^{A\infty B}=\tilde{X}_g^A\oplus_\infty\tilde{X}_g^B
+	\label{eq:13}
+\end{equation}
+
+$\tilde{X}^A\odot M^A$ from the generated $\tilde{X}^{A}$ and $\tilde{X}^B\odot M^B$ from the generated $\tilde{X}^{B}$ are used to compute the generator loss function in the federated learning process.
+
+(3) Discriminator 
+
+The discriminator is responsible for determining whether the generated data is close to the real data, providing feedback to optimize the generator. Discriminator of our imputation framework contains the bottom discriminator of each party and the top model. 
+
+The bottom discriminators and the top discriminator employ a fully connected neural network structure, primarily composed of two hidden layers. Each hidden layer employs the LeakyReLU activation function, while dropout is applied to randomly deactivate neurons with a certain probability to mitigate model overfitting. In the experiments of this paper, the first hidden layer has 128 neurons, while the second one has 64 neurons. The negative slope of the LeakyReLU is set to 0.2, and the dropout rate is set to 0.5. Moreover, we introduce the hint mask $M_{hint}$ depends on $M$ to improve imputation quality by guiding the discriminator, setting the hyperparameter $p_{hint}=0.9$\cite{35} to control the masking probability.
+
+$H_{bt}^A$ is the output of the bottom discriminator $D_{bottom}^{A}$ in Party A, obtained by $\tilde{X}_{g}^{A}$ and  $M_{hint}^A$ through its network, and $H_{bt}^{B}$ is the output of the bottom discriminator $D_{bottom}^{B}$ in Party B, obtained by $\tilde{X}_g^B$ and $M_{hint}^{B}$ through its network:
+\begin{equation}
+	\begin{split}
+ H_{bt}^{A}=D_{bottom}^{A}\left(\tilde{X}_{g}^{A}|M_{hint}^{A}\right)=D_{bottom}^{A}\left(\tilde{X}_{g}^{A}\oplus M_{hint}^{A}\right)\\
+ H_{bt}^{B}=D_{bottom}^{B}\left(\tilde{X}_{g}^{B}|M_{hint}^{B}\right)=D_{bottom}^{B}\left(\tilde{X}_{g}^{B}\oplus M_{hint}^{B}\right)
+	\end{split}
+\end{equation}
+
+In the vertical federated imputation framework, the top model is primarily utilized to coordinate the data imputation process between Party A and Party B. Based on the bottom discriminators of Parties A and B, the quality of the imputed data is further evaluated and optimized by a top discriminator. The top discriminator $D_{top}$ concatenates the output hidden vectors from the bottom discriminators of Parties A and B.The output of the top discriminator $D_{top}$ is a probability vector:
+\begin{equation}
+	p_D^{A\infty B}=D_{top}\left(\tilde{H}_{A\infty B},M_{hint}^{A\infty B}\right)
+\end{equation}
+where,
+\begin{equation}
+	\widetilde{H}_{A\infty B}=H_{bt}^A\oplus_\infty H_{bt}^B
+\end{equation}
+\begin{equation}
+	M_{hint}^{A\infty B}=M_{hint}^A\oplus_\infty M_{hint}^B
+\end{equation}
+$\tilde{H}_{A\infty B}$ denotes the concatenation of $H_{bt}^A$ and $H_{bt}^B$ under VFL, obtained from the bottom discriminators of Parties A and B. $M_{hint}^{A\infty B}$ denotes the concatenation of hint mask vectors $M_{hint}^A$ and $M_{hint}^B$ under VFL. The output $p_D^{A\infty B}$ is the probability vector of the discriminator to distinguish the imputed and real data in the joint samples.
+
+(4) Loss function
+
+The loss function of the whole vertical federated imputation consists of both generator loss and discriminator loss. The optimization process follows the adversarial training mechanism of Generative Adversarial Network. This training objective can be formally expressed as:
+
+\begin{equation}
+	\min_G\max_D\mathcal{L}(D,G)
+\end{equation}
+
+Firstly, we fix the generator and train the discriminator. The minimum batch size $k_{D}$ is selected in each round from the joint sample set $\tilde{X}_{A\infty B}$. Each sample $\tilde{X}_{A\infty B}(i)$ in the minimum batch includes $\tilde{X}_{g}^{A}(i)$ and $M_{hint}^A(i)$ in Party A, $\tilde{X}_{g}^{B}(i)$ and $M_{hint}^B(i)$ in Party B.The total loss function of the discriminator is:
+\begin{equation}
+	\min_D  -\sum_{i=1}^{k_D} \mathcal{L}_{D_{top}} \left( M_{\text{hint}}^{A\infty B}(i), \hat{M}^{A\infty B}(i) \right)
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_{D_{top}} = \sum_{j: m_j^{A \infty B}=0} [ m_j^{A \infty B} \log\left(\hat{m}_j^{A \infty B}\right) + (1-m_j^{A \infty B}) \log\left(1-\hat{m}_j^{A \infty B}\right) ]
+	\end{split}
+\end{equation}
+$\hat{M}^{A\infty B}(i)=D_{top}(\widetilde{H}_{A\infty B}(i),M_{hint}^{A\infty B}(i))$,$m_{j}^{A\infty B}$ is the $j$-th element in the hint mask vector $M_{hint}^{A\infty B}(i)$ for the $i$-th sample, and $\hat{m}_{j}^{A\infty B}$ is the $j$-th element in $\hat{M}^{A\infty B}(i)$ for the $i$-th sample. Notably, for VF-CGAIN, to be consistent with that of CGAIN, $\hat{M}^{A\infty B}(i)=D_{top}(\widetilde{H}_{A\infty B}(i),M_{hint}^{A\infty B}(i)|C(i))$, where, $C(i)$ denotes the label vector of the $i$-th sample.
+
+Subsequently, we fix the discriminator and train the generator. The minimum batch size $k_{G}$ is selected in each round from the joint sample set $\tilde{X}_{A\infty B}$. Each sample $\tilde{X}_{A\infty B}(i)$ in the minimum batch includes $\tilde{X}_{g}^{A}(i)$ , $\tilde{X}^{A}(i)$ and $M_{hint}^A(i)$ in Party A, $\tilde{X}_{g}^{B}\left(i\right)$, $\tilde{X}^{B}(i)$ and $M_{hint}^B(i)$ in Party B.
+The total loss function of the generator is:
+
+\begin{equation}
+	\begin{split}
+		\min_{G}\sum_{i=1}^{k_{G}}\mathcal{L}_{GT_{top}}(M_{hint}^{A\infty B}(i),\hat{M}^{A\infty B}(i),\tilde{X}_{g}^{A\infty B}(i),\tilde{X}_{A\infty B}(i))
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_{GT_{top}}(&M_{hint}^{A\infty B}(i),\hat{M}^{A\infty B}(i),\tilde{X}_{g}^{A\infty B}(i),\tilde{X}_{A\infty B}(i))\\
+		&=\mathcal{L}_{G_{top}}(M_{hint}^{A\infty B}(i),\hat{M}^{A\infty B}(i))\\
+		&+\alpha\mathcal{L}_{M}(\tilde{X}_{g}^{A\infty B}(i),\tilde{X}_{A\infty B}(i))
+	\end{split}
+\end{equation}
+Where,
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_{G_{top}}=-\sum_{j:m_{j}^{A\infty B}=0}[(1-{m_{j}}^{A\infty B})\log({\hat{m}_{j}}^{A\infty B})]_{}
+	\end{split}
+\end{equation}
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_M=\frac{1}{2}(\mathcal{L}_{M^A}+\mathcal{L}_{M^B})^2
+	\end{split}
+\end{equation}
+
+The loss functions $\mathcal{L}_{M^{A}}$ in Party A is:
+\begin{equation}
+	\mathcal{L}_{M^A}=\sum_{j=1}^{d_A}m_j^A\mathcal{L}_M(x_j^A,x_j^{\prime A})		
+\end{equation}
+$$\mathcal{L}_M(x_j^A, x_j^{\prime A}) = 
+\begin{cases} 
+	(x_j^{\prime A} - x_j^A)^2, & \text{if } x_j^A \text{ is continuous}, \\
+	-x_j^A \log x_j^{\prime A},  & \text{if } x_j^A \text{ is binary}.
+\end{cases}
+$$
+
+The loss functions $\mathcal{L}_{M^{B}}$ in Party B is:
+\begin{equation}
+	\begin{split}
+		\mathcal{L}_{M^B}=\sum_{j=1}^{d_B}m_i^B\mathcal{L}_M(x_j^B,x_j^{\prime B})\\
+	\end{split}
+\end{equation}
+\[
+	\mathcal{L}_M(x_j^B, x_j^{\prime B}) = 
+\begin{cases} 
+	(x_j^{\prime B} - x_j^B)^2, & \text{if } x_j^B \text{ is continuous}, \\
+	-x_j^B \log x_j^{\prime B},  & \text{if } x_j^B \text{ is binary}.
+\end{cases}
+\]
+
+(5) Training process
+
+According to the assumption, the label column of the joint samples is held by Party B. Therefore, the top model resides in Party B. The training process of vertical federated imputation dased on GANs is presented in Algorithm \ref{alg1}. Its detailed steps are as follows:
+%\begin{algorithm}
+%	\caption{The training process of vertical federated imputation dased on GANs}
+%	\label{alg1}
+%	\algrenewcommand\algorithmicrequire{\small{\textbf{Client executes:}}}
+%	\algrenewcommand\algorithmicensure{\small \textbf{Server executes:}}
+%	\begin{algorithmic}[1]
+%		\Require Party A initializes $W_{GA}$, $W_{DA}$. Party B initializes $W_{GB}$, $W_{DB}$, $W_{DT}$.
+%		\Ensure The coordinator, Party C, creates an encryption key pair and distributes the public key to Parties A and B.
+%		\While{training loss has not converged}
+%		\State \textbf{(1)Discriminator optimization}
+%		\State train\_discriminator()
+%		\State \textbf{(2) Generator optimization}
+%		\State train\_generator()
+%		\EndWhile
+%	\end{algorithmic}
+%\end{algorithm}
+
+Step 1: Party A initializes the bottom generator's weight parameters $W_{GA}$ and the bottom discriminator's weight parameters $W_{DA}$. Party B initializes the bottom generator's weight parameters $W_{GB}$, the bottom discriminator's weight parameters $W_{DB}$, and the top discriminator's weight parameters $W_{DT}$. The coordinator, Party C, creates an encryption key pair and distributes the public key to Parties A and B. Homomorphic encryption enables secure information exchange without revealing raw data or private information. $\llbracket\cdot\rrbracket$ represents the fully homomorphic encryption, CKKS. Input $X^{Am}$, $M^A$ and $Z^A$ into Party A's bottom generator network, and input $X^{Bm}$, $M^B$ and $Z^B$ into Party B's bottom generator network. 
+%\begin{algorithm}[t]
+%	\caption{Discriminator Optimization}
+%	\label{alg:discriminator}
+%	\begin{algorithmic}[1]
+%		\Function{train\_discriminator():}{}
+%		\State \small Draw $k_D$ samples from dataset $\{X^{Am}(i), M^A(i)\}_{i=1}^{k_D}$, $\{X^{Bm}(i), M^B(i)\}_{i=1}^{k_D}$
+%		\State \small Draw $k_D$ samples $\{Z^A (i)\}_{i=1}^{k_D}$, $\{Z^B (i)\}_{i=1}^{k_D}$
+%		\State \small Draw $k_D$ samples $\{M^A (i), M_{hint}^A (i)\}_{i=1}^{k_D}$, $\{M^B (i), M_{hint}^B (i)\}_{i=1}^{k_D}$
+%		\For{$i=1,\dots,k_D$}
+%		\State \footnotesize $\tilde{X}^A(i)\leftarrow G_{bottom}^A (X^{Am}(i),M^A(i),Z^A (i))$
+%		\State \footnotesize $\tilde{X}^B(i)\leftarrow G_{bottom}^B (X^{Bm}(i),M^B(i),Z^B (i))$
+%		\State \footnotesize $\tilde{X}_g^A(i)\leftarrow (1 - M^A (i)) \odot \tilde{X}^A (i) + M^A (i) \odot X^{Am} (i)$
+%		\State \footnotesize $\tilde{X}_g^B (i) \leftarrow (1 - M^B (i)) \odot \tilde{X}^B (i) + M^B (i) \odot X^{Bm} (i)$
+%		\State \footnotesize $H_{bt}^A (i) \leftarrow D_{bottom}^A (\tilde{X}_g^A (i) \oplus M_{hint}^A (i))$
+%		\State \footnotesize $H_{bt}^B (i) \leftarrow D_{bottom}^B (\tilde{X}_g^B (i) \oplus M_{hint}^B (i))$
+%		\State \small Party A encrypts $H_{bt}^A (i)$ to get $\llbracket H_{bt}^A(i) \rrbracket$ and sends it with $M_{hint}^A (i)$ to Party B.
+%		\State \small Party B encrypts $H_{bt}^B (i)$ to get $\llbracket H_{bt}^B(i) \rrbracket$
+%		\State \footnotesize $\llbracket \tilde{H}_{A \infty B} (i) \rrbracket \leftarrow \llbracket H_{bt}^A (i) \rrbracket \oplus_{\infty} \llbracket H_{bt}^B (i) \rrbracket$
+%		\State \footnotesize $M_{hint}^{A \infty B} (i) \leftarrow M_{hint}^A (i) \oplus_{\infty} M_{hint}^B (i)$
+%		\EndFor
+%		\State \small Updating the discriminator using the Adam optimizer
+%		%\State \small $\nabla_D - \sum_{i=1}^{k_D} \llbracket \mathcal{L}_{D_{top}} (M_{hint}^{A \infty B} (i), D_{top} (\llbracket \tilde{H}_{A \infty B}(i) \rrbracket, M_{hint}^{A \infty B} (i))) \rrbracket$
+%		\State \small $\nabla_D - \sum_{i=1}^{k_D} \llbracket \mathcal{L}_{D_{top}} (M_{hint}^{A \infty B} (i), \llbracket \hat{M}^{A\infty B}(i)\rrbracket) \rrbracket$
+%		\State \small Party B sends $\llbracket\mathcal{L}_{{D}_{{top}}}\rrbracket$ to Party C.
+%		\State \small Party B initializes $R_B$, computes $\llbracket \frac{\partial \mathcal{L}_{D_{{top}}}}{\partial W_{DT}} \rrbracket + \llbracket R_B \rrbracket$ and sends it to Party C.
+%		\State \small Party A and Party B remove random masks and update $W_{DA}$, $W_{DB}$, and $W_{DT}$.
+%		\EndFunction
+%	\end{algorithmic}
+%\end{algorithm}
+
+Step 2: Party A performs forward propagation of the input information through the bottom generator network to obtain $\tilde{X}^{A}$ and $\tilde{X}_g^A$, and computes its corresponding loss $\mathcal{L}_{M^A}$. Party B performs forward propagation of the input information through the bottom generator network to obtain $\tilde{X}^{B}$ and $\tilde{X}_{g}^{B}$, and computes its corresponding loss $\mathcal{L}_{{M}^{{B}}}$. Party A performs forward propagation of $\tilde{X}_{{g}}^{{A}}$ and ${M_{hint}^{A}}$ through the bottom discriminator network to obtain ${H_{bt}^A}$.Party B performs forward propagation of $\tilde{{X}}_{{g}}^{{B}}$ and ${M_{hint}^{B}}$ through the bottom discriminator network to obtain ${H_{bt}^B}$. Party A encrypts $\mathcal{L}_{{M^{A}}}$ and each element value ${H_{bt}^A(i,j)}$ of ${H_{bt}^A}$, obtaining $\llbracket\mathcal{L}_{M^A}\rrbracket$ and the encrypted element vector $\llbracket{H}_{bt}^{A}\rrbracket$, and sends $\llbracket\mathcal{L}_{{M^A}}\rrbracket$,$\llbracket{H}_{bt}^{A}\rrbracket$ and $\mathrm{M}_{{hint}}^A$ to Party B.Party B encrypts $\mathcal{L}_{{M^{B}}}$ and each element value ${H_{bt}^B(i,j)}$ of ${H_{bt}^B}$, obtaining $\llbracket \mathcal{L}_{M^B}\rrbracket$ and the encrypted element vector $\llbracket{H}_{bt}^{B}\rrbracket$. After receiving $\llbracket\mathcal{L}_{{M^A}}\rrbracket$,$\llbracket{H}_{bt}^{A}\rrbracket$ and ${M}_{{hint}}^A$ from Party A, Party B combines $\llbracket{H}_{bt}^{A}\rrbracket$ and $\llbracket{H}_{bt}^{B}\rrbracket$ into an encrypted element vector $\llbracket\widetilde{{H}}_{{A}\infty{B}}\rrbracket$, combines ${M_{hint}^A}$ and ${M_{hint}^B}$ into ${M_{hint}^{A\infty B}(i)}$. Then, Party B performs forward propagation of $\llbracket\widetilde{{H}}_{{A}\infty{B}}\rrbracket$, ${M_{hint}^{A\infty B}(i)}$ through the top discriminator network, and computes the total loss of the discriminator $\llbracket\mathcal{L}_{{D_{top}}}\rrbracket$.
+Simultaneously, Party B computes the generator loss $\llbracket\mathcal{L}_{{G_{top}}}\llbracket$,computes $\llbracket\mathcal{L}_{{M}}\rrbracket$ from $\llbracket\mathcal{L}_{{M}^{{B}}}\rrbracket$ and the received $\llbracket\mathcal{L}_{{M^A}}\rrbracket$,and the total generator loss $\llbracket\mathcal{L}_{{GT_{top}}}\rrbracket$ from $\llbracket\mathcal{L}_{{G_{top}}}\rrbracket$ and $\llbracket\mathcal{L}_{{M}}\rrbracket$. Party B sends the total discriminator loss $\llbracket\mathcal{L}_{{D_{top}}}\rrbracket$ and the total generator loss $\llbracket\mathcal{L}_{{GT}_{{top}}}\rrbracket$ to Party C.
+ 
+Step 3: Party A and Party B initialize encrypted random masks $R_A$, $R_B$, respectively. These masks ensure that intermediate results cannot be reverse-engineered during transmission, thereby guaranteeing data privacy.
+%\noindent
+%\begin{algorithm}
+%	\caption{Generator Optimization}
+%	\label{alg:generator}
+%	\begin{algorithmic}[1]
+%		\Function{train\_generator():}{}
+%		\State \small Draw $k_G$ samples from dataset $\{X^{Am}(i), M^A (i)\}_{i=1}^{k_G}$, $\{X^{Bm}(i), M^B (i)\}_{i=1}^{k_G}$
+%		\State \small Draw $k_G$ samples $\{Z^A (i)\}_{i=1}^{k_G}$, $\{Z^B (i)\}_{i=1}^{k_G}$
+%		\State \small Draw $k_G$ samples $\{M^A (i), M_{hint}^A (i)\}_{i=1}^{k_G}$, $\{M^B (i), M_{hint}^B (i)\}_{i=1}^{k_G}$
+%		\For{$i=1,\dots,k_G$}
+%		\State \footnotesize $\tilde{X}^A(i)\leftarrow G_{bottom}^A (X^{Am}(i),M^A(i),Z^A (i))$
+%		\State \footnotesize $\tilde{X}^B(i)\leftarrow G_{bottom}^B (X^{Bm}(i),M^B(i),Z^B (i))$
+%		\State \footnotesize $\tilde{X}_g^A(i)\leftarrow (1 - M^A (i)) \odot \tilde{X}^A (i) + M^A (i) \odot X^{Am} (i)$
+%		\State \footnotesize $\tilde{X}_g^B (i) \leftarrow (1 - M^B (i)) \odot \tilde{X}^B (i) + M^B (i) \odot X^{Bm} (i)$
+%		\State \footnotesize $H_{bt}^A (i) \leftarrow D_{bottom}^A (\tilde{X}_g^A (i) \oplus M_{hint}^A (i))$
+%		\State \footnotesize $H_{bt}^B (i) \leftarrow D_{bottom}^B (\tilde{X}_g^B (i) \oplus M_{hint}^B (i))$
+%		\State \small Party A encrypts $H_{bt}^A (i)$ to get $\llbracket H_{bt}^A(i) \rrbracket$ and sends it with $M_{hint}^A (i)$ to Party B.
+%		\State \small Party B encrypts $H_{bt}^B (i)$ to get $\llbracket H_{bt}^B(i) \rrbracket$
+%		\State \footnotesize $\llbracket \tilde{H}_{A \infty B} (i) \rrbracket \leftarrow \llbracket H_{bt}^A (i) \rrbracket \oplus_{\infty} \llbracket H_{bt}^B (i) \rrbracket$
+%		\State \footnotesize $M_{hint}^{A \infty B} (i) \leftarrow M_{hint}^A (i) \oplus_{\infty} M_{hint}^B (i)$
+%		\EndFor	
+%		\State Updating the generator using the Adam optimizer
+%		%\State $\nabla_G - \sum_{i=1}^{k_G} \llbracket \mathcal{L}_{G_{top}} \left( M_{\text{hint}}^{A \infty B} (i), D_{top} \left( \llbracket \tilde{H}_{A \infty B} (i) \rrbracket, M_{hint}^{A \infty B} (i) \right) \right) + \frac{\alpha}{2} \left( \llbracket \mathcal{L}_{M^A} \rrbracket + \llbracket \mathcal{L}_{M^B} \rrbracket \right)^2 \rrbracket$
+%		\State \small $\nabla_G - \sum_{i=1}^{k_G} \llbracket \mathcal{L}_{G_{top}} \left( M_{\text{hint}}^{A \infty B} (i), \llbracket \hat{M}^{A\infty B}(i)\rrbracket \right) + \frac{\alpha}{2} \left( \llbracket \mathcal{L}_{M^A} \rrbracket + \llbracket \mathcal{L}_{M^B} \rrbracket \right)^2 \rrbracket$
+%		\State \small Party B sends $\llbracket \mathcal{L}_{GT_{top}} \rrbracket$ to Party C.
+%		\State \small Party B computes $\llbracket \frac{\partial \mathcal{L}_{GT_{\text{top}}}}{\partial W_{GB}} \rrbracket + \llbracket R_B \rrbracket$ and sends it to Party C.
+%		\State \small Party A calculates $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} \rrbracket + \llbracket R_A \rrbracket$ and sends it to Party C.
+%		\State \small Party C decrypts $\llbracket \mathcal{L}_{GT_{top}} \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} \rrbracket + \llbracket R_A \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GB}} \rrbracket + \llbracket R_B \rrbracket$.
+%		\State \small Party C sends $\frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} + R_A$ to Party A and $\frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GB}} + R_B$ to Party B.
+%		\State \small Party A and Party B remove random masks and update $W_{GA}$, $W_{GB}$, respectively.
+%		\EndFunction
+%	\end{algorithmic}
+%\end{algorithm}
+
+The back-propagation process of the discriminator training: Party B computes  $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{{DT}}}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{{DT}}}\rrbracket+\llbracket{R}_{{B}}\rrbracket$,and uses $M_{hint}^B$ and the received $M_{hint}^A$ to split the weight gradient $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial{W}_{DT}^{(1)}}\rrbracket$ of the first layer of Party B's top discriminator network into $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)}\to A}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)}\rightarrow B}\rrbracket$,enabling Party A and Party B to compute $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial {W}_{DA}}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DB}}\rrbracket$.Party B uses $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)}\to B}\rrbracket$ to compute $\llbracket\frac{\partial{\mathcal{L}}_{D_{top}}}{\partial W_{DB}}\rrbracket+\llbracket{R}_{B}\rrbracket$.Then, Party B sends $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DT}}\rrbracket+\llbracket{R}_{B}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial{W}_{DB}}\rrbracket+\llbracket{R}_{B}\rrbracket$ to Party C, and sends $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)}\to A}\rrbracket$ to Party A.Party A computes $\llbracket\frac{\partial\mathcal{L}_{Dtop}}{\partial W_{DA}}\rrbracket+\llbracket R_{A}\rrbracket$, and sends it to Party C.Party C decrypts $\llbracket\mathcal{L}_{D_{top}}\rrbracket$,$\llbracket\frac{\partial\mathcal{L}_{Dtop}}{\partial W_{DT}}\rrbracket+\llbracket {R}_{B}\rrbracket$,$\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial{W}_{DA}}\rrbracket+\llbracket{R}_{A}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{D_{top}}}{\partial {W}_{DB}}\rrbracket+\llbracket{R}_{B}\rrbracket$,sends  $\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DA}}+R_{A}$ to Party A, and sends $\frac{\partial\mathcal{L}_{D_{top}}}{\partial{W}_{DT}}+R_{B}$ and $\frac{\partial\mathcal{L}_{D_{top}}}{\partial W_{DB}}+R_{B}$ to Party B.Party A and Party B remove the encrypted random masks from the received gradient information. Based on these gradients, Party A and Party B update the weights parameters $W_{DA}$ and  $W_{DB}$ of their respective bottom discriminator networks, and update the weights parameters $W_{DT}$ of the top discriminator network.
+
+The back-propagation process of the generator training: Party B computes $\llbracket\frac{\partial\mathcal{L}_{GT_{top}}}{\partial{W}_{GB}}\rrbracket+\llbracket{R}_{B}\rrbracket$,and sends it to Party C. Party A computes $\llbracket\frac{\partial\mathcal{L}_{GT_{top}}}{\partial\mathcal{W}_{GA}}\rrbracket+\llbracket{R}_{A}\rrbracket$, and sends it to Party C. Party C decrypts $\llbracket\mathcal{L}_{GT_{top}}\rrbracket$,$\llbracket\frac{\partial\mathcal{L}_{GT_{top}}}{\partial{W}_{GA}}\rrbracket+\llbracket{R}_{A}\rrbracket$ and $\llbracket\frac{\partial\mathcal{L}_{GT_{top}}}{\partial{W}_{GB}}\rrbracket+\llbracket{R}_{B}\rrbracket$ sends $\frac{\partial\mathcal{L}_{GT_{top}}}{\partial W_{GA}}+R_{A}$
+to Party A, and sends  $\frac{\partial\mathcal{L}_{GT_{top}}}{\partial W_{GB}}+R_{B}$ to Party B. Party A and Party B remove the encrypted random masks from the received gradient information. Based on these gradients, Party A and Party B update the weights parameters $W_{GA}$ and $W_{GB}$ of their respective bottom generator networks.
+
+Step 4: Repeat Steps 2 to 3 iteratively until the training is complete.
+\begin{algorithm}
+	\caption{The training process of vertical federated imputation dased on GANs}
+	\label{alg1}
+	\algrenewcommand\algorithmicrequire{\small{\textbf{Client executes:}}}
+	\algrenewcommand\algorithmicensure{\small \textbf{Server executes:}}
+	\begin{algorithmic}[1]
+		\Require \small Party A initializes $W_{GA}$,$W_{DA}$. Party B initializes $W_{GB}$,$W_{DB}$, $W_{DT}$.
+		\Ensure \small The coordinator, Party C, creates an encryption key pair and distributes the public key to Parties A and B.
+		\While{training loss has not converged}
+		\State \textbf{(1)Discriminator optimization}
+		\State  Draw $k_D$ samples from the dataset $\{X^{Am} (i), M^A (i)\}_{i=1}^{k_D}$，$\{X^{Bm} (i), M^B (i)\}_{i=1}^{k_D}$
+		\State Draw $k_D$ samples $\{Z^A (i)\}_{i=1}^{k_D}$，$\{Z^B (i)\}_{i=1}^{k_D}$
+		\State Draw $k_D$ samples $\{M^A (i), M_{hint}^A (i)\}_{i=1}^{k_D}$, $\{M^B (i), M_{hint}^B (i)\}_{i=1}^{k_D}$
+		\For {$i=1,2,\ldots,k_D$}
+		\State $\tilde{X}^A (i) \leftarrow G_{bottom}^A (X^{Am} (i), M^A (i), Z^A (i))$
+		\State $\tilde{X}^B (i) \leftarrow G_{bottom}^B (X^{Bm} (i), M^B (i), Z^B (i))$
+		\State $\tilde{X}_g^A (i) \leftarrow (1 - M^A (i)) \odot \tilde{X}^A (i) + M^A (i) \odot X^{Am} (i)$
+		\State $\tilde{X}_g^B (i) \leftarrow (1 - M^B (i)) \odot \tilde{X}^B (i) + M^B (i) \odot X^{Bm} (i)$
+		\State $H_{bt}^A (i) \leftarrow D_{bottom}^A (\tilde{X}_g^A (i) \oplus M_{hint}^A (i))$
+		\State $H_{bt}^B (i) \leftarrow D_{bottom}^B (\tilde{X}_g^B (i) \oplus M_{hint}^B (i))$
+		\State Party A encrypts $H_{bt}^A (i)$ to get $\llbracket H_{bt}^A(i) \rrbracket$ and sends it with $M_{hint}^A (i)$to Party B. Party B encrypts$H_{bt}^B (i)$to get $\llbracket H_{bt}^B(i) \rrbracket$
+		\State $\llbracket \tilde{H}_{A \infty B} (i) \rrbracket \leftarrow \llbracket H_{bt}^A (i) \rrbracket \oplus_{\infty} \llbracket H_{bt}^B (i) \rrbracket$
+		\State $M_{hint}^{A \infty B} (i) \leftarrow M_{hint}^A (i) \oplus_{\infty} M_{hint}^B (i)$
+		\EndFor
+		\State Updating the discriminator using the Adam optimizer
+		\State $\nabla_D - \sum_{i=1}^{k_D} \llbracket \mathcal{L}_{D_{top}} \big( M_{hint}^{A \infty B} (i), D_{top} (\llbracket \tilde{H}_{A \infty B} (i) \rrbracket, M_{hint}^{A \infty B} (i)) \big) \rrbracket$
+		\State Party B sends $\llbracket\mathcal{L}_{{D}_{{top}}}\rrbracket$  to Party C.Party B initializes $R_B$, computes $\llbracket \frac{\partial \mathcal{L}_{D_{{top}}}}{\partial W_{DT}} \rrbracket + \llbracket R_B \rrbracket$ and sends it to Party C. Party B splits $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)}} \rrbracket$ into $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)} \to A} \rrbracket$ and $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)} \to B} \rrbracket$. Party B calculates $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DB}} \rrbracket + \llbracket R_B \rrbracket$ using $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)} \to B} \rrbracket$ and send it to Party C and send $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)} \to A} \rrbracket$ to party A.
+		\State Party A initializes $R_A$, calculates $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DA}} \rrbracket + \llbracket R_A \rrbracket$ using $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}^{(1)} \to A} \rrbracket$ and sends it to Party C.
+		\State Party C decrypts $\llbracket\mathcal{L}_{{D}_{{top}}}\rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}} \rrbracket + \llbracket R_B \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DA}} \rrbracket + \llbracket R_A \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DB}} \rrbracket + \llbracket R_B \rrbracket$ and sends $\frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DA}} + R_A$ to Party A, sends $\frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DT}} + R_B$、$\frac{\partial \mathcal{L}_{D_{top}}}{\partial W_{DB}} + R_B$ to Party B.
+		\State Party A and Party B remove random masks and update $W_{DA}$, $W_{DB}$ and $W_{DT}$, respectively
+		\State \textbf{(2) Generator optimization}
+		\State  Draw $k_G$ samples from the dataset $\{X^{Am}(i), M^A (i)\}_{i=1}^{k_G}$，$\{X^{Bm}(i), M^B (i)\}_{i=1}^{k_G}$
+		\State Draw $k_G$ samples $\{Z^A (i)\}_{i=1}^{k_G}$，$\{Z^B (i)\}_{i=1}^{k_G}$
+		\State Draw $k_G$ samples $\{M^A (i), M_{hint}^A (i)\}_{i=1}^{k_G}$, $\{M^B (i), M_{hint}^B (i)\}_{i=1}^{k_G}$	
+		\State Updating the generator using the Adam optimizer
+		\State $\nabla_G - \sum_{i=1}^{k_G} \llbracket \mathcal{L}_{G_{top}} \left( M_{\text{hint}}^{A \infty B} (i), D_{top} \left( \llbracket \tilde{H}_{A \infty B} (i) \rrbracket, M_{hint}^{A \infty B} (i) \right) \right) + \frac{\alpha}{2} \left( \llbracket \mathcal{L}_{M^A} \rrbracket + \llbracket \mathcal{L}_{M^B} \rrbracket \right)^2 \rrbracket$
+		\State Party B sends $\llbracket \mathcal{L}_{GT_{top}} \rrbracket$ to Party C, computes $\llbracket \frac{\partial \mathcal{L}_{GT_{\text{top}}}}{\partial W_{GB}} \rrbracket + \llbracket R_B \rrbracket$ and send it to Party C
+		\State Party A calculates $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} \rrbracket + \llbracket R_A \rrbracket$ and sends it to party C
+		\State Party C decrypts $\llbracket \mathcal{L}_{GT_{top}} \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} \rrbracket + \llbracket R_A \rrbracket$, $\llbracket \frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GB}} \rrbracket + \llbracket R_B \rrbracket$ and sends $\frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GA}} + R_A$ to Party A，sends $\frac{\partial \mathcal{L}_{GT_{top}}}{\partial W_{GB}} + R_B$ to Party B
+		\State Party A and Party B remove random masks and update $W_{GA}$,$W_{GB}$, respectively
+		\EndWhile		
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Experiments}
+\label{sec4}
+
+\subsection{Datasets and Data Preparation}
+\label{subsec41}
+In our experiments, we utilized four datasets\cite{36} to evaluate the proposed method: the Bank Marketing Dataset, the German Credit Dataset, the Letter Recognition Dataset and Online News Popularity Dataset: 
+
+\ding{172}The Bank Marketing Dataset pertains to the direct marketing campaigns of a Portuguese banking institution, which contains 45,211 examples and 16 attribute features, along with an ID column and a label column. It aims to classify whether a client will subscribe to a term deposit. 
+
+\ding{173}The German Credit Dataset originates from a credit scoring system, and its objective is to classify applicants as having either "good" or "bad" credit. The dataset includes 1000 samples, and each sample includes 21 attributes covering financial, demographic, and social characteristics: 13 categorical attribute features, 7 numerical attribute features, and a label column. 
+
+\ding{174}The Letter Recognition dataset is used for character recognition tasks and contains 20,000 instances and 16 attribute features. Each instance includes statistical features of handwritten letter images, such as size, shape, and contour. This dataset aims to classify each sample into one of the 26 English letters. 
+
+\ding{175}The Online News Popularity dataset is used to predict the popularity of online news articles and contains 39,644 instances and 60 attribute features. The dataset includes information such as article content, social media interactions, and publishing time. 
+
+For simplicity, we refer to the four datasets as 'Bank' , 'Credit', 'Letter' and 'News', respectively. In the experiments on the 'Bank' and 'Credit' datasets, the attributes are vertically partitioned between Parties A and B based on feature ownership. Specifically, Party A contains customer information, while Party B contains bank information. In the Bank dataset, Party A has 8 attributes while Party B has 8 attributes excluding the ID column excluding the ID column. In the Credit dataset, Party A has 9 attributes and Party B has 11 attributes excluding the ID column. 'Bank' and 'Credit' datasets represent two scenarios: one with a relatively large sample size and the other with a relatively small sample size. 'Letter' and 'News' datasets are used to simulate a vertical federated learning scenario. And, we divide the original attribute columns equally between Party A and Party B according to their order. Excluding the financial domain, 'Letter' and 'News' datasets represent different application scenarios as well as different sample sizes and feature numbers. 
+
+To verify the validity of our method, {\bfseries we thoroughly conduct experimental demonstrations for the case where} $\boldsymbol{D_{UnAlign}^B}$
+{\bfseries $\boldsymbol{=\varnothing}$ in Fig.\ref{fig:align}.} The case when $D_{UnAlign}^{B}$ $\neq$ $\varnothing$ can be inferred in the same way. In the experiments of this paper, we set different missing sample ratios for Party B when ${D_{UnAlign}^{B}=\varnothing}$. For example, a missing sample ratio of 0.2 indicates that 80\% of the samples in Party B can be aligned with those in Party A, while 20\% of the samples are missing in Party B, relative to Party A. Cnum represents the number of attributes generated by VF-AR in Party B. Besides, we denote the missing sample ratio of Party B as MisR-B.
+
+
+\subsection{Experiment 1:Different settings in FedPSG-AR}
+\label{subsec42}
+
+FedPSG-AR first generates partial attributes for the missing samples of Party B, then imputes the remaining attributes of these missing samples. Initially generated partial attributes have strong correlations with the attributes of Party A. In Experiment 1, different partial attribute generation methods or various remaining attribute imputation methods are adopted to determine the optimal setting for FedPSG-AR. This experiment consists of three groups, with a different missing rate(MisR-B) for Party B's samples. The three groups of experiments are conducted on the two datasets, 'Bank' and 'Credit'. The evaluation metric employed to assess the effectiveness of sample generation is RMSE. RMSE\cite{37} is used to indicate the average degree of deviation between the data in the generated sample and the real data. In Experiment 1, for the federated or non-federated imputation models based on GANs and the generation models involved in the comparative experiment, the total number of training iterations is set to 10,000, the number of epochs is set to 10, the learning rate is set to 0.001, and the optimizer is set to Adam.
+
+(1) The experimental design of Experiment 1
+
+Group 1 in Experiment 1: We fix remaining attribute imputation methods, and compare different partial attribute generation methods. Two methods are used to generate the attributes in the missing samples of Party B that are highly correlated with those of Party A: \ding{142}Local generation model learns the data distribution of these attributes in the observed samples of Party B, to generate the attribute values in the missing samples. We refer to this method as attributes generation model, abbreviated as AG. Furthermore, the complete process of sample generation is referred to as FedPSG-AG. \ding{143}Combining the observed samples from Party A, these attributes in the missing samples of Party B are generated by vertical federated association rules, which is VF-AR in our proposed method FedPSG-AR. In FedPSG-AG, TabDDPM\cite{17} is used as its local generation model AG, which is a state-of-the-art model in the data generation field. Both FedPSG-AG and FedPSG-AR adopt VF-GAIN as the remaining attribute imputation methods. Group 1 in Experiment 1 presents a comparison of results for different values of Cnum. The number of attributes represented by Cnum also reflects different degrees of attribute correlation.
+
+Group 2 in Experiment 1: We fix partial attribute generation method, and compare different remaining attribute imputation models.The imputation models used for comparison include Mean\cite{18}, MissFI(The number of trees in the Random Forest is set to 100)\cite{21}, MICE\cite{22}, GAIN\cite{24}, CGAIN\cite{25}, VGAIN\cite{27}. They are deployed and implemented within a vertical federated framework, and are represented as VF-MissFI, VF-MICE, VF-GAIN, VF-CGAIN, VF-VGAIN. Mean imputation fills the missing values by calculating the mean of the current column. This process does not require any vertical federated computation. Group 2 adopts the optimal results from Group 1, i.e., the partial attribute generation method adopts VF-AR, with Cnum set to 5.
+
+Group 3 in Experiment 1: We fix partial attribute generation method, and compare different remaining attribute imputation methods. The imputation methods include multi-party vertical federated imputation and local non-federated imputation. Multi-party vertical federated imputation is a method that: the remaining attributes are imputed through the implementation of vertical federated imputation models. The federated method combines the observed samples from Parties A and B, and the partial attributes generated by VF-AR in the missing samples of Party B. Local non-federated imputation is a method that: the remaining attributes are imputed through the implementation of local imputation models. The non-federated method combines the observed samples from Party B and the partial attributes generated by VF-AR in the missing samples of Party B. GAIN, CGAIN and VGAIN, which are the outstanding models in Group 2, are adopted to implement the federated and non-federated imputation. Cnum is set to 1, 5, and 8.
+
+(2) Results and Analysis of Experiment 1
+
+Table \ref{tab:rmse_bank}, Table \ref{tab:rmse_credit} and Fig.\ref{fig:exp1} present the experimental results for Group 1 in Experiment 1. In Table \ref{tab:rmse_bank}, Table \ref{tab:rmse_credit}, the generation effects of FedPSG-AG and FedPSG-AR are compared, with the results showing lower RMSE values highlighted in bold. Meanwhile, for FedPSG-AR, the optimal and suboptimal results are highlighted in red and blue, respectively. When Cnum=1, one attribute of the missing samples in Party B is generated by AG or VF-AR, and the remaining attributes are generated by VF-GAIN; and so forth \dots The bolded experimental results in Table \ref{tab:rmse_bank} and Table \ref{tab:rmse_credit} indicate that FedPSG-AR outperforms FedPSG-AG across different MisR-B values and for each Cnum value. Since the remaining attribute imputation methods is fixed, these results also indicate that VF-AR outperforms AG as a partial attribute generation method. Specifically, for AG, even when the local generation model of Party B employs TabDDPM, which achieves the best performance in the current literature, its experimental results still do not surpass those of VF-AR. Because, for these attributes of Party B that are highly correlated with Party A, VF-AR can more effectively learn the underlying data distribution patterns compared to the local generation models. From the experimental results highlighted in red and blue in Table \ref{tab:rmse_bank} and Table \ref{tab:rmse_credit}, FedPSG-AR demonstrates lower RMSE values when Cnum=4, 5, 6. According to the attribute correlation between Party A and Party B, vertical federated association rules generates more highly correlated attributes, then federated imputation is performed for the remaining attributes, resulting in a lower RMSE for the generated samples. It contributes to obtaining a sample set that more closely approximates the real one. However, it is worth noting that the RMSE value increases as the Cnum of Party B increases as shown in Fig.\ref{fig:exp1}. These results indicate that a greater number of attributes in Party B generated by VF-AR is not necessarily better. In fact, some attributes that are non-highly correlated with those of Party A are more suitable for generation through federated imputation. Because attributes with low correlation to Party A may introduce errors in the learning and inference process of VF-AR, thereby reducing the quality of the generated data. Federated imputation can fully leverage the data collaboration among multiple participants to improve the accuracy of generated data. Consequently, generating partial highly correlated attributes and performing federated imputation for the remaining attributes, can help ensure the quality of the generated samples. The value of Cnum should be determined based on the characteristics of the specific dataset. Generally, when Spearman's correlation coefficient between the attributes of Party A and Party B is no less than 0.5, the number of attributes generated by VF-AR is sufficient to meet the requirements of participants sample generation. In Bank and Credit datasets, when the attribute correlation between Party A and Party B is greater than 0.5, the value of Cnum is 5.
+\begin{table*}[h]
+	\centering
+	\caption{RMSE obtained by FedPSG-AG/AR with different Cum of Party B for Bank Dataset (The optimal and suboptimal results are highlighted in \textcolor{red}{red} and \textcolor{blue}{blue}, respectively.)}
+	\label{tab:rmse_bank}
+	\small
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c c c c c c c c c}
+		\toprule
+		%\multicolumn{2}{c}{\diagbox{MisR-B}{Cnum}} & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+		\multirow{2}{*}{\textbf{MisR-B}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{7}{c}{\textbf{Cnum}} \\
+		\cmidrule(lr){3-9}
+		& & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+		\midrule
+		\multirow{2}{*}{0.2} 
+		& FedPSG-AG & 0.4340 & 0.4273 & 0.4048 & 0.3067 & 0.2820 & 0.3055 & 0.3529 \\
+		& {FedPSG-AR} & \textbf{0.3807} & \textbf{0.3614} & \textbf{0.3142} & \textbf{0.2782} & \textcolor{red}{\textbf{0.2057}} & \textbf{0.2369} & \textcolor{blue}{\textbf{0.2177}} 
+		 \\
+		\midrule
+		\multirow{2}{*}{0.5} 
+		& FedPSG-AG & 0.4826 & 0.4517 & 0.4444 & 0.3585 & 0.3119 & 0.3451 & 0.4585 \\
+		& FedPSG-AR & \textbf{0.4545} & \textbf{0.4005} & \textbf{0.3328} & \textbf{0.3139} & \textcolor{red}{\textbf{0.2087}} & \textcolor{blue}{\textbf{0.2258}} & \textbf{0.2771}
+		 \\
+		\midrule
+		\multirow{2}{*}{0.8} 
+		& FedPSG-AG & 0.5007 & 0.4536 & 0.4521 & 0.4273 & 0.4217 & 0.4464 & 0.4740 \\
+		& FedPSG-AR &  \textbf{0.4770} & \textbf{0.4296} & \textbf{0.3746} & \textbf{0.3356} & \textcolor{blue}{\textbf{0.2401}} & \textcolor{red}{\textbf{0.2362}} & \textbf{0.2887}
+		 \\
+		\bottomrule
+	\end{tabular}
+}
+\end{table*}
+\begin{table*}[h]
+	\centering
+	\caption{RMSE obtained by FedPSG-AG/AR with different Cnum of Party B for Credit Dataset (The optimal and suboptimal results are highlighted in \textcolor{red}{red} and \textcolor{blue}{blue}, respectively.)}
+	\label{tab:rmse_credit}
+	%\renewcommand{\arraystretch}{1.2}  % 调整行高
+	%\setlength{\tabcolsep}{5pt}  % 调整列间距
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{c c c c c c c c c c c c}
+			\toprule
+			\multirow{2}{*}{\textbf{MisR-B}} & \multirow{2}{*}{\textbf{Method}} & \multicolumn{10}{c}{\textbf{Cnum}} \\
+			\cmidrule(lr){3-12}
+			& & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+			\midrule
+			\multirow{2}{*}{0.2} 
+			& FedPSG-AG & 0.4962 & 0.4959 & 0.5126 & 0.4710 & 0.4637 & 0.4353 & 0.4218 & 0.3946 & 0.4074 & \textbf{0.4282} \\
+			& FedPSG-AR & \textbf{{0.3844}} & 
+			\textbf{{0.3595}} & 
+			\textbf{{0.3511}} & 
+			\textbf{\textcolor{blue}{0.3480}} & 
+			\textbf{\textcolor{red}{0.3478}} & 
+			\textbf{{0.3590}} & 
+			\textbf{0.3784} & 
+			\textbf{0.3774} & 
+			\textbf{0.4031} & 0.4940 \\
+			\midrule
+			\multirow{2}{*}{0.5} 
+			& FedPSG-AG & 0.4985 & 0.5051 & 0.5373 & 0.4825 & 0.4745 & 0.4549 & 0.4403 & 0.4247 & 0.4771 & \textbf{0.4863} \\
+			& FedPSG-AR & \textbf{{0.4009}} & 
+			\textbf{0.4179} & 
+			\textbf{{0.4001}} & 
+			\textbf{\textcolor{red}{0.3667}} & 
+			\textbf{{0.3674}} & 
+			\textbf{\textcolor{blue}{0.3670}} & 
+			\textbf{0.3884} & 
+			\textbf{0.3954} & 
+			\textbf{0.4316}
+			 & 0.5271 \\
+			\midrule
+			\multirow{2}{*}{0.8} 
+			& FedPSG-AG & 0.5080 & 0.5445 & 0.5859 & 0.5232 & 0.5085 & 0.4725 & 0.4726 & 0.4891 & 0.5122 & 0.5715 \\
+			& FedPSG-AR & \textbf{0.4709} & 
+			\textbf{0.5028} & 
+			\textbf{{0.4573}} & 
+			\textbf{\textcolor{blue}{0.4404}} & 
+			\textbf{{0.4479}} & 
+			\textbf{\textcolor{red}{0.4205}} & 
+			\textbf{0.4597} & 
+			\textbf{0.4633} & 
+			\textbf{0.4723} & 
+			\textbf{0.5391}
+			 \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table*}
+\begin{figure}[h]
+	\centering 
+	\begin{minipage}[b]{0.45\textwidth} 
+			\centering
+			\label{fig:expa}
+			\includegraphics[width=\textwidth]{Bank} 
+		\end{minipage}
+	\hfill 
+	\begin{minipage}[b]{0.45\textwidth} 
+			\centering
+			\label{fig:expb}
+			\includegraphics[width=\textwidth]{Credit} 
+		\end{minipage}
+	\caption{RMSE line graph obtained by FedPSG-AR with different Cum of Party B: (a) Bank Dataset; (b) Credit Dataset}
+	\label{fig:exp1}
+\end{figure}
+
+Table \ref{tab:3} presents the experimental results for Group 2 in Experiment 1. When Cnum=5, for the different values of MisR-B, the optimal and suboptimal RMSE results are obtained by FedPSG-AR when the remaining attribute imputation model is VF-GAIN, VF-VGAIN, or VF-CGAIN. Particularly, the optimal RMSE values of Bank dataset occur when imputation model is VF-GAIN or VF-CGAIN, and the optimal RMSE values of Credit dataset occur when imputation model is VF-VGAIN. The results demonstrate the effectiveness of vertical federated imputation models based on GANs. The worst RMSE values of the two datasets occur when imputation model is Mean. Because Mean imputation is a mean calculation on all the values of the current attribute column, and during the imputation process, it neither references nor combines the data from other parties.
+\begin{table*}[h]
+	\centering
+	\caption{RMSE obtained by FedPSG-AR with different imputation models for Bank and Credit Dataset (The optimal and suboptimal results are highlighted in \textcolor{red}{red} and \textcolor{blue}{blue}, respectively. MisR-B=0.2, 0.5, 0.8)}
+	\label{tab:3}
+	%\renewcommand{\arraystretch}{1.2}  % 调整行距
+	%\setlength{\tabcolsep}{5pt}  % 调整列间距
+	\resizebox{\textwidth}{!}{
+	\begin{tabular}{c c c c c c c c}
+		\toprule
+		\multicolumn{2}{c}{\diagbox{\textbf{Dataset}}{\textbf{Imputation}}} 
+		%\textbf{Dataset}&\diagbox{\textbf{MisR-B}}{\textbf{Imputation}}
+		& \textbf{Mean} & \textbf{VF-MissFI} & \textbf{VF-MICE} & \textbf{VF-GAIN} & \textbf{VF-VGAIN} & \textbf{VF-CGAIN} \\
+		\midrule
+		\multirow{3}{*}{Bank} 
+		& 0.2 & 0.4075 & 0.3333 & 0.3233 & \textcolor{blue}{0.2057} & {0.2291} & \textcolor{red}{0.1691} \\
+		& 0.5 & 0.4578 & 0.3501 & 0.3743 & \textcolor{red}{0.2087} & {0.2335} & \textcolor{blue}{0.2332}\\
+		& 0.8 & 0.4989 & 0.4006 & 0.3567 & \textcolor{red}{0.2401} & 0.3024 & \textcolor{blue}{0.2533} \\
+		\midrule
+		\multirow{3}{*}{Credit} 
+		& 0.2 & 0.4567 & 0.4372 & 0.4471 & \textcolor{blue}{0.3478} & \textcolor{red}{0.3373} & 0.4029 \\
+		& 0.5 & 0.4773 & 0.4359 & 0.4789 & \textcolor{blue}{0.3674} & \textcolor{red}{0.3503} & 0.4242 \\
+		& 0.8 & 0.4910 & 0.4701 & 0.4982 & 0.4479 & \textcolor{red}{0.4030} & \textcolor{blue}{0.4433} \\
+		\bottomrule
+	\end{tabular}
+}
+\end{table*}
+\begin{table*}[h]
+	\centering
+	\caption{After generating partial attributes, RMSE obtained by federated and non-federated imputation (VFImp(Y/N)) when Cnum=1,5,8 for Bank and Credit Dataset, MisR-B=0.2, 0.5, 0.8}
+	\label{tab:4}
+	\small
+	%\renewcommand{\arraystretch}{1.2}  % 调整行距
+	%\setlength{\tabcolsep}{6pt}  % 调整列间距
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{c c c c c c c c}
+			\toprule
+			\multirow{2}{*}{\textbf{Dataset}} & \multirow{2}{*}{\textbf{MisR-B}} 
+			%\multicolumn{2}{c}{\diagbox{\textbf{Dataset}}{\textbf{VFImp(Y/N)}}}
+			& \multicolumn{2}{c}{\textbf{Cnum=1}} & \multicolumn{2}{c}{\textbf{Cnum=5}} & \multicolumn{2}{c}{\textbf{Cnum=8}} \\
+			\cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+			& & \textbf{VF-GAIN} & \textbf{GAIN} & \textbf{VF-GAIN} & \textbf{GAIN} & \textbf{VF-GAIN} & \textbf{GAIN} \\
+			\midrule
+			\multirow{3}{*}{Bank} 
+			& 0.2 & \textbf{0.3807} & 0.4041 & \textbf{\textcolor{red}{0.2057}} & 0.2779 & \textbf{0.2536} & 0.3468 \\
+			& 0.5 & \textbf{0.4545} & 0.4744 & \textbf{\textcolor{red}{0.2087}} & 0.2950 & \textbf{0.3029} & 0.3437 \\
+			& 0.8 & \textbf{0.4770} & 0.4951 & \textbf{\textcolor{red}{0.2401}} & 0.3140 & \textbf{0.2986} & 0.3577 \\
+			\midrule
+			\multirow{3}{*}{Credit} 
+			& 0.2 & \textbf{0.3844} & 0.5317 & \textbf{\textcolor{red}{0.3478}} & 0.4945 & \textbf{0.3774} & 0.5017 \\
+			& 0.5 & \textbf{0.4009} & 0.5748 & \textbf{\textcolor{red}{0.3674}} & 0.5044 & \textbf{0.3954} & 0.4456 \\
+			& 0.8 & \textbf{0.4709} & 0.5631 & \textbf{\textcolor{red}{0.4479}} & 0.5158 & \textbf{0.4633} & 0.4615 \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table*}
+\begin{table*}[h]
+	\centering
+	\caption{After generating partial attributes, RMSE obtained by federated and non-federated imputation (VFImp(Y/N)) based on different GANs when Cnum=5 for Bank and Credit Dataset (The optimal and suboptimal results are highlighted in \textcolor{red}{red} and \textcolor{blue}{blue}, respectively. MisR-B=0.2, 0.5, 0.8)}
+	\label{tab:5}
+	%\renewcommand{\arraystretch}{1.2}  % 调整行距
+	%\setlength{\tabcolsep}{4pt}  % 调整列间距
+	\small
+	\resizebox{\textwidth}{!}{ % 让表格适应单栏
+		\begin{tabular}{c c c c c c c c}
+			\toprule
+			\multirow{2}{*}{\textbf{Dataset}} &\multirow{2}{*}{\textbf{MisR-B}} & \multicolumn{6}{c}{\textbf{VFImp(Y/N)}} \\
+			\cmidrule(lr){3-8}
+			& & \textbf{VF-GAIN} & \textbf{GAIN} & \textbf{VF-VGAIN} & \textbf{VGAIN} & \textbf{VF-CGAIN} & \textbf{CGAIN} \\
+			\midrule
+			\multirow{3}{*}{Bank} 
+			& 0.2 & \textbf{\textcolor{blue}{0.2057}} & 0.2779 & \textbf{0.2291} & 0.2378 & \textbf{\textcolor{red}{0.1691}} & 0.2198 \\
+			& 0.5 & \textbf{\textcolor{red}{0.2087}} & 0.2950 & \textbf{0.2335} & 0.2854 & \textbf{\textcolor{blue}{0.2332}} & 0.2775 \\
+			& 0.8 & \textbf{\textcolor{red}{0.2401}} & 0.3140 & \textbf{0.3024} & 0.3364 & \textbf{\textcolor{blue}{0.2533}} & 0.3333 \\
+			\midrule
+			\multirow{3}{*}{Credit} 
+			& 0.2 & \textbf{\textcolor{blue}{0.3478}} & 0.4945 & \textbf{\textcolor{red}{0.3373}} & 0.4086 & \textbf{0.4029} & 0.4273 \\
+			& 0.5 & \textbf{\textcolor{blue}{0.3674}} & 0.5044 & \textbf{\textcolor{red}{0.3503}} & 0.4354 & \textbf{0.4242} & 0.4670 \\
+			& 0.8 & \textbf{0.4479} & 0.5158 & \textbf{\textcolor{red}{0.4030}} & 0.4217 & \textbf{\textcolor{blue}{0.4433}} & 0.4651 \\
+			\bottomrule
+		\end{tabular}
+	} % 结束 resizebox
+\end{table*}
+
+
+Table \ref{tab:4} and Table \ref{tab:5} present the experimental results for Group 3 in Experiment 1. Firstly, Cum is set to 1, 5, 8, respectively. In table \ref{tab:4}, the model adopted by federated imputation method is VF-GAIN, and the model adopted by non-federated imputation method is local GAIN in Party B. As shown in Table \ref{tab:4}, in FedPSG-AR, federated imputation based on VF-GAIN overall outperform non-federated imputation based on local GAIN for generating the remaining attributes. Because federated imputation introduces more multi-party data for collaborative learning, the incorporation of additional data features improves the quality of the missing data generated for Party B in the joint samples. Meanwhile, with the different values of MisR-B, the experimental results obtained by federated imputation and non-federated imputation in FedPSG-AR when Cnum=5 are superior to the results obtained when Cnum=1 and Cnum=8, which is consistent with the conclusion of Group 1 in Experiment 1. Furthermore, we compare the federated imputation and non-federated imputation of GAIN, CGAIN, VGAIN when Cum = 5 in FedPSG-AR. As shown in Table 5, the federated imputations based on VF-GAIN, VF-CGAIN, VF-VGAIN overall outperform the non-federated imputations based on local GAIN, CGAIN, VGAIN, which is consistent with the conclusion of Table \ref{tab:4}. 
+
+
+\subsection{Experiment 2:Comparison between FedPSG-AR and the SOTA baseline models}
+\label{subsec43}
+
+To validate the effectiveness of our method for participants sample generation, based on Experiment 1, we comprehensively compare FedPSG-AR with other baseline models. This experiment is also conducted under different values of MisR-B. The datasets used in the experiment are Bank, Credit, Letter and News. The evaluation metric for this experiment is also RMSE, which indicates the average deviation between the data in the generated samples and the real data. In Experiment 2, the total number of training iterations for each generation method is set to 10,000, with 10 epochs, a learning rate of 0.001, and the Adam optimizer. 
+
+(1) The experimental design of Experiment 2
+
+In this experiment, to generate the missing samples of Party B, the comparative methods  are classified into three main types:
+
+\ding{172} The entire missing sample is completely generated locally in Party B. This method is referred to as 'Entirely generated locally'. The baseline models used for comparison represent the current state-of-the-art in the field of data generation, including CTGAN\cite{11}, TableGAN\cite{38}, CTAB-GAN\cite{15}, TVAE\cite{11}, and TabDDPM\cite{17}.
+
+\ding{173} Partial attributes of the missing sample are generated locally in Party B, and the remaining attributes are generated through vertical federated imputation. This method is referred to as 'Partially generated locally, partially generated federally'. To address the issue of participants samples generation, our team initially proposed a method called FedPSG-CAG. It first generates partial highly correlated attributes within Party B by local generation models, then generates the remaining attributes by federated imputation. In FedPSG-CAG, the federated imputation combines the observed samples from Parties A and B, and partial attributes in the missing samples of Party B generated by local generation models. 
+
+Notably, we do not adopt FedPSG-AG, which was used for comparison with FedPSG-AR in the Group 1 in Experiment 1. FedPSG-AG is also a method of 'Partially generated locally, partially generated federally'. But, the initially generated partial attributes in FedPSG-AG are selected for comparison with VF-AR in FedPSG-AR, and determined based on their correlation with the attributes of Party A. These attributes may not necessarily exhibit a strong correlation. However, the initially generated partial attributes in FedPSG-CAG are selected based on their correlation with attributes within Party B. The generation model executed locally, can more easily learn the data distribution of attributes with strong correlation. Therefore, the overall performance of FedPSG-CAG is superior to FedPSG-AG. This can be observed from the experimental comparison results of FedPSG-AG-5 (Tables \ref{tab:rmse_bank} and \ref{tab:rmse_credit}) and those of FedPSG-CAG-5 (Table \ref{tab:6}) on Bank and Credit datasets. Hence, in Experiment 2, FedPSG-AG is no longer used for comparison.
+
+\ding{174}The entire missing sample is generated by combining the data of Party A and Party B. This method is referred to as 'Entirely generated federally' including the following two methods:
+
+One method is the vertical federated imputation based on GANs constructed in Section \ref{subsec33} of this paper. This method combines the observed samples from Parties A and B to generate all attributes of the missing samples in Party B, which is referred to as 'Completely imputed federally'. When Cnum=0, FedPSG-AR, FedPSG-CAG and FedPSG-AG are all the methods of ‘Completely imputed federally’, denoted as FedPSG-AR-0 or FedPSG-CAG-0，FedPSG-AG-0.
+
+The other method is the whole process of Fed
+PSG-AR proposed in this paper. Combining the observed samples from Parties A and B, this method firstly generates partial attributes in the missing samples of Party B by VF-AR, then generates the remaining attributes by federated imputation based on GANs.
+
+According to the conclusions of Experiment 1, in both FedPSG-CAG and FedPSG-AR, Cnum is set to 5 to ensure consistency in the comparison, and the federated imputation model adopts VF-GAIN and VF-VGAIN. The local generation model of Party B in FedPSG-CAG uses TabDDPM. When Cnum is set to 5, FedPSG-CAG-5 and FedPSG-AR-5 are used to denote the corresponding settings.
+
+(2) Results and Analysis of Experiment 2
+
+Table \ref{tab:6} and Table \ref{tab:7} present the experimental results for Experimental 2. For the different values of MisR-B, the RMSE values of TabDDPM are superior, when 'Entirely generated locally' is used to generate the missing samples of Party B. This is also the reason why FedPSG-AG and FedPSG-CAG selected TabDDPM as the local model for generating partial attributes of the missing samples in the experiments.
+
+As shown in \ref{tab:6} and \ref{tab:7}, regardless of whether the MisR-B is high or low, the following conclusions can be drawn by analyzing the experimental results of FedPSG-CAG-5: The RMSE values of FedPSG-CAG-5 are all superior to the methods of 'Entirely generated locally'. Meanwhile, the RMSE values of FedPSG-CAG-5 are all superior to FedPSG-CAG/AG/AR-0, the method of 'Completely imputed federally'. These results indicate that the method is effective, which first generates partial highly correlated attributes within Party B by local generation models, then generates the remaining attributes by federated imputation.
+
+FedPSG-CAG/AG/AR-0, the method of 'Completely imputed federally', when compared with TabDDPM, the optimal method of 'Entirely generated locally', leads to the following conclusions: When MisR-B is relatively high, FedPSG-CAG/AG/AR-0 is superior to TabDDPM. However, when MisR-B is relatively low, TabDDPM may learn the distribution of local data more effectively for the missing samples generation.
+
+Furthermore, as shown in the results of Table \ref{tab:6} and Table \ref{tab:7}, regardless of whether the MisR-B is high or low, FedPSG-AR-5 generally outperforms all the other aforementioned methods. Based on FedPSG-CAG, which locally generates partial attributes, the method FedPSG-AR, which federally generates partial attributes by VF-AR, achieves better generation results. 
+
+In particular, 'Letter' and 'News' datasets equally divide the attribute columns between Parties A and B to simulate the vertical federated scenario. The data correlation, sample size, and number of attribute columns differ from those in 'Bank' and 'Credit' datasets. Therefore, Cnum=5 is not necessarily the optimal setting for FedPSG-CAG or FedPSG-AR on 'Letter' and 'News'. However, even so, the RMSE values of FedPSG-CAG-5 or FedPSG-AR-5 based on VF-GANs outperforms all methods of 'Entirely generated locally' and 'Completely imputed federally'. Moreover, FedPSG-AR-5 is superior to FedPSG-CAG-5.
+
+The outstanding performance of FedPSG-AR can be attributed to its methodological innovation, which combines association rules generation, data imputation in VFL. This combination effectively captures correlations between attributes from multiple parties, ensuring that the generated data maintains logical and statistical consistency with the observed data, particularly when the attributes are strongly correlated. Additionally, FedPSG-AR leverages data associations from multiple parties under a vertical federated learning framework, enhancing generation performances while preserving data privacy. In contrast, these baseline methods (e.g., CTGAN, TabDDPM, etc.) focus solely on generating data by locally learning the overall distribution of the participant's data. They do not fully exploit the data associations with other participants. As a result, accuracy and consistency are compromised, particularly in cases with a high MisR-B.
+\begin{table*}[h]
+	\centering
+	\caption{RMSE obtained by different methods when generating the missing samples of Party B for Bank and Credit Dataset (The optimal, suboptimal, and third-best results are highlighted in \textcolor{red}{red}, \textcolor{blue}{blue}, and \textcolor{green}{green}, respectively. MisR-B=0.2, 0.5, 0.8)}
+	\label{tab:6}
+	\renewcommand{\arraystretch}{1.2}  % 行距调整
+	\setlength{\tabcolsep}{4pt}  % 列间距调整
+	\resizebox{\textwidth}{!}{ % 适应表格大小
+		\begin{tabular}{llcccccc}
+			\toprule
+			\multirow{2}{*}{\textbf{Dataset}} & \multirow{2}{*}{\textbf{Methods}} & \multicolumn{3}{c}{\textbf{Bank}} & \multicolumn{3}{c}{\textbf{Credit}} \\
+			\cmidrule(lr){3-5} \cmidrule(lr){6-8}
+			& & \textbf{0.2} & \textbf{0.5} & \textbf{0.8} & \textbf{0.2} & \textbf{0.5} & \textbf{0.8} \\
+			\midrule
+			\multirow{5}{*}{Entirely generated locally} 
+			& CTGAN & 0.5099 & 0.5213 & 0.7554 & 0.5456 & 0.6385 & 0.6600 \\
+			& TableGAN & 0.5951 & 0.6865 & 0.7312 & 0.6008 & 0.6975 & 0.7838 \\
+			& CTAB-GAN & 0.4773 & 0.5644 & 0.6454 & 0.5533 & 0.6674 & 0.6976 \\
+			& TVAE & 0.4265 & 0.4862 & 0.6970 & 0.4305 & 0.5534 & 0.6740 \\
+			& TabDDPM & 0.4227 & 0.4728 & 0.5236 & 0.4478 & 0.5363 & 0.5750 \\
+			\midrule
+			%\multirow{2}{*}{Partially generated locally, partially generated federally} 
+			Partially generated locally,
+			& FedPSG-CAG-5 (VF-GAIN) & 0.2518 & 0.3378 & \textcolor{green}{0.3468} & 0.3509 & 0.3815 & 0.4994 \\
+			partially generated federally
+			& FedPSG-CAG-5 (VF-VGAIN) & \textcolor{green}{0.2372} & \textcolor{green}{0.2997} & 0.3537 & \textcolor{green}{0.3495} & \textcolor{blue}{0.3610} & \textcolor{green}{0.4621} \\
+			\midrule
+			%\multirow{2}{*}{Entirely generated federally (Completely imputed federally)}
+			Entirely generated federally
+			& FedPSG-CAG/AR-0 (VF-GAIN) & 0.4615 & 0.4981 & 0.5190 & 0.5048 & 0.5354 & 0.5518 \\
+			(Completely imputed federally)
+			& FedPSG-CAG/AR-0 (VF-VGAIN) & 0.4686 & 0.5100 & 0.5193 & 0.4526 & 0.5287 & 0.5583 \\
+			\midrule
+			%\multirow{2}{*}{Entirely generated federally (FedPSG-AR)} 
+			Entirely generated federally
+			& \textbf{FedPSG-AR-5 (VF-GAIN)} & \textcolor{red}{0.2057} & \textcolor{red}{0.2087} & \textcolor{red}{0.2401} & \textcolor{blue}{0.3478} & \textcolor{green}{0.3674} & \textcolor{blue}{0.4479} \\
+			 (FedPSG-AR)
+			& \textbf{FedPSG-AR-5 (VF-VGAIN)} & \textcolor{blue}{0.2291} & \textcolor{blue}{0.2335} & \textcolor{blue}{0.3024} & \textcolor{red}{0.3373} & \textcolor{red}{0.3503} & \textcolor{red}{0.4030} \\
+			\bottomrule
+		\end{tabular}
+	} % 结束 resizebox
+\end{table*}
+\begin{table*}[h]
+	\centering
+	\caption{RMSE obtained by different methods when generating the missing samples of Party B for Letter and News Dataset (The optimal, suboptimal, and third-best results are highlighted in \textcolor{red}{red}, \textcolor{blue}{blue}, and \textcolor{green}{green}, respectively. MisR-B=0.2, 0.5, 0.8)}
+	\label{tab:7}
+	\renewcommand{\arraystretch}{1.2}  % 调整行间距
+	\setlength{\tabcolsep}{4pt}  % 调整列间距
+	\resizebox{\textwidth}{!}{ % 让表格适应页面
+		\begin{tabular}{llcccccc}
+			\toprule
+			\multirow{2}{*}{\textbf{Dataset}} & \multirow{2}{*}{\textbf{Methods}} & \multicolumn{3}{c}{\textbf{Letter}} & \multicolumn{3}{c}{\textbf{News}} \\
+			\cmidrule(lr){3-5} \cmidrule(lr){6-8}
+			& & \textbf{0.2} & \textbf{0.5} & \textbf{0.8} & \textbf{0.2} & \textbf{0.5} & \textbf{0.8} \\
+			\midrule
+			\multirow{5}{*}{Entirely generated locally} 
+			& CTGAN & 0.5328 & 0.5664 & 0.6218 & 0.5209 & 0.5626 & 0.6034 \\
+			& TableGAN & 0.5398 & 0.6148 & 0.7068 & 0.4722 & 0.5204 & 0.6234 \\
+			& CTAB-GAN & 0.5226 & 0.5610 & 0.6559 & 0.4815 & 0.5220 & 0.6572 \\
+			& TVAE & 0.5203 & 0.5614 & 0.6634 & 0.5018 & 0.5492 & 0.6348 \\
+			& TabDDPM & 0.4921 & 0.5413 & 0.5833 & 0.4550 & 0.5024 & 0.5671 \\
+			\midrule		
+			%\multirow{2}{*}{Partially generated locally,partially generated federally}
+			Partially generated locally,
+			& FedPSG-CAG-5 (VF-GAIN) & 0.4049 & 0.4468 & 0.4897 & \textcolor{green}{0.4112} & 0.4630 & 0.5133 \\
+			partially generated federally
+			& FedPSG-CAG-5 (VF-VGAIN) & \textcolor{green}{0.3698} & \textcolor{blue}{0.3823} & \textcolor{green}{0.4768} & 0.4341 & \textcolor{green}{0.4579} & \textcolor{green}{0.5021} \\
+			\midrule
+			%\multirow{2}{*}{Entirely generated federally (Completely imputed federally)}
+			Entirely generated federally 
+			& FedPSG-CAG/AR-0 (VF-GAIN) & 0.4700 & 0.4981 & 0.5541 & 0.4602 & 0.5046 & 0.5566 \\
+			(Completely imputed federally)
+			& FedPSG-CAG/AR-0 (VF-VGAIN) & 0.4910 & 0.5432 & 0.5712 & 0.4883 & 0.5323 & 0.5609 \\
+			\midrule
+			%\multirow{2}{*}{Entirely generated federally (FedPSG-AR)} 
+			Entirely generated federally
+			& \textbf{FedPSG-AR-5 (VF-GAIN)} & \textcolor{blue}{0.3667} & \textcolor{green}{0.4297} & \textcolor{red}{0.4650} & \textcolor{blue}{0.3125} & \textcolor{red}{0.4138} & \textcolor{red}{0.4689} \\
+			(FedPSG-AR)
+			& \textbf{FedPSG-AR-5 (VF-VGAIN)} & \textcolor{red}{0.3636} & \textcolor{red}{0.3714} & \textcolor{blue}{0.4707} & \textcolor{red}{0.3068} & \textcolor{blue}{0.4206} & \textcolor{blue}{0.4798} \\
+			\bottomrule
+		\end{tabular}
+	} % 结束 resizebox
+\end{table*}
+
+
+\subsection{Experiment 3:Obtained joint sample sets for training federated classification models}
+\label{subsec44}
+
+To further validate the effectiveness of FedPSG-AR, we combine the generated samples from Party B with the unaligned samples from Party A to obtain new joint samples. Then, a joint sample set, formed by these new joint samples and original aligned joint samples, is used for training the vertical federated classification models. Experiment 3 compares the training performance of various vertical federated classification models using the joint sample set obtained after applying different methods to address the missing samples in Party B. In the experiment, we first construct a joint sample set based on the original aligned samples from Party A and Party B, then 30\% of the joint samples are randomly divided as the test set for the federated classification models. The remaining 70\% of the joint samples, together with the joint samples obtained by following five approaches in the experimental design of Experiment 3, are served as the training set of the federated classification models. Experiment 3 is conducted on the two datasets, 'Bank' and 'Credit'. The MisR-B is also set to 0.2, 0.5, and 0.8. 
+
+The vertical federated classification models adopted in Experiment 3 include VF-LR\cite{39}, VF-SVM\cite{40}, VF-GBDT\cite{41}, VF-RF\cite{42} and FinalNet\cite{43}. These models represent classification learning models of different types and scales. The data from Parties A and B are under security and privacy protection during the training of the vertical federated classification models. The evaluation metrics\cite{44} for assessing the training performance of these classification models are ACC, AUC, and F1 score. In Experiment 3, the configurations of these classification models are as follows:
+
+VF-LR: The learning rate is 0.01, with 1000 iterations and a batch size of 64.
+
+VF-SVM: The regularization parameter is 1.
+
+VF-GBDT: The model includes 20 trees, a learning rate of 0.1, a maximum tree depth of 6, and a sample sampling rate of 20%.
+
+VF-RF: The model includes 100 trees, a maximum tree depth of 3, a minimum of 2 samples required for splitting, and a minimum of 1 sample required for leaf nodes.
+
+FinalNet: The learning rate is 0.001, with 1000 iterations, a batch size of 64, a hidden layer dimension of 128, and a regularization parameter λ of 0.0001.
+
+(1) The experimental design of Experiment 3
+
+In Experiment 3, five approaches are used to address the missing samples in Party B and construct the joint sample set:  
+
+\ding{172} FedPSG-AR, a method of 'Entirely generated federally'. VF-AR are used to generate partial attributes in the missing samples of Party B that are highly correlated with those of Party A, then federated imputation are implemented to generate the remaining attributes. In this experiment, Cnum=5, and VF-GAIN is adopted as a vertical federated imputation model. 
+
+\ding{173} FedPSG-CAG, a method of 'Partially generated locally, partially generated federally'. Local generation models are used to generate partial highly correlated attributes of the missing samples within Party B, then federated imputation are implemented to generate the remaining attributes. In this experiment, the adopted local generation model is TabDDPM, with Cnum=5, and VF-GAIN is adopted as a vertical federated imputation model. 
+
+\ding{174} TabDDPM, a state-of-the-art model for data generation, is directly employed to locally generate the missing samples in Party B.
+
+\ding{175} No sample generation is conducted for the missing samples in Party B, and a joint sample set is obtained by aligning the original observed samples from Parties A and B. In Experiment 3, this approach is referred to as N-GM. 
+
+\ding{176} Based on the joint sample obtained using the approach N-GM, a vertical federated generation method, VertiGAN\cite{3}, is applied to generate new joint samples for Parties A and B. This approach will expand the sample size of the joint sample set derived from N-GM. The number of generated joint samples is the same as the number of missing samples in Party B. In Experiment 3, this approach is referred to as A$\infty$B-GM.
+
+(2) Results and Analysis of Experiment 3
+
+We statistically analyze the joint sample sizes obtained from these five approaches, FedPSG-AR, FedPSG-CAG, TabDDPM, A$\infty$B-GM, N-GM, and draw the following conclusions:
+
+\ding{172} FedPSG-AR, FedPSG-CAG and TabDDPM is to generate the missing samples in Party B relative to Party A. Then, the generated samples of Party B can be aligned with the unaligned samples in Party A to construct complete joint samples. A$\infty$B-GM is to generate joint samples, and the number of generated joint samples is the same as the number of missing samples in Party B. Therefore, the sample sizes of the joint sample sets obtained by FedPSG-AR, FedPSG-CAG, TabDDPM, A$\infty$B-GM are the same, and they are determined by the number of observed samples from Party A.
+
+\ding{173} The joint sample set constructed by N-GM has the least number of samples. Because, under the N-GM approach, if the samples from Party A can not be aligned with the missing samples in party B, the unaligned samples from Party A will be discarded when constructing the joint sample set. Therefore, the sample sizes of the joint sample set under the N-GM approach is determined by the number of original observed samples from Party B before the missing samples are generated.
+
+The experimental results are shown in Fig.\ref{fig:exp3}. Fig.\ref{fig:exp3}(a)–(f) represent the ACC, AUC, and F1 score curves of different vertical federated classification models on the Bank and Credit datasets, when MisR-B = 0.2, 0.5, and 0.8. In each subplot of Fig.\ref{fig:exp3}(a)–(f), the curves in different colors represent different vertical federated classification models. The x-axis indicates the different missing sample addressing methods to obtain the joint sample set, while the y-axis shows the ACC, AUC, and F1 scores values obtained by training these federated classification models on the joint datasets.
+
+As shown in Fig.\ref{fig:exp3}, regardless of the value of MisR-B, the joint sample set obtained by using the FedPSG-AR approaches consistently yields the best performance in terms of ACC, AUC, and F1 scores on the test set of both datasets, across all federated classification models, VF-LR, VF-SVM, VF-GBDT, VF-RF and FinalNet. The next best performance is observed with the FedPSG-CAG, TabDDPM, A$\infty$B-GM, N-GM approaches, in that order. The reasons for these results are as follows:
+%\begin{figure*}[h]
+%	\centering 
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:bank2}
+%		\includegraphics[width=\textwidth]{Bank2} 
+%	\end{minipage}
+%	\hfill
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:bank5}
+%		\includegraphics[width=\textwidth]{Bank5} 
+%	\end{minipage}
+%	\hfill  
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:bank8}
+%		\includegraphics[width=\textwidth]{Bank8} 
+%	\end{minipage}
+%	\hfill  
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:Credit2}
+%		\includegraphics[width=\textwidth]{Credit2} 
+%	\end{minipage}
+%	\hfill  
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:Credit5}
+%		\includegraphics[width=\textwidth]{Credit5} 
+%	\end{minipage}
+%	\hfill  
+%	\begin{minipage}[b]{0.49\textwidth} 
+%		\centering
+%		\label{fig:Credit8}
+%		\includegraphics[width=\textwidth]{Credit8} 
+%	\end{minipage}
+%	\caption{The verification results of different vertical federated classification models}
+%	\label{fig:exp3}
+%\end{figure*}
+
+\ding{172} From the perspective of sample size, the joint sample sets obtained using the four approaches, FedPSG-AR, FedPSG-CAG, TabDDPM, and A$\infty$B-GM, have the same sample size, with N-GM having the smallest. As shown in Fig.\ref{fig:exp3}, regardless of the values of MisR-B, the vertical federated classification models, trained on the joint sample set obtained using the N-GM approach, yield the worst values of evaluation metrics for both datasets. It indicates the importance of joint sample size in training vertical federated machine learning models. With other factors held constant, a larger joint sample set improves classification performance when training vertical federated machine learning models. As shown in Fig.\ref{fig:exp3}, we verified this conclusion using different federated classification models. In the same dataset, as the sample missing ratio of Party B increases, the sample size of the joint sample set obtained by the N-GM approach decreases significantly. As the joint sample set size decreases, the evaluation metrics of all five vertical federated classification models decline. Notably, the evaluation metrics of FinalNet show a more significant decrease compared to VF-GBDT, VF-RF, VF-SVM and VF-LR. FinalNet is a vertical federated deep learning model. The results also indicate that for complex models like deep neural networks, which it's necessary to train with a larger sample size. Our method FedPSG-AR provides a effective solution to obtain more joint samples when one or some participants have missing samples.
+\begin{figure*}[p]
+	\centering 
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:bank2}
+		\includegraphics[width=\textwidth]{Bank2} 
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:bank5}
+		\includegraphics[width=\textwidth]{Bank5} 
+	\end{minipage}
+	\hfill  
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:bank8}
+		\includegraphics[width=\textwidth]{Bank8} 
+	\end{minipage}
+	\hfill  
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:Credit2}
+		\includegraphics[width=\textwidth]{Credit2} 
+	\end{minipage}
+	\hfill  
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:Credit5}
+		\includegraphics[width=\textwidth]{Credit5} 
+	\end{minipage}
+	\hfill  
+	\begin{minipage}[b]{0.73\textwidth} 
+		\centering
+		\label{fig:Credit8}
+		\includegraphics[width=\textwidth]{Credit8} 
+	\end{minipage}
+	\caption{The verification results of different vertical federated classification models}
+	\label{fig:exp3}
+\end{figure*}
+
+\ding{173} From the perspective of sample quality, although the sample sizes of the joint sample sets obtained by the four approaches(FedPSG-AR, Fed
+PSG-CAG, TabDDPM, A$\infty$B-GM)are same, the quality of their joint samples decreases successively. For the three approaches, FedPSG-AR, FedPSG-CAG amd TabDDPM, all the data from Party A has been retained. Compared to the A$\infty$B-GM approach, which generates entirely new joint samples, the joint sample sets obtained using the approaches, FedPSG-AR, FedPSG-CAG and TabDDPM, contain more real data for model training, resulting in higher quality joint samples. FedPSG-AR and FedPSG-CAG, especially FedPSG-AR, can sufficiently leverage the data associations between multiple parties to generate the missing samples of Party B. For the TabDDPM approach, the data of participant with missing samples is generated locally in Party B by TabDDPM. The experimental results shown in Fig.\ref{fig:exp3} demonstrate that our method FedPSG-AR effectively addresses the issue of sample generation for participants with missing samples. Additionally, they indicate that model training performance depends not only on sample size but also on other factors, such as sample quality. Even in cases where MisR-B is high, our method FedPSG-AR can generate higher-quality training samples for the joint sample set, which better supports the training of vertical federated machine learning models. As shown in Fig.\ref{fig:exp3}, this conclusion holds for different machine learning models.
+
+\section{Conclusion}
+\label{sec5}
+In multi-party collaborative scenarios, this paper proposes a novel Participants Sample Generation method based on association rules and data imputation within vertical federated learning, referred to FedPSG-AR, to address the challenge of data generation for participant with missing samples. When one or some participants may lack certain samples that other participants possess, the number of joint samples becomes limited after encrypted sample alignment, which is unfavorable for training vertical federated machine learning models. It is essential to generate samples for participants with missing samples. FedPSG-VR integrates attribute correlations among multiple parties, association rules, and data imputation techniques in vertical federated learning, to generate high-quality samples for those participants. Generation method based on vertical federated association rules generates attributes correlated with those of other parties for participants with missing samples while ensuring data privacy. Then, vertical federated imputation based on GANs are constructed to generate the remaining attributes, maximizing the potential of multi-party collaborative learning. Experiments on various public datasets demonstrate that FedPSG-AR consistently outperforms existing methods across different sample missing ratios, especially in scenarios with high missing ratios. As future work, we would focus on improving the generation methods of highly correlated attributes and the federated imputation methods.
+
+%% start 3rd, 4th and 5th level sections.
+%% Refer following link for more details.
+%% https://en.wikibooks.org/wiki/LaTeX/Document_Structure#Sectioning_commands
+\textbf{Acknowledgments}:This work was supported by the Chongqing Returned Overseas Scholars Entrepreneurship and Innovation Support Program No. CX2024086; the National Social Science Foundation of China under Grant No. 20BXW097; the Chongqing Technology Innovation and Application Development Special Major Project under Grant No. CSTB2023TIAD-STX0034.
+
+
+
+
+\begin{thebibliography}{00}
+
+%% For authoryear reference style
+%% \bibitem[Author(year)]{label}
+%% Text of bibliographic item
+
+\bibitem{1}
+  Liu Y, Kang Y, Zou T, et al. Vertical federated learning: Concepts, advances, and challenges[J]. IEEE Transactions on Knowledge and Data Engineering, 2024, 36(7): 3615-3634.
+\bibitem{2}
+Zhang J F, Jiang Y C. A data augmentation method for vertical federated learning[J]. Wireless Communications and Mobile Computing, 2022, 2022(1): 6596925.
+\bibitem{3}
+Jiang X, Zhang Y, Zhou X, et al. Distributed gan-based privacy-preserving publication of vertically-partitioned data[J]. Proceedings on Privacy Enhancing Technologies, 2023.
+\bibitem{4}
+Yuan X, Yang Y, Gope P, et al. Vflgan: Vertical federated learning-based generative adversarial network for vertically partitioned data publication[J]. arXiv preprint arXiv:2404.09722, 2024.
+\bibitem{5}
+Zhao Z, Wu H, Van Moorsel A, et al. Gtv: Generating tabular data via vertical federated learning[J]. arXiv preprint arXiv:2302.01706, 2023.
+\bibitem{6}
+Zhao F, Li Z, Ren X, et al. VertiMRF: Differentially Private Vertical Federated Data Synthesis[C]//Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining. 2024: 4431-4442.
+\bibitem{7}
+Goodfellow I, Pouget-Abadie J, Mirza M, et al. Generative adversarial nets[J]. Advances in neural information processing systems, 2014, 27.
+\bibitem{8}
+Bank D, Koenigstein N, Giryes R. Autoencoders[J]. Machine learning for data science handbook: data mining and knowledge discovery handbook, 2023: 353-374.
+\bibitem{9}
+Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing systems, 2020, 33: 6840-6851.
+\bibitem{10}
+Chen Y, Liu J, Peng L, et al. Auto-encoding variational Bayes[J]. Cambridge Explorations in Arts and Sciences, 2024, 2(1)
+\bibitem{11}
+Xu L, Skoularidou M, Cuesta-Infante A, et al. Modeling tabular data using conditional gan[J]. Advances in neural information processing systems, 2019, 32.
+\bibitem{12}
+Mirza M, Osindero S. Conditional generative adversarial nets[J]. arXiv preprint arXiv:1411.1784, 2014.
+\bibitem{13}
+Lee J, Hyeong J, Jeon J, et al. Invertible tabular GANs: Killing two birds with one stone for tabular data synthesis[J]. Advances in Neural Information Processing Systems, 2021, 34: 4263-4273.
+\bibitem{14}
+Singh S, Kayathwal K, Wadhwa H, et al. Metgan: Memory efficient tabular gan for high cardinality categorical datasets[C]//Neural Information Processing: 28th International Conference, ICONIP 2021, Sanur, Bali, Indonesia, December 8–12, 2021, Proceedings, Part VI 28. Springer International Publishing, 2021: 519-527.
+%Singh S, Kayathwal K, Wadhwa H, et al. MeTGAN: Memory efficient Tabular GAN for high cardinality categorical datasets[J].
+\bibitem{15}
+Zhao Z, Kunar A, Birke R, et al. Ctab-gan: Effective table data synthesizing[C]//Asian Conference on Machine Learning. PMLR, 2021: 97-112.
+\bibitem{16}
+Engelmann J, Lessmann S. Conditional Wasserstein GAN-based oversampling of tabular data for imbalanced learning[J]. arXiv preprint arXiv:2008.09202, 2020.
+\bibitem{17}
+Kotelnikov A, Baranchuk D, Rubachev I, et al. Tabddpm: Modelling tabular data with diffusion models[C]//International Conference on Machine Learning. PMLR, 2023: 17564-17579.
+\bibitem{18}
+Farhangfar A, Kurgan L A, Pedrycz W. A novel framework for imputation of missing values in databases[J]. IEEE Transactions on Systems, Man, and Cybernetics-Part A: Systems and Humans, 2007, 37(5): 692-709.
+\bibitem{19}
+Regression N. An Introduction to Kernel and Nearest-Neighbor[J]. The American Statistician, 1992, 46(3): 175-185.
+\bibitem{20}
+Chen T, Guestrin C. Xgboost: A scalable tree boosting system[C]//Proceedings of the 22nd acm sigkdd international conference on knowledge discovery and data mining. 2016: 785-794.
+\bibitem{21}
+Stekhoven D J, Bühlmann P. MissForest—non-parametric missing value imputation for mixed-type data[J]. Bioinformatics, 2012, 28(1): 112-118.
+\bibitem{22}
+Royston P, White I R. Multiple imputation by chained equations (MICE): implementation in Stata[J]. Journal of statistical software, 2011, 45: 1-20.
+\bibitem{23}
+Ryu S, Kim M, Kim H. Denoising autoencoder-based missing value imputation for smart meters[J]. IEEE Access, 2020, 8: 40656-40666.
+\bibitem{24}
+Yoon J, Jordon J, Schaar M. Gain: Missing data imputation using generative adversarial nets[C]//International conference on machine learning. PMLR, 2018: 5689-5698.
+\bibitem{25}
+Awan S E, Bennamoun M, Sohel F, et al. Imputation of missing data with class imbalance using conditional generative adversarial networks[J]. Neurocomputing, 2021, 453: 164-171.
+\bibitem{26}
+Wang Y, Li D, Li X, et al. PC-GAIN: Pseudo-label conditional generative adversarial imputation networks for incomplete data[J]. Neural Networks, 2021, 141: 395-403.
+\bibitem{27}
+Miao X, Wu Y, Chen L, et al. An experimental survey of missing data imputation algorithms[J]. IEEE Transactions on Knowledge and Data Engineering, 2022, 35(7): 6630-6650.
+\bibitem{28}
+Zheng S, Charoenphakdee N. Diffusion models for missing value imputation in tabular data[J]. arXiv preprint arXiv:2210.17128, 2022.
+\bibitem{29}
+McMahan B, Moore E, Ramage D, et al. Communication-efficient learning of deep networks from decentralized data[C]//Artificial intelligence and statistics. PMLR, 2017: 1273-1282.
+\bibitem{30}
+Yang Q, Liu Y, Chen T, et al. Federated machine learning: Concept and applications[J]. ACM Transactions on Intelligent Systems and Technology (TIST), 2019, 10(2): 1-19.
+\bibitem{31}
+Du W, Wang Y, Meng G, et al. Privacy-preserving vertical federated knn feature imputation method[J]. Electronics, 2024, 13(2): 381.
+\bibitem{32}
+De Cristofaro E, Tsudik G. Practical private set intersection protocols with linear complexity[C]//International Conference on Financial Cryptography and Data Security. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010: 143-159.
+\bibitem{33}
+Cheon J H, Kim A, Kim M, et al. Homomorphic encryption for arithmetic of approximate numbers[C]//Advances in cryptology–ASIACRYPT 2017: 23rd international conference on the theory and applications of cryptology and information security, Hong kong, China, December 3-7, 2017, proceedings, part i 23. Springer International Publishing, 2017: 409-437.
+Cheon J H, Kim A, Kim M, et al. Homomorphic encryption for arithmetic of approximate numbers[J]. Lecture Notes in Computer Science, 2017, 10624: 409-437.
+\bibitem{add1}
+Zar J H. Spearman rank correlation[J]. Encyclopedia of biostatistics, 2005, 7.
+\bibitem{34}
+Kotsiantis S, Kanellopoulos D. Association rules mining: A recent overview[J]. GESTS International Transactions on Computer Science and Engineering, 2006, 32(1): 71-82.
+\bibitem{35}
+Zhou X, Liu X, Lan G, et al. Federated conditional generative adversarial nets imputation method for air quality missing data[J]. Knowledge-Based Systems, 2021, 228: 107261.
+\bibitem{36}
+Dua, D., Graff, C.: UCI machine learning repository (2017), http://archive.ics.uci.edu/ml
+\bibitem{37}
+Chai T, Draxler R R. Root mean square error (RMSE) or mean absolute error (MAE)[J]. Geoscientific model development discussions, 2014, 7(1): 1525-1534.
+\bibitem{38}
+Park N, Mohammadi M, Gorde K, et al. Data synthesis based on generative adversarial networks[J]. arXiv preprint arXiv:1806.03384, 2018.
+\bibitem{39}
+Yang S, Ren B, Zhou X, et al. Parallel distributed logistic regression for vertical federated learning without third-party coordinator[J]. arXiv preprint arXiv:1911.09824, 2019.
+\bibitem{40}
+Hartmann V, Modi K, Pujol J M, et al. Privacy-preserving classification with secret vector machines[C]//Proceedings of the 29th ACM International Conference on Information \& Knowledge Management. 2020: 475-484.
+\bibitem{41}
+Tian Z, Zhang R, Hou X, et al. ${\sf FederBoost} $: Private Federated Learning for GBDT[J]. IEEE Transactions on Dependable and Secure Computing, 2023.
+\bibitem{42}
+Wu Y, Cai S, Xiao X, et al. Privacy preserving vertical federated learning for tree-based models[J]. arXiv preprint arXiv:2008.06170, 2020.
+\bibitem{43}
+Zhu J, Jia Q, Cai G, et al. Final: Factorized interaction layer for ctr prediction[C]//Proceedings of the 46th International ACM SIGIR conference on research and development in information retrieval. 2023: 2006-2010.
+\bibitem{44}
+Zhao Z, Kunar A, Birke R, et al. Ctab-gan+: Enhancing tabular data synthesis[J]. Frontiers in big Data, 2024, 6: 1296508.
+
+\end{thebibliography}
+\end{document}
+
+\endinput
+
