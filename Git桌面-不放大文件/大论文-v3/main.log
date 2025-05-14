@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.5.13)  13 MAY 2025 16:46
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.5.13)  14 MAY 2025 08:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2696,6 +2696,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [47]
+
+LaTeX Warning: Reference `fig: FedPSG-PUM ' on page 48 undefined on input line 
+72.
+
 File: chapters/imgs/FedPSG-PUM.png Graphic file (type bmp)
 <chapters/imgs/FedPSG-PUM.png>
 
@@ -2732,11 +2736,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [50]
-
-LaTeX Warning: Reference `fig: FedPSG-PUM' on page 51 undefined on input line 1
-43.
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2866,19 +2865,6 @@ Sun(0)/m/n/12 ，|
  []
 
 
-LaTeX Warning: Reference `fig: FedPSG-PUM' on page 60 undefined on input line 4
-42.
-
-
-Overfull \hbox (32.43207pt too wide) in paragraph at lines 444--445
-[]\TU/SimSun(0)/m/n/12 基 于 特 征 相 关 性 分 析  |（\TU/TimesNewRoman(0)/m/n/12 Process
- I\TU/SimSun(0)/m/n/12 ） ，| \TU/TimesNewRoman(0)/m/n/12 FedPSG-PUM \TU/SimSun(0
-)/m/n/12 将 \TU/TimesNewRoman(0)/m/n/12 B \TU/SimSun(0)/m/n/12 方 特 征 集 合 $\OML/n
-txmi/m/it/12 X[] \U/ntxmia/m/it/12 = \LMS/ntxsy/m/n/12 f\OML/ntxmi/m/it/12 x[];
- x[]; :::; x[]\LMS/ntxsy/m/n/12 g$
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2891,19 +2877,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [60]
-Overfull \hbox (22.11949pt too wide) detected at line 478
-[] [] \U/ntxsym/m/n/12 E\LMS/ntxsy/m/n/12 »[] \OML/ntxmi/m/it/12 D\LMS/ntxsy/m/
-n/12 ¹\OML/ntxmi/m/it/12 X; M\LMS/ntxsy/m/n/12 º Ï []¹\OT1/lmr/m/n/12 1 \LMS/nt
-xsy/m/n/12 ^^@ \OML/ntxmi/m/it/12 D\LMS/ntxsy/m/n/12 ¹\OML/ntxmi/m/it/12 G\LMS/
-ntxsy/m/n/12 ¹\OML/ntxmi/m/it/12 X; M\LMS/ntxsy/m/n/12 º\OML/ntxmi/m/it/12 ; M\
-LMS/ntxsy/m/n/12 ºº¼ Ï \OML/ntxmi/m/it/12 ^^U\U/ntxsym/m/n/12 E\LMS/ntxsy/m/n/1
-2 »jj\OML/ntxmi/m/it/12 G\LMS/ntxsy/m/n/12 ¹\OML/ntxmi/m/it/12 X; M\LMS/ntxsy/m
-/n/12 º ^^L ¹\OT1/lmr/m/n/12 1 \LMS/ntxsy/m/n/12 ^^@ \OML/ntxmi/m/it/12 M\LMS/n
-txsy/m/n/12 º ^^@ \OML/ntxmi/m/it/12 X \LMS/ntxsy/m/n/12 ^^L ¹\OT1/lmr/m/n/12 1
- \LMS/ntxsy/m/n/12 ^^@ \OML/ntxmi/m/it/12 M\LMS/ntxsy/m/n/12 ºjj[]¼
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2916,9 +2889,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [61]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2964,39 +2934,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [65]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 20.0pt, for example:
-(fancyhdr)                \setlength{\headheight}{20.0pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
-
-[66]
 File: chapters/imgs/Chapter4Exp1Setting1a.png Graphic file (type bmp)
 <chapters/imgs/Chapter4Exp1Setting1a.png>
 File: chapters/imgs/Chapter4Exp1Setting1b.png Graphic file (type bmp)
 <chapters/imgs/Chapter4Exp1Setting1b.png>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 20.0pt, for example:
-(fancyhdr)                \setlength{\headheight}{20.0pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
-
-[67]
-File: chapters/imgs/Chapter4Exp1Setting3a.png Graphic file (type bmp)
-<chapters/imgs/Chapter4Exp1Setting3a.png>
-File: chapters/imgs/Chapter4Exp1Setting3b.png Graphic file (type bmp)
-<chapters/imgs/Chapter4Exp1Setting3b.png>
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -3010,7 +2951,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[68]
+[66]
+File: chapters/imgs/Chapter4Exp1Setting3a.png Graphic file (type bmp)
+<chapters/imgs/Chapter4Exp1Setting3a.png>
+File: chapters/imgs/Chapter4Exp1Setting3b.png Graphic file (type bmp)
+<chapters/imgs/Chapter4Exp1Setting3b.png>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 5316) has occurred while \output is active []
+
+
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 20.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{20.0pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
+
+[67]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -3026,7 +2988,14 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[69]
+[68]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3035,7 +3004,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[70]
+[69]
 File: chapters/imgs/Chapter4Exp3Bank.png Graphic file (type bmp)
 <chapters/imgs/Chapter4Exp3Bank.png>
 
@@ -3050,7 +3019,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[71]
+[70]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3059,7 +3028,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[72])
+[71])
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3068,7 +3037,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[73]
+[72]
 \openout2 = `chapters/conclusion.aux'.
 
  (chapters/conclusion.tex
@@ -3085,7 +3054,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[74
+[73
 
 
 
@@ -3099,7 +3068,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[75]
+[74]
 \openout2 = `chapters/reference.aux'.
 
  (chapters/reference.tex
@@ -3123,13 +3092,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[76
+[75
 
 
 
 
 
 ]
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 20.0pt, for example:
+(fancyhdr)                \setlength{\headheight}{20.0pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
+
+[76]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3148,15 +3126,6 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
 [78]
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 20.0pt, for example:
-(fancyhdr)                \setlength{\headheight}{20.0pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
-
-[79]
 Underfull \hbox (badness 3503) in paragraph at lines 214--215
 []\TU/TimesNewRoman(0)/m/n/10.5 GHASIMI P, BENEDIKTSSON J A, ULFARSSON M O. The
  spectral-spatial clas-
@@ -3195,7 +3164,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[80]
+[79]
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -3204,7 +3173,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[81])
+[80])
 \openout2 = `chapters/CV.aux'.
 
  (chapters/CV.tex)
@@ -3216,7 +3185,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[82
+[81
 
 
 
@@ -3240,7 +3209,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-8.0pt}.
 
-[83
+[82
 
 
 
@@ -3264,7 +3233,7 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B98F3CAF7E4F2247B0962532853814AD;7390.
+(rerunfilecheck)             Checksum: FB93E122799ADEBB7775EBA874A9774E;7302.
  ) 
 Here is how much of TeX's memory you used:
  32351 strings out of 405057
@@ -3275,4 +3244,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  93i,27n,115p,1385b,3001s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (93 pages).
+Output written on main.pdf (92 pages).
