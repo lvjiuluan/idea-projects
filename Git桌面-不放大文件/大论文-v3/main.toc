@@ -37,9 +37,9 @@
 \contentsline {subsubsection}{\numberline {4.3.2.1}联邦半监督学习框架设计}{51}{subsubsection.4.3.2.1}%
 \contentsline {subsubsection}{\numberline {4.3.2.2}多任务联邦半监督学习算法}{53}{subsubsection.4.3.2.2}%
 \contentsline {subsection}{\numberline {4.3.3}生成模型生成数据}{59}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}实验过程及结果分析}{63}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}数据集介绍与实验准备}{63}{subsection.4.4.1}%
-\contentsline {subsection}{\numberline {4.4.2}实验设计与基线模型介绍}{64}{subsection.4.4.2}%
+\contentsline {section}{\numberline {4.4}实验过程及结果分析}{62}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}数据集介绍与实验准备}{62}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}实验设计与基线模型介绍}{63}{subsection.4.4.2}%
 \contentsline {subsection}{\numberline {4.4.3}实验结果分析}{66}{subsection.4.4.3}%
 \contentsline {section}{\numberline {4.5}本章小结}{72}{section.4.5}%
 \contentsline {chapter}{\numberline {第5章\hspace {.3em}}总结与展望}{73}{chapter.5}%
@@ -49,8 +49,8 @@
 \contentsline {chapter}{作者简介}{81}{chapter*.36}%
 \contentsline {section}{1. \ 基本情况}{81}{section*.37}%
 \contentsline {section}{2. \ 教育和工作经历}{81}{section*.38}%
-\contentsline {section}{1. \ 攻读学位期间的研究成果}{81}{section*.39}%
-\contentsline {subsection}{1.1 \ 发表的学术论文和著作}{81}{subsection*.40}%
-\contentsline {subsection}{1.2 \ 参与的科研项目及获奖}{81}{subsection*.41}%
+\contentsline {section}{3. \ 攻读学位期间的研究成果}{81}{section*.39}%
+\contentsline {subsection}{3.1 \ 发表的学术论文和著作}{81}{subsection*.40}%
+\contentsline {subsection}{3.2 \ 参与的科研项目及获奖}{81}{subsection*.41}%
 \contentsline {chapter}{致 \hskip 1em\relax 谢}{82}{chapter*.42}%
 \contentsfinish 
